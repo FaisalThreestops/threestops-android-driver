@@ -1,0 +1,134 @@
+{
+  "project_info": {
+    "project_number": "295729526730",
+    "firebase_url": "https://delivx-226707.firebaseio.com",
+    "project_id": "delivx-226707",
+    "storage_bucket": "delivx-226707.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:295729526730:android:855fb44e224af744",
+        "android_client_info": {
+          "package_name": "com.app.delivxstore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "295729526730-bjlsifdonpf3bl2r22a71vu69v28anjt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAl3D8eAUOkQuyoaJmvocw9yIYOOIwF97c"
+        },
+        {
+          "current_key": "AIzaSyD8tA2rKuIFrMa9HBpYVmiNrNtGDDi07FY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:295729526730:android:523faecf09474a0f",
+        "android_client_info": {
+          "package_name": "com.customer.delivX"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "295729526730-r6vjevidk6mpvegmlcrfl3jhutd2lgng.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.customer.delivX",
+            "certificate_hash": "4c38719234a095e32bb8115c3696ecf2cd62c06b"
+          }
+        },
+        {
+          "client_id": "295729526730-bjlsifdonpf3bl2r22a71vu69v28anjt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAl3D8eAUOkQuyoaJmvocw9yIYOOIwF97c"
+        },
+        {
+          "current_key": "AIzaSyD8tA2rKuIFrMa9HBpYVmiNrNtGDDi07FY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "295729526730-bjlsifdonpf3bl2r22a71vu69v28anjt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "295729526730-dat950udefjueggnjtfnnj9ohkfv2d0g.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.customer.delivX",
+                "app_store_id": "1450788084"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:295729526730:android:f2ffcbbf0c0b36d5",
+        "android_client_info": {
+          "package_name": "com.driver.delivx"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "295729526730-bjlsifdonpf3bl2r22a71vu69v28anjt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAl3D8eAUOkQuyoaJmvocw9yIYOOIwF97c"
+        },
+        {
+          "current_key": "AIzaSyD8tA2rKuIFrMa9HBpYVmiNrNtGDDi07FY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

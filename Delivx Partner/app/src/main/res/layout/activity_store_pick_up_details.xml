@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context="com.delivx.app.storeDetails.StorePickUpDetails">
+
+    <include
+        android:id="@+id/include_actionbar"
+        layout="@layout/actionbar" />
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/background"
+        android:orientation="vertical"
+        android:layout_above="@+id/Bottomlayout"
+        android:layout_below="@id/include_actionbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="2.5"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_cust_name_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/customer_name"
+                        android:textAllCaps="true"
+                        android:textColor="@color/lig_green2"
+                        android:textSize="@dimen/spFourteen" />
+
+                    <TextView
+                        android:id="@+id/tv_cust_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Abraham"
+                        android:textColor="@color/color_sup_txt"
+                        android:textSize="@dimen/spSixteen" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/iv_call_customer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:padding="5dp"
+                    android:src="@drawable/on_the_way_call_icon_off" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dpPointZeroFive"
+                android:layout_marginTop="5dp"
+                android:background="@color/divider2" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="2.5"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_pick_up_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pickup"
+                        android:textAllCaps="true"
+                        android:textColor="@color/lig_green2"
+                        android:textSize="@dimen/spFourteen" />
+
+                    <TextView
+                        android:id="@+id/tv_pickup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="2"
+                        android:text="10th Cross St, RBI Colony, Ganga Nagar, Bengaluru, Karnataka 560024"
+                        android:textColor="@color/color_sup_txt"
+                        android:textSize="@dimen/spSixteen" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/iv_call_pickUp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:padding="5dp"
+                    android:src="@drawable/on_the_way_call_icon_off" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="2.5"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_drop_up_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/delivery"
+                        android:textAllCaps="true"
+                        android:textColor="@color/lig_green2"
+                        android:textSize="@dimen/spFourteen" />
+
+                    <TextView
+                        android:id="@+id/tv_dropup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="2"
+                        android:text="10th Cross St, RBI Colony, Ganga Nagar, Bengaluru, Karnataka 560024"
+                        android:textColor="@color/color_sup_txt"
+                        android:textSize="@dimen/spSixteen" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="2.5"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_payment_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/PAYMENT"
+                        android:textAllCaps="true"
+                        android:textColor="@color/lig_green2"
+                        android:textSize="@dimen/spFourteen" />
+
+                    <TextView
+                        android:id="@+id/tv_payment_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cash on Delivery"
+                        android:textColor="@color/color_sup_txt"
+                        android:textSize="@dimen/spSixteen" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dpOne"
+                android:layout_marginTop="5dp"
+                android:background="@color/divider2" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvProductsTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/products"
+                    android:textColor="@color/lig_green2"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/spFourteen" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:visibility="gone"
+                    android:id="@+id/rv_item_show"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_item_head"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:id="@+id/tvItems"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2.25"
+                        android:text="@string/items"
+                        android:textColor="@color/lig_green2"
+                        android:textSize="@dimen/spFourteen" />
+
+                    <TextView
+                        android:id="@+id/tvPriceTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.75"
+                        android:text="@string/price"
+                        android:gravity="right|end"
+                        android:textColor="@color/lig_green2"
+                        android:textSize="@dimen/spFourteen" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dpPointZeroFive"
+                android:layout_marginTop="5dp"
+                android:background="@color/divider2" />
+
+            <LinearLayout
+                android:id="@+id/ll_item_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view_last"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/invoice_dotone" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_total"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:paddingBottom="20dp"
+                >
+
+                <TextView
+                    android:id="@+id/tvGrandTotalTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2.25"
+                    android:text="@string/grand_total"
+                    android:gravity="end"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/spSixteen" />
+
+                <TextView
+                    android:id="@+id/tvGrandTotal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.75"
+                    android:text="$ 20.00"
+                    android:gravity="right|end"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/spSixteen" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/Bottomlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@color/grayback"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+
+        <com.delivx.utility.Slider
+            android:id="@+id/myseek"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:clickable="false"
+            android:max="100"
+            android:maxHeight="50dp"
+            android:minHeight="25dp"
+            android:progressDrawable="@drawable/seekbar_background"
+            android:splitTrack="false"
+            android:thumb="@drawable/selector_seekbar_btn"
+            android:thumbOffset="-10dp" />
+
+        <TextView
+            android:id="@+id/tv_status_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="@string/start_job"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/spSixteen" />
+
+    </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="gone"
+        />
+</RelativeLayout>

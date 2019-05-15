@@ -1,0 +1,59 @@
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/order_bkgrnd">
+
+        <include layout="@layout/abar_custom"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:id="@+id/rlWalletBal"
+            android:visibility="visible"
+            >
+            <TextView
+                android:id="@+id/tvCurCreditLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/current_credit"
+                android:textSize="@dimen/spFourteen"
+                android:textColor="@color/grayLightTextColor"
+                android:layout_marginTop="@dimen/dpFifteen"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:id="@+id/tvWalletBalance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/spTwentyFour"
+                android:layout_below="@id/tvCurCreditLabel"
+                android:layout_marginTop="@dimen/dpFive"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/black"
+                />
+
+        </RelativeLayout>
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dpFifity"
+            app:tabMode="fixed"
+            app:tabGravity="fill"
+            android:theme="@style/CustomTabLayoutStyle"
+            app:tabTextColor="@color/shiping_text_color"
+            app:tabSelectedTextColor="@color/colorPrimary"/>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+</android.support.design.widget.CoordinatorLayout>

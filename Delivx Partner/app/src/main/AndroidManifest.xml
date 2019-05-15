@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.driver.delivx">
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-feature
+        android:name="android.hardware.camera.front"
+        android:required="false" />
+
+    <permission
+        android:name="com.driver.delivx.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.dayrunnerdriver.main.permission.C2D_MESSAGE" />
+
+    <application
+        android:name="com.delivx.app.MyApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+
+        <!-- splash activity -->
+        <activity
+            android:name="com.delivx.app.SplashScreen"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.delivx.app.main.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.delivx.login.LoginActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden"/>
+             />
+        <activity
+            android:name="com.delivx.signup.perosonal.SignupPersonal"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible|adjustNothing" />
+        <activity
+            android:name="com.delivx.app.main.history.HistoryOrderDetailsNew"
+            android:screenOrientation="portrait"
+             />
+        <activity
+            android:name="com.delivx.signup.vehicle.SignupVehicle"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
+        <activity
+            android:name="com.delivx.ForgotPassword.ForgotPasswordMobNum"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible" />
+        <activity
+            android:name="com.delivx.vehiclelist.VehicleList"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.delivx.ForgotPassword.ForgotPasswordVerify"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
+        <activity
+            android:name="com.delivx.ForgotPassword.ForgotPasswordChangePass"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible" />
+        <activity
+            android:name="com.delivx.app.CancelReason"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden" />
+        <activity
+            android:name="com.delivx.app.bookingRequest.BookingPopUp"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="eu.janmuller.android.simplecropimage.CropImage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.delivx.app.main.profile.editProfile.EditProfileActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
+
+        <service android:name="com.delivx.fcm.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name="com.delivx.fcm.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <!-- Mqtt Service -->
+        <service android:name="org.eclipse.paho.android.service.MqttService"
+            android:exported="false"
+            android:enabled="true"
+            android:stopWithTask="true"/>
+
+        <service android:name="com.delivx.service.LocationUpdateService" />
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+
+        <!-- GOOGLE MAP -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="@string/map_api_key" />
+
+        <activity
+            android:name="com.delivx.signup.GenericListActivity"
+            android:screenOrientation="portrait" />
+
+        <service
+            android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
+            android:enabled="true" />
+        <service android:name="com.delivx.managers.account.AppAuthenticatorService">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator" />
+        </service>
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="d10711215d5a970c67c4f76641fef0cccf62b92d" />
+
+        <activity
+            android:name="com.livechatinc.inappchat.ChatWindowActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name="com.delivx.app.main.support.webView.WebViewActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.delivx.app.main.bank.stripe.BankNewStripeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            />
+        <activity android:name="com.delivx.app.main.support.subCategory.SupportSubCategoryActivity" />
+        <activity android:name="com.delivx.app.main.bank.addBankAccount.BankNewAccountActivity" />
+
+
+        <activity android:name="com.delivx.walletNew.WalletTransActivity" />
+        <activity android:name="com.delivx.portal.PortalActivity" />
+        <activity
+            android:name="com.delivx.app.storeDetails.StorePickUpDetails"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+
+
+        <activity
+            android:name="com.delivx.app.bookingRide.BookingRide"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.delivx.app.storePickUp.StorePickUp"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+
+        <activity android:name="com.delivx.app.invoice.InvoiceActivity"
+            android:screenOrientation="portrait"
+            />
+
+        <activity android:name="com.delivx.app.main.history.orderDetails.HistoryOrderDetails"
+            android:screenOrientation="portrait"
+            />
+
+        <activity android:name="com.delivx.mqttChat.ChattingActivity"
+            android:screenOrientation="portrait"
+            />
+    </application>
+
+</manifest>

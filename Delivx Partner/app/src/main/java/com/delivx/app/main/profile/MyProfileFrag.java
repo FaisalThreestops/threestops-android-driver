@@ -1,0 +1,232 @@
+package com.delivx.app.main.profile;
+
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Typeface;
+import android.os.Build;
+import android.os.Bundle;
+import android.transition.TransitionInflater;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.delivx.app.main.profile.editProfile.EditProfileActivity;
+import com.driver.delivx.R;
+import com.delivx.pojo.ProfileData;
+import com.delivx.utility.CircleImageView;
+import com.delivx.utility.FontUtils;
+import com.delivx.utility.Utility;
+import com.delivx.utility.VariableConstant;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import dagger.android.support.DaggerFragment;
+import eu.janmuller.android.simplecropimage.CropImage;
+
+
+public class MyProfileFrag extends DaggerFragment implements View.OnClickListener,ProfileContract.ViewOperations {
+
+    private String TAG = MyProfileFrag.class.getSimpleName();
+    private View rootView;
+    private static final int CROP_IMAGE = 13;
+    @BindView(R.id.tv_name) TextView tv_name;
+    @BindView(R.id.tvLogout) TextView tv_logout;
+    @BindView(R.id.tv_phone) TextView tv_phone;
+    @BindView(R.id.tv_pass) TextView tv_pass;
+    @BindView(R.id.tv_vechtype) TextView tv_vechtype;
+    @BindView(R.id.tv_vech_number) TextView tv_vech_number;
+    @BindView(R.id.iv_prof_img) CircleImageView iv_prof_img;
+    @BindView(R.id.iv_profpic_prog) ImageView iv_profpic_prog;
+    @BindView(R.id.iv_name_edit) ImageView iv_name_edit;
+    @BindView(R.id.iv_phone_edit) ImageView iv_phone_edit;
+    @BindView(R.id.iv_password_edit) ImageView iv_password_edit;
+    @BindView(R.id.tv_plan) TextView tv_plan;
+    @BindView(R.id.tv_prof_pass) TextView tv_prof_pass;
+    @BindView(R.id.tv_plan_type) TextView tv_plan_type;
+    @BindView(R.id.tv_prof_name) TextView tv_prof_name;
+    @BindView(R.id.tv_prof_phone) TextView tv_prof_phone;
+    @BindView(R.id.tv_prof_vechtype) TextView tv_prof_vechtype;
+    @BindView(R.id.tv_prof_vech_number) TextView tv_prof_vech_number;
+    @BindView(R.id.progressBar) ProgressBar progressBar;
+    @Inject
+    ProfileContract.PresenterOpetaions presenter;
+    @Inject
+    FontUtils fontUtils;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setSharedElementEnterTransition(TransitionInflater.from(getContext()).inflateTransition(android.R.transition.move));
+        }
+    }
+
+    @Inject
+    public MyProfileFrag() {
+    }
+
+
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        rootView = inflater.inflate(R.layout.fragment_my_profile, container, false);
+        ButterKnife.bind(this,rootView);
+        initializeViews();
+        presenter.attachView(this);
+        presenter.getProfileDetails();
+
+        return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (VariableConstant.IS_PROFILE_EDITED) {
+            VariableConstant.IS_PROFILE_EDITED = false;
+            presenter.getProfileDetails();
+        }
+    }
+
+    private void initializeViews() {
+
+        Typeface clanaproNarrNews = fontUtils.titaliumRegular();
+        tv_name.setTypeface(clanaproNarrNews);
+        tv_logout.setTypeface(clanaproNarrNews);
+        tv_phone.setTypeface(clanaproNarrNews);
+        tv_pass.setTypeface(clanaproNarrNews);
+        tv_vechtype.setTypeface(clanaproNarrNews);
+        tv_vech_number.setTypeface(clanaproNarrNews);
+        tv_prof_name.setTypeface(clanaproNarrNews);
+        tv_plan.setTypeface(clanaproNarrNews);
+        tv_plan_type.setTypeface(clanaproNarrNews);
+        tv_prof_phone.setTypeface(clanaproNarrNews);
+        tv_prof_pass.setTypeface(clanaproNarrNews);
+        tv_prof_vechtype.setTypeface(clanaproNarrNews);
+        tv_prof_vech_number.setTypeface(clanaproNarrNews);
+    }
+
+    @OnClick({R.id.iv_name_edit,R.id.iv_phone_edit,R.id.iv_password_edit,R.id.iv_prof_img,R.id.tvLogout})
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.iv_name_edit:
+                presenter.editName();
+                break;
+
+            case R.id.iv_phone_edit:
+                presenter.editPhone();
+                break;
+
+            case R.id.iv_password_edit:
+                presenter.editPassword();
+                break;
+
+            case R.id.iv_prof_img:
+                presenter.profileEdit();
+                break;
+
+            case R.id.tvLogout:
+                presenter.logout();
+                break;
+        }
+    }
+    @Override
+    public void setProfileDetails(ProfileData profileData) {
+
+        tv_prof_name.setText(profileData.getName());
+        tv_prof_phone.setText(profileData.getPhone());
+        if(profileData.getAccountType().equals("3")){
+            tv_plan_type.setText(profileData.getStoreName());
+            tv_plan.setText(getActivity().getResources().getString(R.string.store_name));
+        }else {
+            tv_plan_type.setText(profileData.getPlanName());
+            tv_plan.setText(getActivity().getResources().getString(R.string.plan));
+        }
+
+        tv_prof_vechtype.setText(profileData.getVehicleTypeName());
+        tv_prof_vech_number.setText(profileData.getVehiclePlatNo());
+        String url = profileData.getProfilePic();
+
+        if (!url.equals(null) || !url.equals("")) {
+            if (url.contains(" ")) {
+                url = url.replace(" ", "%20");
+            }
+            iv_profpic_prog.setVisibility(View.VISIBLE);
+            Picasso.with(getContext())
+                    .load(url)
+                    .resize(200, 200)
+                    .into(iv_prof_img, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            Utility.printLog(TAG+"  onSuccess  ");
+                            iv_profpic_prog.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public void onError() {
+                            Utility.printLog(TAG+"  onError  ");
+                            iv_profpic_prog.setVisibility(View.GONE);
+                        }
+                    });
+        }
+    }
+
+    @Override
+    public void onError(String error) {
+        Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void startEditActivity(String data) {
+        Intent intentName = new Intent(getActivity(), EditProfileActivity.class);
+        intentName.putExtra("data", data);
+        startActivity(intentName);
+        getActivity().overridePendingTransition(R.anim.activity_open_translate, R.anim.activity_close_scale);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        presenter.onActivityResult( requestCode,  resultCode,  data);
+    }
+
+
+    public void startCropImage() {
+        Intent intent = new Intent(getActivity(), CropImage.class);
+        intent.putExtra(CropImage.IMAGE_PATH, VariableConstant.newFile.getPath());
+        intent.putExtra(CropImage.SCALE, true);
+        intent.putExtra(CropImage.ASPECT_X, 4);
+        intent.putExtra(CropImage.ASPECT_Y, 4);
+        getActivity().startActivityForResult(intent, MyProfileFrag.CROP_IMAGE);
+    }
+
+    @Override
+    public void setProfileImage(Bitmap circle_bMap) {
+        iv_prof_img.setImageBitmap(circle_bMap);
+    }
+
+    @Override
+    public void networkError(String message) {
+    }
+
+    @Override
+    public void showProgress() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        progressBar.setVisibility(View.GONE);
+    }
+}

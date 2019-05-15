@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grayback"
+    >
+
+    <include
+        android:id="@+id/include_actionbar"
+        layout="@layout/invoice_actionbar"
+        android:visibility="visible"
+        />
+
+    <LinearLayout
+        android:id="@+id/llTop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/include_actionbar"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/white"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spSixteen"
+                android:src="@drawable/ic_invoice_bill_icon"
+                />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="16dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvBillTitle"
+                    android:textSize="16sp"
+                    android:text="@string/billable_amount"
+                    android:textAllCaps="true"
+                    android:textColor="@color/lig_green2"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvBill"
+                    android:textSize="22sp"
+                    android:layout_marginTop="10dp"
+                    android:text="$ 150.00"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/invoice_back"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/llBottom"
+        android:orientation="vertical"
+        >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider3"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="@dimen/spSixteen"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_invoice_star_icon"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvRatingTitle"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/rate_the_cus"
+                    android:textColor="@color/lig_green2"
+                    />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="@dimen/dpFive">
+
+
+                <ImageView
+                    android:id="@+id/ratingbar"
+                    android:background="@drawable/raing_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:numStars="1"
+                    android:stepSize="1"
+                    android:rating="1"
+                    android:visibility="visible"
+                    />
+
+                <ImageView
+                    android:id="@+id/ratingbar1"
+                    android:background="@drawable/raing_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:numStars="1"
+                    android:stepSize="1"
+                    android:rating="1"
+                    android:visibility="visible"
+                    android:overScrollMode="never"
+                    android:layout_toRightOf="@id/ratingbar"/>
+
+                <ImageView
+                    android:id="@+id/ratingbar2"
+                    android:layout_width="wrap_content"
+                    android:background="@drawable/raing_bar"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:numStars="1"
+                    android:stepSize="1"
+                    android:rating="1"
+                    android:visibility="visible"
+                    android:overScrollMode="never"
+                    android:layout_toRightOf="@id/ratingbar1"/>
+
+                <ImageView
+                    android:id="@+id/ratingbar3"
+                    android:background="@drawable/raing_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:numStars="1"
+                    android:stepSize="1"
+                    android:visibility="visible"
+                    android:overScrollMode="never"
+                    android:layout_toRightOf="@id/ratingbar2"/>
+
+                <ImageView
+                    android:id="@+id/ratingbar4"
+                    android:background="@drawable/raing_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:numStars="1"
+                    android:stepSize="1"
+                    android:visibility="visible"
+                    android:overScrollMode="never"
+                    android:layout_toRightOf="@id/ratingbar3"/>
+
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/divider2"
+            />
+
+        <TextView
+            android:id="@+id/tv_submit"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="@string/submit"
+            android:padding="10dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/spEighteen"
+            android:visibility="visible" />
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/signature"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/llTop"
+        android:layout_above="@id/llBottom"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        >
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="0.8dp"
+            android:background="@color/divider3"
+            />
+
+        <RelativeLayout
+            android:id="@+id/rlSign"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/view1"
+            android:layout_margin="@dimen/spSixteen"
+            >
+            <ImageView
+                android:id="@+id/ivPen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_invoice_pen_icon"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvSignTitle"
+                android:layout_toRightOf="@id/ivPen"
+                android:layout_toEndOf="@id/ivPen"
+                android:textSize="16sp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:text="@string/signature"
+                android:textAllCaps="true"
+                android:textColor="@color/lig_green2"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/edit"
+                />
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/divider3"
+            />
+
+        <ImageView
+            android:id="@+id/ivSignature"
+            android:layout_below="@id/rlSign"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="2dp"
+            />
+        <LinearLayout
+            android:id="@+id/ll_sign_here1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_signin_pen_icon"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvSignHere1"
+                android:text="@string/sign_here"
+                android:textSize="@dimen/spTwentyFour"
+                android:textColor="@color/lig_green2"
+                />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlSignaturePad"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:visibility="gone"
+        >
+        <RelativeLayout
+            android:id="@+id/rlRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            >
+
+            <ImageView
+                android:id="@+id/ivBackBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_signin_back_icon"
+                android:padding="10dp"
+                />
+
+            <ImageView
+                android:id="@+id/ivRefresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:padding="10dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_signin_refresh_icon"
+                />
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/tv_approve"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="@string/approve"
+            android:padding="10dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/spEighteen"
+            android:visibility="visible" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider4"
+            android:layout_above="@id/tv_approve"
+            />
+
+        <com.github.gcacace.signaturepad.views.SignaturePad xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/signature_pad"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:penColor="@android:color/black"
+            android:layout_below="@id/rlRefresh"
+            android:layout_above="@id/tv_approve"
+            app:penMaxWidth="2dp" />
+
+        <LinearLayout
+            android:id="@+id/ll_sign_here"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_signin_pen_icon"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvSignHere"
+                android:text="@string/sign_here"
+                android:textSize="@dimen/spTwentyFour"
+                android:textColor="@color/lig_green2"
+                />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        />
+</RelativeLayout>

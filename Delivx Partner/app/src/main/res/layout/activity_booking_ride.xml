@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context="com.delivx.app.bookingRide.BookingRide">
+
+
+    <include
+        android:id="@+id/include_actionbar"
+        layout="@layout/actionbar" />
+
+    <LinearLayout
+        android:id="@+id/llTop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:layout_below="@id/include_actionbar"
+        >
+
+        <LinearLayout
+            android:id="@+id/ll_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="16dp"
+
+            >
+            <ImageView
+                android:id="@+id/ivAddressDot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/history_pickup_icon"
+                android:paddingRight="10dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="10dp"
+                />
+            <TextView
+                android:id="@+id/tvAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
+                android:maxLines="2"
+                android:textSize="@dimen/spSixteen"
+                android:textColor="@color/color_sup_txt"
+                android:text="10th Cross St, RBI Colony, Ganga Nagar, Bengaluru, Karnataka 560024"
+                />
+
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view0"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dpOne"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@color/divider2" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_margin="16dp"
+            >
+            <TextView
+                android:id="@+id/tvCall"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/call"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:padding="10dp"
+                android:textSize="@dimen/spSixteen"
+                android:background="@drawable/rectangle_corner_solid_blue"/>
+
+            <TextView
+                android:id="@+id/tvJobDetails"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="@string/jobdetails"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:padding="10dp"
+                android:textSize="@dimen/spSixteen"
+                android:background="@drawable/rectangle_corner_solid_blue"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/llTop"
+        android:layout_above="@id/rlBottomView"
+        android:layout_marginBottom="-40dp"
+        >
+        <fragment
+            android:id="@+id/map"
+            class="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/ivMyLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/on_the_way_zoom_icon_off"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="10dp"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlBottomView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@+id/ivDirection"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dpZero"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/dpFive"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:id="@+id/tv_distance_value"
+                        android:layout_width="@dimen/dpZero"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="0 Miles"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/spFourteen" />
+
+                    <TextView
+                        android:id="@+id/tv_timer_value"
+                        android:layout_width="@dimen/dpZero"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="00:00:00"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/spFourteen" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dpZero"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/dpFive"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:id="@+id/tv_distance"
+                        android:layout_width="@dimen/dpZero"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/distance"
+                        android:textColor="@color/color2"
+                        android:textSize="@dimen/spTwelve" />
+
+                    <TextView
+                        android:id="@+id/tv_timer"
+                        android:layout_width="@dimen/dpZero"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/timer"
+                        android:textColor="@color/color2"
+                        android:textSize="@dimen/spTwelve" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/Bottomlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/grayback"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.delivx.utility.Slider
+                    android:id="@+id/myseek"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:clickable="false"
+                    android:max="100"
+                    android:maxHeight="50dp"
+                    android:minHeight="25dp"
+                    android:progressDrawable="@drawable/seekbar_background"
+                    android:splitTrack="false"
+                    android:thumb="@drawable/selector_seekbar_btn"
+                    android:thumbOffset="-10dp" />
+
+                <TextView
+                    android:id="@+id/tv_status_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="@string/arrivedToPick"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/spSixteen" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/ivDirection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="-40dp"
+            android:src="@drawable/store_pickup_direction_icon_off"
+            />
+
+    </RelativeLayout>
+
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:id="@+id/progressBar"
+        android:visibility="gone"
+        />
+
+</RelativeLayout>
