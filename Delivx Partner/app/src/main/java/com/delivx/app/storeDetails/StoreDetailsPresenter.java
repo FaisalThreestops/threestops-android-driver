@@ -150,6 +150,11 @@ public class StoreDetailsPresenter implements StoreDetailsContract.Presenter
         view.openChatAct(appointments);
     }
 
+    @Override
+    public String getlanguageCode() {
+        return preferenceHelperDataSource.getLanguageSettings().getLanguageCode();
+    }
+
     public void setAppointmentStatus(String status){
 
 

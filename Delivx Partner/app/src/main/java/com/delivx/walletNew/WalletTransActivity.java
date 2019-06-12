@@ -68,6 +68,7 @@ public class WalletTransActivity extends DaggerAppCompatActivity
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        Utility.RtlConversion(this,walletTransPresenter.getlanguageCode());
         setContentView(R.layout.activity_wallet_transactions);
         ButterKnife.bind(this);
 //        alerts = new Alerts();

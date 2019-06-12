@@ -41,7 +41,8 @@
     <string name="password_miss">Please enter a password.</string>
     <string name="login_succes">Login Success</string>
     <string name="login_signup_txt"><![CDATA[<font color=\'#767676\'>"Don\'t have an account?"</font><font color=\'#5AA43E\'>" Sign Up"</font>]]></string>
-
+    <string name="selectLanguage">Language</string>
+    <string name="english">English</string>
 
     <!--Forgot password Enter  mobile num activity-->
     <string name="forgotPassword">Forgot Password</string>
@@ -228,7 +229,7 @@
     <string name="read_storage_and_camera_state_permission_message">Please give permission for read write storage and camera to go ahead in app.</string>
 
     <!--Booking PopUp Activity-->
-    <string name="pickup">STORE</string>
+    <string name="pickup">PICKUP</string>
     <string name="drop">DROP</string>
     <string name="lefttoaccept">Left to Accept</string>
     <string name="Deliveryfee">Delivery Fee</string>
@@ -564,4 +565,20 @@
     <string name="pickup_slot">PICk UP SLOT</string>
     <string name="laundry_details">LAUNDRY DETAILS</string>
     <string name="quantity_cap">QUANTITY : </string>
+
+
+
+    <string name="distance_his">"Distance : "</string>
+    <string name="time_his">"Time : "</string>
+    <string name="type_of_deli">"Type of Delivery"</string>
+    <string name="grocery">Grocery</string>
+    <string name="pic_drop">pickup and drop</string>
+    <string name="item_details">Item details</string>
+    <string name="quant">QTY</string>
+    <string name="paymentbreak">payment breakdown</string>
+    <string name="earningsandcommission">Earnings and commission </string>
+    <string name="delvery_charge">Delivery Charges</string>
+    <string name="tax">Tax</string>
+    <string name="order_id_dot">Order Id : </string>
+    <string name="order_type">Order type</string>
 </resources>

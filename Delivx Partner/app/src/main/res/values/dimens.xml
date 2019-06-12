@@ -49,5 +49,9 @@
     <dimen name="spTwentyElght">28sp</dimen>
     <dimen name="spFourty">40sp</dimen>
     <dimen tools:override="true" name="design_navigation_icon_padding">16dp</dimen>
+    <dimen name="dimen_14dp">14dp</dimen>
+    <dimen name="dimen_19dp">19dp</dimen>
+    <dimen name="dimen_16dp">16dp</dimen>
+    <dimen name="dimen_20dp">20dp</dimen>
 
 </resources>

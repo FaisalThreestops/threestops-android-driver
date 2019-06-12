@@ -58,7 +58,7 @@ public class VehicleList extends DaggerAppCompatActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Utility.RtlConversion(this,presenter.getlanguageCode());
         setContentView(R.layout.activity_vehicle_list);
 
         ButterKnife.bind(this);

@@ -56,5 +56,8 @@ public interface InvoiceContract
         void completeBooking(float rating);
 
         void requestPermission();
+
+        String getlanguageCode();
+
     }
 }

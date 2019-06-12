@@ -9,6 +9,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
+import com.delivx.utility.Utility;
 import com.driver.delivx.R;
 import com.delivx.utility.FontUtils;
 
@@ -33,6 +34,7 @@ public class WebViewActivity extends DaggerAppCompatActivity implements WebViewC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utility.RtlConversion(this,presenter.getlanguageCode());
         setContentView(R.layout.activity_web_view);
         overridePendingTransition(R.anim.activity_open_translate, R.anim.activity_close_scale);
         ButterKnife.bind(this);

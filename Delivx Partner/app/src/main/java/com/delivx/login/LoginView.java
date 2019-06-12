@@ -1,6 +1,9 @@
 package com.delivx.login;
 
 import com.delivx.BaseView;
+import com.delivx.login.language.LanguagesList;
+
+import java.util.ArrayList;
 
 /**
  * Created by ads on 11/05/17.
@@ -55,4 +58,8 @@ public interface LoginView extends BaseView {
     void setMaxLength(int maxPhoneLength);
 
     void setCounryCode(int resID, String dialCode, int minPhoneLength, int maxPhoneLength);
+
+    void setLanguageDialog(ArrayList<LanguagesList> languagesListModel, int indexOf);
+
+    void setLanguage(String languageName, boolean b);
 }

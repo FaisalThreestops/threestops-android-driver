@@ -4,6 +4,7 @@ import android.app.Application;
 
 
 import com.delivx.app.MyApplication;
+import com.delivx.networking.LanguageApiService;
 import com.delivx.networking.NetworkModule;
 
 import javax.inject.Singleton;
@@ -19,7 +20,9 @@ import dagger.android.support.AndroidSupportInjectionModule;
  * Interface is used to provide the app component
  */
 @Singleton
-@Component(modules = {AppModule.class,UtilityModule.class, NetworkModule.class, ActivityBindingModule.class, AndroidSupportInjectionModule.class})
+@Component(modules = {AppModule.class,UtilityModule.class,
+        NetworkModule.class, ActivityBindingModule.class,
+        AndroidSupportInjectionModule.class})
 public interface AppComponent extends AndroidInjector<DaggerApplication>
 {
     void inject(MyApplication application);

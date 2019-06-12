@@ -63,5 +63,7 @@ public interface EditProfileContract {
         void setActionBarTitle();
 
         void onOutSideTouch();
+
+        String getlanguageCode();
     }
 }

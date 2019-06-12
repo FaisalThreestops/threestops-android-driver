@@ -46,10 +46,8 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
     @BindView(R.id.tv_popup_pickup) TextView  tv_popup_pickup;
     @BindView(R.id.tvBID) TextView  tvBID;
     @BindView(R.id.tvHeaderDistance) TextView tvHeaderDistance ;
-    @BindView(R.id.tvHeaderHandelers) TextView tvHeaderHandelers;
     @BindView(R.id.tvHeaderPayment) TextView tvHeaderPayment;
     @BindView(R.id.tvDistance) TextView tvDistance;
-    @BindView(R.id.tvHandelrs) TextView tvHandelrs;
     @BindView(R.id.tvPayment) TextView tvPayment;
     @BindView(R.id.btnReject) Button btnReject;
     @BindView(R.id.tv_popup_drop) TextView tv_popup_drop;
@@ -64,6 +62,9 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
     @BindView(R.id.tv_delivery_charge) TextView tv_delivery_charge;
     @BindView(R.id.ll_booking_popup) LinearLayout ll_booking_popup;
 
+    @BindView(R.id.tvordertypeHandelers) TextView tvordertypeHandelers;
+    @BindView(R.id.tvordertype) TextView tvordertype;
+
     @Inject
     BookingPopUpMainMVP.PresenterOperations presenter;
 
@@ -76,6 +77,7 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utility.RtlConversion(this,preferenceHelperDataSource.getLanguageSettings().getLanguageCode());
         setContentView(R.layout.activity_booking_pop_up);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
@@ -106,11 +108,13 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
         tv_popup_pickup.setTypeface(ClanaproNarrNews);
         tvBID.setTypeface(ClanaproNarrNews);
         tvHeaderDistance.setTypeface(ClanaproNarrNews);
-        tvHeaderHandelers.setTypeface(ClanaproNarrNews);
         tvHeaderPayment.setTypeface(ClanaproNarrNews);
         tvDistance.setTypeface(ClanaproNarrNews);
-        tvHandelrs.setTypeface(ClanaproNarrNews);
         tvPayment.setTypeface(ClanaproNarrNews);
+
+        tvordertypeHandelers.setTypeface(ClanaproNarrNews);
+        tvordertype.setTypeface(ClanaproNarrNews);
+
         btnReject.setTypeface(ClanaproNarrNews);
         tv_popup_drop.setTypeface(ClanaproNarrNews);
         tv_lefttoaccept.setTypeface(ClanaproNarrNews);
@@ -135,12 +139,13 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
     {
         tv_popup_cur.setText(pubnubResponse.getCurrencySymbol());
         tvDistance.setText(pubnubResponse.getDis()+" "+pubnubResponse.getMileageMetric());
-        tvHandelrs.setText(pubnubResponse.getHelpers());
         tvPayment.setText(pubnubResponse.getPaymentType());
         tv_popup_pickuploc.setText(pubnubResponse.getStoreName()+":"+pubnubResponse.getAdr1());
         tv_pickuptime.setText(Utility.formatDateWeek(pubnubResponse.getDt()));
         tv_popup_droploc.setText(pubnubResponse.getCustomerName()+":"+pubnubResponse.getDrop1());
         tv_droptime.setText(Utility.formatDateWeek(pubnubResponse.getDropDt()));
+        tvordertype.setText(pubnubResponse.getStoreTypeMsg());
+
 
         if(pubnubResponse.getPaymentType().equals("2"))
             tvPayment.setText(getResources().getString(R.string.cash));

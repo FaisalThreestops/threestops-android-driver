@@ -1,6 +1,7 @@
 package com.delivx.managers.mqtt;
 
 import android.app.ActivityManager;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
@@ -10,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 
 import com.delivx.RxObservers.RXMqttMessageObserver;
@@ -409,7 +411,6 @@ public class MQTTManager
         intent.putExtra("CUST_ID",custID);
         intent.putExtra("CUST_NAME",custName);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Bitmap bitmap= BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_launcher);
@@ -422,11 +423,16 @@ public class MQTTManager
         assert notificationManager != null;
         notificationManager.cancel(0);
 
+        PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        String CHANNEL_ID = mContext.getString(R.string.app_name_withoutSpace);;// The id of the channel.
+        CharSequence name = mContext.getString(R.string.app_name);
+
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(mContext)
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setContentTitle(mContext.getString(R.string.app_name))
                 .setContentText(message)
                 .setContentIntent(pendingIntent)
+                .setChannelId(CHANNEL_ID)
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setSound(defaultSoundUri)
                 .setAutoCancel(true)
@@ -434,6 +440,11 @@ public class MQTTManager
                 .setStyle(bigText);
 
         notificationManager.notify(0 , notificationBuilder.build());
+         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+            notificationManager.createNotificationChannel(mChannel);
+        }
 
     }
 

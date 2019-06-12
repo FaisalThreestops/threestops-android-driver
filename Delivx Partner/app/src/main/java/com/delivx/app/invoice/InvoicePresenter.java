@@ -125,6 +125,12 @@ public class InvoicePresenter implements InvoiceContract.PresenterOpetaions
         view.methodRequiresOnePermission();
     }
 
+    @Override
+    public String getlanguageCode() {
+
+        return preferenceHelperDataSource.getLanguageSettings().getLanguageCode();
+    }
+
     private void createFile() {
         MyImageHandler myImageHandler = MyImageHandler.getInstance();
         File dir = myImageHandler.getAlbumStorageDir(context, VariableConstant.SIGNATURE_PIC_DIR, true);

@@ -70,6 +70,18 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
     @BindView(R.id.myseek) Slider seekbar;
     @BindView(R.id.progressBar) ProgressBar progressBar;
 
+
+
+    @BindView(R.id.tv_paymentbreskdown) TextView tv_paymentbreskdown;
+    @BindView(R.id.tv_subTotal) TextView tv_subTotal;
+    @BindView(R.id.tv_subTotal_val) TextView tv_subTotal_val;
+    @BindView(R.id.tv_delCharge) TextView tv_delCharge;
+    @BindView(R.id.tv_delCharge_val) TextView tv_delCharge_val;
+    @BindView(R.id.tv_discount) TextView tv_discount;
+    @BindView(R.id.tv_discount_val) TextView tv_discount_val;
+    @BindView(R.id.ll_discount) LinearLayout ll_discount;
+
+
     private Typeface font,fontBold;
 
     @Inject PickUpContract.PresenterOperations presenter;
@@ -80,6 +92,7 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utility.RtlConversion(this,presenter.getlanguageCode());
         setContentView(R.layout.activity_store_pick_up);
         ButterKnife.bind(this);
         initViews();
@@ -104,10 +117,19 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
         tv_payment_title.setTypeface(font);
         tv_payment_type.setTypeface(font);
         tvProductsTitle.setTypeface(font);
-        tvPriceTitle.setTypeface(fontBold);
-        tvItems.setTypeface(fontBold);
+        tvPriceTitle.setTypeface(font);
+        tvItems.setTypeface(font);
         tvGrandTotal.setTypeface(fontBold);
         tvGrandTotalTitle.setTypeface(fontBold);
+
+
+        tv_subTotal.setTypeface(font);
+        tv_subTotal_val.setTypeface(font);
+        tv_delCharge.setTypeface(font);
+        tv_delCharge_val.setTypeface(font);
+        tv_discount.setTypeface(font);
+        tv_discount_val.setTypeface(font);
+        tv_paymentbreskdown.setTypeface(font);
 
         seekbar.setSliderProgressCallback(new Slider.SliderProgressCallback() {
             @Override
@@ -179,6 +201,17 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
         else
             tv_payment_type.setText(getResources().getString(R.string.card));
 
+
+        double sub_total_amount = Double.parseDouble(appointments.getSubTotalAmount());
+        tv_subTotal_val.setText(appointments.getCurrencySymbol()+" "+String.format("%.2f", sub_total_amount));
+
+        double deliveryCharge = Double.parseDouble(appointments.getDeliveryCharge());
+        tv_delCharge_val.setText(appointments.getCurrencySymbol()+" "+String.format("%.2f", deliveryCharge));
+
+        double appliedDiscount = Double.parseDouble(appointments.getShipmentDetails().get(0).getAppliedDiscount());
+        tv_discount_val.setText(appointments.getCurrencySymbol()+" "+String.format("%.2f", appliedDiscount));
+
+
         addItems(appointments);
     }
 
@@ -190,39 +223,44 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
         if(size>0){
             for(int i=0;i<size;i++){
                 LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                View view = inflater.inflate(R.layout.store_details_item_single_row, null);
+                View view = inflater.inflate(R.layout.history_item_show_single_raw, null);
 
-                TextView itemName= (TextView) view.findViewById(R.id.tvItemName);
+                TextView itemName= view.findViewById(R.id.tvItemName);
                 itemName.setTypeface(font);
-                TextView itemPrice= (TextView) view.findViewById(R.id.tvItemPrice);
+                TextView itemPrice= view.findViewById(R.id.tvItemPrice);
                 itemPrice.setTypeface(font);
-                TextView itemUnit= (TextView) view.findViewById(R.id.tvUnit);
+                TextView itemUnit= view.findViewById(R.id.tvQuantity);
                 itemPrice.setTypeface(font);
 
-
-                int quantity= Integer.parseInt(appointments.getShipmentDetails().get(i).getQuantity());
-                float unitPrice= Float.parseFloat(appointments.getShipmentDetails().get(i).getFinalPrice());
 
                 String item=appointments.getShipmentDetails().get(i).getItemName();
+                SpannableString spannableString=new SpannableString(item);
+                spannableString.setSpan(new UnderlineSpan(),0,spannableString.length(),0);
+                itemName.setText(spannableString);
+
+                int quantity= Integer.parseInt(appointments.getShipmentDetails().get(i).getQuantity());
+                itemUnit.setText(appointments.getShipmentDetails().get(i).getQuantity());
+
+
+                float unitPrice= Float.parseFloat(appointments.getShipmentDetails().get(i).getFinalPrice());
+
+
 
                 float subTotal=quantity*unitPrice;
                 total+=subTotal;
 
                 itemPrice.setText(appointments.getCurrencySymbol()+" "+
                         String.format(Locale.US,"%.2f",subTotal));
-                SpannableString spannableString=new SpannableString(item);
-                spannableString.setSpan(new UnderlineSpan(),0,spannableString.length(),0);
-
                 String addOns="";/*+appointments.getShipmentDetails().get(i).getAddOns().toString();*/
                 addOns=appointments.getShipmentDetails().get(i).getAddOns().size()>0?
                         "Addons: "+appointments.getShipmentDetails().get(i).getAddOns().toString():"";
 
-                itemName.setText(spannableString);
-                itemUnit.setText(getResources().getString(R.string.qty)
+
+               /* itemUnit.setText(getResources().getString(R.string.qty)
                         +" "+quantity+"\n"+
                         getResources().getString(R.string.unit)+": "+appointments.getShipmentDetails().get(i).getUnitName()
                 +"\n"+addOns);
-                itemName.setTextColor(getResources().getColor(R.color.sky_blue));
+                itemName.setTextColor(getResources().getColor(R.color.sky_blue));*/
 
                 final int finalI = i;
                 itemName.setOnClickListener(new View.OnClickListener() {

@@ -24,6 +24,7 @@ public class PreferenceKeys
         public static final String PROFILE_PIC = "profile_pic";
         public static final String PRESENCE_INTERVAL = "presence_interval";
         public static final String MIN_DIST_FOR_ROUTE = "mini_dist_for_latlongs";
+        public static final String MAX_DIST_FOR_ROUTE = "max_dist_for_latlongs";
         public static final String DISTANCE_UNIT = "distance_unit";
         public static final String DISTANCE_METRIC = "distance_metric";
         public static final String CURRENCY_SYMBOL = "currency";

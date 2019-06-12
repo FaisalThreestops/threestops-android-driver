@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.delivx.utility.Utility;
 import com.driver.delivx.R;
 import com.delivx.utility.FontUtils;
 
@@ -41,6 +42,7 @@ public class BankNewAccountActivity extends DaggerAppCompatActivity implements A
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utility.RtlConversion(this,presenter.getlanguageCode());
         setContentView(R.layout.activity_bank_new_account);
         ButterKnife.bind(this);
         initViews();

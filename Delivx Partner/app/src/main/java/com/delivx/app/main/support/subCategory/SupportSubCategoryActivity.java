@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.delivx.adapter.SupportRVA;
+import com.delivx.utility.Utility;
 import com.driver.delivx.R;
 import com.delivx.pojo.SupportData;
 import com.delivx.utility.FontUtils;
@@ -31,9 +32,11 @@ public class SupportSubCategoryActivity extends DaggerAppCompatActivity implemen
     @Inject
     FontUtils fontUtils;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utility.RtlConversion(this,presenter.getlanguageCode());
         setContentView(R.layout.activity_support_sub_category);
         ButterKnife.bind(this);
         presenter.getBundleData(getIntent());

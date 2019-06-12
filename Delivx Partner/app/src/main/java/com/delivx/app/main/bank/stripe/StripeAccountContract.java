@@ -98,5 +98,7 @@ public interface StripeAccountContract {
         void takePicture();
 
         void openGallery();
+
+        String getlanguageCode();
     }
 }

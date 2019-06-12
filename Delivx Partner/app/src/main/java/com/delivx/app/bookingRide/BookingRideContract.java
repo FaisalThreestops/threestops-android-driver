@@ -66,6 +66,10 @@ public interface BookingRideContract
         void updateBookingStatus();
 
         void openChat();
+
+        String getlanguageCode();
+
+
     }
 
 }

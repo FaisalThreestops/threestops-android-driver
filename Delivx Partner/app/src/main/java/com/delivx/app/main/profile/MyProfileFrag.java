@@ -3,6 +3,7 @@ package com.delivx.app.main.profile;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.transition.TransitionInflater;
@@ -14,7 +15,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.delivx.app.main.MainActivity;
 import com.delivx.app.main.profile.editProfile.EditProfileActivity;
+import com.delivx.login.LoginActivity;
+import com.delivx.login.language.LanguagesList;
+import com.delivx.service.LocationUpdateService;
+import com.delivx.utility.AppConstants;
+import com.delivx.utility.DialogHelper;
 import com.driver.delivx.R;
 import com.delivx.pojo.ProfileData;
 import com.delivx.utility.CircleImageView;
@@ -24,8 +31,11 @@ import com.delivx.utility.VariableConstant;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 
+import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -41,6 +51,8 @@ public class MyProfileFrag extends DaggerFragment implements View.OnClickListene
     @BindView(R.id.tv_name) TextView tv_name;
     @BindView(R.id.tvLogout) TextView tv_logout;
     @BindView(R.id.tv_phone) TextView tv_phone;
+    @BindView(R.id.tv_email) TextView tv_email;
+    @BindView(R.id.tv_email_value) TextView tv_email_value;
     @BindView(R.id.tv_pass) TextView tv_pass;
     @BindView(R.id.tv_vechtype) TextView tv_vechtype;
     @BindView(R.id.tv_vech_number) TextView tv_vech_number;
@@ -57,10 +69,15 @@ public class MyProfileFrag extends DaggerFragment implements View.OnClickListene
     @BindView(R.id.tv_prof_vechtype) TextView tv_prof_vechtype;
     @BindView(R.id.tv_prof_vech_number) TextView tv_prof_vech_number;
     @BindView(R.id.progressBar) ProgressBar progressBar;
-    @Inject
-    ProfileContract.PresenterOpetaions presenter;
-    @Inject
-    FontUtils fontUtils;
+    @Inject   ProfileContract.PresenterOpetaions presenter;
+    @Inject   FontUtils fontUtils;
+    @Inject   DialogHelper dialogHelper;
+    @BindDrawable(R.drawable.drop_down) Drawable drop_down;
+
+    @BindView(R.id.tv_selected_language) TextView tv_selected_language;
+    @BindView(R.id.tv_language) TextView tv_language;
+    ArrayList<LanguagesList> languagesLists = new ArrayList<>();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,9 +89,6 @@ public class MyProfileFrag extends DaggerFragment implements View.OnClickListene
     @Inject
     public MyProfileFrag() {
     }
-
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -104,6 +118,8 @@ public class MyProfileFrag extends DaggerFragment implements View.OnClickListene
         tv_name.setTypeface(clanaproNarrNews);
         tv_logout.setTypeface(clanaproNarrNews);
         tv_phone.setTypeface(clanaproNarrNews);
+        tv_email.setTypeface(clanaproNarrNews);
+        tv_email_value.setTypeface(clanaproNarrNews);
         tv_pass.setTypeface(clanaproNarrNews);
         tv_vechtype.setTypeface(clanaproNarrNews);
         tv_vech_number.setTypeface(clanaproNarrNews);
@@ -114,9 +130,13 @@ public class MyProfileFrag extends DaggerFragment implements View.OnClickListene
         tv_prof_pass.setTypeface(clanaproNarrNews);
         tv_prof_vechtype.setTypeface(clanaproNarrNews);
         tv_prof_vech_number.setTypeface(clanaproNarrNews);
+        tv_selected_language.setTypeface(clanaproNarrNews);
+        tv_language.setTypeface(clanaproNarrNews);
+
     }
 
-    @OnClick({R.id.iv_name_edit,R.id.iv_phone_edit,R.id.iv_password_edit,R.id.iv_prof_img,R.id.tvLogout})
+    @OnClick({R.id.iv_name_edit,R.id.iv_phone_edit,
+            R.id.iv_password_edit,R.id.iv_prof_img,R.id.tvLogout ,R.id.tv_selected_language})
     @Override
     public void onClick(View v) {
 
@@ -140,12 +160,17 @@ public class MyProfileFrag extends DaggerFragment implements View.OnClickListene
             case R.id.tvLogout:
                 presenter.logout();
                 break;
+
+            case R.id.tv_selected_language:
+                presenter.getLanguages();
+                break;
         }
     }
     @Override
     public void setProfileDetails(ProfileData profileData) {
 
         tv_prof_name.setText(profileData.getName());
+        tv_email_value.setText(profileData.getEmail());
         tv_prof_phone.setText(profileData.getPhone());
         if(profileData.getAccountType().equals("3")){
             tv_plan_type.setText(profileData.getStoreName());
@@ -228,5 +253,26 @@ public class MyProfileFrag extends DaggerFragment implements View.OnClickListene
     @Override
     public void hideProgress() {
         progressBar.setVisibility(View.GONE);
+    }
+
+
+    @Override
+    public void setLanguageDialog(ArrayList<LanguagesList> languagesListModel, int indexSelected) {
+        languagesLists = languagesListModel;
+        DialogHelper.languageSelectDialog(getActivity(), languagesLists, indexSelected);
+
+    }
+
+    @Override
+    public void setLanguage(String languagesListModel, boolean indexSelected) {
+        tv_selected_language.setText(languagesListModel);
+        tv_selected_language.setCompoundDrawablesWithIntrinsicBounds(null,null ,drop_down,null);
+        if(indexSelected)
+        {
+            Intent intent = new Intent(getActivity(), MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            Runtime.getRuntime().exit(0);
+        }
     }
 }

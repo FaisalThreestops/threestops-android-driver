@@ -180,6 +180,11 @@ public class PresenterVerifyMobile implements VerifyMobilePresenterContract {
         view.setOtp(OTP);
     }
 
+    @Override
+    public String getlanguageCode() {
+        return preferenceHelperDataSource.getLanguageSettings().getLanguageCode();
+    }
+
     public void verifyOtpApi(final String otp){
         view.showProgress();
 

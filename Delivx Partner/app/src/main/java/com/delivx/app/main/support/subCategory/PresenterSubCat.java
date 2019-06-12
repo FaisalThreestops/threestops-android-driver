@@ -2,6 +2,7 @@ package com.delivx.app.main.support.subCategory;
 
 import android.content.Intent;
 
+import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.pojo.SupportData;
 
 import java.util.ArrayList;
@@ -16,9 +17,9 @@ import javax.inject.Inject;
 public class PresenterSubCat implements SubCatContract.PresenterOperation {
 
     @Inject SubCatContract.ViewOperation view;
-    ArrayList<SupportData> supportDatas = new ArrayList<>();
+    private ArrayList<SupportData> supportDatas = new ArrayList<>();
     String title="";
-
+    @Inject    PreferenceHelperDataSource preferenceHelperDataSource;
     @Inject
     public PresenterSubCat() {
     }
@@ -35,5 +36,10 @@ public class PresenterSubCat implements SubCatContract.PresenterOperation {
     public void initActionBar() {
         view.setActionBar();
         view.setActionBarTitle(title);
+    }
+
+    @Override
+    public String getlanguageCode() {
+        return preferenceHelperDataSource.getLanguageSettings().getLanguageCode() ;
     }
 }

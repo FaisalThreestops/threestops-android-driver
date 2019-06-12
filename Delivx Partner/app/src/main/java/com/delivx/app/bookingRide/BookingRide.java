@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.location.Location;
 import android.net.Uri;
@@ -17,6 +18,7 @@ import android.text.Html;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.MenuItem;
+import android.view.TouchDelegate;
 import android.view.View;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
@@ -88,6 +90,7 @@ public class BookingRide extends DaggerAppCompatActivity implements OnMapReadyCa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utility.RtlConversion(this,presenter.getlanguageCode());
         setContentView(R.layout.activity_booking_ride);
         ButterKnife.bind(this);
         presenter.getBundleData(getIntent().getExtras());
@@ -117,6 +120,11 @@ public class BookingRide extends DaggerAppCompatActivity implements OnMapReadyCa
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        final Rect rect = new Rect();
+        myseek.getHitRect(rect);
+        rect.right += 100;   // increase left hit area
+        myseek.setTouchDelegate( new TouchDelegate( rect , myseek));
 
         myseek.setSliderProgressCallback(new Slider.SliderProgressCallback() {
             @Override

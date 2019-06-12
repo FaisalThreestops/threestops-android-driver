@@ -15,22 +15,14 @@
         android:id="@+id/ll_top_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_above="@id/cvBottom">
-
-        <View android:layout_width="match_parent"
-              android:layout_height="30dp"
-              android:id="@+id/viewTop"
-              android:visibility="visible"
-            />
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/llLogo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/dpThirty">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -180,7 +172,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/spFourteen"
-                        android:text="+31"
+                        android:text="+91"
                         android:textColor="@color/color_sup_txt"
                         android:padding="@dimen/dpTen"
                         />
@@ -281,6 +273,22 @@
             android:text="@string/forgot_pass"
             android:textColor="@color/lig_green2"
             android:textSize="@dimen/spTen" />
+
+
+        <TextView
+            android:id="@+id/tv_selected_language"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dpTen"
+            android:text="@string/english"
+            android:textColor="@color/lig_green2"
+            android:textSize="@dimen/spFourteen"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textAllCaps="true"
+            android:textDirection="locale"
+            android:visibility="gone"/>
+
 
     </LinearLayout>
 

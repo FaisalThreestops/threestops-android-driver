@@ -13,6 +13,7 @@ import android.os.Bundle;
 
 import com.delivx.app.MyApplication;
 import com.delivx.data.source.PreferenceHelperDataSource;
+import com.delivx.login.language.LanguagesList;
 import com.driver.delivx.R;
 import com.delivx.login.LoginActivity;
 import com.delivx.networking.NetworkService;
@@ -122,7 +123,9 @@ public class LogoutPopup extends Dialog {
                               jsonObject=new JSONObject(value.body().string());
                               Utility.printLog("pushTopics shared pref "+preferenceHelperDataSource.getPushTopic());
                               Utility.subscribeOrUnsubscribeTopics(new JSONArray(preferenceHelperDataSource.getPushTopic()),false);
+                              LanguagesList languagesList = preferenceHelperDataSource.getLanguageSettings();
                               preferenceHelperDataSource.clearSharedPredf();
+                              preferenceHelperDataSource.setLanguageSettings(languagesList);
                               ((MyApplication)context.getApplicationContext()).disconnectMqtt();
                               context.startActivity(new Intent(context, LoginActivity.class));
                               if(Utility.isMyServiceRunning(LocationUpdateService.class,(Activity) context))

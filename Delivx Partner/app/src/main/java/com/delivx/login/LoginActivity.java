@@ -2,13 +2,16 @@ package com.delivx.login;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.util.DisplayMetrics;
@@ -26,6 +29,8 @@ import android.widget.TextView;
 import com.delivx.ForgotPassword.ForgotPasswordMobNum;
 import com.delivx.app.main.MainActivity;
 import com.delivx.data.source.PreferenceHelperDataSource;
+import com.delivx.login.language.LanguagesList;
+import com.delivx.utility.DialogHelper;
 import com.driver.delivx.R;
 import com.delivx.signup.perosonal.SignupPersonal;
 import com.delivx.utility.DisableError;
@@ -34,10 +39,13 @@ import com.delivx.utility.Utility;
 import com.delivx.utility.VariableConstant;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
+import butterknife.BindDrawable;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -76,8 +84,11 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
     @BindView(R.id.view_background) View view_background;
     @BindView(R.id.view_phone_option) View view_phone_option;
     @BindView(R.id.view_email_option) View view_email_option;
-    @BindView(R.id.viewTop) View viewTop ;
     @BindView(R.id.cvBottom) CardView cvBottom;
+    @BindView(R.id.tv_selected_language) TextView tv_selected_language;
+    ArrayList<LanguagesList> languagesLists = new ArrayList<>();
+    @BindDrawable(R.drawable.drop_down)  Drawable drop_down;
+    @Inject DialogHelper dialogHelper;
 
     @BindString(R.string.location_permission_message) String location_permission_message;
 
@@ -91,6 +102,7 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utility.RtlConversion(this,preferenceHelperDataSource.getLanguageSettings().getLanguageCode());
         setContentView(R.layout.activity_login);
 
         ButterKnife.bind(this);
@@ -129,31 +141,18 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
 
         ClanaproNarrMedium = fontUtils.titaliumSemiBold();
         ClanaproNarrNews = fontUtils.titaliumRegular();
-
         tv_splash_msg.setTypeface(ClanaproNarrMedium);
-
         tv_log_login.setTypeface(ClanaproNarrMedium);
-
         tv_log_forgortpass.setTypeface(ClanaproNarrNews);
-
         et_log_mob.setTypeface(ClanaproNarrNews);
-
         tv_log_signup.setText(Html.fromHtml(getString(R.string.login_signup_txt)));
         tv_log_signup.setTypeface(ClanaproNarrNews);
-
         til_log_mob.setTypeface(ClanaproNarrNews);
-
         et_log_pass.setTypeface(ClanaproNarrNews);
-
         tvOr.setTypeface(ClanaproNarrNews);
-
         tv_option_email.setTypeface(ClanaproNarrNews);
-
         tv_option_phone.setTypeface(ClanaproNarrNews);
-
-//        et_log_mob.addTextChangedListener(new CustomTextWatcher(et_log_mob, et_log_pass, this));
-//        et_log_pass.addTextChangedListener(new CustomTextWatcher(et_log_mob, et_log_pass, this));
-
+        tv_selected_language.setTypeface(ClanaproNarrNews);
         til_log_pass.setTypeface(ClanaproNarrNews);
 
         loginPresenter.getLoginCreds();
@@ -168,15 +167,29 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
                 if (heightDiff > dpToPx(LoginActivity.this, 200)) { // if more than 200 dp, it's probably a keyboard...
                     llLogo.setVisibility(View.GONE);
                     cvBottom.setVisibility(View.GONE);
-                    viewTop.setVisibility(View.GONE);
 
                 }else {
                     llLogo.setVisibility(View.VISIBLE);
                     cvBottom.setVisibility(View.VISIBLE);
-                    viewTop.setVisibility(View.VISIBLE);
                 }
             }
         });
+
+
+        dialogHelper.getDialogCallbackHelper(new DialogHelper.DialogCallbackHelper() {
+
+            @Override
+            public void walletFragOpen() {
+
+            }
+
+            @Override
+            public void changeLanguage(String langCode, String langName, int dir) {
+                loginPresenter.languageChanged(langCode,langName);
+            }
+
+        });
+
 
     }
     public static float dpToPx(Context context, float valueInDp) {
@@ -186,7 +199,9 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
 
 
 
-    @OnClick({R.id.tvCountryCode,R.id.tv_option_phone,R.id.tv_option_email,R.id.activityRoot,R.id.tv_log_login,R.id.tv_log_forgortpass,R.id.tv_log_signup})
+    @OnClick({R.id.tvCountryCode,R.id.tv_option_phone,R.id.tv_option_email,
+            R.id.activityRoot,R.id.tv_log_login,
+            R.id.tv_log_forgortpass,R.id.tv_log_signup,R.id.tv_selected_language})
     @Override
     public void onClick(View v) {
 
@@ -222,6 +237,11 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
 
             case R.id.tvCountryCode:
                 loginPresenter.showDialogForCountryPicker();
+                break;
+
+            case R.id.tv_selected_language:
+                hideSoftKeyboard();
+                loginPresenter.getLanguages();
                 break;
         }
 
@@ -452,4 +472,26 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
         }
         getWindow().setSoftInputMode (WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
+
+
+    @Override
+    public void setLanguageDialog(ArrayList<LanguagesList> languagesListModel, int indexSelected) {
+        languagesLists = languagesListModel;
+        DialogHelper.languageSelectDialog(this, languagesLists, indexSelected);
+
+    }
+
+    @Override
+    public void setLanguage(String language,boolean restart)    {
+        tv_selected_language.setText(language);
+        tv_selected_language.setCompoundDrawablesWithIntrinsicBounds(null,null ,drop_down,null);
+        if(restart)
+        {
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            Runtime.getRuntime().exit(0);
+        }
+    }
+
 }

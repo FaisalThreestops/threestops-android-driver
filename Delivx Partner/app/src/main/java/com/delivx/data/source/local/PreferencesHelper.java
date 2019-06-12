@@ -3,6 +3,7 @@ package com.delivx.data.source.local;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.delivx.login.language.LanguagesList;
 import com.google.gson.Gson;
 import com.delivx.data.source.PreferenceHelperDataSource;
 
@@ -41,7 +42,7 @@ public class PreferencesHelper implements PreferenceHelperDataSource {
 
     @Override
     public String getMyEmail() {
-        return sharedPreferences.getString(PreferenceKeys.KeysEntry.EMAIL,"");
+        return sharedPreferences.getString(PreferenceKeys.KeysEntry.EMAIL,"3embedsoft@gmail.com");
     }
 
     @Override
@@ -232,7 +233,29 @@ public class PreferencesHelper implements PreferenceHelperDataSource {
 
     @Override
     public int getMinDistForRouteArray() {
-        return Integer.parseInt(sharedPreferences.getString(PreferenceKeys.KeysEntry.MIN_DIST_FOR_ROUTE,"20"));
+        return Integer.parseInt(sharedPreferences.getString(PreferenceKeys.KeysEntry.MIN_DIST_FOR_ROUTE,"5"));
+    }
+
+    /**
+     * <h2>setMaxDistForRouteArray</h2>
+     * This method is used to set the distance
+     *
+     * @param distance distance
+     */
+    @Override
+    public void setMaxDistForRouteArray(String distance) {
+        editor.putString(PreferenceKeys.KeysEntry.MAX_DIST_FOR_ROUTE,distance);
+        editor.commit();
+    }
+
+    /**
+     * <h2>getMaxDistForRouteArray</h2>
+     * This method is used to get the MaxDistForRouteArray
+     */
+    @Override
+    public int getMaxDistForRouteArray() {
+        return Integer.parseInt(sharedPreferences.getString(PreferenceKeys.KeysEntry.MAX_DIST_FOR_ROUTE,"500"));
+
     }
 
     @Override
@@ -374,4 +397,31 @@ public class PreferencesHelper implements PreferenceHelperDataSource {
         editor.clear();
         editor.apply();
     }
+
+
+    private static final String LANGUAGE_SETTINGS = "LANGUAGE_SETTINGS";
+    @Override
+    public LanguagesList getLanguageSettings() {
+        String jsonString = sharedPreferences.getString(LANGUAGE_SETTINGS, "");
+        return new Gson().fromJson(jsonString, LanguagesList.class);
+    }
+
+    @Override
+    public void setLanguageSettings(LanguagesList languageSettings) {
+        if (languageSettings != null)
+        {
+            String jsonString = new Gson().toJson(languageSettings);
+            editor.putString(LANGUAGE_SETTINGS, jsonString);
+            editor.commit();
+        }
+        else
+        {
+            editor.putString(LANGUAGE_SETTINGS, "");
+            editor.commit();
+        }
+
+    }
+
+
+
 }

@@ -330,6 +330,7 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
             locationUtilObj.restart_location_update();
         }
         presenter.checkBookingPopUp();
+        presenter.getAssignedTRips();
     }
 
     @Override

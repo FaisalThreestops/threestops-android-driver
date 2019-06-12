@@ -14,38 +14,33 @@
         android:background="@color/colorPrimary"
         android:elevation="3dp">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_marginLeft="@dimen/dpTwenty"
             android:id="@+id/ll_actionbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center_vertical"
+            android:layout_marginStart="@dimen/dpTwenty">
 
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:gravity="center"
-                android:paddingTop="@dimen/dpFive"
                 android:text="11th Mar 2018"
                 android:textColor="@color/white"
-                android:textSize="@dimen/spNineteen" />
+                android:textSize="@dimen/spSixteen" />
 
             <TextView
+                android:layout_below="@id/tv_title"
                 android:id="@+id/tv_bid"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_gravity="start"
-                android:layout_weight="1"
-                android:gravity="top"
+                android:layout_height="wrap_content"
                 android:text="ID:123456789"
-                android:paddingTop="@dimen/dpFive"
                 android:textColor="@color/white"
-                android:textSize="@dimen/spThirteen" />
+                android:textSize="@dimen/spFourteen" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
 
 

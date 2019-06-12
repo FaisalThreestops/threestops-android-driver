@@ -92,6 +92,7 @@ public class Presenter implements BookingPopUpMainMVP.PresenterOperations {
             notificationManager.cancelAll();
 
             String response = bundle.getString("booking_Data");
+            Utility.printLog("the booking req details : "+ response);
             pubnubResponse = new Gson().fromJson(response, PubnubResponse.class);
             view.setTexts(pubnubResponse);
 

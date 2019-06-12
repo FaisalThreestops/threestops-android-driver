@@ -48,5 +48,7 @@ public interface PickUpContract {
         void deleteItem(ShipmentDetails shipmentDetails);
 
         void openChat();
+
+        String getlanguageCode();
     }
 }

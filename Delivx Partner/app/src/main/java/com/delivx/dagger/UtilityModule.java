@@ -10,8 +10,8 @@ import com.delivx.managers.booking.RxDriverCancelledObserver;
 import com.delivx.managers.mqtt.MQTTManager;
 import com.delivx.networking.DispatcherService;
 import com.delivx.networking.NetworkStateHolder;
-import com.delivx.service.CouchDbHandler;
 import com.delivx.utility.AcknowledgeHelper;
+import com.delivx.utility.DialogHelper;
 import com.delivx.utility.FontUtils;
 import com.delivx.utility.Upload_file_AmazonS3;
 import com.delivx.utility.VariableConstant;
@@ -42,6 +42,18 @@ public class UtilityModule {
 
     @Provides
     @Singleton
+    RxNetworkObserver provideRxNetworkObserver(){
+        return new RxNetworkObserver();
+    }
+
+    @Provides
+    @Singleton
+    NetworkStateHolder networkStateHolder(){
+        return  new NetworkStateHolder();
+    }
+
+    @Provides
+    @Singleton
     MQTTManager mqttManager(Context context,AcknowledgeHelper acknowledgeHelper,
                             PreferenceHelperDataSource helperDataSource,NetworkStateHolder holder,
                             RxNetworkObserver rxNetworkObserver,  BookingManager bookingManager)
@@ -55,11 +67,11 @@ public class UtilityModule {
         return new FontUtils(context);
     }
 
-    @Provides
+  /*  @Provides
     @Singleton
     CouchDbHandler getCouchDbHandler(Context context,PreferenceHelperDataSource preferenceHelperDataSource){
         return new CouchDbHandler(context,preferenceHelperDataSource);
-    }
+    }*/
 
 
 
@@ -91,6 +103,11 @@ public class UtilityModule {
                                          RxBookingAssignObserver rxBookingAssignObserver){
         return new BookingManager(gson, rxDriverCancelledObserver,rxBookingAssignObserver);
     }
+
+    @Provides
+    @Singleton
+    DialogHelper provideDialogHelper() { return new DialogHelper();}
+
 
 
 }

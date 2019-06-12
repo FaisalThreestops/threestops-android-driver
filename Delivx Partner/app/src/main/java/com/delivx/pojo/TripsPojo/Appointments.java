@@ -41,6 +41,8 @@ public class Appointments implements Serializable {
 
     private String mileageMetric;
 
+    private String storeTypeMsg;
+
 
 
     private String subTotalAmount;
@@ -82,6 +84,8 @@ public class Appointments implements Serializable {
     private String paidByCash;
 
     private String paidByWallet;
+
+    private int journeyStartToEndTime;
 
     public String getPaidByCard() {
         return paidByCard;
@@ -391,38 +395,19 @@ public class Appointments implements Serializable {
         this.pickedupTime = pickedupTime;
     }
 
-    @Override
-    public String toString() {
-        return "Appointments{" +
-                "dropLat='" + dropLat + '\'' +
-                ", timeStamp='" + timeStamp + '\'' +
-                ", pickupLat='" + pickupLat + '\'' +
-                ", appCommission='" + appCommission + '\'' +
-                ", customerPhone='" + customerPhone + '\'' +
-                ", currency='" + currency + '\'' +
-                ", statusCode='" + statusCode + '\'' +
-                ", totalAmount='" + totalAmount + '\'' +
-                ", signatureUrl='" + signatureUrl + '\'' +
-                ", pickAddress='" + pickAddress + '\'' +
-                ", pickupLong='" + pickupLong + '\'' +
-                ", driverEarning='" + driverEarning + '\'' +
-                ", orderId='" + orderId + '\'' +
-                ", cancellationFee='" + cancellationFee + '\'' +
-                ", customerName='" + customerName + '\'' +
-                ", mileageMetric='" + mileageMetric + '\'' +
-                ", bookingDate='" + bookingDate + '\'' +
-                ", storeName='" + storeName + '\'' +
-                ", deliveredTime='" + deliveredTime + '\'' +
-                ", paymentType='" + paymentType + '\'' +
-                ", storeAddress='" + storeAddress + '\'' +
-                ", earnedAmount='" + earnedAmount + '\'' +
-                ", dropLong='" + dropLong + '\'' +
-                ", currencySymbol='" + currencySymbol + '\'' +
-                ", items=" + items +
-                ", rating='" + rating + '\'' +
-                ", distanceDriver='" + distanceDriver + '\'' +
-                ", dropAddress='" + dropAddress + '\'' +
-                ", pickedupTime='" + pickedupTime + '\'' +
-                '}';
+    public String getStoreTypeMsg() {
+        return storeTypeMsg;
+    }
+
+    public void setStoreTypeMsg(String storeTypeMsg) {
+        this.storeTypeMsg = storeTypeMsg;
+    }
+
+    public int getJourneyStartToEndTime() {
+        return journeyStartToEndTime;
+    }
+
+    public void setJourneyStartToEndTime(int journeyStartToEndTime) {
+        this.journeyStartToEndTime = journeyStartToEndTime;
     }
 }

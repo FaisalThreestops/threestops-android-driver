@@ -96,6 +96,7 @@ public class SignupVehicle extends DaggerAppCompatActivity implements SignupVehi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utility.RtlConversion(this,preferenceHelper.getLanguageSettings().getLanguageCode());
         setContentView(R.layout.activity_signup_vehicle);
         overridePendingTransition(R.anim.bottem_slide_down, R.anim.stay_activity);
         ButterKnife.bind(this);

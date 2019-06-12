@@ -19,9 +19,11 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,6 +70,7 @@ public class BankNewStripeActivity extends DaggerAppCompatActivity implements Vi
     @BindView(R.id.tilCity) TextInputLayout tilCity;
     @BindView(R.id.tilCountry) TextInputLayout tilCountry;
     @BindView(R.id.tilAddress) TextInputLayout tilAddress;
+    @BindView(R.id.progressBar) ProgressBar progressBar;
 
     
     @Inject
@@ -84,6 +87,7 @@ public class BankNewStripeActivity extends DaggerAppCompatActivity implements Vi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utility.RtlConversion(this,presenter.getlanguageCode());
         setContentView(R.layout.activity_bank_new_stripe_details);
         ButterKnife.bind(this);
         initViews();
@@ -123,7 +127,6 @@ public class BankNewStripeActivity extends DaggerAppCompatActivity implements Vi
 
 
         tv_title.setTypeface(fontUtils.titaliumSemiBold());
-        tvSave.setTypeface(fontUtils.titaliumRegular());
         tvSave.setTypeface(fontUtils.titaliumRegular());
         etName.setTypeface(fontUtils.titaliumRegular());
         etLName.setTypeface(fontUtils.titaliumRegular());
@@ -460,13 +463,21 @@ public class BankNewStripeActivity extends DaggerAppCompatActivity implements Vi
     @Override
     public void showProgress() {
 
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+        getWindow().setSoftInputMode (WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        progressBar.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
     @Override
     public void hideProgress() {
-
+        progressBar.setVisibility(View.GONE);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 }

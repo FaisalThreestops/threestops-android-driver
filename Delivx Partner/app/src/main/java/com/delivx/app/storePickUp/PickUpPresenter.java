@@ -167,6 +167,11 @@ public class PickUpPresenter implements PickUpContract.PresenterOperations {
         view.openChatAct(appointments);
     }
 
+    @Override
+    public String getlanguageCode() {
+        return preferenceHelperDataSource.getLanguageSettings().getLanguageCode();
+    }
+
     public void orderApi(final JSONArray jsonArray, final ShipmentDetails shipmentDetails, final String qty, final boolean isDelete){
         if(view!=null)
             view.showProgress();
@@ -197,9 +202,13 @@ public class PickUpPresenter implements PickUpContract.PresenterOperations {
                         try {
                             JSONObject jsonObject;
                             if(value.code()==200){
-                                jsonObject=new JSONObject(value.body().string());
+                                String res = value.body().string();
+                                Utility.printLog("updated item : "+res);
+                                jsonObject=new JSONObject(res);
+                                jsonObject = jsonObject.getJSONObject("data");
+                                String totalAmount=jsonObject.getString("totalAmount");
+                                String sub_total=jsonObject.getString("subTotalAmount");
 
-                                String totalAmount=jsonObject.getJSONObject("data").getString("totalAmount");
                                 appointments.setTotalAmount(totalAmount);
                                 if(isDelete)
                                     view.setViews(appointments);
@@ -258,6 +267,7 @@ public class PickUpPresenter implements PickUpContract.PresenterOperations {
                 jsonObject.put("unitPrice",appointments.getShipmentDetails().get(i).getUnitPrice());
                 jsonObject.put("unitName",appointments.getShipmentDetails().get(i).getUnitName());
                 jsonObject.put("parentProductId",appointments.getShipmentDetails().get(i).getParentProductId());
+                jsonObject.put("addedToCartOn",appointments.getShipmentDetails().get(i).getAddedToCartOn());
 
                 if(jsonObject.getString("unitId").equals(shipmentDetails.getUnitId())){
                     jsonObject.put("quantity",qty);

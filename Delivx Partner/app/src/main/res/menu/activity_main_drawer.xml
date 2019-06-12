@@ -12,6 +12,11 @@
             android:title="@string/history" />
 
         <item
+            android:id="@+id/nav_bank_details"
+            android:icon="@drawable/menu_bank"
+            android:title="@string/bank_details" />
+
+        <item
             android:id="@+id/nav_payment"
             android:icon="@drawable/menu_payment_icon"
             android:title="@string/payments" />
@@ -21,25 +26,25 @@
             android:icon="@drawable/support"
             android:title="@string/support" />
 
+        <item
+            android:id="@+id/item_menu_nav_language"
+            android:icon="@drawable/ic_language"
+            android:title="@string/selectLanguage"
+            android:visible="false"/>
 
 
-      <!--  <item
-            android:id="@+id/nav_live_chat"
-            android:icon="@drawable/live_chat"
-            android:title="@string/live_chat" />-->
+
+
+        <!--  <item
+              android:id="@+id/nav_live_chat"
+              android:icon="@drawable/live_chat"
+              android:title="@string/live_chat" />-->
 
        <!-- <item
             android:id="@+id/nav_portal"
             android:icon="@drawable/portal"
             android:title="@string/portal" />
-
-
-
-
-        <item
-            android:id="@+id/nav_bank_details"
-            android:icon="@drawable/menu_bank"
-            android:title="@string/bank_details" />-->
+-->
 
     </group>
 </menu>

@@ -44,8 +44,7 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements Store
     @BindView(R.id.tv_cust_name) TextView tv_cust_name;
     @BindView(R.id.iv_call_customer) ImageView iv_call_customer;
     @BindView(R.id.tv_pick_up_title) TextView tv_pick_up_title;
-    @BindView(R.id.ll_item_head) LinearLayout ll_item_head;
-    @BindView(R.id.ll_total) LinearLayout ll_total;
+    /*@BindView(R.id.ll_total) LinearLayout ll_total;*/
     @BindView(R.id.tv_pickup) TextView tv_pickup;
     @BindView(R.id.iv_call_pickUp) ImageView iv_call_pickUp;
     @BindView(R.id.iv_search) ImageView iv_search;
@@ -56,17 +55,31 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements Store
     @BindView(R.id.tvProductsTitle) TextView tvProductsTitle;
     @BindView(R.id.tvPriceTitle) TextView tvPriceTitle;
     @BindView(R.id.tvItems) TextView tvItems;
-    @BindView(R.id.tvGrandTotal) TextView tvGrandTotal;
-    @BindView(R.id.tvGrandTotalTitle) TextView tvGrandTotalTitle;
+/*    @BindView(R.id.tvGrandTotal) TextView tvGrandTotal;
+    @BindView(R.id.tvGrandTotalTitle) TextView tvGrandTotalTitle;*/
     @BindView(R.id.tv_status_text) TextView tv_status_text;
     @BindView(R.id.ll_item_container) LinearLayout ll_item_container;
     @BindView(R.id.myseek) Slider seekbar;
     @BindView(R.id.progressBar) ProgressBar progressBar;
     @BindView(R.id.Bottomlayout) RelativeLayout bottomLayout;
-    @BindView(R.id.view_last) View view_last;
+    /*@BindView(R.id.view_last) View view_last;*/
     @BindView(R.id.rv_item_show)
     RecyclerView rv_item_show;
     private Typeface font,fontBold;
+
+
+
+
+    @BindView(R.id.tv_paymentbreskdown) TextView tv_paymentbreskdown;
+    @BindView(R.id.tv_subTotal) TextView tv_subTotal;
+    @BindView(R.id.tv_subTotal_val) TextView tv_subTotal_val;
+    @BindView(R.id.tv_delCharge) TextView tv_delCharge;
+    @BindView(R.id.tv_delCharge_val) TextView tv_delCharge_val;
+    @BindView(R.id.tv_discount) TextView tv_discount;
+    @BindView(R.id.tv_discount_val) TextView tv_discount_val;
+    @BindView(R.id.ll_discount) LinearLayout ll_discount;
+    @BindView(R.id.tv_subToatal) TextView tv_subToatal;
+    @BindView(R.id.tv_subToatal_val) TextView tv_subToatal_val;
 
     @Inject
     StoreDetailsContract.Presenter presenter;
@@ -76,6 +89,7 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements Store
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utility.RtlConversion(this,presenter.getlanguageCode());
         setContentView(R.layout.activity_store_pick_up_details);
         ButterKnife.bind(this);
 
@@ -104,8 +118,18 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements Store
         tvProductsTitle.setTypeface(font);
         tvPriceTitle.setTypeface(fontBold);
         tvItems.setTypeface(fontBold);
-        tvGrandTotal.setTypeface(fontBold);
-        tvGrandTotalTitle.setTypeface(fontBold);
+       /* tvGrandTotal.setTypeface(fontBold);
+        tvGrandTotalTitle.setTypeface(fontBold);*/
+
+        tv_subTotal.setTypeface(font);
+        tv_subTotal_val.setTypeface(font);
+        tv_delCharge.setTypeface(font);
+        tv_delCharge_val.setTypeface(font);
+        tv_discount.setTypeface(font);
+        tv_discount_val.setTypeface(font);
+        tv_subToatal.setTypeface(fontBold);
+        tv_subToatal_val.setTypeface(fontBold);
+        tv_paymentbreskdown.setTypeface(font);
 
         seekbar.setSliderProgressCallback(new Slider.SliderProgressCallback() {
             @Override
@@ -161,10 +185,7 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements Store
             tv_pickup.setText(appointments.getPickUpAddress());
             tv_drop_up_title.setText(getResources().getString(R.string.pickup_slot));
             tv_dropup.setText("12 AM -12 PM");
-            ll_item_head.setVisibility(View.GONE);
             tvProductsTitle.setText(getResources().getString(R.string.laundry_details));
-            ll_total.setVisibility(View.GONE);
-            view_last.setVisibility(View.GONE);
             rv_item_show.setVisibility(View.VISIBLE);
 
             LaunderListRVA  launderListRVA = new LaunderListRVA(this,
@@ -180,6 +201,19 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements Store
             tv_dropup.setText(appointments.getDropAddress());
 
         }
+
+
+        double sub_total_amount = Double.parseDouble(appointments.getSubTotalAmount());
+        tv_subTotal_val.setText(appointments.getCurrencySymbol()+" "+String.format("%.2f", sub_total_amount));
+
+        double deliveryCharge = Double.parseDouble(appointments.getDeliveryCharge());
+        tv_delCharge_val.setText(appointments.getCurrencySymbol()+" "+String.format("%.2f", deliveryCharge));
+
+        double totalAmount = Double.parseDouble(appointments.getTotalAmount());
+        tv_subToatal_val.setText(appointments.getCurrencySymbol()+" "+String.format("%.2f", totalAmount));
+
+        double appliedDiscount = Double.parseDouble(appointments.getShipmentDetails().get(0).getAppliedDiscount());
+        tv_discount_val.setText(appointments.getCurrencySymbol()+" "+String.format("%.2f", appliedDiscount));
 
 
         addItems(appointments);
@@ -252,41 +286,47 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements Store
         if(size>0){
             for(int i=0;i<size;i++){
                 LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                View view = inflater.inflate(R.layout.store_details_item_single_row, null);
+                View view = inflater.inflate(R.layout.history_item_show_single_raw, null);
 
                 TextView itemName= view.findViewById(R.id.tvItemName);
                 itemName.setTypeface(font);
                 TextView itemPrice= view.findViewById(R.id.tvItemPrice);
                 itemPrice.setTypeface(font);
-                TextView itemUnit= view.findViewById(R.id.tvUnit);
+                TextView itemUnit= view.findViewById(R.id.tvQuantity);
                 itemPrice.setTypeface(font);
 
+                itemName.setText(appointments.getShipmentDetails().get(i).getItemName());
                 int quantity= Integer.parseInt(appointments.getShipmentDetails().get(i).getQuantity());
+                itemUnit.setText(String.valueOf(quantity));
+
+
                 String unitPriceStr=appointments.getShipmentDetails().get(i).getUnitPrice();
                 float unitPrice=0;
                 if(!"".equals(unitPriceStr) && unitPriceStr!=null)
                     unitPrice= Float.parseFloat(unitPriceStr);
-                String item=appointments.getShipmentDetails().get(i).getItemName();
-
                 float subTotal=quantity*unitPrice;
+                itemPrice.setText(appointments.getCurrencySymbol()+" "+
+                        String.format(Locale.US,"%.2f",subTotal));
+
+
                 total+=subTotal;
 
-                itemPrice.setText(appointments.getCurrencySymbol()+" "+
-                                String.format(Locale.US,"%.2f",subTotal));
-                itemName.setText(item);
+                ll_item_container.addView(view);
 
-                if(appointments.getShipmentDetails().get(i).getAddOns()!=null) {
+                /*if(appointments.getShipmentDetails().get(i).getAddOns()!=null) {
                     String addOns = "";
                     addOns = appointments.getShipmentDetails().get(i).getAddOns().size() > 0 ? "Addons: " + appointments.getShipmentDetails().get(i).getAddOns().toString() : "";
 
                     itemUnit.setText(getResources().getString(R.string.qty) + " " + quantity + "\n" + getResources().getString(R.string.unit) + ": " + appointments.getShipmentDetails().get(i).getUnitName() + "\n" + addOns);
                     ll_item_container.addView(view);
                 }else
-                    ll_item_container.setVisibility(View.GONE);
+                    ll_item_container.setVisibility(View.GONE);*/
+
 
             }
         }
-        tvGrandTotal.setText(appointments.getCurrencySymbol()+" "+String.format(Locale.US,"%.2f",Float.parseFloat(appointments.getTotalAmount())));
+     /*   tvGrandTotal.setText(appointments.getCurrencySymbol()+" "+
+                String.format(Locale.US,"%.2f",Float.parseFloat(appointments.getTotalAmount())));*/
     }
 
     @Override

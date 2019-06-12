@@ -70,6 +70,7 @@ public class HistoryOrderDetails extends DaggerAppCompatActivity /*implements Or
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utility.RtlConversion(this,presenter.getlanguageCode());
         setContentView(R.layout.activity_history_order_details);
         ButterKnife.bind(this);
 

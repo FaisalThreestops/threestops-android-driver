@@ -1,6 +1,9 @@
 package com.delivx.app.main;
 
 import com.delivx.BaseView;
+import com.delivx.login.language.LanguagesList;
+
+import java.util.ArrayList;
 
 /**
  * Created by DELL on 29-01-2018.
@@ -17,4 +20,12 @@ public interface MainView extends BaseView
     void dismissDialog();
 
     void logout();
+
+    void networkAvailable();
+
+    void networkNotAvailable();
+
+    void setLanguageDialog(ArrayList<LanguagesList> data, int indexOf);
+
+    void setLanguage(String langName, boolean b);
 }

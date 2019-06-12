@@ -423,6 +423,11 @@ public class EditProfilePresenter implements EditProfileContract.PresenterOperat
     }
 
     @Override
+    public String getlanguageCode() {
+        return preferenceHelperDataSource.getLanguageSettings().getLanguageCode();
+    }
+
+    @Override
     public void setActionBarTitle() {
         switch (data) {
             case "phone":

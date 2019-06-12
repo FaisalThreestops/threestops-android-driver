@@ -115,4 +115,9 @@ public class BankNewAccountPresenter implements AddBankAccountContract.Presenter
             createBankAccount(name,acc,routing);
         }
     }
+
+    @Override
+    public String getlanguageCode() {
+        return preferenceHelperDataSource.getLanguageSettings().getLanguageCode();
+    }
 }

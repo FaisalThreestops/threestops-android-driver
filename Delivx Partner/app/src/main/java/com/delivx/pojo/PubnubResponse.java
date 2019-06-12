@@ -45,6 +45,7 @@ public class PubnubResponse implements Serializable {
     private String msg;
     private int ExpiryTimer;
     private int PingId;
+    private String storeTypeMsg;
 
     public String getCurrency() {
         return currency;
@@ -252,5 +253,13 @@ public class PubnubResponse implements Serializable {
 
     public void setPingId(int pingId) {
         PingId = pingId;
+    }
+
+    public String getStoreTypeMsg() {
+        return storeTypeMsg;
+    }
+
+    public void setStoreTypeMsg(String storeTypeMsg) {
+        this.storeTypeMsg = storeTypeMsg;
     }
 }

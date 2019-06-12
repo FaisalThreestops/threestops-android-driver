@@ -2,6 +2,7 @@ package com.delivx.app.main.history.orderDetails;
 
 import android.os.Bundle;
 
+import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.pojo.TripsPojo.Appointments;
 
 import java.text.SimpleDateFormat;
@@ -20,6 +21,8 @@ public class OrderHistoryPresenter implements OrderHistoryContract.PresenterOper
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
 
     @Inject OrderHistoryContract.ViewOperation view;
+    @Inject
+    PreferenceHelperDataSource  preferenceHelperDataSource;
 
     @Inject
     public OrderHistoryPresenter() {
@@ -52,6 +55,11 @@ public class OrderHistoryPresenter implements OrderHistoryContract.PresenterOper
     @Override
     public void hideOrderDetails() {
 //        view.hideItems();
+    }
+
+    @Override
+    public String getlanguageCode() {
+        return preferenceHelperDataSource.getLanguageSettings().getLanguageCode();
     }
 
     private void setDropTime() {

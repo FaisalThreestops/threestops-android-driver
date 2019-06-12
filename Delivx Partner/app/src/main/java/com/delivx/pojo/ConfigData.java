@@ -21,6 +21,8 @@ public class ConfigData implements Serializable {
 
     private String DistanceForLogingLatLongs;
 
+    private String DistanceForLogingLatLongsMax;
+
 
     // included in truckr not in Ufly
     private String currency;
@@ -202,5 +204,13 @@ public class ConfigData implements Serializable {
 
     public void setTripStartedInterval(String tripStartedInterval) {
         this.tripStartedInterval = tripStartedInterval;
+    }
+
+    public String getDistanceForLogingLatLongsMax() {
+        return DistanceForLogingLatLongsMax;
+    }
+
+    public void setDistanceForLogingLatLongsMax(String distanceForLogingLatLongsMax) {
+        DistanceForLogingLatLongsMax = distanceForLogingLatLongsMax;
     }
 }

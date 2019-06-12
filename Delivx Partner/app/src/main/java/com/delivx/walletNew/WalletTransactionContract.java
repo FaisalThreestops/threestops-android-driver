@@ -90,5 +90,7 @@ public interface WalletTransactionContract
          */
         void initLoadTransactions(boolean isToLoadMore, boolean isFromOnRefresh);
 
+        String getlanguageCode();
+
     }
 }

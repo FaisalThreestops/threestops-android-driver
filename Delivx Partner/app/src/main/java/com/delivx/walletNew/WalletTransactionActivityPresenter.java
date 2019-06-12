@@ -30,21 +30,16 @@ public class WalletTransactionActivityPresenter implements WalletTransactionCont
 {
     private final String TAG = "WalletTransProvider";
 
-    @Inject
-    PreferenceHelperDataSource preferenceHelperDataSource;
+    @Inject PreferenceHelperDataSource preferenceHelperDataSource;
     @Inject Context mContext;
     @Inject WalletTransactionContract.WalletTrasactionView trasactionView;
     @Inject NetworkService networkService;
     @Inject NetworkStateHolder networkStateHolder;
     Gson gson;
 
-//    @Inject  CompositeDisposable compositeDisposable;
-
     @Inject
     WalletTransactionActivityPresenter()
     {
-
-
     }
 
     /**
@@ -55,19 +50,15 @@ public class WalletTransactionActivityPresenter implements WalletTransactionCont
      */
     public void initLoadTransactions(boolean isToLoadMore, boolean isFromOnRefresh)
     {
-//        if( networkStateHolder.isConnected())
-//        {
         if(!isFromOnRefresh)
         {
-//                trasactionView.showProgressDialog(mContext.getString(R.string.pleaseWait));
             getTransactionHistory();
         }
+    }
 
-//        }
-//        else
-//        {
-//            trasactionView.noInternetAlert();
-//        }
+    @Override
+    public String getlanguageCode() {
+        return preferenceHelperDataSource.getLanguageSettings().getLanguageCode();
     }
 
 

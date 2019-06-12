@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.delivx.app.main.history.orderDetails.OrderHistoryContract;
+import com.delivx.utility.Utility;
 import com.driver.delivx.R;
 import com.delivx.pojo.TripsPojo.Appointments;
 import com.delivx.utility.FontUtils;
@@ -30,6 +31,8 @@ public class HistoryOrderDetailsNew extends DaggerAppCompatActivity implements O
     @BindView(R.id.tv_total) TextView tv_total;
     @BindView(R.id.tv_totalVal) TextView tv_totalVal;
     @BindView(R.id.tv_distance) TextView tv_distance;
+    @BindView(R.id.tv_distance_value) TextView tv_distance_value;
+    @BindView(R.id.tv_distanceTime_value) TextView tv_distanceTime_value;
     @BindView(R.id.tv_distanceTime) TextView tv_distanceTime;
     @BindView(R.id.tv_addressTitle) TextView tv_addressTitle;
     @BindView(R.id.tv_payment_title) TextView tv_payment_title;
@@ -41,31 +44,39 @@ public class HistoryOrderDetailsNew extends DaggerAppCompatActivity implements O
     @BindView(R.id.tv_delCharge_val) TextView tv_delCharge_val;
     @BindView(R.id.tv_discount) TextView tv_discount;
     @BindView(R.id.tv_discount_val) TextView tv_discount_val;
+    @BindView(R.id.ll_discount) LinearLayout ll_discount;
     @BindView(R.id.tv_subToatal) TextView tv_subToatal;
     @BindView(R.id.tv_subToatal_val) TextView tv_subToatal_val;
     @BindView(R.id.tv_eaning_title) TextView tv_eaning_title;
     @BindView(R.id.tv_earned) TextView tv_earned;
     @BindView(R.id.tv_earned_val) TextView tv_earned_val;
-    @BindView(R.id.tv_storeEarn) TextView tv_storeEarn;
-    @BindView(R.id.tv_storeEarn_val) TextView tv_storeEarn_val;
-    @BindView(R.id.tv_appCommn) TextView tv_appCommn;
-    @BindView(R.id.tv_appCommn_val) TextView tv_appCommn_val;
     @BindView(R.id.tv_title) TextView tv_title;
     @BindView(R.id.tv_bid) TextView tv_bid;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.tvPickUp) TextView tvPickUp;
     @BindView(R.id.tvDrop) TextView tvDrop;
     @BindView(R.id.llItemContainer) LinearLayout llItemContainer;
-    @BindView(R.id.tvShowOrderDetals) TextView tvShowOrderDetals;
-    @BindView(R.id.tvHideOrderDetals) TextView tvHideOrderDetals;
-    @BindView(R.id.ivStore) ImageView ivStore;
-    @BindView(R.id.tvStore) TextView tvStore;
-    @BindView(R.id.tvStoreAddress) TextView tvStoreAddress;
     @BindView(R.id.tvWalletValue) TextView tvWalletValue;
     @BindView(R.id.tvCashValue) TextView tvCashValue;
+    @BindView(R.id.tvCash) TextView tvCash;
     @BindView(R.id.tvCardValue) TextView tvCardValue;
-    @BindView(R.id.llOrderDetails) LinearLayout llOrderDetails;
-
+    @BindView(R.id.tv_type_of_delivery) TextView tv_type_of_delivery;
+    @BindView(R.id.tv_type_of_delivery_value) TextView tv_type_of_delivery_value;
+    @BindView(R.id.tv_pickup_drop) TextView tv_pickup_drop;
+    @BindView(R.id.tv_item_detail) TextView tv_item_detail;
+    @BindView(R.id.tv_items) TextView tv_items;
+    @BindView(R.id.tv_qty) TextView tv_qty;
+    @BindView(R.id.tv_price) TextView tv_price;
+    @BindView(R.id.tv_payment_method) TextView tv_payment_method;
+    @BindView(R.id.tvCard) TextView tvCard;
+    @BindView(R.id.tvWallet) TextView tvWallet;
+    @BindView(R.id.ll_tax) LinearLayout ll_tax;
+    @BindView(R.id.ll_cash) LinearLayout ll_cash;
+    @BindView(R.id.ll_card) LinearLayout ll_card;
+    @BindView(R.id.ll_wallet) LinearLayout ll_wallet;
+    @BindView(R.id.tvPickUp_name) TextView tvPickUp_name;
+    @BindView(R.id.tv_drop_name) TextView tv_drop_name;
+    @BindView(R.id.tv_orderStatus) TextView tv_orderStatus;
 
 
     @Inject
@@ -77,26 +88,11 @@ public class HistoryOrderDetailsNew extends DaggerAppCompatActivity implements O
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utility.RtlConversion(this,presenter.getlanguageCode());
         setContentView(R.layout.history_order_details);
         ButterKnife.bind(this);
         presenter.getBundleData(getIntent().getExtras());
         setActionBar();
-
-        tvShowOrderDetals.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tvShowOrderDetals.setVisibility(View.GONE);
-                llOrderDetails.setVisibility(View.VISIBLE);
-            }
-        });
-
-        tvHideOrderDetals.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                llOrderDetails.setVisibility(View.GONE);
-                tvShowOrderDetals.setVisibility(View.VISIBLE);
-            }
-        });
     }
     public void setActionBar() {
 
@@ -138,28 +134,92 @@ public class HistoryOrderDetailsNew extends DaggerAppCompatActivity implements O
     @Override
     public void setViews(Appointments appointment) {
 
-        tv_title.setText(appointment.getBookingDate());
-        tv_bid.setText(appointment.getOrderId());
+
+        tv_total.setTypeface(fontUtils.clanaproNarrNews());
+        tv_totalVal.setTypeface(fontUtils.clanaproNarrMedium());
+        tv_distance.setTypeface(fontUtils.clanaproNarrNews());
+        tv_distance_value.setTypeface(fontUtils.clanaproNarrNews());
+        tv_distanceTime_value.setTypeface(fontUtils.clanaproNarrNews());
+        tv_distanceTime.setTypeface(fontUtils.clanaproNarrNews());
+        tv_type_of_delivery.setTypeface(fontUtils.clanaproNarrNews());
+        tv_type_of_delivery_value.setTypeface(fontUtils.clanaproNarrMedium());
+        tv_pickup_drop.setTypeface(fontUtils.clanaproNarrMedium());
+        tv_item_detail.setTypeface(fontUtils.clanaproNarrMedium());
+        tv_payment_title.setTypeface(fontUtils.clanaproNarrMedium());
+        tv_items.setTypeface(fontUtils.clanaproNarrNews());
+        tv_qty.setTypeface(fontUtils.clanaproNarrNews());
+        tv_price.setTypeface(fontUtils.clanaproNarrNews());
+        tv_subTotal.setTypeface(fontUtils.clanaproNarrNews());
+        tv_subTotal_val.setTypeface(fontUtils.clanaproNarrNews());
+        tv_Tax.setTypeface(fontUtils.clanaproNarrNews());
+        tv_Tax_val.setTypeface(fontUtils.clanaproNarrNews());
+        tv_delCharge.setTypeface(fontUtils.clanaproNarrNews());
+        tv_delCharge_val.setTypeface(fontUtils.clanaproNarrNews());
+        tv_discount.setTypeface(fontUtils.clanaproNarrNews());
+        tv_discount_val.setTypeface(fontUtils.clanaproNarrNews());
+        tv_subToatal.setTypeface(fontUtils.clanaproNarrMedium());
+        tv_subToatal_val.setTypeface(fontUtils.clanaproNarrMedium());
+        tv_payment_method.setTypeface(fontUtils.clanaproNarrNews());
+        tvCash.setTypeface(fontUtils.clanaproNarrNews());
+        tvCashValue.setTypeface(fontUtils.clanaproNarrNews());
+        tvCard.setTypeface(fontUtils.clanaproNarrNews());
+        tvWallet.setTypeface(fontUtils.clanaproNarrNews());
+        tvWalletValue.setTypeface(fontUtils.clanaproNarrNews());
+        tvCardValue.setTypeface(fontUtils.clanaproNarrNews());
+        tv_eaning_title.setTypeface(fontUtils.clanaproNarrNews());
+        tvPickUp_name.setTypeface(fontUtils.clanaproNarrNews());
+        tv_drop_name.setTypeface(fontUtils.clanaproNarrNews());
+        tv_orderStatus.setTypeface(fontUtils.clanaproNarrMedium());
+
+        tv_title.setText(Utility.parseDateToddMMyyyy(appointment.getBookingDate()));
+        tv_bid.setText(getResources().getString(R.string.order_id_dot)+appointment.getOrderId());
         tvDrop.setText(appointment.getDropAddress());
         tvPickUp.setText(appointment.getPickAddress());
-        tv_appCommn_val.setText(appointment.getCurrencySymbol()+" "+appointment.getAppCommission());
-        tv_totalVal.setText(appointment.getCurrencySymbol()+" "+appointment.getTotalAmount());
-        tv_subTotal_val.setText(appointment.getCurrencySymbol()+" "+appointment.getSubTotalAmount());
-        tv_Tax_val.setText(appointment.getCurrencySymbol()+" "+appointment.getTax());
-        tv_earned_val.setText(appointment.getCurrencySymbol()+" "+appointment.getDriverEarning());
-        tv_storeEarn_val.setText(appointment.getCurrencySymbol()+" "+appointment.getStoreEarning());
-        tv_delCharge_val.setText(appointment.getCurrencySymbol()+" "+appointment.getDeliveryCharge());
-        tv_subToatal_val.setText(appointment.getCurrencySymbol()+" "+appointment.getTotalAmount());
-        tv_discount_val.setText(appointment.getCurrencySymbol()+" "+appointment.getItems().get(0).getAppliedDiscount());
+        double total_amount = Double.parseDouble(appointment.getTotalAmount());
+        tv_totalVal.setText(appointment.getCurrencySymbol()+" "+String.format("%.2f", total_amount));
+        double sub_total_amount = Double.parseDouble(appointment.getSubTotalAmount());
+        tv_subTotal_val.setText(appointment.getCurrencySymbol()+" "+String.format("%.2f", sub_total_amount));
+        double tax = Double.parseDouble(appointment.getTax());
+        tv_Tax_val.setText(appointment.getCurrencySymbol()+" "+String.format("%.2f", tax));
+        double driverEarning = Double.parseDouble(appointment.getDriverEarning());
+        tv_earned_val.setText(appointment.getCurrencySymbol()+" "+String.format("%.2f", driverEarning));
+        double deliveryCharge = Double.parseDouble(appointment.getDeliveryCharge());
+        tv_delCharge_val.setText(appointment.getCurrencySymbol()+" "+String.format("%.2f", deliveryCharge));
+        double totalAmount = Double.parseDouble(appointment.getTotalAmount());
+        tv_subToatal_val.setText(appointment.getCurrencySymbol()+" "+String.format("%.2f", totalAmount));
+        double appliedDiscount = Double.parseDouble(appointment.getItems().get(0).getAppliedDiscount());
+        tv_discount_val.setText(appointment.getCurrencySymbol()+" "+String.format("%.2f", appliedDiscount));
 
-        if(appointment.getStoreLogo()!=null && !appointment.getStoreLogo().isEmpty()){
-            Picasso.with(this).load(appointment.getStoreLogo()).resize(60,60).into(ivStore);
-        }
-        tvStore.setText(appointment.getStoreName());
-        tvStoreAddress.setText(appointment.getStoreAddress());
-        tvCashValue.setText(appointment.getCurrencySymbol()+" "+appointment.getPaidByCash());
-        tvWalletValue.setText(appointment.getCurrencySymbol()+" "+appointment.getPaidByWallet());
-        tvCardValue.setText(appointment.getCurrencySymbol()+" "+appointment.getPaidByCard());
+        if(appointment.getTax().matches("0"))
+            ll_discount.setVisibility(View.GONE);
+
+        if(appointment.getItems().get(0).getAppliedDiscount().matches("0"))
+            ll_tax.setVisibility(View.GONE);
+
+        double paidByCash = Double.parseDouble(appointment.getPaidByCash());
+        tvCashValue.setText(appointment.getCurrencySymbol()+" "+String.format("%.2f", paidByCash));
+        double paidBywallet = Double.parseDouble(appointment.getPaidByWallet());
+        tvWalletValue.setText(appointment.getCurrencySymbol()+" "+String.format("%.2f", paidBywallet));
+        double paidByCard = Double.parseDouble(appointment.getPaidByCard());
+        tvCardValue.setText(appointment.getCurrencySymbol()+" "+String.format("%.2f", paidByCard));
+
+        tv_distance_value.setText(appointment.getDistanceDriver()+" "+appointment.getMileageMetric() );
+        tv_distanceTime_value.setText(Utility.getDurationString_(appointment.getJourneyStartToEndTime()));
+
+        if(appointment.getPaidByCash().matches("0"))
+            ll_cash.setVisibility(View.GONE);
+
+        if(appointment.getPaidByWallet().matches("0"))
+            ll_wallet.setVisibility(View.GONE);
+
+        if(appointment.getPaidByCard().matches("0"))
+            ll_card.setVisibility(View.GONE);
+
+        tvPickUp_name.setText(appointment.getCustomerName());
+        tv_drop_name.setText(appointment.getStoreName());
+        tv_type_of_delivery_value.setText(appointment.getStoreTypeMsg());
+
+
 
         addItems(appointment);
     }
@@ -173,16 +233,14 @@ public class HistoryOrderDetailsNew extends DaggerAppCompatActivity implements O
 
 
                 LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                View view = inflater.inflate(R.layout.store_details_item_single_row, null);
+                View view = inflater.inflate(R.layout.history_item_show_single_raw, null);
 
-                TextView itemName= (TextView) view.findViewById(R.id.tvItemName);
-                itemName.setTypeface(fontUtils.titaliumRegular());
-                TextView itemPrice= (TextView) view.findViewById(R.id.tvItemPrice);
-                itemPrice.setTypeface(fontUtils.titaliumRegular());
-                TextView itemUnit= (TextView) view.findViewById(R.id.tvUnit);
-                itemPrice.setTypeface(fontUtils.titaliumRegular());
-                TextView tvQuantity= (TextView) view.findViewById(R.id.tvQuantity);
-                tvQuantity.setTypeface(fontUtils.titaliumRegular());
+                TextView tvItemName= view.findViewById(R.id.tvItemName);
+                tvItemName.setTypeface(fontUtils.clanaproNarrNews());
+                TextView tvQuantity= view.findViewById(R.id.tvQuantity);
+                tvQuantity.setTypeface(fontUtils.clanaproNarrNews());
+                TextView tvItemPrice= view.findViewById(R.id.tvItemPrice);
+                tvItemPrice.setTypeface(fontUtils.clanaproNarrNews());
 
 
                 int quantity= Integer.parseInt(appointments.getItems().get(i).getQuantity());
@@ -192,15 +250,11 @@ public class HistoryOrderDetailsNew extends DaggerAppCompatActivity implements O
 
                 float subTotal=quantity*unitPrice;
 
-                itemPrice.setText(appointments.getCurrencySymbol()+" "+
+                tvItemPrice.setText(appointments.getCurrencySymbol()+" "+
                         String.format(Locale.US,"%.2f",subTotal));
 
-                itemName.setText(item);
-                itemUnit.setText(appointments.getItems().get(i).getUnitName());
+                tvItemName.setText(item);
                 tvQuantity.setText(quantity+"");
-//                itemUnit.setText("( "+quantity+" "+appointments.getItems().get(i).getUnitName()+" )");
-                itemName.setTextColor(getResources().getColor(R.color.color_sup_txt));
-
 
                 llItemContainer.addView(view);
             }

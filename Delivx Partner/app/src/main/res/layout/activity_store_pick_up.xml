@@ -148,31 +148,44 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_item_head"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal"
-                    android:weightSum="3">
+                    android:weightSum="3"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/tvItems"
+                        android:layout_weight="1.8"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2.25"
                         android:text="@string/items"
-                        android:textColor="@color/lig_green2"
-                        android:textSize="@dimen/spFifteen" />
+                        android:textSize="12sp"
+                        android:textColor="@color/gunsmoke"
+                        android:textAllCaps="true"/>
+
+                    <TextView
+                        android:id="@+id/tv_qty"
+                        android:layout_weight="0.4"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/quant"
+                        android:textSize="12sp"
+                        android:textColor="@color/gunsmoke"
+                        android:textAllCaps="true"
+                        android:gravity="center"
+                        android:layout_gravity="center"/>
 
                     <TextView
                         android:id="@+id/tvPriceTitle"
+                        android:layout_weight="0.8"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.75"
                         android:text="@string/price"
-                        android:gravity="right|end"
-                        android:textColor="@color/lig_green2"
-                        android:textSize="@dimen/spFifteen" />
+                        android:textSize="12sp"
+                        android:textColor="@color/gunsmoke"
+                        android:textAllCaps="true"
+                        android:gravity="right"/>
 
                 </LinearLayout>
 
@@ -201,6 +214,120 @@
                     android:textColor="@color/sky_blue"
                     android:layout_marginTop="6dp"
                     android:visibility="gone"/>
+
+
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/dpFifteen"
+                    android:layout_marginBottom="@dimen/dpFifteen"
+                    android:background="@color/gunsmoke_view" />
+
+
+                <TextView
+                    android:id="@+id/tv_paymentbreskdown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/dpTen"
+                    android:text="@string/paymentbreak"
+                    android:textAllCaps="true"
+                    android:textColor="@color/lig_green2"
+                    android:textSize="@dimen/spFourteen" />
+
+
+                <LinearLayout
+                    android:weightSum="2"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_subTotal"
+                        android:layout_weight="1"
+                        android:layout_gravity="start"
+                        android:text="Sub Total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_sup_txt"
+                        android:textSize="14sp"
+                        />
+                    <TextView
+                        android:id="@+id/tv_subTotal_val"
+                        android:gravity="end"
+                        android:layout_weight="1"
+                        android:layout_gravity="end"
+                        android:text="$ 40.00"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_sup_txt"
+                        android:textSize="14sp"
+                        />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:weightSum="2"
+                    android:layout_marginTop="@dimen/dpTen"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_delCharge"
+                        android:layout_weight="1"
+                        android:layout_gravity="start"
+                        android:text="@string/delvery_charge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_sup_txt"
+                        android:textSize="14sp"
+                        />
+                    <TextView
+                        android:id="@+id/tv_delCharge_val"
+                        android:gravity="end"
+                        android:layout_weight="1"
+                        android:layout_gravity="end"
+                        android:text="$ 40.00"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_sup_txt"
+                        android:textSize="14sp"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_discount"
+                    android:weightSum="2"
+                    android:layout_marginTop="@dimen/dpTen"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_discount"
+                        android:layout_weight="1"
+                        android:layout_gravity="start"
+                        android:text="Discount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_sup_txt"
+                        android:textSize="14sp"
+                        />
+                    <TextView
+                        android:id="@+id/tv_discount_val"
+                        android:gravity="end"
+                        android:layout_weight="1"
+                        android:layout_gravity="end"
+                        android:text="$ 40.00"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_sup_txt"
+                        android:textSize="14sp"
+                        />
+                </LinearLayout>
+
+
 
                 <View
                     android:layout_width="match_parent"

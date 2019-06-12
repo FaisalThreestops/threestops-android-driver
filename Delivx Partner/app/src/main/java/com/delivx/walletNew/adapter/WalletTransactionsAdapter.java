@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.driver.delivx.R;
 import com.delivx.utility.Utility;
-import com.delivx.utility.VariableConstant;
 import com.delivx.walletNew.model.CreditDebitTransctions;
 
 import java.text.DateFormat;

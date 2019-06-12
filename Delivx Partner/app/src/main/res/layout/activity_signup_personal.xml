@@ -187,7 +187,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_toEndOf="@+id/flag"
                     android:layout_toRightOf="@+id/flag"
-                    android:text="+31"
+                    android:text="+91"
                     android:textColor="@color/color_sup_txt"
                     android:textSize="@dimen/spFourteen" />
 
@@ -329,7 +329,8 @@
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/til_lic_no"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="gone">
 
                 <EditText
                     android:id="@+id/et_license_no"

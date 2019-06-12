@@ -74,7 +74,7 @@
                                 android:layout_centerVertical="true"
                                 android:layout_marginLeft="3dp"
                                 android:layout_marginStart="3dp"
-                                android:background="@drawable/flag_nl"
+                                android:background="@drawable/flag_in"
                                 android:contentDescription="@string/app_name" />
 
                             <TextView
@@ -88,7 +88,7 @@
                                 android:layout_marginStart="5dp"
                                 android:layout_toEndOf="@+id/flag"
                                 android:layout_toRightOf="@+id/flag"
-                                android:text="+31"
+                                android:text="+91"
                                 android:textColor="@color/profile_data"
                                 android:textSize="@dimen/spSixteen" />
 

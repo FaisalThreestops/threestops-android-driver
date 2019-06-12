@@ -28,4 +28,6 @@ public interface ForgotPassPresenterContract {
     void rbEmailChecked();
 
     void rbMobileChecked();
+
+    String getlanguageCode();
 }

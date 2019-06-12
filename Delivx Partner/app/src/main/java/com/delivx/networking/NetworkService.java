@@ -1,12 +1,16 @@
 package com.delivx.networking;
 
+import com.delivx.service.LatLngBody;
+
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -171,11 +175,11 @@ public interface NetworkService {
                                                @Field("presenceTime")String presenceTime,
                                                @Field("status")String status);
 
-    @PATCH("driver/locationLogs")
-    @FormUrlEncoded
-    Observable<Response<ResponseBody>> locationLogs (@Header("language") String language,
-                                               @Header("authorization") String authorization,
-                                               @Field("latLng")String latLng);
+    @POST("driver/locationLogs")
+    @Headers( "Content-Type: application/json;charset=UTF-8")
+    Observable<Response<ResponseBody>> locationLogs(@Header("authorization")String authorization,
+                                                    @Header("language")String language,
+                                                    @Body LatLngBody body);
 
     @GET("driver/profile")
     Observable<Response<ResponseBody>> profile (@Header("language") String language,

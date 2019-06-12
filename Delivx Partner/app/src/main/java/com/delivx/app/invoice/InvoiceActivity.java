@@ -71,6 +71,7 @@ public class InvoiceActivity extends DaggerAppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        Utility.RtlConversion(this,presenter.getlanguageCode());
         setContentView(R.layout.activity_invoice);
         ButterKnife.bind(this);
 

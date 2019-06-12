@@ -28,6 +28,8 @@ public interface OrderHistoryContract {
         void getBundleData(Bundle extras);
         void showOrderDetails();
         void hideOrderDetails();
+
+        String getlanguageCode();
     }
 
 }

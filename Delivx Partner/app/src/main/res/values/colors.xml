@@ -62,6 +62,7 @@
     <color name="silver_chalice">#aaaaaa</color>
     <color name="alabaster">#f7f7f7</color>
     <color name="gunsmoke">#8D8F8E</color>
+    <color name="gunsmoke_view">#B9B8B8</color>
     <color name="yellow">#ecea55</color>
     <color name="key_lime_lie">#C0BE1D</color>
     <color name="tandura">#484848</color>
@@ -72,6 +73,8 @@
     <color name="red_light">#f4666a</color>
     <color name="grayTextColor">#ff444444</color>
     <color name="backgroundcolor">#F5F5F5</color>
+    <color name="dialogHeaderBackground">#F6FAFB</color>
+    <color name="dialogActionBackground">#f2f2f2</color>
 
 <!--wallet-->
     <color name="app_color_off">#ff9e2837</color>
@@ -84,5 +87,6 @@
     <color name="signUpinputText">#EBEBEB</color>
     <color name="colord6d6d6">#d6d6d6</color>
     <color name="green">#008000</color>
+    <color name="transparent_black">#80000000</color>
 
 </resources>

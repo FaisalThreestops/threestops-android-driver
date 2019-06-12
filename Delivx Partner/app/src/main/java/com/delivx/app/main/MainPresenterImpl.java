@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
+import com.delivx.login.language.LanguagesList;
+import com.delivx.login.language.LanguagesPojo;
+import com.delivx.networking.LanguageApiService;
 import com.google.gson.Gson;
 import com.delivx.RxObservers.RXMqttMessageObserver;
 import com.delivx.RxObservers.RxNetworkObserver;
@@ -19,6 +22,8 @@ import com.delivx.utility.VariableConstant;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -36,43 +41,34 @@ import retrofit2.Response;
 
 public class MainPresenterImpl implements MainPresenter {
 
-    @Inject
-    AcknowledgeHelper acknowledgeHelper;
+    @Inject  AcknowledgeHelper acknowledgeHelper;
+    @Inject  Activity context;
+    @Inject  MainView view;
+    @Inject  PreferenceHelperDataSource helperDataSource;
+    @Inject  NetworkService networkService;
+    @Inject  RxNetworkObserver rxNetworkObserver;
+    @Inject  NetworkStateHolder networkStateHolder;
+    private ArrayList<LanguagesList> languagesLists = new ArrayList<>();
+    @Inject LanguageApiService languageApiService;
+
 
     @Inject
-    Activity context;
-
-    @Inject
-    MainView view;
-
-    @Inject
-    PreferenceHelperDataSource helperDataSource;
-
-    @Inject
-    NetworkService networkService;
-
-    @Inject
-    RxNetworkObserver rxNetworkObserver;
-
-    private String currentVersion;
-
-    @Inject
-    public MainPresenterImpl() {
+    MainPresenterImpl() {
     }
 
     @Override
     public void getVersion() {
         try {
-            currentVersion = context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName;
+            String currentVersion = context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName;
             view.setVersiontext(currentVersion);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
 
         RXMqttMessageObserver.getInstance().subscribe(observer);
-        rxNetworkObserver.subscribe(networkObserver);
+        /*rxNetworkObserver.subscribe(networkObserver);
         rxNetworkObserver.subscribeOn(Schedulers.newThread());
-        rxNetworkObserver.observeOn(AndroidSchedulers.mainThread());
+        rxNetworkObserver.observeOn(AndroidSchedulers.mainThread());*/
 
 
     }
@@ -99,11 +95,12 @@ public class MainPresenterImpl implements MainPresenter {
                         try {
                             JSONObject jsonObject;
                             if (value.code() == 200) {
-                                jsonObject = new JSONObject(value.body().string());
+                                String resp = value.body().string();
+                                Utility.printLog("config resp  :"+resp);
                                 Gson gson = new Gson();
-                                GetConfig getConfig = gson.fromJson(jsonObject.toString(), GetConfig.class);
-
+                                GetConfig getConfig = gson.fromJson(resp, GetConfig.class);
                                 helperDataSource.setMinDistForRouteArray(getConfig.getData().getDistanceForLogingLatLongs());
+                                helperDataSource.setMaxDistForRouteArray(getConfig.getData().getDistanceForLogingLatLongsMax());
                                 helperDataSource.setPresenceInterval(getConfig.getData().getPresenceTime());
                                 helperDataSource.setTripStartedInterval(getConfig.getData().getTripStartedInterval());
 
@@ -113,7 +110,7 @@ public class MainPresenterImpl implements MainPresenter {
                             }
 
                             Utility.printLog("config auth : " + helperDataSource.getToken());
-                            Utility.printLog("config : " + jsonObject.toString());
+
 
                         } catch (Exception e) {
                             Utility.printLog("config : Catch :" + e.getMessage());
@@ -139,6 +136,53 @@ public class MainPresenterImpl implements MainPresenter {
     @Override
     public void onDrawerOpen() {
         view.setProfileDetails();
+    }
+
+
+
+    @Override
+    public void checkForNetwork(boolean isConnected) {
+        Utility.printLog("the internet check mainActivity : "+isConnected);
+        networkStateHolder.setConnected(isConnected);
+        rxNetworkObserver.publishData(networkStateHolder);
+
+        if(isConnected)
+            view.networkAvailable();
+        else
+            view.networkNotAvailable();
+    }
+
+    @Override
+    public String getlanguageCode() {
+        return helperDataSource.getLanguageSettings().getLanguageCode() ;
+    }
+
+
+    @Override
+    public void subscribeNetworkObserver() {
+        checkForNetwork(networkStateHolder.isConnected());
+
+        /*rxNetworkObserver.subscribeOn(Schedulers.io());
+        rxNetworkObserver.observeOn(AndroidSchedulers.mainThread());
+        networkDisposable = rxNetworkObserver.subscribeWith(new DisposableObserver<NetworkStateHolder>() {
+            @Override
+            public void onNext(NetworkStateHolder networkStateHolder) {
+                Utility.printLog(" network not available "+networkStateHolder.isConnected());
+                if(networkStateHolder.isConnected())
+                    view.networkAvailable();
+                else
+                    view.networkNotAvailable();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+            }
+        });*/
     }
 
 
@@ -237,6 +281,89 @@ public class MainPresenterImpl implements MainPresenter {
         }
     };
 
+
+
+    @Override
+    public void getLanguages() {
+
+        if(Utility.isNetworkAvailable(context)) {
+            view.showProgress();
+
+            Observable<Response<ResponseBody>> getLanguages = languageApiService.getLanguage();
+
+            getLanguages.observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(new Observer<Response<ResponseBody>>() {
+
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(Response<ResponseBody> value) {
+                            view.hideProgress();
+
+                            try {
+                                switch (value.code()) {
+                                    case VariableConstant.RESPONSE_CODE_SUCCESS:
+                                        String res = value.body().string();
+                                        Utility.printLog("language res : "+res);
+
+                                        Gson gson = new Gson();
+                                        LanguagesPojo languagesListModel = gson.fromJson(res,LanguagesPojo.class);
+                                        Utility.printLog("language res : "+languagesListModel.getData().size());
+                                        languagesLists.clear();
+                                        languagesLists.addAll(languagesListModel.getData());
+                                        boolean isLanguage = false;
+                                        for(LanguagesList languagesList : languagesLists)
+                                        {
+                                            if(helperDataSource.getLanguageSettings().getLanguageCode().equals(languagesList.getLanguageCode()))
+                                            {
+                                                isLanguage = true;
+                                                view.setLanguageDialog( languagesListModel.getData(),languagesLists.indexOf(languagesList));
+                                                break;
+                                            }
+                                        }
+                                        if(!isLanguage)
+                                            view.setLanguageDialog(null,-1);
+
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Utility.printLog("getLanguages : Catch :" + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            view.hideProgress();
+                            Utility.printLog("getLanguages : onError :" + e.getMessage());
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+        }else {
+
+        }
+
+    }
+
+    @Override
+    public void languageChanged(String langCode, String langName, int dir) {
+        helperDataSource.setLanguage(langCode);
+        helperDataSource.setLanguageSettings(new LanguagesList(langCode,langName));
+        view.setLanguage(langName,true);
+
+    }
 
 
 }

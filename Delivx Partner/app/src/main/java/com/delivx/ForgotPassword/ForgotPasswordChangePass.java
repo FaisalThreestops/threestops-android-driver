@@ -59,6 +59,7 @@ public class ForgotPasswordChangePass extends DaggerAppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utility.RtlConversion(this,presenter.getlanguageCode());
         setContentView(R.layout.activity_forgot_password_change_pass);
         overridePendingTransition(R.anim.activity_open_translate, R.anim.activity_close_scale);
 

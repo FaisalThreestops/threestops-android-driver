@@ -29,6 +29,8 @@ public class Slider extends SeekBar {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+
+        Utility.printLog("thumb action :  "+event.getAction());
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
             if (event.getX() >= mThumb.getBounds().left

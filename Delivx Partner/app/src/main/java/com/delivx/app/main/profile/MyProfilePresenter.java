@@ -13,6 +13,9 @@ import android.util.Log;
 import android.view.Window;
 import android.widget.Toast;
 
+import com.delivx.login.language.LanguagesList;
+import com.delivx.login.language.LanguagesPojo;
+import com.delivx.networking.LanguageApiService;
 import com.google.gson.Gson;
 import com.delivx.app.main.profile.editProfile.ChangePasswordDialog;
 import com.delivx.data.source.PreferenceHelperDataSource;
@@ -30,6 +33,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -50,26 +54,23 @@ public class MyProfilePresenter implements ProfileContract.PresenterOpetaions {
 
     ProfileContract.ViewOperations view;
 
-    @Inject
-    NetworkService networkService;
-
-    @Inject
-    Activity context;
-
-    @Inject
-    PreferenceHelperDataSource preferenceHelperDataSource;
-
-    @Inject
-    Upload_file_AmazonS3 amazonS3;
+    @Inject NetworkService networkService;
+    @Inject LanguageApiService languageApiService;
+    @Inject Activity context;
+    @Inject PreferenceHelperDataSource preferenceHelperDataSource;
+    @Inject Upload_file_AmazonS3 amazonS3;
 
     private ChangePasswordDialog changePasswordDialog;
     private String  TAG=MyProfilePresenter.class.getSimpleName();
     private String fileName,takenNewImage,state;
     private static final int CAMERA_PIC = 11, GALLERY_PIC = 12, CROP_IMAGE = 13;
 
+    private ArrayList<LanguagesList> languagesLists;
+
 
     @Inject
     public MyProfilePresenter() {
+        languagesLists = new ArrayList<>();
     }
 
     @Override
@@ -80,6 +81,11 @@ public class MyProfilePresenter implements ProfileContract.PresenterOpetaions {
     @Override
     public void getProfileDetails()
     {
+
+        if(preferenceHelperDataSource.getLanguageSettings()!=null && preferenceHelperDataSource.getLanguageSettings().getLanguageName()!=null)
+            view.setLanguage(preferenceHelperDataSource.getLanguageSettings().getLanguageName(),false);
+
+
         view.showProgress();
         final Observable<Response<ResponseBody>> profile=networkService.profile(preferenceHelperDataSource.getLanguage(),preferenceHelperDataSource.getToken());
         profile.observeOn(AndroidSchedulers.mainThread())
@@ -342,6 +348,88 @@ public class MyProfilePresenter implements ProfileContract.PresenterOpetaions {
                             view.hideProgress();
                     }
                 });
+    }
+
+
+    @Override
+    public void getLanguages() {
+        if(Utility.isNetworkAvailable(context)) {
+            view.showProgress();
+
+            Observable<Response<ResponseBody>> getLanguages = languageApiService.getLanguage();
+
+            getLanguages.observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(new Observer<Response<ResponseBody>>() {
+
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(Response<ResponseBody> value) {
+                            view.hideProgress();
+
+                            try {
+                                switch (value.code()) {
+                                    case VariableConstant.RESPONSE_CODE_SUCCESS:
+                                        String res = value.body().string();
+                                        Utility.printLog("language res : "+res);
+
+                                        Gson gson = new Gson();
+                                        LanguagesPojo languagesListModel = gson.fromJson(res,LanguagesPojo.class);
+                                        Utility.printLog("language res : "+languagesListModel.getData().size());
+                                        languagesLists.clear();
+                                        languagesLists.addAll(languagesListModel.getData());
+                                        boolean isLanguage = false;
+                                        for(LanguagesList languagesList : languagesLists)
+                                        {
+                                            if(preferenceHelperDataSource.getLanguageSettings().getLanguageCode().equals(languagesList.getLanguageCode()))
+                                            {
+                                                isLanguage = true;
+                                                view.setLanguageDialog( languagesListModel.getData(),languagesLists.indexOf(languagesList));
+                                                break;
+                                            }
+                                        }
+                                        if(!isLanguage)
+                                            view.setLanguageDialog(null,-1);
+
+                                        break;
+
+                                    default:
+                                        /*loginView.showError();*/
+                                        break;
+                                }
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Utility.printLog("getLanguages : Catch :" + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            view.hideProgress();
+                            Utility.printLog("getLanguages : onError :" + e.getMessage());
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+        }else {
+            view.onError(context.getResources().getString(R.string.no_network));
+        }
+
+    }
+
+    @Override
+    public void languageChanged(String langCode, String langName, int dir) {
+        preferenceHelperDataSource.setLanguage(langCode);
+        preferenceHelperDataSource.setLanguageSettings(new LanguagesList(langCode,langName));
+        view.setLanguage(langName,true);
     }
 
 }

@@ -21,6 +21,8 @@ public interface WebViewContract {
         void getBundleData(Intent intent);
 
         void initActionBar();
+
+        String getlanguageCode();
     }
 
 }

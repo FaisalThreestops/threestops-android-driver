@@ -40,5 +40,7 @@ public interface StoreDetailsContract
         void updateBookingStatus();
 
         void openChat();
+
+        String getlanguageCode();
     }
 }

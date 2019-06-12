@@ -27,5 +27,7 @@ public interface AddBankAccountContract {
 
         void validateFields(String name, String acc, String routing);
 
+        String getlanguageCode();
+
     }
 }

@@ -175,14 +175,32 @@ public class BankNewStripePresenter implements StripeAccountContract.PresenterOp
     public void onSave() {
         if(validateFields()){
             amzonUpload();
-            addBankDetails();
+            /*addBankDetails();*/
         }
     }
 
     private void addBankDetails() {
-        String[] dateOfBirth=new String[3];
-        dateOfBirth=dob.split("/");
-        view.showProgress();
+        /*view.showProgress();*/
+        String[] dateOfBirth = dob.split("/");
+
+        Utility.printLog("bank sripe : "+ preferenceHelperDataSource.getToken()+"\n"+
+                preferenceHelperDataSource.getMyEmail()+"\n"+
+                city+"\n"+
+                "US"+"\n"+
+                address+"\n"+
+                postalCode+"\n"+
+                state+"\n"+
+                dateOfBirth[1]+"\n"+
+                dateOfBirth[0]+"\n"+
+                dateOfBirth[2]+"\n"+
+                fname+"\n"+
+                lName+"\n"+
+                imageUrl+"\n"+
+                personalId+"\n"+
+                Utility.currentDate()+"\n"+
+                ip);
+
+        /*view.showProgress();*/
         final Observable<Response<ResponseBody>> profile=networkService.createStripeAccount(preferenceHelperDataSource.getLanguage(),
                 preferenceHelperDataSource.getToken(),
                 preferenceHelperDataSource.getMyEmail(),
@@ -215,21 +233,26 @@ public class BankNewStripePresenter implements StripeAccountContract.PresenterOp
 
                         try {
                             JSONObject jsonObject;
-                            if(value.code()==200)
-                            {
-                                jsonObject=new JSONObject(value.body().string());
-                                view.onSuccess(jsonObject.getString("message"));
+                            switch (value.code()){
 
-                            }else
-                            {
-                                jsonObject=new JSONObject(value.errorBody().string());
+                                case 200:
+                                    jsonObject=new JSONObject(value.body().string());
+                                    Utility.printLog("bank stripe getConnectAccount : "+value.body().string());
+                                    view.onSuccess(jsonObject.getString("message"));
+                                    break;
+
+                                default:
+                                    String err =value.errorBody().string();
+                                    jsonObject=new JSONObject(err);
+                                    Utility.BlueToast(context,err);
+                                    Utility.printLog("bank stripe error getConnectAccount : "+value.errorBody().string());
+                                    break;
                             }
 
-                            Utility.printLog("connectAccount : "+jsonObject.toString());
 
                         }catch (Exception e)
                         {
-                            Utility.printLog("connectAccount : Catch :"+e.getMessage());
+                            Utility.printLog("bank connectAccount : Catch :"+e.getMessage());
                         }
                     }
 
@@ -237,6 +260,7 @@ public class BankNewStripePresenter implements StripeAccountContract.PresenterOp
                     public void onError(Throwable e) {
                         if(view!=null)
                             view.hideProgress();
+                        Utility.printLog("bank connectAccount : Catch :"+e.getMessage());
 
                     }
 
@@ -308,6 +332,11 @@ public class BankNewStripePresenter implements StripeAccountContract.PresenterOp
         view.openGallery();
     }
 
+    @Override
+    public String getlanguageCode() {
+        return preferenceHelperDataSource.getLanguageSettings().getLanguageCode();
+    }
+
     /*@Override
     public void ipAddress(String ip) {
         bankNewStripePresenterImplement.ipAddress(ip);
@@ -372,6 +401,7 @@ public class BankNewStripePresenter implements StripeAccountContract.PresenterOp
 
     private void amzonUpload() {
 
+        view.showProgress();
         String BUCKETSUBFOLDER = VariableConstant.BANK_PROOF;
         imageUrl = VariableConstant.AMAZON_BASE_URL + VariableConstant.BUCKET_NAME + "/" + BUCKETSUBFOLDER + "/" + mFileTemp.getName();
 
@@ -380,15 +410,22 @@ public class BankNewStripePresenter implements StripeAccountContract.PresenterOp
             @Override
             public void sucess(String url) {
                 imageUrl=url;
+                Utility.printLog("Bank document : "+imageUrl);
+                /*view.hideProgress();*/
+                addBankDetails();
             }
 
             @Override
             public void sucess(String url, String type) {
                 imageUrl=url;
+                Utility.printLog("Bank document :: "+imageUrl);
+                view.hideProgress();
+                addBankDetails();
             }
 
             @Override
             public void error(String errormsg) {
+                view.hideProgress();
             }
         });
     }

@@ -14,11 +14,11 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="height" value="26" />
-                            <entry key="outputName" value="info_icon" />
+                            <entry key="height" value="12" />
+                            <entry key="outputName" value="wallet" />
                             <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="C:\Users\DELL\Downloads\info icon.svg" />
-                            <entry key="width" value="26" />
+                            <entry key="sourceFile" value="D:\Baby\App Assets\delivx\wallet.svg" />
+                            <entry key="width" value="12" />
                           </map>
                         </option>
                       </PersistentState>

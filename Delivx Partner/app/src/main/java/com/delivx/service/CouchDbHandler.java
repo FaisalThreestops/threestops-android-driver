@@ -3,12 +3,13 @@ package com.delivx.service;
 import android.content.Context;
 import android.util.Log;
 
+
 import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
 import com.couchbase.lite.Document;
 import com.couchbase.lite.Manager;
 import com.couchbase.lite.android.AndroidContext;
-import com.delivx.data.source.PreferenceHelperDataSource;
+import com.delivx.utility.SessionManager;
 
 import org.json.JSONArray;
 
@@ -16,8 +17,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.inject.Inject;
 
 /**
  * Created by DELL on 31-08-2017.
@@ -29,13 +28,13 @@ public class CouchDbHandler {
     private Manager manager;
     private AndroidContext androidContext;
     private Database database;
-    private PreferenceHelperDataSource preferenceHelperDataSource;
+    private SessionManager sessionManager;
     private String indexAppDocID;
 
-    @Inject
-    public CouchDbHandler(Context context,PreferenceHelperDataSource preferenceHelperDataSource) {
+    public CouchDbHandler(Context context) {
         this.androidContext = new AndroidContext(context);
-        this.preferenceHelperDataSource=preferenceHelperDataSource;
+
+        sessionManager = new SessionManager(context);
         mCreateManager();
         getDatabase();
         mGetDocument();
@@ -58,7 +57,7 @@ public class CouchDbHandler {
         try {
 
             if (manager != null) {
-                database = manager.getDatabase("couchdbufly");
+                database = manager.getDatabase("couchdbdayrunner");
             }
             Log.d(TAG, "Database created");
 
@@ -69,10 +68,10 @@ public class CouchDbHandler {
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void mGetDocument() {
-        indexAppDocID = preferenceHelperDataSource.getDocumentID();
+        indexAppDocID = sessionManager.getDocumentID();
         if (indexAppDocID.isEmpty()) {
             indexAppDocID = createAppDocumnent();
-            preferenceHelperDataSource.setDocumentID(indexAppDocID);
+            sessionManager.setDocumentID(indexAppDocID);
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -101,32 +100,31 @@ public class CouchDbHandler {
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public JSONArray retriveDocument() {
+    JSONArray retriveDocument() {
 
-        Document retrievedDocument = database.getDocument(preferenceHelperDataSource.getDocumentID());
+        Document retrievedDocument = database.getDocument(sessionManager.getDocumentID());
         Map map = new HashMap();
         if(retrievedDocument!=null)
-             map = retrievedDocument.getProperties();
+            map = retrievedDocument.getProperties();
         ArrayList latList = (ArrayList) map.get("lattitude");
         ArrayList longList = (ArrayList) map.get("longitude");
         JSONArray jsonArray = new JSONArray();
 
-        if(latList!=null||longList!=null){
+        if(latList!=null)
             for (int i = 0; i < latList.size(); i++) {
                 jsonArray.put(String.valueOf(latList.get(i)) + "," + String.valueOf(longList.get(i)));
             }
-        }
-
         return jsonArray;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public void updateDocument(double lat, double lng) {
+    void updateDocument(double lat, double lng) {
 
-        Document retrievedDocument = database.getDocument(preferenceHelperDataSource.getDocumentID());
-        try{
 
+
+        try {
+            Document retrievedDocument = database.getDocument(sessionManager.getDocumentID());
             Map map = retrievedDocument.getProperties();
             ArrayList latList = (ArrayList) map.get("lattitude");
             ArrayList longList = (ArrayList) map.get("longitude");
@@ -142,17 +140,14 @@ public class CouchDbHandler {
 
             retrievedDocument.putProperties(map1);
 
-        }catch (NullPointerException e){
-            e.printStackTrace();
-        } catch (CouchbaseLiteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     public void deleteDocument() {
-        Document retrievedDocument = database.getDocument(preferenceHelperDataSource.getDocumentID());
+        Document retrievedDocument = database.getDocument(sessionManager.getDocumentID());
         Map map = retrievedDocument.getProperties();
         ArrayList latList = (ArrayList) map.get("lattitude");
         ArrayList longList = (ArrayList) map.get("longitude");

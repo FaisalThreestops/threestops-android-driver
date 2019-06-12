@@ -93,6 +93,11 @@ public class VehicleListPresenter implements VehicleListPresenterContract {
         view.logout(preferenceHelper,networkService);
     }
 
+    @Override
+    public String getlanguageCode() {
+        return preferenceHelper.getLanguageSettings().getLanguageCode();
+    }
+
 
     public void setDefaultVehicle(){
         if(view!=null)

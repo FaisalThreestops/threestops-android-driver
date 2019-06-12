@@ -25,4 +25,6 @@ public interface VerifyMobilePresenterContract {
     void validateOtp(String digit1,String digit2,String digit3,String digit4);
 
     void onSmsReceived(String msg);
+
+    String getlanguageCode();
 }

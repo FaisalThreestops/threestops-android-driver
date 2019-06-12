@@ -21,5 +21,7 @@ public interface SubCatContract {
     interface PresenterOperation{
         void getBundleData(Intent intent);
         void initActionBar();
+
+        String getlanguageCode();
     }
 }

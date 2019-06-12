@@ -206,6 +206,11 @@ public class PresenterForgotPass implements ForgotPassPresenterContract {
         view.onMobileSelection();
     }
 
+    @Override
+    public String getlanguageCode() {
+        return preferenceHelperDataSource.getLanguageSettings().getLanguageCode();
+    }
+
     public void forgotPasswordApi(final int verifyType, final String countryCode, final String mob_mail){
         if(view!=null)
             view.showProgress();

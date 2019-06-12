@@ -91,6 +91,11 @@ public class PresenterChangePass implements ChangePassPresenterContract
 
     }
 
+    @Override
+    public String getlanguageCode() {
+        return preferenceHelperDataSource.getLanguageSettings().getLanguageCode();
+    }
+
     public void updatePasswordApi(String password){
 
         Observable<Response<ResponseBody>> updatePassword=networkService.password(preferenceHelperDataSource.getLanguage(),MobNum,Ccode,OTP,password);

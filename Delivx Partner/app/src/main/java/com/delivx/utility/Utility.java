@@ -11,6 +11,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -25,10 +27,12 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.Settings;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,6 +63,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -725,6 +730,48 @@ public class Utility {
     }
 
 
+    /**
+     * <h1>getDurationString</h1>
+     * <p>format of timer set</p>
+     * @param seconds : the input in seconds for convert the time format
+     * @return :time format
+     */
+    public static String getDurationString_(int seconds)
+    {
+        int hours = seconds / 3600;
+        int minutes = (seconds % 3600) / 60;
+        seconds = seconds % 60;
+        if(hours!=0){
+            return twoDigitString(hours) + "hr : " + twoDigitString(minutes) + "min : " + twoDigitString(seconds)+"sec";
+        }else if(minutes!=0)
+        {
+            return twoDigitString(minutes) + "min : " + twoDigitString(seconds)+"sec";
+        }
+        else {
+            return twoDigitString(seconds) + "sec";
+        }
+    }
+
+    /**
+     * <h1>twoDigitString</h1>
+     * <p>number format for keep 2 digit</p>
+     * @param number : number
+     * @return : 2 digit number
+     */
+    public static String twoDigitString(int number) {
+
+        if (number == 0) {
+            return "00";
+        }
+
+        if (number / 10 == 0) {
+            return "0" + number;
+        }
+        return String.valueOf(number);
+    }
+
+
+
     public static String getCounrtyCode(Context context) {
         /*double[] latlng=getLocation(context);
         String code=getAddress(latlng[0],latlng[1],context);*/
@@ -950,5 +997,83 @@ public class Utility {
         return false;
     }
 
+
+    public static String parseDateToddMMyyyy(String time) {
+        String inputPattern = "yyyy-MM-dd HH:mm:ss";
+        String outputPattern = "dd MMM yyyy, h:mm a";
+        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
+        SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
+
+        Date date = null;
+        String str = null;
+
+        try {
+            date = inputFormat.parse(time);
+            str = outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return str;
+    }
+
+
+    /**
+     * changeLanguageConfig      used to set the language configuration
+     * @param code language code
+     **/
+    public static int changeLanguageConfig(String code,Context context )
+    {
+        /*Configuration configuration = context.getResources().getConfiguration();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+        {
+            configuration.setLayoutDirection(new Locale(code));
+            printLog(" language direction "+configuration.getLayoutDirection());
+        }
+        configuration.locale = new Locale(code);
+        context.getResources().updateConfiguration(configuration,context.getResources().getDisplayMetrics());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            return configuration.getLayoutDirection();
+        }*/
+        return 0;
+    }
+
+
+    public static void RtlConversion(Activity activity, String lang)
+    {
+
+        if(lang!=null && lang.equals("ar"))
+        {
+            setLocale(lang,activity);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+            {
+                activity.getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+            }
+
+        }
+        else
+        {
+            if(lang==null)
+                lang="en";
+            setLocale(lang,activity);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                activity.getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+            }
+        }
+
+    }
+
+    private static void setLocale(String lang, Context context) {
+        try {
+            Utility.printLog("Locale lang " + lang);
+            Locale myLocale = new Locale(lang);
+            Resources res = context.getResources();
+            DisplayMetrics dm = res.getDisplayMetrics();
+            Configuration conf = res.getConfiguration();
+            conf.locale = myLocale;
+            res.updateConfiguration(conf, dm);
+        } catch (Exception e) {
+            Utility.printLog("select_language inside Exception" + e.toString());
+        }
+    }
 
 }

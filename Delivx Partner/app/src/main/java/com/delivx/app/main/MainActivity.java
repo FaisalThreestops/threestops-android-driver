@@ -3,9 +3,11 @@ package com.delivx.app.main;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,6 +33,12 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.delivx.app.main.bank.BankListFrag;
+import com.delivx.login.language.LanguagesList;
+import com.delivx.networking.ConnectivityReceiver;
+import com.delivx.networking.NetworkErrorDialog;
+import com.delivx.utility.DialogHelper;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -51,6 +59,7 @@ import com.delivx.utility.FontUtils;
 import com.delivx.utility.Utility;
 import com.delivx.utility.VariableConstant;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -64,15 +73,15 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 
 public class MainActivity extends DaggerAppCompatActivity
-        implements MainView,NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, EasyPermissions.PermissionCallbacks {
+        implements MainView,NavigationView.OnNavigationItemSelectedListener,
+        View.OnClickListener, EasyPermissions.PermissionCallbacks,
+        ConnectivityReceiver.ConnectivityReceiverListener{
 
     private static final String TAG = MainActivity.class.getName();
-
-//    private ProgressDialog pDialog;
     private boolean homeOpen = true;
 
     private boolean doubleBackToExitPressedOnce=false;
-    private Typeface ClanaproNarrMedium,ClanaproNarrNews;
+    private Typeface ClanaproNarrNews;
 
     @BindView(R.id.progressBar) ProgressBar progressBar;
     @BindView(R.id.drawer_layout) DrawerLayout drawer;
@@ -92,20 +101,19 @@ public class MainActivity extends DaggerAppCompatActivity
     @BindView(R.id.tvTitle) TextView tvTitle;
     @BindView(R.id.tvTitle2) TextView  tvTitle2;
 
-    @Inject
-    MainPresenter presenter;
-    @Inject
-    PreferenceHelperDataSource preferenceHelperDataSource;
-    @Inject
-    NetworkService networkService;
-    @Inject
-    HomeFragment homeFragment;
-    @Inject
-    HistoryFragment historyFragment;
-    @Inject
-    FontUtils fontUtils;
-    @Inject
-    MyProfileFrag myProfileFrag;
+    @Inject   MainPresenter presenter;
+    @Inject   PreferenceHelperDataSource preferenceHelperDataSource;
+    @Inject   NetworkService networkService;
+    @Inject   HomeFragment homeFragment;
+    @Inject   HistoryFragment historyFragment;
+    @Inject   FontUtils fontUtils;
+    @Inject   MyProfileFrag myProfileFrag;
+    NetworkErrorDialog networkErrorDialog;
+    ArrayList<LanguagesList> languagesLists = new ArrayList<>();
+    @Inject   DialogHelper dialogHelper;
+
+    public static boolean mainActivity_opened = false;
+
     private Fragment fragment;
     private Dialog dialog;
 
@@ -113,18 +121,8 @@ public class MainActivity extends DaggerAppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utility.RtlConversion(this,presenter.getlanguageCode());
         setContentView(R.layout.activity_main);
-
-       /* Window window = this.getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
-        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
-        window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
-        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
-        setShowWhenLocked(true);
-        setTurnScreenOn(true);
-*/
-
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             setShowWhenLocked(true);
@@ -136,20 +134,33 @@ public class MainActivity extends DaggerAppCompatActivity
             window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
-
-
         ButterKnife.bind(this);
         checkAndRequestPermissions();
 
         initVar();
 
+
         presenter.getVersion();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mainActivity_opened = true;
+        MyApplication.getInstance().setConnectivityListener(this);
+        presenter.subscribeNetworkObserver();
+        presenter.getAppConfig();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mainActivity_opened = false;
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        presenter.getAppConfig();
         checkAndRequestPermissions();
     }
 
@@ -194,9 +205,37 @@ public class MainActivity extends DaggerAppCompatActivity
 
     private void initVar() {
 
-        ClanaproNarrMedium = fontUtils.titaliumSemiBold();
+
+
+        dialogHelper.getDialogCallbackHelper(new DialogHelper.DialogCallbackHelper() {
+
+            @Override
+            public void walletFragOpen() {
+
+            }
+
+            @Override
+            public void changeLanguage(String langCode, String langName, int dir) {
+
+                if(Utility.isMyServiceRunning(LocationUpdateService.class,getApplicationContext())){
+                    Intent stopIntent = new Intent(MainActivity.this, LocationUpdateService.class);
+                    stopIntent.setAction(AppConstants.ACTION.STOPFOREGROUND_ACTION);
+                    startService(stopIntent);
+                }
+                presenter.languageChanged(langCode,langName,dir);
+            }
+        });
+
+
+
+
+        registerReceiver(new ConnectivityReceiver(),
+                new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+
+        Typeface clanaproNarrMedium = fontUtils.titaliumSemiBold();
         ClanaproNarrNews = fontUtils.titaliumRegular();
 
+        networkErrorDialog = new NetworkErrorDialog(this,ClanaproNarrNews);
 
         assert navigationView != null;
         navigationView.setNavigationItemSelectedListener(this);
@@ -232,13 +271,13 @@ public class MainActivity extends DaggerAppCompatActivity
         fragmentManager.beginTransaction()
                 .replace(R.id.frame_container, homeFragment)
                 .commit();
-        tv_on_off_statas.setTypeface(ClanaproNarrMedium);
+        tv_on_off_statas.setTypeface(clanaproNarrMedium);
 
-        tv_prof_edit.setTypeface(ClanaproNarrMedium);
+        tv_prof_edit.setTypeface(clanaproNarrMedium);
 
-        tvTitle.setTypeface(ClanaproNarrMedium);
+        tvTitle.setTypeface(clanaproNarrMedium);
 
-        tvTitle2.setTypeface(ClanaproNarrMedium);
+        tvTitle2.setTypeface(clanaproNarrMedium);
 
         menu_layout.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.transparent));
         abarMain.setVisibility(View.GONE);
@@ -338,7 +377,6 @@ public class MainActivity extends DaggerAppCompatActivity
                 button_menu.setImageResource(R.drawable.selector_hamburger_white);
                 break;
 
-/*
             case R.id.nav_bank_details:
                 homeOpen = false;
 
@@ -359,7 +397,7 @@ public class MainActivity extends DaggerAppCompatActivity
                 abarMain.setVisibility(View.VISIBLE);
                 button_menu.setImageResource(R.drawable.selector_hamburger_white);
 
-                break;*/
+                break;
 
            /* case R.id.nav_portal:
                 *//*homeOpen = false;
@@ -425,6 +463,10 @@ public class MainActivity extends DaggerAppCompatActivity
                 }
 
                 break;*/
+
+            case R.id.item_menu_nav_language:
+                presenter.getLanguages();
+                break;
 
         }
 
@@ -607,7 +649,9 @@ public class MainActivity extends DaggerAppCompatActivity
 
     @Override
     public void logout() {
+        LanguagesList languagesList = preferenceHelperDataSource.getLanguageSettings();
         preferenceHelperDataSource.clearSharedPredf();
+        preferenceHelperDataSource.setLanguageSettings(languagesList);
         FirebaseMessaging.getInstance().unsubscribeFromTopic("/topics/" + preferenceHelperDataSource.getPushTopic());
         ((MyApplication)getApplicationContext()).disconnectMqtt();
 
@@ -622,6 +666,60 @@ public class MainActivity extends DaggerAppCompatActivity
         startActivity(intent);
         finish();
     }
+
+    @Override
+    public void networkAvailable() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(networkErrorDialog!=null && networkErrorDialog.isShowing()) {
+                    networkErrorDialog.dismiss();
+                    if(getFragmentRefreshListener()!=null){
+                        getFragmentRefreshListener().onRefresh();
+                    }
+                }
+            }
+        });
+    }
+
+
+    private FragmentRefreshListener fragmentRefreshListener;
+
+    /**
+     *for refresh the fragments after network check
+     */
+    public FragmentRefreshListener getFragmentRefreshListener() {
+        return fragmentRefreshListener;
+    }
+
+    public void setFragmentRefreshListener(FragmentRefreshListener fragmentRefreshListener) {
+        this.fragmentRefreshListener = fragmentRefreshListener;
+    }
+
+    public interface FragmentRefreshListener{
+        void onRefresh();
+    }
+
+    @Override
+    public void networkNotAvailable() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(mainActivity_opened && networkErrorDialog!=null && !networkErrorDialog.isShowing())
+                    networkErrorDialog.show();
+            }
+        });
+
+    }
+
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        presenter.checkForNetwork(isConnected);
+
+    }
+
+
 
     public void mShowNoInternetMessage() {
 
@@ -647,6 +745,25 @@ public class MainActivity extends DaggerAppCompatActivity
         try{
             dialog.show();
         }catch (Exception e){
+        }
+    }
+
+
+    @Override
+    public void setLanguageDialog(ArrayList<LanguagesList> languagesListModel, int indexOf) {
+        languagesLists = languagesListModel;
+        DialogHelper.languageSelectDialog(this, languagesLists, indexOf);
+    }
+
+    @Override
+    public void setLanguage(String langName, boolean indexSelected) {
+
+        if(indexSelected)
+        {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            Runtime.getRuntime().exit(0);
         }
     }
 }

@@ -103,6 +103,7 @@ public class SignupPersonal extends DaggerAppCompatActivity implements View.OnCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utility.RtlConversion(this,preferenceHelper.getLanguageSettings().getLanguageCode());
         setContentView(R.layout.activity_signup_personal);
         overridePendingTransition(R.anim.bottem_slide_down, R.anim.stay_activity);
 

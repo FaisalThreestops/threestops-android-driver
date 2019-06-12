@@ -57,6 +57,7 @@ public class EditProfileActivity extends DaggerAppCompatActivity implements View
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utility.RtlConversion(this,presenter.getlanguageCode());
         setContentView(R.layout.activity_edit_phone_number);
         overridePendingTransition(R.anim.activity_open_translate, R.anim.activity_close_scale);
         ButterKnife.bind(this);

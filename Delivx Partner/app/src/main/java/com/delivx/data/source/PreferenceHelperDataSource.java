@@ -1,5 +1,7 @@
 package com.delivx.data.source;
 
+import com.delivx.login.language.LanguagesList;
+
 /**
  * Created by DELL on 21-12-2017.
  */
@@ -201,6 +203,18 @@ public interface PreferenceHelperDataSource
      * This method is used to get the MinDistForRouteArray
      */
     int getMinDistForRouteArray();
+
+    /**
+     * <h2>setMaxDistForRouteArray</h2>
+     * This method is used to set the distance
+     * @param distance distance
+     */
+    void setMaxDistForRouteArray(String distance);
+    /**
+     * <h2>getMaxDistForRouteArray</h2>
+     * This method is used to get the MaxDistForRouteArray
+     */
+    int getMaxDistForRouteArray();
     /**
      * <h2>setPushTopic</h2>
      * This method is used to set the url
@@ -342,4 +356,19 @@ public interface PreferenceHelperDataSource
      * This method is used to clear the shared prefernce
      */
     void clearSharedPredf();
+
+
+    /**
+     * getLanguageSettings      method is used to get language details
+     * @return  language data
+     */
+    LanguagesList getLanguageSettings();
+
+    /**
+     *  setLanguageSettings      method is used to set language details
+     *  @param languageSettings   language data
+     **/
+    void setLanguageSettings(LanguagesList languageSettings);
+
+
 }

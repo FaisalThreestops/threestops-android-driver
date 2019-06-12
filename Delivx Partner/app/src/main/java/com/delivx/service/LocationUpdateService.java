@@ -42,6 +42,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -92,6 +93,8 @@ public class LocationUpdateService
     private boolean updted = true;
     private CouchDbHandler couchDBHandle;
     private int mqttCount = 0;
+    private double prevLatTimer=0.0,prevLongTimer=0.0;
+    private static int counter;
 
     @Inject
     PreferenceHelperDataSource preferenceHelperDataSource;
@@ -115,7 +118,6 @@ public class LocationUpdateService
                 if ("1".equals(status1)) {
                     if (!updted) {
                         updateLocationLogs();
-//                        updted=true;
                     }
                 } else {
                     updted = false;
@@ -168,7 +170,6 @@ public class LocationUpdateService
 
         MyApplication controller = (MyApplication) getApplicationContext();
         couchDBHandle = controller.getDBHandler();
-//        couchDBHandle.deleteDocument();
 
         PackageManager manager = this.getPackageManager();
         PackageInfo info = null;
@@ -254,22 +255,19 @@ public class LocationUpdateService
 
                 String CHANNEL_ID = getString(R.string.app_name_withoutSpace);;// The id of the channel.
                 CharSequence name = getString(R.string.app_name);
-
-                int importance = NotificationManager.IMPORTANCE_HIGH;
-
-
                 Notification notification = new NotificationCompat.Builder(this,CHANNEL_ID)
                         .setContentTitle(getResources().getString(R.string.app_name))
                         .setTicker("")
                         .setContentText("Running...")
                         .setSmallIcon(R.drawable.ic_launcher)
-                        /*.setChannelId(CHANNEL_ID)*/
+                        .setChannelId(CHANNEL_ID)
                         .setLargeIcon(Bitmap.createScaledBitmap(icon, 128, 128, false))
                         .setOngoing(true).build();
 
                 NotificationManager mNotificationManager =
                         (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    int importance = NotificationManager.IMPORTANCE_HIGH;
                     NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
                     mNotificationManager.createNotificationChannel(mChannel);
                 }
@@ -312,7 +310,6 @@ public class LocationUpdateService
         if (prevLat == 0.0 || prevLng == 0.0) {
             prevLat = preferenceHelperDataSource.getDriverCurrentLat();
             prevLng = preferenceHelperDataSource.getDriverCurrentLongi();
-
         }
 
         double curLat = preferenceHelperDataSource.getDriverCurrentLat();
@@ -327,13 +324,13 @@ public class LocationUpdateService
         }
 
 
-        if (((dis >= preferenceHelperDataSource.getMinDistForRouteArray()) && (dis <= 300)) || (disFromStaryPts != -1.0 && ((disFromStaryPts >= preferenceHelperDataSource.getMinDistForRouteArray()) && (disFromStaryPts <= 300)))) {
+        if (((dis >= preferenceHelperDataSource.getMinDistForRouteArray()) && (dis <=  preferenceHelperDataSource.getMaxDistForRouteArray()))
+                || (disFromStaryPts != -1.0 && ((disFromStaryPts >= preferenceHelperDataSource.getMinDistForRouteArray()) && (disFromStaryPts <= preferenceHelperDataSource.getMaxDistForRouteArray())))) {
 
             strayLat = prevLat = preferenceHelperDataSource.getDriverCurrentLat();
             strayLng = prevLng = preferenceHelperDataSource.getDriverCurrentLongi();
 
             distanceInMtr = (dis > disFromStaryPts) ? dis : disFromStaryPts;
-
 
 
             try {
@@ -350,39 +347,22 @@ public class LocationUpdateService
                             distancespd = (object.getDouble("distance") / distance_conv_unit);
                             distancespd += distanceInMtr;
                             Log.d(TAG, "Myservice Total distance" + distancespd);
-//                            distanceKm = distancespd * Double.parseDouble(preferenceHelperDataSource.getDistanceConvUnit());
                             distanceKm = distancespd * distance_conv_unit;
                             strDouble = String.format(Locale.US, "%.2f", distanceKm);
                             object.put("distance",strDouble);
-//                            object.put("distance_in_mtr",distancespd)
-
                         }
                     }
                 }
                 preferenceHelperDataSource.setBookings(jsonArray.toString());
                 Utility.printLog("MyService bookings " + preferenceHelperDataSource.getBookings());
-
                 RXDistanceChangeObserver.getInstance().emit(jsonArray);
-
-                    if (Utility.isNetworkAvailable(getApplicationContext())) {
-                        if (updted) {
-                            if(!VariableConstant.IS_POP_UP_OPEN)
-                                publishLocation(preferenceHelperDataSource.getDriverCurrentLat(), preferenceHelperDataSource.getDriverCurrentLongi(),1);
-                        } else {
-                            updateLocationLogs();
-                        }
-                    } else {
-                        Log.d(TAG, "calling updateDocument...");
-                        couchDBHandle.updateDocument(preferenceHelperDataSource.getDriverCurrentLat(), preferenceHelperDataSource.getDriverCurrentLongi());
-                    }
-
-
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         } else {
-            if (dis > 300 && disFromStaryPts > 300) {
+            if (dis > preferenceHelperDataSource.getMaxDistForRouteArray() &&
+                    disFromStaryPts > preferenceHelperDataSource.getMaxDistForRouteArray()) {
                 strayLat = curLat;
                 strayLng = curLong;
             }
@@ -421,6 +401,7 @@ public class LocationUpdateService
             public void run() {
                 if (Utility.isNetworkAvailable(getApplicationContext())) {
 
+                    updateLocationLogs();
 
                     Utility.printLog("mqtt connection iss : "+((MyApplication)getApplication()).isMQTTConnected());
                     if(!((MyApplication)getApplication()).isMQTTConnected())
@@ -439,8 +420,34 @@ public class LocationUpdateService
                         MyApplication.getInstance().connectMQTT();
                     }
 
-                    if(!VariableConstant.IS_POP_UP_OPEN)
-                        publishLocation(preferenceHelperDataSource.getDriverCurrentLat(), preferenceHelperDataSource.getDriverCurrentLongi(),0);
+                    if(prevLatTimer==0.0 || prevLongTimer==0.0)
+                    {
+                        prevLatTimer=preferenceHelperDataSource.getDriverCurrentLat();
+                        prevLongTimer=preferenceHelperDataSource.getDriverCurrentLongi();
+                    }
+
+
+                    if(counter>=preferenceHelperDataSource.getMinDistForRouteArray()){
+                        counter=0;
+                        if(distance(prevLatTimer,prevLongTimer,preferenceHelperDataSource.getDriverCurrentLat(),
+                                preferenceHelperDataSource.getDriverCurrentLongi(),METER)>=preferenceHelperDataSource.getMinDistForRouteArray())
+                        {
+                            prevLatTimer=preferenceHelperDataSource.getDriverCurrentLat();
+                            prevLongTimer=preferenceHelperDataSource.getDriverCurrentLongi();
+                            publishLocation(preferenceHelperDataSource.getDriverCurrentLat(), preferenceHelperDataSource.getDriverCurrentLongi(),1);
+
+                        }else {
+                            publishLocation(preferenceHelperDataSource.getDriverCurrentLat(),preferenceHelperDataSource.getDriverCurrentLongi(),0);
+                        }
+
+                    }else {
+                        counter++;
+                    }
+
+                }else if(!preferenceHelperDataSource.getBookings().isEmpty()){
+                couchDBHandle.updateDocument(preferenceHelperDataSource.getDriverCurrentLat(),
+                        preferenceHelperDataSource.getDriverCurrentLongi());
+
 
                 }
 
@@ -448,7 +455,7 @@ public class LocationUpdateService
 
         };
         Log.d(TAG, "myTimer_publish interval " + preferenceHelperDataSource.getTripStartedInterval());
-        myTimer_publish.schedule(myTimerTask_publish, 0,1000*(long) preferenceHelperDataSource.getTripStartedInterval());
+        myTimer_publish.schedule(myTimerTask_publish, 0,1000/**(long) preferenceHelperDataSource.getTripStartedInterval()*/);
     }
     /**********************************************************************************************/
     public void publishLocation(double latitude, double longitude, final int transit) {
@@ -490,29 +497,6 @@ public class LocationUpdateService
                 e.printStackTrace();
             }
 
-
-           /* JSONObject reqObject = new JSONObject();
-            try {
-                reqObject.put("language", preferenceHelperDataSource.getLanguage());
-                reqObject.put("authorization", preferenceHelperDataSource.getToken());
-                reqObject.put("longitude", longitude);
-                reqObject.put("latitude", latitude);
-                reqObject.put("status", preferenceHelperDataSource.getMasterStatus());
-//                reqObject.put("vt", preferenceHelperDataSource.getVehicleId());
-                reqObject.put("pubnubStr", pubnubStr);
-                reqObject.put("appVersion", version);
-                reqObject.put("batteryPer", String.valueOf(battery_level));
-                reqObject.put("locationCheck", locationChk);
-                reqObject.put("deviceType", String.valueOf(VariableConstant.DEVICE_TYPE));
-                reqObject.put("locationHeading", bearing);
-                reqObject.put("transit", transit+"");
-
-                ((MyApplication)getApplication()).publishMqtt(reqObject);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }*/
-
             Observable<Response<ResponseBody>> location=dispatcherService.location(
                     /*preferenceHelperDataSource.getLanguage()*/"0",
                     preferenceHelperDataSource.getToken(),
@@ -539,16 +523,6 @@ public class LocationUpdateService
                         @Override
                         public void onNext(Response<ResponseBody> value) {
                             try {
-                                /*if(locationPojo.getStatusCode()!=null && locationPojo.getStatusCode().equals("401")){
-
-                                    Intent intent=new Intent(AppConstants.ACTION.PUSH_ACTION);
-                                    Bundle bundle=new Bundle();
-                                    bundle.putString("action","201");
-                                    intent.putExtras(bundle);
-                                    sendBroadcast(intent);
-                                    stopForeground(true);
-                                    stopSelf();
-                                }*/
                                 JSONObject jsonObject;
                                 if(value.code()==200)
                                 {
@@ -558,7 +532,6 @@ public class LocationUpdateService
                                 {
                                     jsonObject=new JSONObject(value.errorBody().string());
                                     jsonObject.put("code",value.code());
-//                                view.setError(value.code(),jsonObject.getString("message"));
                                 }
 
                                 if(jsonObject.getInt("code")==498){
@@ -597,52 +570,59 @@ public class LocationUpdateService
     public void updateLocationLogs() {
 
         JSONArray list = couchDBHandle.retriveDocument();
+        JSONObject joLatLngBody = new JSONObject();
+        try {
+            joLatLngBody.put("latLong",list);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Gson gson = new Gson();
+        LatLngBody latLngBody = gson.fromJson(joLatLngBody.toString(),LatLngBody.class);
+        Utility.printLog(TAG + "retriveDocument body:  " +joLatLngBody.toString() );
 
-        Utility.printLog(TAG + "retriveDocument list " + list.toString());
+        if(latLngBody.getLatLong().length>0) {
+            Utility.printLog(TAG + "retriveDocument body:  "+latLngBody.getLatLong().length+"\n" +joLatLngBody.toString() );
+            Observable<Response<ResponseBody>> locationLogs = networkService.locationLogs(
+                    preferenceHelperDataSource.getToken(),
+                    preferenceHelperDataSource.getLanguage(),
+                    latLngBody);
+            locationLogs.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Observer<Response<ResponseBody>>() {
+                @Override
+                public void onSubscribe(Disposable d) {
 
-        Observable<Response<ResponseBody>> locationLogs=networkService.locationLogs(
-                preferenceHelperDataSource.getLanguage(),
-                preferenceHelperDataSource.getToken(),list.toString());
-        locationLogs.observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<Response<ResponseBody>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
+                }
 
-                    }
-                    @Override
-                    public void onNext(Response<ResponseBody> value) {
-                        try {
-                            JSONObject jsonObject;
-                            if(value.code()==200)
-                            {
-                                jsonObject=new JSONObject(value.body().string());
-                                updted=true;
-                                couchDBHandle.deleteDocument();
-                            }else
-                            {
-                                jsonObject=new JSONObject(value.errorBody().string());
-//                                view.setError(value.code(),jsonObject.getString("message"));
-                            }
-
-                            Utility.printLog("locationLogs : "+jsonObject.toString());
-
-                        }catch (Exception e)
-                        {
-                            Utility.printLog("locationLogs : Catch :"+e.getMessage());
+                @Override
+                public void onNext(Response<ResponseBody> value) {
+                    try {
+                        JSONObject jsonObject;
+                        if (value.code() == 200) {
+                            jsonObject = new JSONObject(value.body().string());
+                            updted = true;
+                            couchDBHandle.deleteDocument();
+                        } else {
+                            jsonObject = new JSONObject(value.errorBody().string());
                         }
+
+                        Utility.printLog("locationLogs : " + jsonObject.toString());
+
+                    } catch (Exception e) {
+                        Utility.printLog("locationLogs : Catch :" + e.getMessage());
                     }
+                }
 
-                    @Override
-                    public void onError(Throwable e) {
+                @Override
+                public void onError(Throwable e) {
 
-                    }
+                }
 
-                    @Override
-                    public void onComplete() {
+                @Override
+                public void onComplete() {
 
-                    }
-                });
+                }
+            });
+        }
+
 
     }
 }

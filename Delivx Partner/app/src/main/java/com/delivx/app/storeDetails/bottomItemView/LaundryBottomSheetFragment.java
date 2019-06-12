@@ -14,17 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.delivx.adapter.BankDetailsRVA;
 import com.delivx.pojo.ShipmentDetails;
-import com.delivx.pojo.bank.BankList;
-import com.delivx.utility.SessionManager;
 import com.delivx.utility.Utility;
 import com.driver.delivx.R;
 import com.squareup.picasso.Picasso;
-
-import org.json.JSONObject;
 
 public class LaundryBottomSheetFragment extends BottomSheetDialogFragment  {
 

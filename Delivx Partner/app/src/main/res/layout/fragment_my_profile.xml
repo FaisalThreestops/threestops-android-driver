@@ -44,7 +44,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="150dp"
         android:layout_below="@+id/ll_profile_top"
         android:layout_marginTop="-80dp"
         android:gravity="center">
@@ -114,7 +114,7 @@
         android:layout_below="@id/ll_profile_top"
         android:layout_marginLeft="@dimen/dpForty"
         android:layout_marginRight="@dimen/dpForty"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="70dp"
         android:orientation="vertical"
         >
 
@@ -224,6 +224,63 @@
                 android:background="@color/profile_underline" />
 
         </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            >
+
+            <TextView
+                android:id="@+id/tv_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dpFive"
+                android:text="@string/Email"
+                android:textColor="@color/profile_head"
+                android:textAllCaps="true"
+                android:textSize="@dimen/spTwelve" />
+
+            <RelativeLayout
+                android:id="@+id/rl_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_email">
+
+                <TextView
+                    android:id="@+id/tv_email_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="@dimen/dpFive"
+                    android:text="xxxxxxxx"
+                    android:textColor="@color/profile_data"
+                    android:textSize="@dimen/spSixteen" />
+
+                <ImageView
+                    android:id="@+id/iv_email_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/app_name"
+                    android:padding="8dp"
+                    android:src="@drawable/edit"
+                    android:visibility="gone"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dpOne"
+                android:layout_below="@+id/rl_email"
+                android:background="@color/profile_underline" />
+
+        </RelativeLayout>
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -437,6 +494,43 @@
                 android:layout_height="@dimen/dpOne"
                 android:layout_below="@+id/rl_number"
                 android:background="@color/profile_underline" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:layout_marginTop="@dimen/dpFive"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_language"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/dpTen"
+                android:text="@string/selectLanguage"
+                android:textColor="@color/lig_green2"
+                android:textSize="@dimen/spFourteen"
+                android:gravity="center_vertical|start"
+                android:textDirection="locale"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"/>
+
+            <TextView
+                android:id="@+id/tv_selected_language"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/dpTen"
+                android:text="@string/english"
+                android:textColor="@color/lig_green2"
+                android:textSize="@dimen/spFourteen"
+                android:gravity="center_vertical|end"
+                android:layout_gravity="center"
+                android:textAllCaps="true"
+                android:layout_alignParentEnd="true"
+                android:textDirection="locale"
+                android:layout_alignParentRight="true"/>
 
         </RelativeLayout>
 

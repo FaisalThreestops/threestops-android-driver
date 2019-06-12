@@ -17,4 +17,6 @@ public interface ChangePassPresenterContract {
     void onOutSideTouch();
 
     void validatePassword(String pass, String confPass);
+
+    String getlanguageCode();
 }

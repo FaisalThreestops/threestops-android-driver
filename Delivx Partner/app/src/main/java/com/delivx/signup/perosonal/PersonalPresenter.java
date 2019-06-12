@@ -392,7 +392,9 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
     }
 
     @Override
-    public void validateFields(String fName, String mob, String email, String password,String lastName,String countryCode,String referral,String city,String expiryDate,String license,String dob) {
+    public void validateFields(String fName, String mob, String email,
+                               String password,String lastName,String countryCode,
+                               String referral,String city,String expiryDate,String license,String dob) {
 
         if(profileUrl.isEmpty())
         {
@@ -419,10 +421,10 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
         {
             view.onError(context.getResources().getString(R.string.choose_city));
         }
-        else if(MyTextUtils.isEmpty(license))
+       /* else if(MyTextUtils.isEmpty(license))
         {
             view.onError(context.getResources().getString(R.string.license_empty));
-        }
+        }*/
         else if(MyTextUtils.isEmpty(dob))
         {
             view.onError(context.getResources().getString(R.string.dob_empty));

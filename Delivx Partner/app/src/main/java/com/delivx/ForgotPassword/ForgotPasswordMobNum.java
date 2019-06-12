@@ -65,6 +65,7 @@ public class ForgotPasswordMobNum extends DaggerAppCompatActivity implements Vie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utility.RtlConversion(this,presenter.getlanguageCode());
         setContentView(R.layout.activity_forgot_password_mob_num);
         overridePendingTransition(R.anim.bottem_slide_down, R.anim.stay_activity);
 

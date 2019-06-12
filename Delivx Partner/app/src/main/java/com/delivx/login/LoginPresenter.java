@@ -43,4 +43,12 @@ public interface LoginPresenter {
     void getCountryCode();
 
     void unSubScribeMQTT();
+
+    /**
+     * <h1>getLanguages</h1>
+     * <p>api call for get the languages</p>
+     */
+    void getLanguages();
+
+    void languageChanged(String langCode, String langName);
 }

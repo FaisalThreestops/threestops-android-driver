@@ -253,6 +253,11 @@ public class BookingRidePresenter implements BookingRideContract.PresenterOperat
         view.openChatAct(appointments);
     }
 
+    @Override
+    public String getlanguageCode() {
+        return preferenceHelperDataSource.getLanguageSettings().getLanguageCode();
+    }
+
     Observer<JSONArray> observer=new Observer<JSONArray>() {
         @Override
         public void onSubscribe(Disposable d) {

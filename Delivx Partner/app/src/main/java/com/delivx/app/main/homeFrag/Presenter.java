@@ -1,10 +1,17 @@
 package com.delivx.app.main.homeFrag;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.location.Location;
 
+import com.delivx.app.MyApplication;
 import com.delivx.app.bookingRequest.BookingPopUp;
+import com.delivx.login.LoginActivity;
+import com.delivx.login.language.LanguagesList;
 import com.delivx.managers.booking.RxBookingAssignObserver;
 import com.delivx.pojo.BookingAssigned;
+import com.delivx.service.LocationUpdateService;
+import com.delivx.utility.AppConstants;
 import com.google.gson.Gson;
 import com.delivx.RxObservers.RXMqttMessageObserver;
 import com.delivx.data.source.PreferenceHelperDataSource;
@@ -42,6 +49,9 @@ public class Presenter implements HomeFragmentContract.Presenter {
 
     @Inject
     NetworkService networkService;
+
+    @Inject
+    Activity context;
 
     @Inject
     DispatcherService dispatcherService;
@@ -128,27 +138,41 @@ public class Presenter implements HomeFragmentContract.Presenter {
 
                         try {
                             JSONObject jsonObject;
-                            if(value.code()==200)
-                            {
-                                String response=value.body().string();
-                                Utility.printLog("AssignedTRipResponse"+response);
-                                jsonObject=new JSONObject(response);
-                                Gson gson=new Gson();
-                                AssignedTripsPojo tripsPojo=gson.fromJson(jsonObject.toString(),AssignedTripsPojo.class);
-                                appointments=tripsPojo.getData().getAppointments();
-                                setAppointments();
-                                view.setAssignedTrips(appointments);
-                                view.onMasterStatusUpdate(tripsPojo.getData().getMasterStatus());
-                                view.addMarkers(appointments);
-                                preferenceHelperDataSource.setMasterStatus(tripsPojo.getData().getMasterStatus());
 
-                            }else
-                            {
-                                jsonObject=new JSONObject(value.errorBody().string());
-//                                view.setError(value.code(),jsonObject.getString("message"));
+                            switch (value.code()){
+                                case 200:
+                                    String response=value.body().string();
+                                    Utility.printLog("AssignedTRipResponse"+response);
+                                    jsonObject=new JSONObject(response);
+                                    Gson gson=new Gson();
+                                    AssignedTripsPojo tripsPojo=gson.fromJson(jsonObject.toString(),AssignedTripsPojo.class);
+                                    appointments=tripsPojo.getData().getAppointments();
+                                    setAppointments();
+                                    view.setAssignedTrips(appointments);
+                                    view.onMasterStatusUpdate(tripsPojo.getData().getMasterStatus());
+                                    view.addMarkers(appointments);
+                                    preferenceHelperDataSource.setMasterStatus(tripsPojo.getData().getMasterStatus());
+                                    break;
+                                case 498:
+                                    Utility.printLog("pushTopics shared pref "+preferenceHelperDataSource.getPushTopic());
+                                    Utility.subscribeOrUnsubscribeTopics(new JSONArray(preferenceHelperDataSource.getPushTopic()),false);
+                                    LanguagesList languagesList = preferenceHelperDataSource.getLanguageSettings();
+                                    preferenceHelperDataSource.clearSharedPredf();
+                                    preferenceHelperDataSource.setLanguageSettings(languagesList);
+                                    ((MyApplication)context.getApplicationContext()).disconnectMqtt();
+                                    context.startActivity(new Intent(context, LoginActivity.class));
+                                    if(Utility.isMyServiceRunning(LocationUpdateService.class, context))
+                                    {
+                                        Intent stopIntent = new Intent(context, LocationUpdateService.class);
+                                        stopIntent.setAction(AppConstants.ACTION.STOPFOREGROUND_ACTION);
+                                        context.startService(stopIntent);
+                                    }
+
+                                    break;
+                                default:
+                                    jsonObject=new JSONObject(value.errorBody().string());
+                                    break;
                             }
-
-                            Utility.printLog("assignedTrips : "+jsonObject.toString());
 
                         }catch (Exception e)
                         {
@@ -228,8 +252,8 @@ public class Presenter implements HomeFragmentContract.Presenter {
 
     @Override
     public void updateLocation(Location location) {
-     preferenceHelperDataSource.setDriverCurrentLat(String.valueOf(location.getLatitude()));
-     preferenceHelperDataSource.setDriverCurrentLongi(String.valueOf(location.getLongitude()));
+        preferenceHelperDataSource.setDriverCurrentLat(String.valueOf(location.getLatitude()));
+        preferenceHelperDataSource.setDriverCurrentLongi(String.valueOf(location.getLongitude()));
     }
 
     @Override

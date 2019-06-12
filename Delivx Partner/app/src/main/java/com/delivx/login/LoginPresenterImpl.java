@@ -7,8 +7,10 @@ import android.os.Build;
 import android.util.Base64;
 import android.util.Log;
 
+import com.delivx.login.language.LanguagesList;
+import com.delivx.login.language.LanguagesPojo;
 import com.delivx.managers.mqtt.MQTTManager;
-import com.google.firebase.messaging.FirebaseMessaging;
+import com.delivx.networking.LanguageApiService;
 import com.google.gson.Gson;
 import com.delivx.app.MyApplication;
 import com.delivx.utility.country_picker.CountryPicker;
@@ -28,9 +30,11 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 
 import io.reactivex.Observable;
@@ -41,6 +45,8 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
+import static com.delivx.utility.VariableConstant.LOGIN;
+
 public class LoginPresenterImpl implements LoginPresenter
 {
 
@@ -49,15 +55,17 @@ public class LoginPresenterImpl implements LoginPresenter
     @Inject LoginView loginView;
     @Inject PreferenceHelperDataSource preferenceHelperDataSource;
     @Inject MQTTManager mqttManager;
+    @Inject LanguageApiService languageApiService;
 
     private int minPhoneLength=0,maxPhoneLength=15;
-
     private boolean isEmailOptionSelected=true;
-
     private String countryCode="+31";
+    private ArrayList<LanguagesList> languagesLists;
 
     @Inject
-    public LoginPresenterImpl() {}
+    public LoginPresenterImpl() {
+        languagesLists = new ArrayList<>();
+    }
 
     @Override
     public void validateCredentials(String phone, String username, String password) {
@@ -172,6 +180,8 @@ public class LoginPresenterImpl implements LoginPresenter
 
     @Override
     public void getBundleData(Intent intent) {
+        if(preferenceHelperDataSource.getLanguageSettings()!=null && preferenceHelperDataSource.getLanguageSettings().getLanguageName()!=null)
+        loginView.setLanguage(preferenceHelperDataSource.getLanguageSettings().getLanguageName(),false);
         String msg=intent.getStringExtra("success_msg");
 
         if(msg!=null){
@@ -353,6 +363,7 @@ public class LoginPresenterImpl implements LoginPresenter
         preferenceHelperDataSource.setIsLogin(true);
         preferenceHelperDataSource.setPassword(password);
         preferenceHelperDataSource.setPassword(password);
+        preferenceHelperDataSource.setMyEmail(data.getEmail());
 
 
         Utility.printLog("pushTopics shared pref "+preferenceHelperDataSource.getPushTopic());
@@ -386,4 +397,88 @@ public class LoginPresenterImpl implements LoginPresenter
         }
 
     }
+
+    @Override
+    public void getLanguages() {
+        if(Utility.isNetworkAvailable(context)) {
+            loginView.showProgress();
+
+            Observable<Response<ResponseBody>> getLanguages = languageApiService.getLanguage();
+
+            getLanguages.observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(new Observer<Response<ResponseBody>>() {
+
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(Response<ResponseBody> value) {
+                            loginView.hideProgress();
+
+                            try {
+                                switch (value.code()) {
+                                    case VariableConstant.RESPONSE_CODE_SUCCESS:
+                                        String res = value.body().string();
+                                        Utility.printLog("language res : "+res);
+
+                                        Gson gson = new Gson();
+                                        LanguagesPojo languagesListModel = gson.fromJson(res,LanguagesPojo.class);
+                                        Utility.printLog("language res : "+languagesListModel.getData().size());
+                                        languagesLists.clear();
+                                        languagesLists.addAll(languagesListModel.getData());
+                                        boolean isLanguage = false;
+                                        for(LanguagesList languagesList : languagesLists)
+                                        {
+                                            if(preferenceHelperDataSource.getLanguageSettings().getLanguageCode().equals(languagesList.getLanguageCode()))
+                                            {
+                                                isLanguage = true;
+                                                loginView.setLanguageDialog( languagesListModel.getData(),languagesLists.indexOf(languagesList));
+                                                break;
+                                            }
+                                        }
+                                        if(!isLanguage)
+                                            loginView.setLanguageDialog(null,-1);
+
+                                        break;
+
+                                    default:
+                                        /*loginView.showError();*/
+                                        break;
+                                }
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Utility.printLog("getLanguages : Catch :" + e.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            loginView.hideProgress();
+                            Utility.printLog("getLanguages : onError :" + e.getMessage());
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+        }else {
+            loginView.showError(context.getResources().getString(R.string.no_network));
+        }
+
+    }
+
+    @Override
+    public void languageChanged(String langCode, String langName) {
+        preferenceHelperDataSource.setLanguage(langCode);
+        preferenceHelperDataSource.setLanguageSettings(new LanguagesList(langCode,langName));
+        loginView.setLanguage(langName,true);
+    }
+
+
+
 }

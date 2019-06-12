@@ -15,4 +15,6 @@ public interface VehicleListPresenterContract {
     void confirmOnclick();
 
     void logoutOnclick();
+
+    String getlanguageCode();
 }

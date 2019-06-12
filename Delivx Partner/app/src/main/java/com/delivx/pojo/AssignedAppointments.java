@@ -72,6 +72,8 @@ public class AssignedAppointments implements Serializable {
 
     private String storeType;
 
+    private String subTotalAmount;
+
     private boolean isCominigFromStore;
 
     public String getStorePhone() {
@@ -346,5 +348,13 @@ public class AssignedAppointments implements Serializable {
 
     public void setCominigFromStore(boolean cominigFromStore) {
         isCominigFromStore = cominigFromStore;
+    }
+
+    public String getSubTotalAmount() {
+        return subTotalAmount;
+    }
+
+    public void setSubTotalAmount(String subTotalAmount) {
+        this.subTotalAmount = subTotalAmount;
     }
 }
