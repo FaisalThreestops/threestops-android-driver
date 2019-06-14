@@ -11,7 +11,6 @@ public interface LoginPresenter {
     /**
      * <h2>validateCredentials</h2>
      * <p>method will validate the username and password entered by user</p>
-     *
      * @param phone
      * @param username can be mobile number and email
      * @param password any varchar string will be place here
@@ -24,6 +23,10 @@ public interface LoginPresenter {
      */
     void onDestroy();
 
+    /**
+     * <h2>getLoginCreds</h2>
+     * <p>specifies the key values to the username and password</p>
+     */
     void getLoginCreds();
 
     void forgotpassOnclick();
@@ -40,8 +43,15 @@ public interface LoginPresenter {
 
     void showDialogForCountryPicker();
 
+    /** setting the country code
+     * but default is +91
+     */
     void getCountryCode();
 
+    /**
+     * <h1>unSubScribeMQTT</h1>
+     * <p>unsubscribing the mqtt which are already subscribed</p>
+     */
     void unSubScribeMQTT();
 
     /**
@@ -50,5 +60,11 @@ public interface LoginPresenter {
      */
     void getLanguages();
 
+    /**
+     * <h2>languageChanged</h2>
+     * <p>Changing the language by  passsing language code and language name</p>
+     * @param langCode
+     * @param langName
+     */
     void languageChanged(String langCode, String langName);
 }

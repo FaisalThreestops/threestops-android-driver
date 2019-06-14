@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -103,8 +104,10 @@ public class SignupPersonal extends DaggerAppCompatActivity implements View.OnCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Setting the language
         Utility.RtlConversion(this,preferenceHelper.getLanguageSettings().getLanguageCode());
         setContentView(R.layout.activity_signup_personal);
+        //Animation for opening the Sign in page
         overridePendingTransition(R.anim.bottem_slide_down, R.anim.stay_activity);
 
         ButterKnife.bind(this);
@@ -161,6 +164,7 @@ public class SignupPersonal extends DaggerAppCompatActivity implements View.OnCl
     public void setCounryFlag(int drawableID, String dialCOde, int minLength, int maxLength) {
         flag.setBackgroundResource(drawableID);
         countryCode.setText(dialCOde);
+        Log.i("country code ", "setCounryFlag: "+dialCOde);
     }
 
     @Override
@@ -241,8 +245,11 @@ public class SignupPersonal extends DaggerAppCompatActivity implements View.OnCl
         tv_signup_zone.setText(zone);
     }
 
-
-
+    /**
+     * <h1>initializeViews</h1>
+     * <p>this is the method, for initialize the views</p>
+     * <pre>setting the text style </pre>
+     */
     private void initializeViews()
     {
         ClanaproNarrMedium = fontUtils.titaliumSemiBold();
@@ -268,7 +275,6 @@ public class SignupPersonal extends DaggerAppCompatActivity implements View.OnCl
         tv_next.setTypeface(ClanaproNarrMedium);
 
         presenter.getCountryCode();
-
     }
 
     @OnFocusChange({R.id.et_password,R.id.et_referral,R.id.et_signup_mob,R.id.et_email})

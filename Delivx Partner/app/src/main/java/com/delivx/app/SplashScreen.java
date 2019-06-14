@@ -64,6 +64,7 @@ public class SplashScreen extends DaggerAppCompatActivity {
      * based on status it corresponding activity will open</p>
      */
     private void checkConfiguration() {
+        //
         if (preferenceHelperDataSource.isLoggedIn()/*&&!preferenceHelperDataSource.getVehicleId().isEmpty()*/) {
             Intent intent = new Intent(SplashScreen.this, MainActivity.class);
             startActivity(intent);
