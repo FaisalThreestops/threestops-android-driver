@@ -90,6 +90,7 @@ public class MQTTManager
 
                 if(mqttAndroidClient!=null && mqttAndroidClient.isConnected()) {
                     subscribeToTopic(helperDataSource.getDriverChannel());
+                    subscribeToTopic(helperDataSource.getDriverChannel_msg());
                     holder.setConnected(true);
                     Utility.printLog(TAG + " TEST MQTT" +" connected " + mqttAndroidClient.getClientId());
                     rxNetworkObserver.publishData(holder);
@@ -234,7 +235,6 @@ public class MQTTManager
 
                         case "11":
                             try{
-                                Utility.printLog("the chnannel iss : "+helperDataSource.getDriverChannel()+"  "+jsonObject.getJSONObject("bookingData").getString("chn"));
                                 if(helperDataSource.getDriverChannel().equals(jsonObject.getJSONObject("bookingData").getString("chn"))){
                                     acknowledgeHelper.bookingAckApi(jsonObject.getJSONObject("bookingData").getString("orderId"), new AcknowledgementCallback() {
                                         @Override
@@ -389,6 +389,7 @@ public class MQTTManager
             if (mqttAndroidClient != null)
             {
                 unSubscribeToTopic(helperDataSource.getDriverChannel());
+                unSubscribeToTopic(helperDataSource.getDriverChannel_msg());
                 unSubscribeToTopic("message/"+helperDataSource.getDriverID());
                 mqttAndroidClient.disconnect();
             }

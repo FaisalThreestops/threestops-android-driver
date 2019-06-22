@@ -71,7 +71,10 @@ import dagger.android.support.DaggerAppCompatActivity;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
-
+/**
+ * <h1>MainActivity</h1>
+ * <p>Activity for controlling the fragments using NavigationView</p>
+ */
 public class MainActivity extends DaggerAppCompatActivity
         implements MainView,NavigationView.OnNavigationItemSelectedListener,
         View.OnClickListener, EasyPermissions.PermissionCallbacks,
@@ -88,7 +91,6 @@ public class MainActivity extends DaggerAppCompatActivity
     @BindView(R.id.abarMain) AppBarLayout abarMain;
     @BindView(R.id.button_menu) ImageView button_menu;
     @BindView(R.id.toolbarMenu) ImageView toolbarMenu;
-    @BindView(R.id.iv_history) ImageView iv_history;
     @BindView(R.id.menu_layout) RelativeLayout menu_layout;
     @BindView(R.id.nav_view) NavigationView navigationView;
     @BindView(R.id.tvVersion) TextView tvVersion;
@@ -121,13 +123,17 @@ public class MainActivity extends DaggerAppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Check the language code for RTL UI Check
         Utility.RtlConversion(this,presenter.getlanguageCode());
         setContentView(R.layout.activity_main);
 
+
+        //if the android version is oreo or above then set the screen always on without lock
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             setShowWhenLocked(true);
             setTurnScreenOn(true);
-        } else {
+        }//if the android version is below oreo then set the screen always on without lock
+        else {
             Window window = this.getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
             window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
@@ -138,7 +144,6 @@ public class MainActivity extends DaggerAppCompatActivity
         checkAndRequestPermissions();
 
         initVar();
-
 
         presenter.getVersion();
     }
@@ -165,6 +170,10 @@ public class MainActivity extends DaggerAppCompatActivity
     }
 
 
+    /**
+     * <h1>checkAndRequestPermissions</h1>
+     * <p>Check the location permission using EasyPermissions library</p>
+     */
     private void checkAndRequestPermissions() {
         if (Build.VERSION.SDK_INT >= 23) {
             String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION};
@@ -180,20 +189,25 @@ public class MainActivity extends DaggerAppCompatActivity
                 EasyPermissions.requestPermissions(this, getString(R.string.location_permission_message),
                         VariableConstant.RC_LOCATION_STATE, perms);
             }
-
         } else {
             // Pre-Marshmallow
             onPermissionGranted();
         }
     }
 
+    /**
+     * <h1>onPermissionGranted</h1>
+     * <p>start the service for location update</p>
+     */
     private void onPermissionGranted() {
-
+        //check whether the service already not running
         if (!Utility.isMyServiceRunning(LocationUpdateService.class, MainActivity.this)) {
             Intent startIntent = new Intent(MainActivity.this, LocationUpdateService.class);
             startIntent.setAction(AppConstants.ACTION.STARTFOREGROUND_ACTION);
             startService(startIntent);
         }
+
+        //if the Home fragment is created and added in Main Activity then set the google map
         if (homeOpen && homeFragment.isAdded()) {
             homeFragment.setGoogleMap();
         }
@@ -203,32 +217,34 @@ public class MainActivity extends DaggerAppCompatActivity
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
+
+    /**
+     * <h1>initVar</h1>
+     * <p>Initialize the Variable</p>
+     */
     private void initVar() {
 
-
-
+        //initialize the Dialog Helper for change language call back
         dialogHelper.getDialogCallbackHelper(new DialogHelper.DialogCallbackHelper() {
 
             @Override
             public void walletFragOpen() {
-
             }
 
             @Override
             public void changeLanguage(String langCode, String langName, int dir) {
 
+                //Location update service stop  if running
                 if(Utility.isMyServiceRunning(LocationUpdateService.class,getApplicationContext())){
                     Intent stopIntent = new Intent(MainActivity.this, LocationUpdateService.class);
                     stopIntent.setAction(AppConstants.ACTION.STOPFOREGROUND_ACTION);
                     startService(stopIntent);
                 }
-                presenter.languageChanged(langCode,langName,dir);
+                presenter.languageChanged(langCode,langName);
             }
         });
 
-
-
-
+        ///register the Network check Broadcast receiver
         registerReceiver(new ConnectivityReceiver(),
                 new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
@@ -266,31 +282,28 @@ public class MainActivity extends DaggerAppCompatActivity
 
         drawer.addDrawerListener(toggle);
 
+        //assign the home fragment as default
         fragment=homeFragment;
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.frame_container, homeFragment)
                 .commit();
+
         tv_on_off_statas.setTypeface(clanaproNarrMedium);
-
         tv_prof_edit.setTypeface(clanaproNarrMedium);
-
         tvTitle.setTypeface(clanaproNarrMedium);
-
         tvTitle2.setTypeface(clanaproNarrMedium);
-
         menu_layout.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.transparent));
         abarMain.setVisibility(View.GONE);
     }
 
     @Override
     public void onBackPressed() {
+        // check navigation drawer open and close
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-//            super.onBackPressed();
-
-
+            //checking for double press the back button  and close activity
             if (doubleBackToExitPressedOnce) {
                 super.onBackPressed();
                 return;
@@ -299,8 +312,8 @@ public class MainActivity extends DaggerAppCompatActivity
             this.doubleBackToExitPressedOnce = true;
             Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
 
+            //wait 2 second for back press and if not done make default value
             new Handler().postDelayed(new Runnable() {
-
                 @Override
                 public void run() {
                     doubleBackToExitPressedOnce=false;
@@ -316,6 +329,7 @@ public class MainActivity extends DaggerAppCompatActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         switch (item.getItemId()) {
 
+            //event for Home Select
             case R.id.nav_home:
                 fragment = homeFragment;
                 fragmentManager.beginTransaction()
@@ -327,12 +341,12 @@ public class MainActivity extends DaggerAppCompatActivity
                 tvTitle2.setVisibility(View.GONE);
                 abarMain.setVisibility(View.GONE);
                 tv_prof_edit.setVisibility(View.GONE);
-                iv_history.setVisibility(View.GONE);
                 button_menu.setImageResource(R.drawable.selector_hamburger);
                 menu_layout.setVisibility(View.VISIBLE);
                 menu_layout.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.transparent));
                 break;
 
+            //event for History Select
             case R.id.nav_history:
                 homeOpen = false;
                 fragment = historyFragment;
@@ -346,11 +360,12 @@ public class MainActivity extends DaggerAppCompatActivity
                 tvTitle.setText((getResources().getString(R.string.history)));
                 tvTitle.setVisibility(View.VISIBLE);
                 tvTitle2.setVisibility(View.GONE);
-                iv_history.setVisibility(View.GONE);
                 menu_layout.setVisibility(View.GONE);
                 abarMain.setVisibility(View.VISIBLE);
                 button_menu.setImageResource(R.drawable.selector_hamburger_white);
                 break;
+
+            //event for Support Select
             case R.id.nav_support:
                 homeOpen = false;
                 fragment = new SupportFrag();
@@ -359,24 +374,17 @@ public class MainActivity extends DaggerAppCompatActivity
                         .replace(R.id.frame_container, fragment)
                         .commit();
 
-               /* Intent intent=new Intent(this,ChattingActivity.class);
-                intent.putExtra("BID","12345");
-                intent.putExtra("PROID","12345");
-                intent.putExtra("PRONAME","12345");
-                startActivity(intent);*/
-
                 tv_on_off_statas.setVisibility(View.GONE);
                 tv_prof_edit.setVisibility(View.GONE);
                 tvTitle.setText((getResources().getString(R.string.support)));
                 tvTitle.setVisibility(View.VISIBLE);
                 tvTitle2.setVisibility(View.GONE);
-                iv_history.setVisibility(View.GONE);
                 menu_layout.setVisibility(View.GONE);
                 abarMain.setVisibility(View.VISIBLE);
-
                 button_menu.setImageResource(R.drawable.selector_hamburger_white);
                 break;
 
+            //event for Bank Details Select
             case R.id.nav_bank_details:
                 homeOpen = false;
 
@@ -392,82 +400,25 @@ public class MainActivity extends DaggerAppCompatActivity
                 tvTitle2.setVisibility(View.GONE);
                 tvTitle.setVisibility(View.VISIBLE);
                 tv_prof_edit.setVisibility(View.GONE);
-                iv_history.setVisibility(View.GONE);
                 menu_layout.setVisibility(View.GONE);
                 abarMain.setVisibility(View.VISIBLE);
                 button_menu.setImageResource(R.drawable.selector_hamburger_white);
-
                 break;
 
-           /* case R.id.nav_portal:
-                *//*homeOpen = false;
-                walletOpen=false;
-                fragment = new PortalFrag();
-                fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();
-                tv_on_off_statas.setVisibility(View.GONE);
-                tvTitle.setText("Portal");
-                tv_prof_edit.setVisibility(View.GONE);
-                tvTitle2.setVisibility(View.GONE);
-                tvTitle.setVisibility(View.VISIBLE);
-                tv_prof_edit.setVisibility(View.GONE);
-                iv_history.setVisibility(View.GONE);
-                menu_layout.setVisibility(View.GONE);
-                abarMain.setVisibility(View.VISIBLE);
-                button_menu.setImageResource(R.drawable.selector_hamburger_white);*//*
-
-                break;*/
+            //event for Wallet Select
             case R.id.nav_payment:
-                /*homeOpen = false;
-                walletOpen=true;
-                fragment=new WalletFragment();
-                fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.frame_container, fragment)
-                        .commit();
-                tv_on_off_statas.setVisibility(View.GONE);
-                tv_prof_edit.setVisibility(View.GONE);
-                tvTitle.setVisibility(View.GONE);
-//                tvTitle.setText(getString(R.string.payments));
-                tvTitle2.setVisibility(View.GONE);
-                iv_history.setVisibility(View.GONE);
-                menu_layout.setVisibility(View.GONE);
-                abarMain.setVisibility(View.GONE);*/
                 try {
-
                     Intent intent = new Intent(MainActivity.this, com.delivx.walletNew.WalletTransActivity.class);
                     startActivity(intent);
-
                 } catch (Exception e) {
                     Utility.printLog(TAG + " caught : " + e.getMessage());
                 }
                 break;
 
-
-           /* case R.id.nav_live_chat:
-                if (homeOpen) {
-                    abarMain.setVisibility(View.GONE);
-                }
-//                walletOpen=false;
-                menu_layout.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.transparent));
-
-                try {
-
-                    Intent intent = new Intent(MainActivity.this, com.livechatinc.inappchat.ChatWindowActivity.class);
-                    intent.putExtra(ChatWindowActivity.KEY_GROUP_ID, "your_group_id");
-                    intent.putExtra(ChatWindowActivity.KEY_LICENCE_NUMBER, "4711811");
-                    startActivity(intent);
-
-                } catch (Exception e) {
-                    Utility.printLog(TAG + " caught : " + e.getMessage());
-                }
-
-                break;*/
-
+            //event for Language Select
             case R.id.item_menu_nav_language:
                 presenter.getLanguages();
                 break;
-
         }
 
         drawer.closeDrawer(GravityCompat.START);
@@ -475,10 +426,11 @@ public class MainActivity extends DaggerAppCompatActivity
     }
 
 
-    @OnClick({R.id.button_menu,R.id.toolbarMenu,R.id.iv_history,R.id.tv_prof_edit})
+    @OnClick({R.id.button_menu,R.id.toolbarMenu,R.id.tv_prof_edit})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            //for navigation drawer open and close
             case R.id.button_menu:
             case R.id.toolbarMenu: {
                 if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -489,6 +441,7 @@ public class MainActivity extends DaggerAppCompatActivity
                 break;
             }
 
+            //for edit the profile in Profile Fragment (Enable only in profile)
             case R.id.tv_prof_edit:
                 if (VariableConstant.IS_STRIPE_ADDED) {
                     Intent intent = new Intent(MainActivity.this, BankNewAccountActivity.class);
@@ -499,10 +452,7 @@ public class MainActivity extends DaggerAppCompatActivity
                 }
                 break;
 
-            case R.id.iv_history:
-                homeFragment.hideList();
-                break;
-
+            //open the profile Fragment
             case R.id.rl_profile_view:
                 homeOpen = false;
                 fragment = myProfileFrag ;
@@ -513,7 +463,6 @@ public class MainActivity extends DaggerAppCompatActivity
                         .commit();
                 drawer.closeDrawer(GravityCompat.START);
                 tv_on_off_statas.setVisibility(View.GONE);
-                iv_history.setVisibility(View.GONE);
                 tv_prof_edit.setVisibility(View.GONE);
                 tvTitle.setVisibility(View.GONE);
                 tvTitle2.setVisibility(View.VISIBLE);
@@ -543,20 +492,12 @@ public class MainActivity extends DaggerAppCompatActivity
 
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
+        //Location permission check
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
             new AppSettingsDialog.Builder(this).build().show();
         } else if (requestCode == VariableConstant.RC_LOCATION_STATE) {
             EasyPermissions.requestPermissions(MainActivity.this, getString(R.string.location_permission_message)
-                     , VariableConstant.RC_LOCATION_STATE, Manifest.permission.ACCESS_FINE_LOCATION);
-        }
-    }
-
-    public void moveDrawer(DrawerLayout mDrawerLayout) {
-        // Drawer State checking
-        if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
-            mDrawerLayout.closeDrawer(Gravity.LEFT);
-        } else {
-            mDrawerLayout.openDrawer(Gravity.LEFT);
+                    , VariableConstant.RC_LOCATION_STATE, Manifest.permission.ACCESS_FINE_LOCATION);
         }
     }
 
@@ -568,28 +509,25 @@ public class MainActivity extends DaggerAppCompatActivity
     @Override
     public void networkError(String message) {
         Utility.printLog(TAG+ "networkError called..1");
-
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if(dialog!=null && !dialog.isShowing()) {
-                        mShowNoInternetMessage();
-                    }else if(dialog==null){
-                        mShowNoInternetMessage();
-                    }
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(dialog!=null && !dialog.isShowing()) {
+                    mShowNoInternetMessage();
+                }else if(dialog==null){
+                    mShowNoInternetMessage();
                 }
-            });
-        }
+            }
+        });
+    }
 
 
     @Override
     public void showProgress() {
-//        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgress() {
-//        progressBar.setVisibility(View.GONE);
     }
 
     @Override
@@ -600,26 +538,23 @@ public class MainActivity extends DaggerAppCompatActivity
 
     @Override
     public void setError(final int code, String msg) {
-
-
         if(code==498){
             logout();
             return;
         }
         Utility.mShowMessage(getResources().getString(R.string.message), msg, this, new Utility.AlertDialogCallBack() {
-                @Override
-                public void onOkPressed() {
-                    if(code==498){
-                        logout();
-                    }
-
+            @Override
+            public void onOkPressed() {
+                if(code==498){
+                    logout();
                 }
+            }
 
-                @Override
-                public void onCancelPressed() {
+            @Override
+            public void onCancelPressed() {
 
-                }
-            });
+            }
+        });
     }
 
     @Override
@@ -652,15 +587,20 @@ public class MainActivity extends DaggerAppCompatActivity
         LanguagesList languagesList = preferenceHelperDataSource.getLanguageSettings();
         preferenceHelperDataSource.clearSharedPredf();
         preferenceHelperDataSource.setLanguageSettings(languagesList);
+
+        //unsubscribe the fcm topics
         FirebaseMessaging.getInstance().unsubscribeFromTopic("/topics/" + preferenceHelperDataSource.getPushTopic());
         ((MyApplication)getApplicationContext()).disconnectMqtt();
 
+        //stop the update location service if running
         if(Utility.isMyServiceRunning(LocationUpdateService.class,MainActivity.this))
         {
             Intent stopIntent = new Intent(MainActivity.this, LocationUpdateService.class);
             stopIntent.setAction(AppConstants.ACTION.STOPFOREGROUND_ACTION);
             MainActivity.this.startService(stopIntent);
         }
+
+        //Redirect to  the  Login activity  withe close  all existing Activities
         Intent intent=new Intent(MainActivity.this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
@@ -690,10 +630,6 @@ public class MainActivity extends DaggerAppCompatActivity
      */
     public FragmentRefreshListener getFragmentRefreshListener() {
         return fragmentRefreshListener;
-    }
-
-    public void setFragmentRefreshListener(FragmentRefreshListener fragmentRefreshListener) {
-        this.fragmentRefreshListener = fragmentRefreshListener;
     }
 
     public interface FragmentRefreshListener{
@@ -731,9 +667,9 @@ public class MainActivity extends DaggerAppCompatActivity
                 ViewGroup.LayoutParams.MATCH_PARENT);
 
 
-        TextView tvTryAgain= (TextView) dialog.findViewById(R.id.tvTryAgain);
+        TextView tvTryAgain= dialog.findViewById(R.id.tvTryAgain);
         tvTryAgain.setTypeface(fontUtils.titaliumRegular());
-        TextView tvErrorMessage= (TextView) dialog.findViewById(R.id.tvErrorMessage);
+        TextView tvErrorMessage= dialog.findViewById(R.id.tvErrorMessage);
         tvErrorMessage.setTypeface(fontUtils.titaliumSemiBold());
         tvTryAgain.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -756,14 +692,10 @@ public class MainActivity extends DaggerAppCompatActivity
     }
 
     @Override
-    public void setLanguage(String langName, boolean indexSelected) {
-
-        if(indexSelected)
-        {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            Runtime.getRuntime().exit(0);
-        }
+    public void setLanguageSuccess() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        Runtime.getRuntime().exit(0);
     }
 }

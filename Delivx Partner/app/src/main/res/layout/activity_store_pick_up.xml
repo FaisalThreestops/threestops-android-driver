@@ -319,12 +319,38 @@
                         android:gravity="end"
                         android:layout_weight="1"
                         android:layout_gravity="end"
-                        android:text="$ 40.00"
+                        android:text="$ 0.00"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/color_sup_txt"
                         android:textSize="14sp"
                         />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/ll_tax"
+                    android:layout_marginTop="@dimen/dpTen"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_tax"
+                        android:layout_gravity="start"
+                        android:text="@string/taxes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_sup_txt"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_tax_item_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"/>
+
+
                 </LinearLayout>
 
 

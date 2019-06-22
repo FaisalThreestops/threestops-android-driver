@@ -162,8 +162,14 @@ public class Presenter implements ChattingContract.PresenterOperations {
                     ChatData chatData=gson.fromJson(jsonObject.getString("data"),ChatData.class);
                     chatData.setCustProType(2);
 
-                    chatDataArry.add(chatData);
-                    view.updateData(chatDataArry);
+                    if(chatData.getBid().matches(bid)){
+                        chatDataArry.add(chatData);
+                        view.updateData(chatDataArry);
+                    }else {
+
+                    }
+
+
 
                 }catch (Exception e){
                     e.printStackTrace();

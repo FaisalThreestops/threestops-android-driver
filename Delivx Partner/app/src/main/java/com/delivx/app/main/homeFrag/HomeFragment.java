@@ -67,7 +67,7 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
 
     private View rootView;
     private TextView tv_on_off_statas;
-    private ImageView ivExpand,button_menu,button_back;
+    private ImageView button_menu,button_back;
     private SupportMapFragment mapFragment;
     private GoogleMap map;
 
@@ -142,7 +142,6 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
     public void initLayoutId(){
 
         tv_on_off_statas = (TextView) getActivity().findViewById(R.id.tv_on_off_statas);
-        ivExpand = (ImageView) getActivity().findViewById(R.id.iv_history);
         button_menu = (ImageView) getActivity().findViewById(R.id.button_menu);
         button_back = (ImageView) getActivity().findViewById(R.id.button_back);
         Typeface fontBold=fontUtils.titaliumSemiBold();
@@ -150,7 +149,6 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
         tv_on_off_statas.setTypeface(fontBold);
         tv_on_off_statas.setOnClickListener(this);
         button_back.setOnClickListener(this);
-        ivExpand.setOnClickListener(this);
         tvMarkerAll.setTypeface(font);
         tvMarkerPickUp.setTypeface(font);
         tvMarkerDelivery.setTypeface(font);
@@ -365,7 +363,6 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
                 presenter.updateMasterStatus();
                 break;
             case R.id.button_back:
-            case R.id.iv_history:
                 presenter.expandMap();
                 Utility.printLog("expand minimize");
                 break;
@@ -426,7 +423,6 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
         tv_on_off_statas.setVisibility(View.GONE);
         button_back.setVisibility(View.VISIBLE);
         button_menu.setVisibility(View.GONE);
-        ivExpand.setImageResource(R.drawable.pickup_expand_icon_off);
 
         tvMarkerPickUp.setTextColor(getActivity().getResources().getColor(R.color.color_sup_txt));
         tvMarkerAll.setTextColor(getActivity().getResources().getColor(R.color.colorPrimary));
@@ -442,7 +438,6 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
         tv_on_off_statas.setVisibility(View.VISIBLE);
         button_back.setVisibility(View.GONE);
         button_menu.setVisibility(View.VISIBLE);
-        ivExpand.setImageResource(R.drawable.home_note_icon_off);
     }
 
     @Override

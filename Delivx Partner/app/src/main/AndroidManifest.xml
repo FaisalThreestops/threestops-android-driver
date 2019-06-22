@@ -211,6 +211,7 @@
 
         <activity android:name="com.delivx.mqttChat.ChattingActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleInstance"
             />
 
         <receiver

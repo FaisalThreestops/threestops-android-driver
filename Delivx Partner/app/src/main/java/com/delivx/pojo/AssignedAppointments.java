@@ -74,6 +74,10 @@ public class AssignedAppointments implements Serializable {
 
     private String subTotalAmount;
 
+    private String excTax;
+
+    private ArrayList<ExclusiveTaxes> exclusiveTaxes;
+
     private boolean isCominigFromStore;
 
     public String getStorePhone() {
@@ -356,5 +360,21 @@ public class AssignedAppointments implements Serializable {
 
     public void setSubTotalAmount(String subTotalAmount) {
         this.subTotalAmount = subTotalAmount;
+    }
+
+    public String getExcTax() {
+        return excTax;
+    }
+
+    public void setExcTax(String excTax) {
+        this.excTax = excTax;
+    }
+
+    public ArrayList<ExclusiveTaxes> getExclusiveTaxes() {
+        return exclusiveTaxes;
+    }
+
+    public void setExclusiveTaxes(ArrayList<ExclusiveTaxes> exclusiveTaxes) {
+        this.exclusiveTaxes = exclusiveTaxes;
     }
 }

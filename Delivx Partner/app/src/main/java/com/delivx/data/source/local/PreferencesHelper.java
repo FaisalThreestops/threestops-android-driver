@@ -349,6 +349,17 @@ public class PreferencesHelper implements PreferenceHelperDataSource {
     }
 
     @Override
+    public void setDriverChannel_msg(String chn) {
+        editor.putString(PreferenceKeys.KeysEntry.CHN_MSG,chn);
+        editor.commit();
+    }
+
+    @Override
+    public String getDriverChannel_msg() {
+        return sharedPreferences.getString(PreferenceKeys.KeysEntry.CHN_MSG,null);
+    }
+
+    @Override
     public void setVehicleId(String id) {
         editor.putString(PreferenceKeys.KeysEntry.VEH_ID,id);
         editor.commit();

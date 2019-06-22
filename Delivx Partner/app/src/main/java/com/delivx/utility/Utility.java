@@ -77,7 +77,6 @@ public class Utility {
 
     /**
      * custom method to display the toast message
-     *
      * @param context
      * @param msg
      */
@@ -1023,24 +1022,19 @@ public class Utility {
      **/
     public static int changeLanguageConfig(String code,Context context )
     {
-        /*Configuration configuration = context.getResources().getConfiguration();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
-        {
-            configuration.setLayoutDirection(new Locale(code));
-            printLog(" language direction "+configuration.getLayoutDirection());
-        }
-        configuration.locale = new Locale(code);
-        context.getResources().updateConfiguration(configuration,context.getResources().getDisplayMetrics());
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            return configuration.getLayoutDirection();
-        }*/
         return 0;
     }
 
 
+    /**
+     * <h1>RtlConversion</h1>
+     * <p>Check the RTL depends on the language code</p>
+     * @param activity : activity
+     * @param lang : Language Code
+     */
     public static void RtlConversion(Activity activity, String lang)
     {
-
+        //Checking the language code is empty, if not empty and whether it is "ar"(Arabic), then assign as RTL(Right to left)
         if(lang!=null && lang.equals("ar"))
         {
             setLocale(lang,activity);
@@ -1048,10 +1042,11 @@ public class Utility {
             {
                 activity.getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
             }
-
         }
+        //if the language is null or arabic
         else
         {
+            //if the language is null initiate with english and assign as LTR(left to right)
             if(lang==null)
                 lang="en";
             setLocale(lang,activity);
@@ -1062,6 +1057,12 @@ public class Utility {
 
     }
 
+    /**
+     * <h1>setLocale</h1>
+     * <p>set Locale for the language</p>
+     * @param lang : language code
+     * @param context : activity or context of Activity
+     */
     private static void setLocale(String lang, Context context) {
         try {
             Utility.printLog("Locale lang " + lang);

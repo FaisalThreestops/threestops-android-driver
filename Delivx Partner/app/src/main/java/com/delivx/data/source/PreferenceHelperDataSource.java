@@ -303,6 +303,10 @@ public interface PreferenceHelperDataSource
      * This method is used to get the channel
      */
     String getDriverChannel();
+
+    void setDriverChannel_msg(String chn);
+    String getDriverChannel_msg();
+
     /**
      * <h2>.setVehicleId</h2>
      * This method is used to set the vehicle Id

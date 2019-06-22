@@ -130,7 +130,6 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
     @Override
     public void getCountryCode() {
         String code= Utility.getCounrtyCode(context);
-        Log.i("code", "getCountryCode: "+code);
 
         if(!code.isEmpty()){
             String drawableName = "flag_"
@@ -152,7 +151,6 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
                     }
                 }
 
-                Log.i("country", "getCountryCode: hellooo");
                 view.setCounryFlag(id,dialCode,minPhoneLength,maxPhoneLength);
                 view.setMaxLength(maxPhoneLength);
             } catch (IOException e) {
@@ -179,9 +177,7 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
 
                 dialCode=dCode;
                 view.setMaxLength(maxPhoneLength);
-                Log.i("country code ", "setCounryFlag: "+dialCode);
                 view.setCounryFlag(resID,dialCode,minPhoneLength,maxPhoneLength);
-                Log.i("country code ", "setCounryFlag: "+dialCode);
 
                 picker.dismiss();
             }

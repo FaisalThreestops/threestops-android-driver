@@ -76,6 +76,7 @@ public class ChattingActivity extends DaggerAppCompatActivity implements Chattin
     protected void onResume() {
         super.onResume();
         isOpen=true;
+        presenter.getChattingData();
     }
 
 

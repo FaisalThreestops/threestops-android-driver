@@ -35,10 +35,11 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
-/**
- * Created by DELL on 29-01-2018.
- */
 
+/**
+ * <h1>MainPresenterImpl</h1>
+ * <p>model class for implementing the Main Activity</p>
+ */
 public class MainPresenterImpl implements MainPresenter {
 
     @Inject  AcknowledgeHelper acknowledgeHelper;
@@ -64,13 +65,7 @@ public class MainPresenterImpl implements MainPresenter {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-
         RXMqttMessageObserver.getInstance().subscribe(observer);
-        /*rxNetworkObserver.subscribe(networkObserver);
-        rxNetworkObserver.subscribeOn(Schedulers.newThread());
-        rxNetworkObserver.observeOn(AndroidSchedulers.mainThread());*/
-
-
     }
 
     @Override
@@ -161,28 +156,6 @@ public class MainPresenterImpl implements MainPresenter {
     @Override
     public void subscribeNetworkObserver() {
         checkForNetwork(networkStateHolder.isConnected());
-
-        /*rxNetworkObserver.subscribeOn(Schedulers.io());
-        rxNetworkObserver.observeOn(AndroidSchedulers.mainThread());
-        networkDisposable = rxNetworkObserver.subscribeWith(new DisposableObserver<NetworkStateHolder>() {
-            @Override
-            public void onNext(NetworkStateHolder networkStateHolder) {
-                Utility.printLog(" network not available "+networkStateHolder.isConnected());
-                if(networkStateHolder.isConnected())
-                    view.networkAvailable();
-                else
-                    view.networkNotAvailable();
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-            }
-        });*/
     }
 
 
@@ -201,7 +174,6 @@ public class MainPresenterImpl implements MainPresenter {
                     switch (value.getInt("action")){
                         case 12:
                             getAppConfig();
-//                            view.logout();
                             break;
 
                         case 11:
@@ -239,10 +211,7 @@ public class MainPresenterImpl implements MainPresenter {
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             context.startActivity(intent);
                         }
-
                     }
-
-
                 });
             }
 
@@ -358,10 +327,10 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     @Override
-    public void languageChanged(String langCode, String langName, int dir) {
+    public void languageChanged(String langCode, String langName) {
         helperDataSource.setLanguage(langCode);
         helperDataSource.setLanguageSettings(new LanguagesList(langCode,langName));
-        view.setLanguage(langName,true);
+        view.setLanguageSuccess();
 
     }
 

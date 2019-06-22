@@ -44,7 +44,6 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements Store
     @BindView(R.id.tv_cust_name) TextView tv_cust_name;
     @BindView(R.id.iv_call_customer) ImageView iv_call_customer;
     @BindView(R.id.tv_pick_up_title) TextView tv_pick_up_title;
-    /*@BindView(R.id.ll_total) LinearLayout ll_total;*/
     @BindView(R.id.tv_pickup) TextView tv_pickup;
     @BindView(R.id.iv_call_pickUp) ImageView iv_call_pickUp;
     @BindView(R.id.iv_search) ImageView iv_search;
@@ -55,14 +54,14 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements Store
     @BindView(R.id.tvProductsTitle) TextView tvProductsTitle;
     @BindView(R.id.tvPriceTitle) TextView tvPriceTitle;
     @BindView(R.id.tvItems) TextView tvItems;
-/*    @BindView(R.id.tvGrandTotal) TextView tvGrandTotal;
-    @BindView(R.id.tvGrandTotalTitle) TextView tvGrandTotalTitle;*/
     @BindView(R.id.tv_status_text) TextView tv_status_text;
     @BindView(R.id.ll_item_container) LinearLayout ll_item_container;
+    @BindView(R.id.ll_tax) LinearLayout ll_tax;
+    @BindView(R.id.ll_tax_item_container) LinearLayout ll_tax_item_container;
+    @BindView(R.id.tv_tax) TextView tv_tax;
     @BindView(R.id.myseek) Slider seekbar;
     @BindView(R.id.progressBar) ProgressBar progressBar;
     @BindView(R.id.Bottomlayout) RelativeLayout bottomLayout;
-    /*@BindView(R.id.view_last) View view_last;*/
     @BindView(R.id.rv_item_show)
     RecyclerView rv_item_show;
     private Typeface font,fontBold;
@@ -80,6 +79,8 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements Store
     @BindView(R.id.ll_discount) LinearLayout ll_discount;
     @BindView(R.id.tv_subToatal) TextView tv_subToatal;
     @BindView(R.id.tv_subToatal_val) TextView tv_subToatal_val;
+
+    private boolean tax_added = false;
 
     @Inject
     StoreDetailsContract.Presenter presenter;
@@ -127,6 +128,7 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements Store
         tv_delCharge_val.setTypeface(font);
         tv_discount.setTypeface(font);
         tv_discount_val.setTypeface(font);
+        tv_tax.setTypeface(font);
         tv_subToatal.setTypeface(fontBold);
         tv_subToatal_val.setTypeface(fontBold);
         tv_paymentbreskdown.setTypeface(font);
@@ -313,6 +315,17 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements Store
 
                 ll_item_container.addView(view);
 
+
+                if(appointments.getExcTax()!=null ){
+                    float exc_tax = Float.parseFloat(appointments.getExcTax());
+                    if(exc_tax>0 && !tax_added){
+                        addTaxItems(appointments);
+                    }else {
+                        ll_tax.setVisibility(View.GONE);
+                    }
+                }else
+                    ll_tax.setVisibility(View.GONE);
+
                 /*if(appointments.getShipmentDetails().get(i).getAddOns()!=null) {
                     String addOns = "";
                     addOns = appointments.getShipmentDetails().get(i).getAddOns().size() > 0 ? "Addons: " + appointments.getShipmentDetails().get(i).getAddOns().toString() : "";
@@ -327,6 +340,39 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements Store
         }
      /*   tvGrandTotal.setText(appointments.getCurrencySymbol()+" "+
                 String.format(Locale.US,"%.2f",Float.parseFloat(appointments.getTotalAmount())));*/
+    }
+
+    public void addTaxItems(AssignedAppointments appointments){
+        tax_added = true;
+        int size=appointments.getExclusiveTaxes().size();
+        if(size>0){
+            for(int i=0;i<size;i++){
+                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                View view = inflater.inflate(R.layout.history_item_show_single_raw, null);
+
+                TextView itemName= view.findViewById(R.id.tvItemName);
+                itemName.setTypeface(font,Typeface.ITALIC);
+                itemName.setTextColor(getResources().getColor(R.color.divider2));
+                TextView itemPrice= view.findViewById(R.id.tvItemPrice);
+                itemPrice.setTypeface(font);
+                itemPrice.setTextColor(getResources().getColor(R.color.divider2));
+                TextView itemUnit= view.findViewById(R.id.tvQuantity);
+                itemPrice.setTypeface(font, Typeface.ITALIC);
+                itemUnit.setVisibility(View.INVISIBLE);
+
+
+                String tax_name = "("+appointments.getExclusiveTaxes().get(i).getTaxCode()+"%"+")";
+                itemName.setText(tax_name);
+
+                float tax_price=Float.parseFloat(appointments.getExclusiveTaxes().get(i).getPrice());
+                itemPrice.setText(appointments.getCurrencySymbol()+" "+
+                        String.format(Locale.US,"%.2f",tax_price));
+
+                ll_tax_item_container.addView(view);
+
+
+            }
+        }
     }
 
     @Override

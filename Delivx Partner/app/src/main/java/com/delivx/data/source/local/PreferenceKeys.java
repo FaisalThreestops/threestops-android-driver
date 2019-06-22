@@ -15,6 +15,7 @@ public class PreferenceKeys
         public static final String VEH_ID = "vehicle_id";
         public static final String VEHICLES = "vehicles";
         public static final String CHN = "driver_channel";
+        public static final String CHN_MSG = "CHN_MSG";
         public static final String PRESENCE_CHN = "presence_channel";
         public static final String LOGGED_IN = "login";
         public static final String DEVICE_ID = "device_id";

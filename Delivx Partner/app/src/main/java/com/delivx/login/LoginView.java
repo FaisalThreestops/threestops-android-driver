@@ -44,11 +44,7 @@ public interface LoginView extends BaseView {
      */
     void navigateToHome();
 
-    /**<h2>setLoginCreds</h2>
-     * <p>adding the key values to the username and password</p>
-     * @param username
-     * @param pass
-     */
+
     void setLoginCreds(String username,String  pass);
 
     void startForgotPassAct();

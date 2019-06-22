@@ -81,6 +81,11 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
     @BindView(R.id.tv_discount_val) TextView tv_discount_val;
     @BindView(R.id.ll_discount) LinearLayout ll_discount;
 
+    @BindView(R.id.ll_tax) LinearLayout ll_tax;
+    @BindView(R.id.ll_tax_item_container) LinearLayout ll_tax_item_container;
+    @BindView(R.id.tv_tax) TextView tv_tax;
+
+    private boolean tax_added = false;
 
     private Typeface font,fontBold;
 
@@ -262,6 +267,17 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
                 +"\n"+addOns);
                 itemName.setTextColor(getResources().getColor(R.color.sky_blue));*/
 
+
+                if(appointments.getExcTax()!=null ){
+                    float exc_tax = Float.parseFloat(appointments.getExcTax());
+                    if(exc_tax>0 /*&& !tax_added*/){
+                        addTaxItems(appointments);
+                    }else {
+                        ll_tax.setVisibility(View.GONE);
+                    }
+                }else
+                    ll_tax.setVisibility(View.GONE);
+
                 final int finalI = i;
                 itemName.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -275,6 +291,41 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
             }
         }
         tvGrandTotal.setText(appointments.getCurrencySymbol()+" "+String.format(Locale.US,"%.2f",Float.parseFloat(appointments.getTotalAmount())));
+    }
+
+
+    public void addTaxItems(AssignedAppointments appointments){
+        tax_added = true;
+
+        ll_tax_item_container.removeAllViews();
+        int size=appointments.getExclusiveTaxes().size();
+        if(size>0){
+            for(int i=0;i<size;i++){
+                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                View view = inflater.inflate(R.layout.history_item_show_single_raw, null);
+
+                TextView itemName= view.findViewById(R.id.tvItemName);
+                itemName.setTypeface(font,Typeface.ITALIC);
+                itemName.setTextColor(getResources().getColor(R.color.divider2));
+                TextView itemPrice= view.findViewById(R.id.tvItemPrice);
+                itemPrice.setTypeface(font);
+                itemPrice.setTextColor(getResources().getColor(R.color.divider2));
+                TextView itemUnit= view.findViewById(R.id.tvQuantity);
+                itemPrice.setTypeface(font, Typeface.ITALIC);
+                itemUnit.setVisibility(View.INVISIBLE);
+
+                String tax_name = "("+appointments.getExclusiveTaxes().get(i).getTaxCode()+"%"+")";
+                itemName.setText(tax_name);
+
+                float tax_price=Float.parseFloat(appointments.getExclusiveTaxes().get(i).getPrice());
+                itemPrice.setText(appointments.getCurrencySymbol()+" "+
+                        String.format(Locale.US,"%.2f",tax_price));
+
+                ll_tax_item_container.addView(view);
+
+
+            }
+        }
     }
 
 

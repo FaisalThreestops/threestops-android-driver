@@ -98,7 +98,7 @@ public class DataBaseHelper extends SQLiteOpenHelper
                 dbSavedChat.setFromID(cursor.getString(1));
                 dbSavedChat.setTargetId(cursor.getString(2));
                 dbSavedChat.setTimestamp(cursor.getLong(3));
-                dbSavedChat.setBid(cursor.getLong(4));
+                dbSavedChat.setBid(String.valueOf(cursor.getLong(4)));
                 dbSavedChat.setType(cursor.getInt(5));
                 dbSavedChat.setCustProType(cursor.getInt(6));
 

@@ -162,8 +162,6 @@ public class LocationUpdateService
         super.onCreate();
         buildGoogleApiClient();
 
-
-        Utility.printLog(TAG+" my service : "+preferenceHelperDataSource.getDriverChannel());
         IntentFilter iFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
         iFilter.addAction("com.app.driverapp.internetStatus");
         registerReceiver(mBroadcastReceiver, iFilter);

@@ -177,12 +177,12 @@ public class PickUpPresenter implements PickUpContract.PresenterOperations {
             view.showProgress();
 
         Observable<Response<ResponseBody>> updateOrder=networkService.updateOrder(
-                preferenceHelperDataSource.getLanguage(),
                 preferenceHelperDataSource.getToken(),
+                preferenceHelperDataSource.getLanguage(),
                 jsonArray.toString(),
                 null,
                 appointments.getBid(),
-                appointments.getTotalAmount(),
+                appointments.getDeliveryCharge(),
                 preferenceHelperDataSource.getDriverCurrentLat()+"",
                 preferenceHelperDataSource.getDriverCurrentLongi()+""
         );

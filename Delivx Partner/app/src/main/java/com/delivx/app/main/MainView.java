@@ -27,5 +27,9 @@ public interface MainView extends BaseView
 
     void setLanguageDialog(ArrayList<LanguagesList> data, int indexOf);
 
-    void setLanguage(String langName, boolean b);
+    /**
+     * <h1>setLanguageSuccess</h1>
+     * <p>restart the main activity</p>
+     */
+    void setLanguageSuccess();
 }

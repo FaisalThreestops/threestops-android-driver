@@ -70,40 +70,32 @@ public class LoginPresenterImpl implements LoginPresenter
     @Override
     public void validateCredentials(String phone, String username, String password) {
 
-        //if username is empty and choose the email Adrress to login
         if (MyTextUtils.isEmpty(username) && isEmailOptionSelected) {
             onUsernameError(context.getString(R.string.err_email));
             return;
         }
-        //choose the email adrress to login and if email is not in format
         else if (!MyTextUtils.isEmail(username) && isEmailOptionSelected  )
         {
             onUsernameError(context.getString(R.string.invalidEmail));
             return;
         }
-        //choose the phone number to login and phone number is empty
         else if(!isEmailOptionSelected && MyTextUtils.isEmpty(phone))
         {
             loginView.showError(context.getString(R.string.phone_mis));
             return;
         }
-        //choose the phone number to login and if checking the phone number length
         else if( !Utility.phoneNumberLengthValidation(phone,countryCode) && !isEmailOptionSelected )
         {
             loginView.showError(context.getString(R.string.invalidPhone));
             return;
         }
-        //if password is not entered
         else if (MyTextUtils.isEmpty(password)) {
             onPasswordError(context.getString(R.string.password_miss));
             return;
         }
-        //checking the authorize username and password
         else {
-            //checking by email and password
             if(isEmailOptionSelected)
                 signIn(username,password);
-            //checking by phone number and password
             else
                 signIn(phone,password);
         }
@@ -215,7 +207,6 @@ public class LoginPresenterImpl implements LoginPresenter
         loginView.onEmailLoginSelected();
     }
 
-    //selecting the country code in the Dialog
     @Override
     public void showDialogForCountryPicker() {
         final CountryPicker picker = CountryPicker.newInstance(context.getResources().getString(R.string.select_country));
@@ -238,7 +229,6 @@ public class LoginPresenterImpl implements LoginPresenter
             }
         });
     }
-    //Getting the RegisterID
     public static int getResId(String drawableName) {
         try {
             Class<R.drawable> res = R.drawable.class;
@@ -280,6 +270,7 @@ public class LoginPresenterImpl implements LoginPresenter
      * <h2>onError<h2/>
      * <p>this method have a api error message and this message will
      * show to their and will stop progress dialog</p>
+     *
      * @param error will get api error message and show to the user
      */
 
@@ -290,15 +281,12 @@ public class LoginPresenterImpl implements LoginPresenter
         }
     }
 
-    //checking for authorized user
     void signIn(String username, final String password){
 
-        //loginView holds the loginActivity class so its not null
         if (loginView != null) {
             loginView.showProgress();
         }
 
-        //api call
         Observable<Response<ResponseBody>> responseObservable=networkService.signIn(preferenceHelperDataSource.getLanguage(),countryCode,username,password,preferenceHelperDataSource.getDeviceId(),preferenceHelperDataSource.getFCMRegistrationId(),
                 VariableConstant.APP_VERSION,VariableConstant.DEVICE_MAKER,
                 VariableConstant.DEVICE_MODEL,VariableConstant.DEVICE_TYPE,Utility.date(), Build.VERSION.SDK_INT);
@@ -321,21 +309,20 @@ public class LoginPresenterImpl implements LoginPresenter
 
                 try {
                     JSONObject jsonObject;
-                    //if the email and password exists successfully
                     if(value.code()==200){
-                        jsonObject=new JSONObject(value.body().string());
-                        Log.i("value", "onNext: "+value.body());
+                        String res = value.body().string();
+                        Utility.printLog("the login response : "+res);
+                        jsonObject=new JSONObject(res);
                         Gson gson=new Gson();
                         SinginResponsePojo signInResponse=gson.fromJson(jsonObject.toString(),SinginResponsePojo.class);
                         preferenceHelperDataSource.setPushTopic(jsonObject.getJSONObject("data").getString("fcmTopics"));
                         setSignInData(signInResponse.getData(),password);
                         Utility.printLog("LoginResponse : "+jsonObject.toString());
                     }else {
-                        // if the email and password not exists,, prints the error message
+
                         jsonObject=new JSONObject(value.errorBody().string());
                         loginView.showError(jsonObject.getString("message"));
                         Utility.printLog("LoginResponse : "+value.errorBody().string());
-                        Log.i("value", "onNext: "+value.errorBody());
                     }
 
 
@@ -366,8 +353,11 @@ public class LoginPresenterImpl implements LoginPresenter
         });
     }
 
-    public void setSignInData(SigninData data, String password){
+    private void setSignInData(SigninData data, String password){
         preferenceHelperDataSource.setDriverChannel(data.getChn());
+        String driver_channel = "message/"+data.getMid();
+        Utility.printLog("login driver_channel "+driver_channel);
+        preferenceHelperDataSource.setDriverChannel_msg(driver_channel);
         VariableConstant.MQTT_CHANEL = data.getChn();
         preferenceHelperDataSource.setDriverID(data.getMid());
         preferenceHelperDataSource.setToken(data.getToken());
@@ -377,9 +367,7 @@ public class LoginPresenterImpl implements LoginPresenter
 
         preferenceHelperDataSource.setIsLogin(true);
         preferenceHelperDataSource.setPassword(password);
-        preferenceHelperDataSource.setPassword(password);
         preferenceHelperDataSource.setMyEmail(data.getEmail());
-
 
         Utility.printLog("pushTopics shared pref "+preferenceHelperDataSource.getPushTopic());
         try {
