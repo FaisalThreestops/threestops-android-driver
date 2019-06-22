@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.util.Base64;
-import android.util.Log;
 
 import com.delivx.login.language.LanguagesList;
 import com.delivx.login.language.LanguagesPojo;
@@ -23,19 +22,12 @@ import com.delivx.pojo.SinginResponsePojo;
 import com.delivx.utility.MyTextUtils;
 import com.delivx.utility.Utility;
 import com.delivx.utility.VariableConstant;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Locale;
-
 import javax.inject.Inject;
-import javax.inject.Named;
-
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -45,11 +37,8 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
-import static com.delivx.utility.VariableConstant.LOGIN;
-
 public class LoginPresenterImpl implements LoginPresenter
 {
-
     @Inject Activity context;
     @Inject NetworkService networkService;
     @Inject LoginView loginView;
@@ -57,13 +46,12 @@ public class LoginPresenterImpl implements LoginPresenter
     @Inject MQTTManager mqttManager;
     @Inject LanguageApiService languageApiService;
 
-    private int minPhoneLength=0,maxPhoneLength=15;
     private boolean isEmailOptionSelected=true;
     private String countryCode="+31";
     private ArrayList<LanguagesList> languagesLists;
 
     @Inject
-    public LoginPresenterImpl() {
+    LoginPresenterImpl() {
         languagesLists = new ArrayList<>();
     }
 
@@ -72,26 +60,21 @@ public class LoginPresenterImpl implements LoginPresenter
 
         if (MyTextUtils.isEmpty(username) && isEmailOptionSelected) {
             onUsernameError(context.getString(R.string.err_email));
-            return;
         }
         else if (!MyTextUtils.isEmail(username) && isEmailOptionSelected  )
         {
             onUsernameError(context.getString(R.string.invalidEmail));
-            return;
         }
         else if(!isEmailOptionSelected && MyTextUtils.isEmpty(phone))
         {
             loginView.showError(context.getString(R.string.phone_mis));
-            return;
         }
         else if( !Utility.phoneNumberLengthValidation(phone,countryCode) && !isEmailOptionSelected )
         {
             loginView.showError(context.getString(R.string.invalidPhone));
-            return;
         }
         else if (MyTextUtils.isEmpty(password)) {
             onPasswordError(context.getString(R.string.password_miss));
-            return;
         }
         else {
             if(isEmailOptionSelected)
@@ -99,41 +82,29 @@ public class LoginPresenterImpl implements LoginPresenter
             else
                 signIn(phone,password);
         }
-
     }
-
 
     @Override
     public void getCountryCode() {
         String code= Utility.getCounrtyCode(context);
 
         if(!code.isEmpty()){
-            String drawableName = "flag_"
-                    + code.toLowerCase(Locale.ENGLISH);
-            int id=getResId(drawableName);
             String allCountriesCode = null;
             try {
                 allCountriesCode = readEncodedJsonString(context);
                 if(allCountriesCode!=null){
                     JSONArray countrArray = new JSONArray(allCountriesCode);
                     JSONObject jsonObject;
-
                     String dialCode="+91";
                     for(int index = 0; index<countrArray.length(); index++){
                         jsonObject=countrArray.getJSONObject(index);
                         if(jsonObject.getString("code").equals(code)){
                             dialCode=jsonObject.getString("dial_code");
-//                            maxPhoneLength=jsonObject.getInt("max_digits");
-//                            minPhoneLength=(!jsonObject.getString("min_digits").isEmpty())?jsonObject.getInt("min_digits"):5;
-                            break;
+                      break;
                         }
                     }
-
-                    loginView.setMaxLength(maxPhoneLength);
-                    loginView.setCounryCode(id,dialCode,minPhoneLength,maxPhoneLength);
+                    loginView.setCountryCode(dialCode);
                     countryCode=dialCode;
-                }else {
-                    loginView.setMaxLength(10);
                 }
 
             } catch (IOException e) {
@@ -144,6 +115,13 @@ public class LoginPresenterImpl implements LoginPresenter
         }
     }
 
+    /**
+     * <h1>readEncodedJsonString</h1>
+     * <p>decode the country code</p>
+     * @param context activity
+     * @return decoded country code
+     * @throws java.io.IOException
+     */
     private static String readEncodedJsonString(Context context) throws java.io.IOException {
 
         try{
@@ -169,7 +147,7 @@ public class LoginPresenterImpl implements LoginPresenter
     }
 
     @Override
-    public void forgotpassOnclick() {
+    public void forgotPassOnclick() {
         loginView.startForgotPassAct();
     }
 
@@ -181,9 +159,10 @@ public class LoginPresenterImpl implements LoginPresenter
     @Override
     public void getBundleData(Intent intent) {
         if(preferenceHelperDataSource.getLanguageSettings()!=null && preferenceHelperDataSource.getLanguageSettings().getLanguageName()!=null)
-        loginView.setLanguage(preferenceHelperDataSource.getLanguageSettings().getLanguageName(),false);
-        String msg=intent.getStringExtra("success_msg");
+        loginView.setLanguage(preferenceHelperDataSource.getLanguageSettings().getLanguageName(),
+                false);
 
+        String msg=intent.getStringExtra("success_msg");
         if(msg!=null){
             Utility.mShowMessage(context.getResources().getString(R.string.message),msg,context);
         }
@@ -214,36 +193,19 @@ public class LoginPresenterImpl implements LoginPresenter
         picker.setListener(new CountryPickerListener() {
             @Override
             public void onSelectCountry(String name, String code, String dialCode,int minLength,int maxLength) {
-                String drawableName = "flag_"
-                        + code.toLowerCase(Locale.ENGLISH);
-                int resID=getResId(drawableName);
-
-                minPhoneLength=minLength;
-                maxPhoneLength=maxLength;
                 countryCode=dialCode;
-
-                loginView.setMaxLength(maxPhoneLength);
-                loginView.setCounryCode(resID,dialCode,minPhoneLength,maxPhoneLength);
-
+                loginView.setCountryCode(dialCode);
                 picker.dismiss();
             }
         });
     }
-    public static int getResId(String drawableName) {
-        try {
-            Class<R.drawable> res = R.drawable.class;
-            Field field = res.getField(drawableName);
-            int drawableId = field.getInt(null);
-            return drawableId;
-        } catch (Exception e) {
-            Log.e("CountryCodePicker", "Failure to get drawable id.", e);
-        }
-        return -1;
-    }
 
-
-
-    public void onUsernameError(String message) {
+    /**
+     * <h1>onUsernameError</h1>
+     * <p>for the email error message show</p>
+     * @param message error message for email
+     */
+    private void onUsernameError(String message) {
         if (loginView != null) {
             loginView.setUsernameError(message);
             loginView.hideProgress();
@@ -251,7 +213,12 @@ public class LoginPresenterImpl implements LoginPresenter
     }
 
 
-    public void onPasswordError(String message) {
+    /**
+     * <h1>onPasswordError</h1>
+     * <p>set the error for password </p>
+     * @param message error message for password
+     */
+    private void onPasswordError(String message) {
         if (loginView != null) {
             loginView.setPasswordError(message);
             loginView.hideProgress();
@@ -259,6 +226,10 @@ public class LoginPresenterImpl implements LoginPresenter
     }
 
 
+    /**
+     * <h1>onSuccess</h1>
+     * <p>for hide the progress and open the MainActivity after login success</p>
+     */
     public void onSuccess() {
         if (loginView != null) {
             loginView.hideProgress();
@@ -270,10 +241,8 @@ public class LoginPresenterImpl implements LoginPresenter
      * <h2>onError<h2/>
      * <p>this method have a api error message and this message will
      * show to their and will stop progress dialog</p>
-     *
      * @param error will get api error message and show to the user
      */
-
     public void onError(String error) {
         if (loginView != null) {
             loginView.hideProgress();
@@ -281,12 +250,17 @@ public class LoginPresenterImpl implements LoginPresenter
         }
     }
 
-    void signIn(String username, final String password){
 
+    /**
+     * <h1>signIn</h1>
+     * <p>Sign In API call</p>
+     * @param username email id or phone number
+     * @param password password
+     */
+    private void signIn(String username, final String password){
         if (loginView != null) {
             loginView.showProgress();
         }
-
         Observable<Response<ResponseBody>> responseObservable=networkService.signIn(preferenceHelperDataSource.getLanguage(),countryCode,username,password,preferenceHelperDataSource.getDeviceId(),preferenceHelperDataSource.getFCMRegistrationId(),
                 VariableConstant.APP_VERSION,VariableConstant.DEVICE_MAKER,
                 VariableConstant.DEVICE_MODEL,VariableConstant.DEVICE_TYPE,Utility.date(), Build.VERSION.SDK_INT);
@@ -353,6 +327,13 @@ public class LoginPresenterImpl implements LoginPresenter
         });
     }
 
+    /**
+     * <h1>setSignInData</h1>
+     * <p>handle the login response ,
+     * storing the data in shared preference and subscribe the MQTT Topic</p>
+     * @param data sign in response
+     * @param password password for login
+     */
     private void setSignInData(SigninData data, String password){
         preferenceHelperDataSource.setDriverChannel(data.getChn());
         String driver_channel = "message/"+data.getMid();
@@ -364,7 +345,6 @@ public class LoginPresenterImpl implements LoginPresenter
         preferenceHelperDataSource.setPresenceChannel(data.getPresence_chn());
         preferenceHelperDataSource.setMyName(data.getName());
         preferenceHelperDataSource.setProfilePic(data.getProfilePic());
-
         preferenceHelperDataSource.setIsLogin(true);
         preferenceHelperDataSource.setPassword(password);
         preferenceHelperDataSource.setMyEmail(data.getEmail());
@@ -382,13 +362,11 @@ public class LoginPresenterImpl implements LoginPresenter
         }else {
             MyApplication.getInstance().connectMQTT();
         }
-
         onSuccess();
     }
 
     @Override
     public void unSubScribeMQTT() {
-
         try {
             if(VariableConstant.MQTT_CHANEL!=null && mqttManager!=null && mqttManager.isMQTTConnected()){
                 mqttManager.unSubscribeToTopic(VariableConstant.MQTT_CHANEL);
@@ -405,9 +383,7 @@ public class LoginPresenterImpl implements LoginPresenter
     public void getLanguages() {
         if(Utility.isNetworkAvailable(context)) {
             loginView.showProgress();
-
             Observable<Response<ResponseBody>> getLanguages = languageApiService.getLanguage();
-
             getLanguages.observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
                     .subscribe(new Observer<Response<ResponseBody>>() {
@@ -448,7 +424,6 @@ public class LoginPresenterImpl implements LoginPresenter
                                         break;
 
                                     default:
-                                        /*loginView.showError();*/
                                         break;
                                 }
 
