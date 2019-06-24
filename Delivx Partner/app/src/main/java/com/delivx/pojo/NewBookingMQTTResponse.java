@@ -4,11 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-/**
- * Created by ads on 16/05/17.
- */
-
-public class PubnubResponse implements Serializable {
+public class NewBookingMQTTResponse implements Serializable {
 
     private String storeName;
     private String customerName;

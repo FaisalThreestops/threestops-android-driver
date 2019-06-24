@@ -9,7 +9,7 @@ import android.os.CountDownTimer;
 import com.google.gson.Gson;
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.networking.DispatcherService;
-import com.delivx.pojo.PubnubResponse;
+import com.delivx.pojo.NewBookingMQTTResponse;
 import com.delivx.utility.Utility;
 
 import org.json.JSONObject;
@@ -26,25 +26,15 @@ import retrofit2.Response;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 
-/**
- * Created by DELL on 26-09-2017.
- */
 
 public class Presenter implements BookingPopUpMainMVP.PresenterOperations {
 
-    @Inject
-    BookingPopUpMainMVP.ViewOperations view;
+    @Inject   BookingPopUpMainMVP.ViewOperations view;
+    @Inject   Activity context;
+    @Inject   PreferenceHelperDataSource preferenceHelperDataSource;
+    @Inject   DispatcherService dispatcherService;
 
-    @Inject
-    Activity context;
-
-    @Inject
-    PreferenceHelperDataSource preferenceHelperDataSource;
-
-    @Inject
-    DispatcherService dispatcherService;
-
-    private PubnubResponse pubnubResponse;
+    private NewBookingMQTTResponse newBookingMQTTResponse;
     private CountDownTimer countDownTimer;
 
     @Inject
@@ -53,15 +43,14 @@ public class Presenter implements BookingPopUpMainMVP.PresenterOperations {
 
     @Override
     public void updateApptRequest(String status) {
-        respondToreqApi(status);
+        respondToReqApi(status);
     }
 
     @Override
     public void startTimer()
     {
         view.startMusicPlayer();
-
-        final long finalTime = pubnubResponse.getExpiryTimer();
+        final long finalTime = newBookingMQTTResponse.getExpiryTimer();
         countDownTimer = new CountDownTimer(finalTime * 1000, 1000) {
 
             public void onTick(long millisUntilFinished) {
@@ -78,7 +67,7 @@ public class Presenter implements BookingPopUpMainMVP.PresenterOperations {
             }
             public void onFinish() {
                 view.onTimerChanged(0,"00");
-                cancelCoutdownTimer();
+                cancelCoutDownTimer();
             }
         }.start();
 
@@ -93,21 +82,24 @@ public class Presenter implements BookingPopUpMainMVP.PresenterOperations {
 
             String response = bundle.getString("booking_Data");
             Utility.printLog("the booking req details : "+ response);
-            pubnubResponse = new Gson().fromJson(response, PubnubResponse.class);
-            view.setTexts(pubnubResponse);
-
-//            preferenceHelperDataSource.setLastBooking(pubnubResponse.getBid());
+            newBookingMQTTResponse = new Gson().fromJson(response, NewBookingMQTTResponse.class);
+            view.setTexts(newBookingMQTTResponse);
         }
     }
 
 
-
-
-    public void respondToreqApi(String status){
+    /**
+     * <h1>respondToReqApi</h1>
+     * <p>Update online and offline in API</p>
+     * @param status 3 online, 4 offline
+     */
+    private void respondToReqApi(String status){
         if(view!=null){
             view.showProgressbar();
         }
-        Observable<Response<ResponseBody>> bookingAck=dispatcherService.respondToRequest(preferenceHelperDataSource.getLanguage(),preferenceHelperDataSource.getToken(),pubnubResponse.getBid(), String.valueOf(status));
+        Observable<Response<ResponseBody>> bookingAck=dispatcherService.respondToRequest(
+                preferenceHelperDataSource.getLanguage(),preferenceHelperDataSource.getToken(),
+                newBookingMQTTResponse.getBid(), String.valueOf(status));
         bookingAck.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Response<ResponseBody>>() {
@@ -115,7 +107,6 @@ public class Presenter implements BookingPopUpMainMVP.PresenterOperations {
                     public void onSubscribe(Disposable d) {
 
                     }
-
                     @Override
                     public void onNext(Response<ResponseBody> value) {
 
@@ -132,7 +123,7 @@ public class Presenter implements BookingPopUpMainMVP.PresenterOperations {
                                 jsonObject=new JSONObject(value.errorBody().string());
                                 view.onSuccess(jsonObject.getString("message"));
                             }
-                            cancelCoutdownTimer();
+                            cancelCoutDownTimer();
 
                             Utility.printLog("respondToRequest : "+jsonObject.toString());
 
@@ -147,7 +138,7 @@ public class Presenter implements BookingPopUpMainMVP.PresenterOperations {
                         if(view!=null){
                             view.dismissProgressbar();
                         }
-                        cancelCoutdownTimer();
+                        cancelCoutDownTimer();
                     }
 
                     @Override
@@ -159,7 +150,11 @@ public class Presenter implements BookingPopUpMainMVP.PresenterOperations {
                 });
     }
 
-    private void cancelCoutdownTimer(){
+    /**
+     * <h1>cancelCoutDownTimer</h1>
+     * <p>if any error occur, stop the timer</p>
+     */
+    private void cancelCoutDownTimer(){
         if (countDownTimer != null) {
             countDownTimer.cancel();
             countDownTimer = null;
