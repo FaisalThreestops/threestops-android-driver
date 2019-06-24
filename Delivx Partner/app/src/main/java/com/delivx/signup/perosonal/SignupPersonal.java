@@ -44,7 +44,6 @@ import eu.janmuller.android.simplecropimage.CropImage;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
-/**************************************************************************************************/
 public class SignupPersonal extends DaggerAppCompatActivity implements View.OnClickListener,PersonalView,View.OnFocusChangeListener ,View.OnTouchListener{
 
     private final String TAG = SignupPersonal.class.getSimpleName();
@@ -53,9 +52,6 @@ public class SignupPersonal extends DaggerAppCompatActivity implements View.OnCl
     public static String ImageType = "";
     private String  profile_pic = "profile_pic", licence_pic = "add_licence",licence_pic_back="license_back";
 
-
-//    private double[] location;
-//    private double lat, lng;
     private Typeface ClanaproNarrMedium;
     private Typeface ClanaproNarrNews;
 
@@ -105,12 +101,10 @@ public class SignupPersonal extends DaggerAppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         Utility.RtlConversion(this,preferenceHelper.getLanguageSettings().getLanguageCode());
         setContentView(R.layout.activity_signup_personal);
+        //Animation for opening the Sign in page
         overridePendingTransition(R.anim.bottem_slide_down, R.anim.stay_activity);
-
         ButterKnife.bind(this);
-
         initializeViews();
-
         presenter.setActionBar();
         presenter.setActionBarTitle();
     }
@@ -124,17 +118,15 @@ public class SignupPersonal extends DaggerAppCompatActivity implements View.OnCl
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
-
-//        outState.putString("ImageType", ImageType);
     }
 
-    /**********************************************************************************************/
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
     }
+
 
     @Override
     public void initActionBar() {
@@ -165,9 +157,7 @@ public class SignupPersonal extends DaggerAppCompatActivity implements View.OnCl
 
     @Override
     public void setMaxLength(int length) {
-       /* InputFilter[] fArray = new InputFilter[1];
-        fArray[0] = new InputFilter.LengthFilter(length);
-        et_signup_mob.setFilters(fArray);*/
+
     }
 
     @Override
@@ -200,8 +190,6 @@ public class SignupPersonal extends DaggerAppCompatActivity implements View.OnCl
     @Override
     public void moveToVehicleDetails(Bundle bundle)
     {
-
-//        tv_next.setEnabled(true);
         Intent intent=new Intent(this, ForgotPasswordVerify.class);
         intent.putExtras(bundle);
         startActivity(intent);
@@ -241,8 +229,11 @@ public class SignupPersonal extends DaggerAppCompatActivity implements View.OnCl
         tv_signup_zone.setText(zone);
     }
 
-
-
+    /**
+     * <h1>initializeViews</h1>
+     * <p>this is the method, for initialize the views</p>
+     * <pre>setting the text style </pre>
+     */
     private void initializeViews()
     {
         ClanaproNarrMedium = fontUtils.titaliumSemiBold();
@@ -271,25 +262,31 @@ public class SignupPersonal extends DaggerAppCompatActivity implements View.OnCl
 
     }
 
+
     @OnFocusChange({R.id.et_password,R.id.et_referral,R.id.et_signup_mob,R.id.et_email})
     public void onFocusChange(View v, boolean hasFocus) {
         switch (v.getId())
         {
+            //referral focus check
             case R.id.et_referral:
                 if(!hasFocus && !et_referral.getText().toString().isEmpty())
                     presenter.validateReferralCode(et_referral.getText().toString());
                 break;
 
+            //phone number check
             case R.id.et_signup_mob:
+                //if we enter the number then it will entered to this condition for validation
                 if(!hasFocus && !et_signup_mob.getText().toString().isEmpty())
                     presenter.validatePhone(countryCode.getText().toString(),et_signup_mob.getText().toString());
                 break;
 
+            //email validate
             case R.id.et_email:
                 if(!hasFocus && !et_email.getText().toString().isEmpty())
                     presenter.validateEmail(et_email.getText().toString());
                 break;
 
+                //password validate
             case R.id.et_password:
                 if (!hasFocus && !et_password.getText().toString().isEmpty() && tv_signup_city.getText().toString().isEmpty())
                     tv_signup_city.callOnClick();
@@ -303,10 +300,11 @@ public class SignupPersonal extends DaggerAppCompatActivity implements View.OnCl
     public void onClick(View v)
     {
         switch (v.getId()) {
-
+            //event for confirm sign up
             case R.id.tv_next:
                 tv_next.setEnabled(false);
                 methodRequiresOnePermission();
+                //validating the all fields in signUp
                 if (preferenceHelper.getDeviceId() != null)
                     presenter.validateFields(et_fname.getText().toString(),
                         et_signup_mob.getText().toString(),
@@ -322,37 +320,45 @@ public class SignupPersonal extends DaggerAppCompatActivity implements View.OnCl
                             );
                 break;
 
+            //event for country
             case R.id.countryPicker:
                 presenter.showDialogForCountryPicker();
                 break;
 
+            //event for profile image
             case R.id.iv_signup_pp:
                 presenter.profileOnclick();
                 ImageType = profile_pic;
                 break;
 
+            //event for city
             case R.id.tv_signup_city:
                 presenter.getCity();
                 break;
+            //event for Zone
             case R.id.tv_signup_zone:
                 if(!"".equals(presenter.getCityId()) &&presenter.getCityId()!=null)
                     presenter.getZonesOnCity(presenter.getCityId());
                 else
                     Toast.makeText(this, " Please select City to Continue", Toast.LENGTH_SHORT).show();
                 break;
+            //event for licence expiry date
             case R.id.tvExpiryDate:
                 presenter.openCalender(1);
                 break;
 
+            //event for DOB
             case R.id.tvDob:
                 presenter.openCalender(2);
                 break;
 
+            //event for licence front image
             case R.id.ll_add_licence:
                 presenter.licenseOnclik();
                 ImageType = licence_pic;
                 break;
 
+            //event for licence back image
             case R.id.ll_add_licenc2:
                 presenter.licenseOnclik();
                 ImageType = licence_pic_back;
@@ -373,7 +379,6 @@ public class SignupPersonal extends DaggerAppCompatActivity implements View.OnCl
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Utility.printLog(TAG + " onActivityResult    requestCode " + requestCode + " resultCode " + resultCode);
-
         presenter.onActivityResult( requestCode,  resultCode,  data);
 
     }
@@ -464,11 +469,6 @@ public class SignupPersonal extends DaggerAppCompatActivity implements View.OnCl
     protected void onResume() {
         super.onResume();
         tv_next.setEnabled(true);
-        /*location = Utility.getLocation(SignupPersonal.this);
-        if (location != null && location.length > 0) {
-            lat = location[0];
-            lng = location[1];
-        }*/
     }
 
     @Override
@@ -492,7 +492,7 @@ public class SignupPersonal extends DaggerAppCompatActivity implements View.OnCl
         return false;
     }
 
-
+    //after giving the permission
     @AfterPermissionGranted(VariableConstant.RC_READ_PHONE_STATE)
     private void methodRequiresOnePermission() {
         String[] perms = {Manifest.permission.READ_PHONE_STATE};

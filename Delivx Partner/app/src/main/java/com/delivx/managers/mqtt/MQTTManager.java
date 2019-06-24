@@ -13,6 +13,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import com.delivx.RxObservers.RXMqttMessageObserver;
 import com.delivx.RxObservers.RxNetworkObserver;
@@ -201,7 +202,6 @@ public class MQTTManager
                         String content = jsonObject.getJSONObject("data").getString("content");
                         String custID = jsonObject.getJSONObject("data").getString("fromID");
                         String custName = jsonObject.getJSONObject("data").getString("name");
-
                         sendNotification(bid,content,custID,custName);
                     }
 

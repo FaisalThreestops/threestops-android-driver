@@ -63,10 +63,6 @@ import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 
-/**
- * Created by DELL on 08-01-2018.
- */
-
 public class PersonalPresenter implements PersonalPresenterContract,DatePickerDialog.OnDateSetListener
 {
     private int minPhoneLength=0,maxPhoneLength=15;
@@ -145,8 +141,6 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
                     jsonObject=countrArray.getJSONObject(index);
                     if(jsonObject.getString("code").equals(code)){
                         dialCode=jsonObject.getString("dial_code");
-                       /* maxPhoneLength=jsonObject.getInt("max_digits");
-                        minPhoneLength=(!jsonObject.getString("min_digits").isEmpty())?jsonObject.getInt("min_digits"):5;*/
                         break;
                     }
                 }
@@ -187,13 +181,18 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
     @Override
     public void validateEmail(String email)
     {
+        //if email field is not null
         if (!MyTextUtils.isEmpty(email)) {
+            //if email is in format
             if (MyTextUtils.isEmail(email)) {
                  validaEmailPhone(2,email);
-            } else {
+            }
+            //if email is not in format
+            else {
                 view.onEmailError(context.getResources().getString(R.string.invalidEmail));
             }
         }
+        //if email textview is null
         else {
             view.onEmailError(context.getResources().getString(R.string.err_email));
         }
@@ -201,32 +200,7 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
 
     @Override
     public void validatePhone(String countryCode, String phone) {
-
-      /*  if (!MyTextUtils.isEmpty(phone)) {
-
-            if(dialCode.isEmpty()){
-                dialCode=view.getCountryCode();
-            }
-            if (Utility.phoneNumberLengthValidation(phone,dialCode)) {
-
-//                Utility.printLog(dialCode+phone+" is valid: "+Utility.phoneNumberLengthValidation(phone,dialCode));
-                validaEmailPhone(1,phone);
-            } else {
-                view.onPhoneError(context.getResources().getString(R.string.invalidPhone));
-            }
-        }
-        else {
-            view.onPhoneError(context.getResources().getString(R.string.err_phone_no));
-        }
-*/
-
-
-
-
-
-        //        signUpPersonalCheck.setPhone(false);
-
-
+        //if phone number is not empty
         if(!TextUtil.isEmpty(phone))
         {
             String phoneNumberE164Format = countryCode.concat(phone);
@@ -234,11 +208,13 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
             try {
                 Phonenumber.PhoneNumber phoneNumberProto = phoneUtil.parse(phoneNumberE164Format, null);
                 boolean isValid = phoneUtil.isValidNumber(phoneNumberProto); // returns true if valid
-
+                //if phone number is valid
                 if (isValid ) {
                     validaEmailPhone(1,phone);
 
-                } else {
+                }
+                //if phone number is not valid
+                else {
                     view.onPhoneError(context.getResources().getString(R.string.invalidPhone));
                 }
 
@@ -246,6 +222,7 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
 
             }
         }
+        //if phone number is empty
         else {
             view.onPhoneError(context.getResources().getString(R.string.err_phone_no));
         }
@@ -281,7 +258,6 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
         {
             switch (requestCode) {
                 case CAMERA_PIC:
-//                    fileType = "image";
                     view.startCropImage();
                     break;
 
@@ -293,9 +269,9 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
 
                         if (Environment.MEDIA_MOUNTED.equals(state)) {
 
-                            VariableConstant.newFile = new File(Environment.getExternalStorageDirectory() /*+ "/" + VariableConstant.PARENT_FOLDER + "/Media/Images/CropImages/"*/, takenNewImage);
+                            VariableConstant.newFile = new File(Environment.getExternalStorageDirectory(), takenNewImage);
                         } else {
-                            VariableConstant.newFile = new File(context.getFilesDir() /*+ "/" + VariableConstant.PARENT_FOLDER + "/Media/Images/CropImages/"*/, takenNewImage);
+                            VariableConstant.newFile = new File(context.getFilesDir(), takenNewImage);
                         }
 
                         InputStream inputStream = context.getContentResolver().openInputStream(
@@ -395,28 +371,30 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
     public void validateFields(String fName, String mob, String email,
                                String password,String lastName,String countryCode,
                                String referral,String city,String expiryDate,String license,String dob) {
-
+        //error occur when the profile image is not uploaded
         if(profileUrl.isEmpty())
         {
             view.onError(context.getResources().getString(R.string.choose_prof_pic));
         }
+        //error occur when the firstname is empty
         else if(MyTextUtils.isEmpty(fName)){
             view.onFirstNameError(context.getResources().getString(R.string.err_fname));
         }
+        //verifying the phone number
         else if(!isPhoneValid)
         {
             validatePhone(countryCode,mob);
         }
+        //verifying the email address
         else if(!isEmailValid)
         {
             validateEmail(email);
         }
+        //if password is empty,, it raise the error
         else if(MyTextUtils.isEmpty(password)){
             view.onPasswordError(context. getResources().getString(R.string.password_miss));
         }
-        /*else if(!password.matches("^*[a-zA-Z](?=.*\\d).{5,14}$")){
-            view.onPasswordError(context.getResources().getString(R.string.pass_validation));
-        }*/
+        //if we didn't pick the city at that time it raise the error
         else if(MyTextUtils.isEmpty(city))
         {
             view.onError(context.getResources().getString(R.string.choose_city));
@@ -425,25 +403,31 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
         {
             view.onError(context.getResources().getString(R.string.license_empty));
         }*/
+        //checking for date of birth
         else if(MyTextUtils.isEmpty(dob))
         {
             view.onError(context.getResources().getString(R.string.dob_empty));
         }
+        //checking the driving license expiry date
         else if(MyTextUtils.isEmpty(expiryDate))
         {
             view.onError(context.getResources().getString(R.string.license_expiry_error));
         }
+        //checking the driving license front side photo
         else if(licenseUrl.isEmpty())
         {
             view.onError(context.getResources().getString(R.string.choose_licence_img));
         }
+        //checking the driving license back side photo
         else if(licenseBackUrl.isEmpty())
         {
             view.onError(context.getResources().getString(R.string.choose_licence_img));
         }
+        //while uploading the profile photo, licenseFrontSide and licenseBackSide
         else if(profileUrl.equals("UPLOADING")||licenseUrl.equals("UPLOADING")||licenseBackUrl.equals("UPLOADING")){
             view.onError("Uploading documents please wait...");
         }
+        //if the all filds are valid
         else {
 
             double[] latlong = Utility.getLocation(context);
@@ -464,7 +448,6 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
                 jsonObjectSignUp.put("longitude",latlong[1]);
                 jsonObjectSignUp.put("profilePic",profileUrl);
                 jsonObjectSignUp.put("referral",referral);
-//                jsonObjectSignUp.put("cities", selectedCity.toString());
                 jsonObjectSignUp.put("zones", selectedZone.toString());
                 jsonObjectSignUp.put("driverLicense",licenseUrl+","+licenseBackUrl);
                 jsonObjectSignUp.put("accountType",1);
@@ -484,18 +467,17 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
             }
 
             signUpApi(mob,countryCode);
-
-
-//            view.moveToVehicleDetails(bundle);
         }
 
     }
 
     @Override
     public void getCity() {
+        //if city is picked then only move to selectZone
         if(cities.size()>0){
             view.moveToZoneList(cities);
         }
+        //for selecting the city
         else
             getCitiesApi();
     }
@@ -594,6 +576,7 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
             datePickerDialog.show();
     }
 
+    //gettting the country code url from xml and get the resources then store it into the byte[]
     private static String readEncodedJsonString(Context context) throws java.io.IOException {
             String base64 = context.getResources().getString(R.string.countries_code);
             byte[] data = Base64.decode(base64, Base64.DEFAULT);
@@ -728,10 +711,12 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
         }
     }
 
+    @Override
     public String getCityId()
     {
         return cityID;
     }
+
     private void uploadImageToAmazon(File file, final String type){
         String BUCKETSUBFOLDER = "";
 
@@ -751,7 +736,6 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
             BUCKETSUBFOLDER = VariableConstant.LICENCE;
             licenseBackUrl="UPLOADING";
         }
-//        view.showProgress();
 
         final String imageUrl = VariableConstant.AMAZON_BASE_URL + VariableConstant.BUCKET_NAME + BUCKETSUBFOLDER + file.getName().trim();
         Log.d("", "amzonUpload: " + imageUrl);
@@ -760,7 +744,6 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
         amazonS3.Upload_data(type,VariableConstant.BUCKET_NAME, BUCKETSUBFOLDER + file.getName().trim(), file, new Upload_file_AmazonS3.Upload_CallBack() {
             @Override
             public void sucess(String url) {
-//                view.hideProgress();
                 if (type.equals("PROFILE")) {
                     profileUrl = url;
 
@@ -780,8 +763,6 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
 
             @Override
             public void sucess(String url, String type) {
-//                view.hideProgress();
-
                 if (type.equals("PROFILE")) {
                     profileUrl = url;
 
@@ -801,7 +782,6 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
 
             @Override
             public void error(String errormsg) {
-//                view.hideProgress();
                 if (type.equals("PROFILE")) {
                     profileUrl = "";
                     view.uploadProfileError();
@@ -849,8 +829,6 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
                                 bundle.putString("mobile", mob);
                                 bundle.putString("otp","");
                                 bundle.putString("countryCode",countryCode);
-
-//                                view.moveToVerifyAct(bundle);
                                 view.moveToVehicleDetails(bundle);
 
                             }else
@@ -893,6 +871,7 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
 
 
 
+    @Override
     public void getZonesOnCity(String cityID)
     {
         view.showProgress();
@@ -903,8 +882,6 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
                 .subscribe(new Observer<Response<ResponseBody>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
-
                     }
                     @Override
                     public void onNext(Response<ResponseBody> value) {
@@ -915,7 +892,6 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
                                 jsonObject=new JSONObject(value.body().string());
                                 Gson gson=new Gson();
                                 ZoneModel zoneModel=gson.fromJson(jsonObject.toString(),ZoneModel.class);
-//                                setCities(signupZonesPojo.getData());
                                 view.sendZones(zoneModel.getData());
                             } catch (IOException e) {
                                 e.printStackTrace();
@@ -925,9 +901,6 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
                         }
                         if(view!=null)
                             view.hideProgress();
-
-
-
                     }
 
                     @Override
