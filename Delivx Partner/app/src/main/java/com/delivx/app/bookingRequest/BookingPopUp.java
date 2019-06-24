@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.delivx.app.main.MainActivity;
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.driver.delivx.R;
-import com.delivx.pojo.PubnubResponse;
+import com.delivx.pojo.NewBookingMQTTResponse;
 import com.delivx.utility.AppConstants;
 import com.delivx.utility.FontUtils;
 import com.delivx.utility.Utility;
@@ -34,11 +34,8 @@ import dagger.android.support.DaggerAppCompatActivity;
 import static com.delivx.utility.VariableConstant.IS_POP_UP_OPEN;
 
 
-/**************************************************************************************************/
 public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClickListener ,BookingPopUpMainMVP.ViewOperations{
 
-
-    private String TAG = "BookingPopUp";
     public static MediaPlayer mediaPlayer;
     private ProgressDialog mDialog;
 
@@ -100,8 +97,11 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
     }
 
 
+    /**
+     * <h1>initializeViews</h1>
+     * <p>Initialize the widgets</p>
+     */
     private void initializeViews() {
-
         Typeface ClanaproNarrNews, ClanaproNarrMedium;
         ClanaproNarrNews = fontUtils.titaliumRegular();
         ClanaproNarrMedium = fontUtils.titaliumSemiBold();
@@ -111,10 +111,8 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
         tvHeaderPayment.setTypeface(ClanaproNarrNews);
         tvDistance.setTypeface(ClanaproNarrNews);
         tvPayment.setTypeface(ClanaproNarrNews);
-
         tvordertypeHandelers.setTypeface(ClanaproNarrNews);
         tvordertype.setTypeface(ClanaproNarrNews);
-
         btnReject.setTypeface(ClanaproNarrNews);
         tv_popup_drop.setTypeface(ClanaproNarrNews);
         tv_lefttoaccept.setTypeface(ClanaproNarrNews);
@@ -135,25 +133,25 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
     }
 
     @Override
-    public void setTexts(PubnubResponse pubnubResponse)
+    public void setTexts(NewBookingMQTTResponse newBookingMQTTResponse)
     {
-        tv_popup_cur.setText(pubnubResponse.getCurrencySymbol());
-        tvDistance.setText(pubnubResponse.getDis()+" "+pubnubResponse.getMileageMetric());
-        tvPayment.setText(pubnubResponse.getPaymentType());
-        tv_popup_pickuploc.setText(pubnubResponse.getStoreName()+":"+pubnubResponse.getAdr1());
-        tv_pickuptime.setText(Utility.formatDateWeek(pubnubResponse.getDt()));
-        tv_popup_droploc.setText(pubnubResponse.getCustomerName()+":"+pubnubResponse.getDrop1());
-        tv_droptime.setText(Utility.formatDateWeek(pubnubResponse.getDropDt()));
-        tvordertype.setText(pubnubResponse.getStoreTypeMsg());
+        tv_popup_cur.setText(newBookingMQTTResponse.getCurrencySymbol());
+        tvDistance.setText(newBookingMQTTResponse.getDis()+" "+newBookingMQTTResponse.getMileageMetric());
+        tvPayment.setText(newBookingMQTTResponse.getPaymentType());
+        tv_popup_pickuploc.setText(newBookingMQTTResponse.getStoreName()+":"+newBookingMQTTResponse.getAdr1());
+        tv_pickuptime.setText(Utility.formatDateWeek(newBookingMQTTResponse.getDt()));
+        tv_popup_droploc.setText(newBookingMQTTResponse.getCustomerName()+":"+newBookingMQTTResponse.getDrop1());
+        tv_droptime.setText(Utility.formatDateWeek(newBookingMQTTResponse.getDropDt()));
+        tvordertype.setText(newBookingMQTTResponse.getStoreTypeMsg());
 
 
-        if(pubnubResponse.getPaymentType().equals("2"))
+        if(newBookingMQTTResponse.getPaymentType().equals("2"))
             tvPayment.setText(getResources().getString(R.string.cash));
         else
             tvPayment.setText(getResources().getString(R.string.card));
 
-        tv_delivery_charge.setText(Utility.formatPrice(pubnubResponse.getDeliveryFee()));
-        tvBID.setText(getResources().getString(R.string.order_id)+ pubnubResponse.getBid());
+        tv_delivery_charge.setText(Utility.formatPrice(newBookingMQTTResponse.getDeliveryFee()));
+        tvBID.setText(getResources().getString(R.string.order_id)+ newBookingMQTTResponse.getBid());
 
     }
 
@@ -168,10 +166,12 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
 
         switch (v.getId())
         {
+            //Accept Booking
             case R.id.ll_booking_popup:
                 presenter.updateApptRequest(AppConstants.BookingStatus.Accept);
                 break;
 
+            //Reject  Booking
             case R.id.btnReject:
                 presenter.updateApptRequest(AppConstants.BookingStatus.Reject);
                 break;
@@ -235,8 +235,6 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
             mediaPlayer.stop();
         }
         IS_POP_UP_OPEN=false;
-
-//        finish();
         Intent intent=new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
