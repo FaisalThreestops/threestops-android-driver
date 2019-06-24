@@ -170,10 +170,14 @@ public class PresenterForgotPass implements ForgotPassPresenterContract {
 
     @Override
     public void validatePhone(String mob_mail,String countryCode) {
+        //if mobile number is empty
         if (!mob_mail.matches("")) {
+            //if email matches the format
             if (Patterns.EMAIL_ADDRESS.matcher(mob_mail).matches()) {
                 forgotPasswordApi(2,"",mob_mail);
-            } else if (Utility.phoneNumberLengthValidation(mob_mail,countryCode)) {
+            }
+            //if phone match
+            else if (Utility.phoneNumberLengthValidation(mob_mail,countryCode)) {
                 forgotPasswordApi(1,countryCode,mob_mail);
             } else {
                 if(isEmail){
@@ -231,9 +235,10 @@ public class PresenterForgotPass implements ForgotPassPresenterContract {
 
                         try {
                             JSONObject jsonObject;
+
                             if(value.code()==200){
                                 jsonObject=new JSONObject(value.body().string());
-
+                                //mobile number verification
                                 if(verifyType==1){
                                     view.startNextActivity(countryCode,mob_mail);
                                 }else {
@@ -241,7 +246,7 @@ public class PresenterForgotPass implements ForgotPassPresenterContract {
                                 }
 
                             }else {
-
+                                //email address verification
                                 if(value.code()==202 && verifyType==2){
                                     jsonObject=new JSONObject(value.body().string());
                                     view.moveToLogin(jsonObject.getString("message"));

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.util.Base64;
+import android.util.Log;
 
 import com.delivx.login.language.LanguagesList;
 import com.delivx.login.language.LanguagesPojo;
@@ -357,9 +358,11 @@ public class LoginPresenterImpl implements LoginPresenter
         }
 
         if(MyApplication.getInstance().isMQTTConnected()){
+            Log.i("check", "setSignInData: if");
             mqttManager.subscribeToTopic(preferenceHelperDataSource.getDriverID());
 
         }else {
+            Log.i("check", "setSignInData: else");
             MyApplication.getInstance().connectMQTT();
         }
         onSuccess();

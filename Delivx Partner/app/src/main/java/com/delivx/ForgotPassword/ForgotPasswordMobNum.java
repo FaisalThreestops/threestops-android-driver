@@ -120,26 +120,29 @@ public class ForgotPasswordMobNum extends DaggerAppCompatActivity implements Vie
 
     @Override
     public void editextAfterChanged() {
+        //if phone number is empty
         if(et_forgot_mob.getText().toString().isEmpty()){
             tv_forgot_next.setFocusable(false);
             tv_forgot_next.setBackgroundColor(getResources().getColor(R.color.gray));
         }
+        //if phone is not empty
         else {
-
+            //if email address matches
             if (Patterns.EMAIL_ADDRESS.matcher(et_forgot_mob.getText().toString()).matches()) {
                 tv_forgot_next.setFocusable(true);
                 tv_forgot_next.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
-            } else if (Patterns.PHONE.matcher(et_forgot_mob.getText().toString()).matches() && et_forgot_mob.getText().toString().length()>=minPhoneLength ) {
+            }
+            //if phone number matches and >=minimum length
+            else if (Patterns.PHONE.matcher(et_forgot_mob.getText().toString()).matches() && et_forgot_mob.getText().toString().length()>=minPhoneLength ) {
                 tv_forgot_next.setFocusable(true);
                 tv_forgot_next.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
             }
+            //if above condition doesn't match
             else {
                 tv_forgot_next.setFocusable(false);
                 tv_forgot_next.setBackgroundColor(getResources().getColor(R.color.gray));
             }
-
-
         }
     }
 
@@ -226,7 +229,7 @@ public class ForgotPasswordMobNum extends DaggerAppCompatActivity implements Vie
 
         /*presenter.getCountryCode();*/
 
-
+        //listner for ll_First linear layout
         sv_signup.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -236,6 +239,7 @@ public class ForgotPasswordMobNum extends DaggerAppCompatActivity implements Vie
             }
         });
 
+        //listner for ok option keyboard
         et_forgot_mob.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                return presenter.onNextKey(v,keyCode,event,et_forgot_mob.getText().toString());
@@ -259,9 +263,11 @@ public class ForgotPasswordMobNum extends DaggerAppCompatActivity implements Vie
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
                 switch (checkedId) {
+                    //email event
                     case R.id.rbEmail:
                         presenter.rbEmailChecked();
                         break;
+                        //phone event
                     case R.id.rbPhone:
                         presenter.rbMobileChecked();
                         break;
@@ -276,11 +282,11 @@ public class ForgotPasswordMobNum extends DaggerAppCompatActivity implements Vie
     public void onClick(View v) {
 
         switch (v.getId()) {
-
+            //event for next
             case R.id.tv_forgot_next:
                 presenter.validatePhone(et_forgot_mob.getText().toString(),countryCode.getText().toString());
                 break;
-
+                //event for picking the country code
             case R.id.code:
                 presenter.showDialogForCountryPicker();
                 break;

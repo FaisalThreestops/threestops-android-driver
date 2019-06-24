@@ -140,6 +140,7 @@ public class Presenter implements HomeFragmentContract.Presenter {
                             JSONObject jsonObject;
 
                             switch (value.code()){
+                                //success
                                 case 200:
                                     String response=value.body().string();
                                     Utility.printLog("AssignedTRipResponse"+response);
@@ -153,6 +154,7 @@ public class Presenter implements HomeFragmentContract.Presenter {
                                     view.addMarkers(appointments);
                                     preferenceHelperDataSource.setMasterStatus(tripsPojo.getData().getMasterStatus());
                                     break;
+                                    //session expired
                                 case 498:
                                     Utility.printLog("pushTopics shared pref "+preferenceHelperDataSource.getPushTopic());
                                     Utility.subscribeOrUnsubscribeTopics(new JSONArray(preferenceHelperDataSource.getPushTopic()),false);
@@ -258,10 +260,12 @@ public class Presenter implements HomeFragmentContract.Presenter {
 
     @Override
     public void expandMap() {
+        //if map is full viewed
         if(isMapInFullView){
             view.minimizeMap(appointments);
             isMapInFullView=false;
         }
+        //if map is not fully viewed
         else
         {
             view.openMapInFullView();
@@ -292,7 +296,11 @@ public class Presenter implements HomeFragmentContract.Presenter {
             BookingPopUp.mediaPlayer.stop();
     }
 
-
+    /**
+     * <h2>updateMasterStatusApi</h2>
+     * <p>Invoke API for updating the status of the driver</p>
+     * @param masterStatus : 3.online,, 4.offline
+     */
     public void updateMasterStatusApi(final int masterStatus) {
         view.showProgress();
 

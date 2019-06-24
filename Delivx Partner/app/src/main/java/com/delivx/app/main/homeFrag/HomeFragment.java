@@ -138,7 +138,10 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
         return rootView;
     }
 
-
+    /**
+     * <h2>initLayoutId</h2>
+     * <p>finding views by Id in content_main.xml and initialize the views</p>
+     */
     public void initLayoutId(){
 
         tv_on_off_statas = (TextView) getActivity().findViewById(R.id.tv_on_off_statas);
@@ -185,8 +188,7 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
         first=true;
         this.map = googleMap;
         View mapView = mapFragment.getView();
-        if (mapView != null &&
-                mapView.findViewById(Integer.parseInt("1")) != null) {
+        if (mapView != null && mapView.findViewById(Integer.parseInt("1")) != null) {
             View locationButton = ((View) mapView.findViewById(Integer.parseInt("1")).getParent()).findViewById(Integer.parseInt("2"));
             RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams)
                     locationButton.getLayoutParams();
@@ -287,13 +289,13 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
         mPreviousLoc = mCurrentLoc;
     }
 
-    public void setCarMarker(LatLng latLng) {
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
-        map.getUiSettings().setZoomControlsEnabled(false);
-
-        if (marker != null)
-            marker.getmMarker().setPosition(latLng);
-    }
+//    public void setCarMarker(LatLng latLng) {
+//        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+//        map.getUiSettings().setZoomControlsEnabled(false);
+//
+//        if (marker != null)
+//            marker.getmMarker().setPosition(latLng);
+//    }
 
     @Override
     public void updateLocation(Location location) {
@@ -359,16 +361,20 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            //event for online/offline
             case R.id.tv_on_off_statas:
                 presenter.updateMasterStatus();
                 break;
+                //event for back option in toolbar
             case R.id.button_back:
                 presenter.expandMap();
                 Utility.printLog("expand minimize");
                 break;
+                //event for markerAll
             case R.id.tvMarkerAll:
                 presenter.markerAllOnclik();
                 break;
+            //event for markerPickUp
             case R.id.tvMarkerPickUp:
                 presenter.markerPickUpOnclik();
                 break;
@@ -382,6 +388,7 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
     @Override
     public void onMasterStatusUpdate(int status) {
         switch (status) {
+            //online
             case 3:
                 tv_on_off_statas.setText(getString(R.string.go_offline));
                 tv_on_off_statas.setSelected(true);
@@ -389,6 +396,7 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
                 /*MyPubnub.getInstance(getActivity()).stopPubnub();
                 MyPubnub.getInstance(getActivity()).subscribe();*/
                 break;
+                //offline
             case 4:
                 tv_on_off_statas.setText(getString(R.string.go_online));
                 tv_on_off_statas.setSelected(false);
@@ -565,6 +573,7 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
         ll_bookings.setVisibility(View.GONE);
     }
 
+    //updating the location
     public void startUpdateLocation()
     {
         if(!Utility.isMyServiceRunning(LocationUpdateService.class,getActivity())){
@@ -573,6 +582,8 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
             getActivity().startService(startIntent);
         }
     }
+
+    //stop updating the location
     public void stopUpdateLocation()
     {
         if(Utility.isMyServiceRunning(LocationUpdateService.class,getActivity())){

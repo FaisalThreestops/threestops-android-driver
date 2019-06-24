@@ -142,6 +142,10 @@ public class ForgotPasswordVerify extends DaggerAppCompatActivity implements Vie
         super.onStart();
     }
 
+    /**
+     * <h2>initializeViews</h2>
+     * <p>initializing the views</p>
+     */
     private void initializeViews() {
 
 
