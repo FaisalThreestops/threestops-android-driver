@@ -513,9 +513,9 @@ public class MainActivity extends DaggerAppCompatActivity
             @Override
             public void run() {
                 if(dialog!=null && !dialog.isShowing()) {
-                    mShowNoInternetMessage();
+                    showNoInternetMessage();
                 }else if(dialog==null){
-                    mShowNoInternetMessage();
+                    showNoInternetMessage();
                 }
             }
         });
@@ -614,26 +614,9 @@ public class MainActivity extends DaggerAppCompatActivity
             public void run() {
                 if(networkErrorDialog!=null && networkErrorDialog.isShowing()) {
                     networkErrorDialog.dismiss();
-                    if(getFragmentRefreshListener()!=null){
-                        getFragmentRefreshListener().onRefresh();
-                    }
                 }
             }
         });
-    }
-
-
-    private FragmentRefreshListener fragmentRefreshListener;
-
-    /**
-     *for refresh the fragments after network check
-     */
-    public FragmentRefreshListener getFragmentRefreshListener() {
-        return fragmentRefreshListener;
-    }
-
-    public interface FragmentRefreshListener{
-        void onRefresh();
     }
 
     @Override
@@ -648,7 +631,6 @@ public class MainActivity extends DaggerAppCompatActivity
 
     }
 
-
     @Override
     public void onNetworkConnectionChanged(boolean isConnected) {
         presenter.checkForNetwork(isConnected);
@@ -656,9 +638,11 @@ public class MainActivity extends DaggerAppCompatActivity
     }
 
 
-
-    public void mShowNoInternetMessage() {
-
+    /**
+     * <h1>showNoInternetMessage</h1>
+     * <p>Dialog initialize and show for internet not available</p>
+     */
+    public void showNoInternetMessage() {
         dialog=new Dialog(MainActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.no_internet_dialog);

@@ -99,9 +99,8 @@ public class UtilityModule {
 
     @Provides
     @Singleton
-    BookingManager provideBookingManager(Gson gson, RxDriverCancelledObserver rxDriverCancelledObserver,
-                                         RxBookingAssignObserver rxBookingAssignObserver){
-        return new BookingManager(gson, rxDriverCancelledObserver,rxBookingAssignObserver);
+    BookingManager provideBookingManager(RxBookingAssignObserver rxBookingAssignObserver){
+        return new BookingManager(rxBookingAssignObserver);
     }
 
     @Provides

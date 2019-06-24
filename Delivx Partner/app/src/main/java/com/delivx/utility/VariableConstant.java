@@ -19,7 +19,6 @@ public class VariableConstant {
     public static final String APP_VERSION = BuildConfig.VERSION_NAME;
     public static final String DEVICE_MODEL = android.os.Build.MODEL;
     public static final String DEVICE_MAKER = android.os.Build.MANUFACTURER;
-    public static final String DEVICE_VERSION = Build.VERSION.RELEASE;
     public static final int DEVICE_TYPE = 2; //1 for ios 2 for android
     public static final int USER_TYPE = 2; //1 for customer 2 for driver
     //permission constants
@@ -27,15 +26,18 @@ public class VariableConstant {
     public static final int RC_LOCATION_STATE = 102;
 
 
+    //MQTT Connect details
     public static final String MQTT_HOST = "159.203.182.173";
     public static final String MQTT_PORT = "2052";
     public static final String MQTT_USERNAME =  "DelivXVernemq";
     public static final String MQTT_PASSWORD =  "dZuxnpHxXD86Sz8g";
 
+    //AWS image Upload Details
     public static final String BUCKET_NAME = "grocberufly";
     public static final String AMAZON_BASE_URL = "https://s3.amazonaws.com/";
     public static final String COGNITO_POOL_ID = "ap-south-1:23fd5020-068c-4452-997a-d084a640a136";
 
+    //Image Upload URL Folder path in AWS
     public static final String PROFILE_PIC = "driver/ProfilePics/";
     public static final String LICENCE = "driver/DriverLincence/";
     public static final String VEHICLE = "Vehicles/VehicleImage/";

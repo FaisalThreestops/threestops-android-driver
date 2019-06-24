@@ -1,9 +1,10 @@
 package com.delivx.utility;
 
-/**
- * Created by ads on 18/05/17.
- */
 
+/**
+ * <h1>AppConstants</h1>
+ * <p>save the status for check booking and online status</p>
+ */
 public enum AppConstants {
 
     getAptStatus_OnTheWay("6"),

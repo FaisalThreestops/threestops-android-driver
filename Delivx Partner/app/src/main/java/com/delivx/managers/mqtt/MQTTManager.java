@@ -97,11 +97,6 @@ public class MQTTManager
                     Utility.printLog(TAG + " onSuccessPhone: myqtt client " + asyncActionToken.isComplete());
                 }
 
-                /*holder.setConnected(true);
-                rxNetworkObserver.publishData(holder);
-                subscribeToTopic(helperDataSource.getDriverChannel());
-                subscribeToTopic("message/"+helperDataSource.getDriverID());
-                Utility.printLog(TAG+" onSuccessPhone: myqtt client "+asyncActionToken.isComplete());*/
             }
             @Override
             public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
@@ -188,11 +183,6 @@ public class MQTTManager
             @Override
             public void connectionLost(Throwable cause) {
                 Utility.printLog(TAG+" TEST MQTT not connect "+cause);
-               /* if(!Utility.isNetworkAvailable(mContext)){
-                    holder.setConnected(false);
-                    rxNetworkObserver.publishData(holder);
-                }*/
-
             }
             @Override
             public void messageArrived(String topic, final MqttMessage message) throws Exception
@@ -398,14 +388,14 @@ public class MQTTManager
         }
     }
 
-    public void publish(JSONObject jsonObject){
-        try {
-            mqttAndroidClient.publish("driver_location_update", jsonObject.toString().getBytes(),2,false);
-        } catch (MqttException e) {
-            e.printStackTrace();
-        }
-    }
-
+    /**
+     * <h1>sendNotification</h1>
+     * <p>set the notification for chat, and show</p>
+     * @param bid booking ID
+     * @param message message for chat
+     * @param custID customer ID
+     * @param custName Customer name
+     */
     private void sendNotification(String bid, String message, String custID, String custName){
         Intent intent=new Intent(mContext,ChattingActivity.class);
         intent.putExtra("BID",bid);
