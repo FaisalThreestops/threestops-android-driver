@@ -3,9 +3,6 @@ package com.delivx.ForgotPassword.RetriveFromMobile;
 import android.view.KeyEvent;
 import android.view.View;
 
-/**
- * Created by DELL on 29-12-2017.
- */
 
 public interface ForgotPassPresenterContract {
 
@@ -21,6 +18,10 @@ public interface ForgotPassPresenterContract {
      */
     void setActionBarTitle();
 
+    /**
+     * <h1>getCountryCode</h1>
+     * <p>get country from the dialog</p>
+     */
     void getCountryCode();
 
     /**
@@ -42,7 +43,6 @@ public interface ForgotPassPresenterContract {
      * @param keyCode :keycode
      * @param event : event
      * @param mob :mobile number
-     * @return
      */
     boolean onNextKey(View v, int keyCode, KeyEvent event, String mob);
 
@@ -75,7 +75,7 @@ public interface ForgotPassPresenterContract {
     /**
      * <h2>getlanguageCode</h2>
      * <p>get the language code</p>
-     * @return : languagecode
+     * @return : Language  ccode
      */
     String getlanguageCode();
 }

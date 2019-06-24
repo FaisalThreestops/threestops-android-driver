@@ -2,10 +2,6 @@ package com.delivx.ForgotPassword.VerifyMobile;
 
 import android.os.Bundle;
 
-/**
- * Created by DELL on 02-01-2018.
- */
-
 public interface VerifyMobilePresenterContract {
 
     /**
@@ -23,7 +19,7 @@ public interface VerifyMobilePresenterContract {
     /**
      * <h2>getBundleData</h2>
      * <p>get the data from ForgotPasswordMobNum</p>
-     * @param bundle
+     * @param bundle Intent bundle
      */
     void getBundleData(Bundle bundle);
 
@@ -44,7 +40,7 @@ public interface VerifyMobilePresenterContract {
 
     /**
      * <h2>onOutSideTouch</h2>
-     * <p>hidding the keyboard</p>
+     * <p>hiding the keyboard</p>
      */
     void onOutSideTouch();
 

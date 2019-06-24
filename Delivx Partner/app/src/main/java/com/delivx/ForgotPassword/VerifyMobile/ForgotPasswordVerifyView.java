@@ -2,9 +2,6 @@ package com.delivx.ForgotPassword.VerifyMobile;
 
 import com.delivx.BaseView;
 
-/**
- * Created by DELL on 02-01-2018.
- */
 
 public interface ForgotPasswordVerifyView extends BaseView {
 
@@ -23,7 +20,7 @@ public interface ForgotPasswordVerifyView extends BaseView {
     /**
      * <h2>setVerifyMessage</h2>
      * <p>set the otp sent phone number in the text</p>
-     * @param msg :phone number
+     * @param msg verify message including phone number
      */
     void setVerifyMessage(String msg);
 

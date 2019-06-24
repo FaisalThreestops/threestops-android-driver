@@ -20,7 +20,7 @@ public interface PersonalPresenterContract {
     /**
      * <h2>getCityId</h2>
      * <p>get the CityID</p>
-     * @return
+     * @return city id
      */
     String getCityId();
 
@@ -63,6 +63,11 @@ public interface PersonalPresenterContract {
      */
     void validatePhone(String countryCode, String phone);
 
+    /**
+     * <h1>validateReferralCode</h1>
+     * <p>Validate phone ref code</p>
+     * @param code ref code
+     */
     void validateReferralCode(String code);
 
     /**

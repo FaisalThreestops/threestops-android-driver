@@ -1,8 +1,5 @@
 package com.delivx.login.language;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
 
 public class LanguagesList implements Serializable {

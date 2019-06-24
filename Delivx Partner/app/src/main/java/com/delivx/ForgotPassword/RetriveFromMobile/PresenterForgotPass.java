@@ -35,18 +35,13 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
-/**
- * Created by DELL on 29-12-2017.
- */
+
 
 public class PresenterForgotPass implements ForgotPassPresenterContract {
 
     @Inject ForgotPassMobNumView view;
-
     @Inject Activity context;
-
     @Inject NetworkService networkService;
-
     @Inject PreferenceHelperDataSource preferenceHelperDataSource;
 
     private int minPhoneLength=0,maxPhoneLength=15;
@@ -54,10 +49,12 @@ public class PresenterForgotPass implements ForgotPassPresenterContract {
 
 
     @Inject
-    public PresenterForgotPass() {
+    PresenterForgotPass() {
     }
 
-    public static int getResId(String drawableName) {
+
+
+    private static int getResId(String drawableName) {
         try {
             Class<R.drawable> res = R.drawable.class;
             Field field = res.getField(drawableName);
@@ -103,8 +100,7 @@ public class PresenterForgotPass implements ForgotPassPresenterContract {
                     }
                 }
 
-                view.setCounryFlag(id,dialCode,minPhoneLength,maxPhoneLength);
-                view.setMaxLength(maxPhoneLength);
+                view.setCountryFlag(id,dialCode,minPhoneLength,maxPhoneLength);
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
@@ -123,23 +119,9 @@ public class PresenterForgotPass implements ForgotPassPresenterContract {
                 String drawableName = "flag_"
                         + code.toLowerCase(Locale.ENGLISH);
                 int resID=getResId(drawableName);
-                /*if (et_forgot_mob.getText().toString().length() > 0) {
-
-                        if (et_forgot_mob.getText().toString().charAt(0) == '0') {
-                            mobileNumberWithoutZero = et_forgot_mob.getText().toString().substring(1);
-                        } else {
-                            mobileNumberWithoutZero = et_forgot_mob.getText().toString();
-
-                        }
-                }*/
                 minPhoneLength=minLength;
                 maxPhoneLength=maxLength;
-
-                view.setMaxLength(maxPhoneLength);
-                view.setCounryFlag(resID,dialCode,minPhoneLength,maxPhoneLength);
-
-//                fullMobileNumber = countryCode.getText().toString() + mobileNumberWithoutZero;
-
+                view.setCountryFlag(resID,dialCode,minPhoneLength,maxPhoneLength);
                 picker.dismiss();
             }
         });
@@ -153,7 +135,6 @@ public class PresenterForgotPass implements ForgotPassPresenterContract {
 
     private static String readEncodedJsonString(Context context)
             throws java.io.IOException {
-
         String base64 = context.getResources().getString(R.string.countries_code);
         byte[] data = Base64.decode(base64, Base64.DEFAULT);
         return new String(data, "UTF-8");
@@ -199,14 +180,12 @@ public class PresenterForgotPass implements ForgotPassPresenterContract {
     @Override
     public void rbEmailChecked() {
         isEmail=true;
-        view.setMaxLength(100);
         view.onEmailSelection();
     }
 
     @Override
     public void rbMobileChecked() {
         isEmail=false;
-        view.setMaxLength(maxPhoneLength);
         view.onMobileSelection();
     }
 
@@ -215,7 +194,15 @@ public class PresenterForgotPass implements ForgotPassPresenterContract {
         return preferenceHelperDataSource.getLanguageSettings().getLanguageCode();
     }
 
-    public void forgotPasswordApi(final int verifyType, final String countryCode, final String mob_mail){
+    /**
+     * <h1>forgotPasswordApi</h1>
+     * <p>M</p>
+     * @param verifyType
+     * @param countryCode
+     * @param mob_mail
+     */
+    private void forgotPasswordApi(final int verifyType, final String countryCode,
+                                   final String mob_mail){
         if(view!=null)
             view.showProgress();
 
@@ -254,9 +241,7 @@ public class PresenterForgotPass implements ForgotPassPresenterContract {
                                     jsonObject=new JSONObject(value.errorBody().string());
                                     view.onError(jsonObject.getString("message"));
                                 }
-
                             }
-
                             Utility.printLog("forgotPasswordApi : "+jsonObject.toString());
 
                         }catch (JSONException e)
@@ -279,7 +264,6 @@ public class PresenterForgotPass implements ForgotPassPresenterContract {
                             view.hideProgress();
                     }
                 });
-
     }
 
 }

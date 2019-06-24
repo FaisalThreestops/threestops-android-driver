@@ -47,8 +47,6 @@ import com.delivx.networking.NetworkCheckerService;
 import com.delivx.service.LocationUpdateService;
 import com.delivx.signup.perosonal.SignUpPersonalModule;
 import com.delivx.signup.perosonal.SignupPersonal;
-import com.delivx.signup.vehicle.SignupVehicle;
-import com.delivx.signup.vehicle.VehicleModule;
 import com.delivx.vehiclelist.AdapterModule;
 import com.delivx.vehiclelist.VehicleList;
 import com.delivx.vehiclelist.VehicleListModule;
@@ -97,11 +95,6 @@ public abstract class ActivityBindingModule {
     @ActivityScoped
     @ContributesAndroidInjector (modules = {VehicleListModule.class,AdapterModule.class})
     abstract VehicleList vehicleList();
-
-
-    @ActivityScoped
-    @ContributesAndroidInjector (modules = {VehicleModule.class})
-    abstract SignupVehicle signupVehicle();
 
     @ActivityScoped
     @ContributesAndroidInjector(modules ={SignUpPersonalModule.class})

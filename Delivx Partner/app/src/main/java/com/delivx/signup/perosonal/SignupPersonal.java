@@ -109,7 +109,6 @@ public class SignupPersonal extends DaggerAppCompatActivity implements View.OnCl
         presenter.setActionBarTitle();
     }
 
-    /**********************************************************************************************/
     @Override
     protected void onStart() {
         super.onStart();
@@ -150,7 +149,7 @@ public class SignupPersonal extends DaggerAppCompatActivity implements View.OnCl
     }
 
     @Override
-    public void setCounryFlag(int drawableID, String dialCOde, int minLength, int maxLength) {
+    public void setCountryFlag(int drawableID, String dialCOde, int minLength, int maxLength) {
         flag.setBackgroundResource(drawableID);
         countryCode.setText(dialCOde);
     }
@@ -208,6 +207,7 @@ public class SignupPersonal extends DaggerAppCompatActivity implements View.OnCl
         startActivityForResult(intent, SELECT_A_CITY);
     }
 
+    @Override
     public void sendZones(ArrayList<Zone> zone)
     {
         Intent intent = new Intent(SignupPersonal.this, GenericListActivity.class);

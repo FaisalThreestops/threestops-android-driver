@@ -51,17 +51,12 @@ public class ForgotPasswordMobNum extends DaggerAppCompatActivity implements Vie
     @BindString(R.string.forgotPassword) String title;
     @BindView(R.id.rgForgotPass) RadioGroup rg_WorkGroup;
 
-
     @Inject ForgotPassPresenterContract presenter;
     @Inject FontUtils fontUtils;
 
     private int minPhoneLength=0;
     private Typeface ClanaproNarrMedium,ClanaproNarrNews;
 
-    /**********************************************************************************************/
-
-
-    /**********************************************************************************************/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,9 +65,7 @@ public class ForgotPasswordMobNum extends DaggerAppCompatActivity implements Vie
         overridePendingTransition(R.anim.bottem_slide_down, R.anim.stay_activity);
 
         ButterKnife.bind(this);
-
         initializeViews();
-
         presenter.setActionBar();
 
     }
@@ -81,22 +74,18 @@ public class ForgotPasswordMobNum extends DaggerAppCompatActivity implements Vie
     @Override
     protected void onStart() {
         super.onStart();
-
     }
 
-   @Override
+    @Override
     public void initActionBar() {
-
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.selector_signup_close);
         }
-
         tv_title.setTypeface(ClanaproNarrMedium);
         iv_search.setVisibility(View.GONE);
-
         presenter.setActionBarTitle();
     }
 
@@ -106,16 +95,9 @@ public class ForgotPasswordMobNum extends DaggerAppCompatActivity implements Vie
     }
 
     @Override
-    public void setCounryFlag(int drawableID, String dialCOde, int minLength, int maxLength) {
+    public void setCountryFlag(int drawableID, String dialCOde, int minLength, int maxLength) {
         flag.setBackgroundResource(drawableID);
         countryCode.setText(dialCOde);
-    }
-
-    @Override
-    public void setMaxLength(int length) {
-        /*InputFilter[] fArray = new InputFilter[1];
-        fArray[0] = new InputFilter.LengthFilter(length);
-        et_forgot_mob.setFilters(fArray);*/
     }
 
     @Override
@@ -148,12 +130,10 @@ public class ForgotPasswordMobNum extends DaggerAppCompatActivity implements Vie
 
     @Override
     public void onEmailSelection() {
-
         et_forgot_mob.setHint(getResources().getString(R.string.Email));
         et_forgot_mob.setText("");
         tv_forgot_msg.setText(getResources().getString(R.string.forgotMsgEmail));
         et_forgot_mob.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-//        flag.setVisibility(View.GONE);
         countryCode.setVisibility(View.GONE);
     }
 
@@ -163,7 +143,6 @@ public class ForgotPasswordMobNum extends DaggerAppCompatActivity implements Vie
         et_forgot_mob.setHint(getResources().getString(R.string.phone_number));
         tv_forgot_msg.setText(getResources().getString(R.string.forgotMsgMob));
         et_forgot_mob.setInputType(InputType.TYPE_CLASS_NUMBER);
-//        flag.setVisibility(View.VISIBLE);
         countryCode.setVisibility(View.VISIBLE);
     }
 
@@ -191,7 +170,6 @@ public class ForgotPasswordMobNum extends DaggerAppCompatActivity implements Vie
         Utility.showAlert(error,this);
     }
 
-    /**********************************************************************************************/
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -214,22 +192,14 @@ public class ForgotPasswordMobNum extends DaggerAppCompatActivity implements Vie
 
         ClanaproNarrMedium = fontUtils.titaliumSemiBold();
         ClanaproNarrNews = fontUtils.titaliumRegular();
-
-
         tv_forgot_msg.setTypeface(ClanaproNarrNews);
-
         tv_forgot_phoneno.setTypeface(ClanaproNarrNews);
-
         et_forgot_mob.setTypeface(ClanaproNarrNews);
         et_forgot_mob.setHint(getResources().getString(R.string.phone_number));
-
         tv_forgot_next.setTypeface(ClanaproNarrMedium);
-
         countryCode.setTypeface(ClanaproNarrNews);
 
-        /*presenter.getCountryCode();*/
-
-        //listner for ll_First linear layout
+        //listener for ll_First linear layout
         sv_signup.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -239,10 +209,10 @@ public class ForgotPasswordMobNum extends DaggerAppCompatActivity implements Vie
             }
         });
 
-        //listner for ok option keyboard
+        //listener for ok option keyboard
         et_forgot_mob.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-               return presenter.onNextKey(v,keyCode,event,et_forgot_mob.getText().toString());
+                return presenter.onNextKey(v,keyCode,event,et_forgot_mob.getText().toString());
             }
         });
         et_forgot_mob.addTextChangedListener(new TextWatcher() {
@@ -267,7 +237,7 @@ public class ForgotPasswordMobNum extends DaggerAppCompatActivity implements Vie
                     case R.id.rbEmail:
                         presenter.rbEmailChecked();
                         break;
-                        //phone event
+                    //phone event
                     case R.id.rbPhone:
                         presenter.rbMobileChecked();
                         break;
@@ -286,7 +256,7 @@ public class ForgotPasswordMobNum extends DaggerAppCompatActivity implements Vie
             case R.id.tv_forgot_next:
                 presenter.validatePhone(et_forgot_mob.getText().toString(),countryCode.getText().toString());
                 break;
-                //event for picking the country code
+            //event for picking the country code
             case R.id.code:
                 presenter.showDialogForCountryPicker();
                 break;
@@ -295,7 +265,6 @@ public class ForgotPasswordMobNum extends DaggerAppCompatActivity implements Vie
 
     @Override
     public void networkError(String message) {
-
     }
 
     @Override

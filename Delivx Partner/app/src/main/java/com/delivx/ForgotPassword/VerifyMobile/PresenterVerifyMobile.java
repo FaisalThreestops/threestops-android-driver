@@ -24,23 +24,19 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
-/**
- * Created by DELL on 02-01-2018.
- */
 
 public class PresenterVerifyMobile implements VerifyMobilePresenterContract {
 
     @Inject ForgotPasswordVerifyView view;
     @Inject Activity context;
     @Inject NetworkService networkService;
-    @Inject
-    PreferenceHelperDataSource preferenceHelperDataSource;
+    @Inject PreferenceHelperDataSource preferenceHelperDataSource;
     private String from,phone,otp,cCode;
     private JSONObject jsonObjectSignUp;
     private String SignUpVahicle = "SignUpVahicle",ForgotPass = "ForgotPass", EditPhone = "EditPhone";
 
     @Inject
-    public PresenterVerifyMobile() {
+    PresenterVerifyMobile() {
     }
 
     @Override
@@ -245,6 +241,11 @@ public class PresenterVerifyMobile implements VerifyMobilePresenterContract {
                 });
     }
 
+
+    /**
+     * <h1>signUpApi</h1>
+     * <p>API call for signup, once the phone number verify success</p>
+     */
     private void signUpApi(){
         view.showProgress();
 
@@ -288,8 +289,6 @@ public class PresenterVerifyMobile implements VerifyMobilePresenterContract {
                     ,jsonObjectSignUp.getString("driverLicenseExpiry")
                     ,jsonObjectSignUp.getString("dateOfBirth")
             );
-
-
 
 
             Utility.printLog("presenterVerify Signup Req: "+jsonObjectSignUp.toString());

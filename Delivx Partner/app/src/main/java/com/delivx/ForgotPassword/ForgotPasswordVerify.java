@@ -34,12 +34,9 @@ import butterknife.OnClick;
 import dagger.android.support.DaggerAppCompatActivity;
 
 
-/**************************************************************************************************/
 public class ForgotPasswordVerify extends DaggerAppCompatActivity implements View.OnClickListener,ForgotPasswordVerifyView {
 
     private Typeface ClanaproNarrMedium,ClanaproNarrNews;
-
-
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.tv_verify_txt) TextView tv_verify_txt;
     @BindView(R.id.tv_verify_msg) TextView tv_verify_msg;
@@ -121,7 +118,6 @@ public class ForgotPasswordVerify extends DaggerAppCompatActivity implements Vie
         tv_verify_msg.setText(msg);
     }
 
-    /**********************************************************************************************/
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -136,7 +132,6 @@ public class ForgotPasswordVerify extends DaggerAppCompatActivity implements Vie
         overridePendingTransition(R.anim.activity_open_scale, R.anim.activity_close_translate);
     }
 
-    /**********************************************************************************************/
     @Override
     protected void onStart() {
         super.onStart();
@@ -147,24 +142,13 @@ public class ForgotPasswordVerify extends DaggerAppCompatActivity implements Vie
      * <p>initializing the views</p>
      */
     private void initializeViews() {
-
-
         ClanaproNarrMedium =fontUtils.titaliumSemiBold() ;
-
         ClanaproNarrNews = fontUtils.titaliumRegular();
-
         tv_verify_txt.setTypeface(ClanaproNarrMedium);
-
         tv_verify_msg.setTypeface(ClanaproNarrNews);
-
         tvTimer.setTypeface(ClanaproNarrNews);
-
         presenter.getVerifyMessage(msg1,msg2);
-
         tv_resendcode.setTypeface(ClanaproNarrNews);
-
-
-
 
         et_otp1.setTypeface(ClanaproNarrMedium);
         et_otp1.requestFocus();

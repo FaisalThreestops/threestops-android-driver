@@ -183,6 +183,15 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
 
 
     }
+
+
+    /***
+     * <h1>dpToPx</h1>
+     * <p>Converting DP to Pixel</p>
+     * @param context activity
+     * @param valueInDp value in dp
+     * @return value in pixel
+     */
     public static float dpToPx(Context context, float valueInDp) {
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, valueInDp, metrics);
@@ -275,10 +284,6 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
         progressBar.setVisibility(View.GONE);
     }
 
-    /**
-     * set username error that receive from validation
-     * @param message Error message get from validation of email and phone number
-     */
     @Override
     public void setUsernameError(String message) {
         til_log_mob.setErrorEnabled(true);
@@ -286,10 +291,7 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
         enableDisableSignIn(true);
     }
 
-    /**
-     * set password error that receive from validation
-     * @param message Error message get from validation of password
-     */
+
     @Override
     public void setPasswordError(String message) {
         til_log_pass.setErrorEnabled(true);
@@ -297,10 +299,7 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
         enableDisableSignIn(true);
     }
 
-    /**
-     * <p>on successful validating and positive response from api
-     * it will navigate to the VehicleList activity</p>
-     */
+
     @Override
     public void navigateToHome() {
         startActivity(new Intent(this, MainActivity.class));
@@ -357,34 +356,18 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
         tvCountryCode.setText(dialCode);
     }
 
-    /**
-     * <h2>showError</h2>
-     * <p>this method will toast user the api error message</p>
-     * @param message have api error message that will show to user
-     */
     @Override
     public void showError(String message) {
         enableDisableSignIn(true);
         Utility.mShowMessage(getResources().getString(R.string.message),message,LoginActivity.this);
     }
 
-    /**
-     * <h2>onDestroy</h2>
-     * <p>will called when activity popping out from
-     * the back stack and will null esisting view</p>
-     */
     @Override
     protected void onDestroy() {
         loginPresenter.onDestroy();
         super.onDestroy();
     }
 
-    /**
-     * <h2>setDisableError</h2>
-     * <p>method will check which view is used by user and corresponding that
-     * view will hide the error that is showing to user</p>
-     * @param view which is on focused and user is working on it
-     */
     @Override
     public void setDisableError(View view) {
         switch (view.getId()) {

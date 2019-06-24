@@ -98,10 +98,17 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
 
 
     @Inject
-    public PersonalPresenter() {
+    PersonalPresenter() {
     }
 
-    public static int getResId(String drawableName) {
+
+    /**
+     * <h1>getResId</h1>
+     * <p>get drawable id for Country flag</p>
+     * @param drawableName name of the drawable
+     * @return id of the flag
+     */
+    private static int getResId(String drawableName) {
         try {
             Class<R.drawable> res = R.drawable.class;
             Field field = res.getField(drawableName);
@@ -145,7 +152,7 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
                     }
                 }
 
-                view.setCounryFlag(id,dialCode,minPhoneLength,maxPhoneLength);
+                view.setCountryFlag(id,dialCode,minPhoneLength,maxPhoneLength);
                 view.setMaxLength(maxPhoneLength);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -171,7 +178,7 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
 
                 dialCode=dCode;
                 view.setMaxLength(maxPhoneLength);
-                view.setCounryFlag(resID,dialCode,minPhoneLength,maxPhoneLength);
+                view.setCountryFlag(resID,dialCode,minPhoneLength,maxPhoneLength);
 
                 picker.dismiss();
             }
@@ -505,12 +512,14 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
         view.setCityTextView(zoneNames);
     }
 
-    public void onZoneSelected(ArrayList<Zone> zone) {
+    /**
+     * <h1>onZoneSelected</h1>
+     * <p>for set the zone list</p>
+     * @param zone array of zone
+     */
+    private void onZoneSelected(ArrayList<Zone> zone) {
         this.zones.clear();
         this.zones.addAll(zone);
-
-//        selectedZone = new JSONArray();
-
         String zoneNames = "";
         for (Zone s : zones) {
             if (s.isSelected()) {
@@ -570,13 +579,12 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
             else{
                 Calendar minAdultAge = new GregorianCalendar();
                 minAdultAge.add(Calendar.YEAR, -18);
-//                Utility.printLog("PK minAgeDate "+minAdultAge.getTime()+" , "+minAdultAge.getTimeInMillis());
                 datePickerDialog.getDatePicker().setMaxDate(minAdultAge.getTimeInMillis());
             }
             datePickerDialog.show();
     }
 
-    //gettting the country code url from xml and get the resources then store it into the byte[]
+    //Get the country code url from xml and get the resources then store it into the byte[]
     private static String readEncodedJsonString(Context context) throws java.io.IOException {
             String base64 = context.getResources().getString(R.string.countries_code);
             byte[] data = Base64.decode(base64, Base64.DEFAULT);
@@ -584,6 +592,12 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
     }
 
 
+    /**
+     * <h1>validaEmailPhone</h1>
+     * <p>Api call for validate phone number and email</p>
+     * @param type  1. phone and 2. Email
+     * @param emailOrPhone phone number or email address
+     */
     private void validaEmailPhone(final int type, String emailOrPhone)
     {
         view.showProgress();
@@ -649,6 +663,10 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
                 });
     }
 
+    /**
+     * <h1>getCitiesApi</h1>
+     * <p>API call for get the list of City</p>
+     */
     private void getCitiesApi(){
         view.showProgress();
 
@@ -704,6 +722,12 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
 
     }
 
+
+    /**
+     * <h1>setCities</h1>
+     * <p>set cities for zone</p>
+     * @param zoneData zone list
+     */
     private void setCities(ArrayList<ZoneData> zoneData){
         cities.clear();
         for(ZoneData data:zoneData){
@@ -717,6 +741,13 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
         return cityID;
     }
 
+
+    /**
+     * <h1>uploadImageToAmazon</h1>
+     * <p>set AWS folder and upload image</p>
+     * @param file  image file
+     * @param type type for differentiates image
+     */
     private void uploadImageToAmazon(File file, final String type){
         String BUCKETSUBFOLDER = "";
 
@@ -799,6 +830,13 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
         });
     }
 
+
+    /**
+     * <h1>signUpApi</h1>
+     * <p>api call for Signup OTP</p>
+     * @param mob mobile number
+     * @param countryCode country code
+     */
     private void signUpApi(final String mob, final String countryCode)
     {
         view.showProgress();

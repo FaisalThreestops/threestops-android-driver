@@ -2,10 +2,6 @@ package com.delivx.ForgotPassword.RetriveFromMobile;
 
 import com.delivx.BaseView;
 
-/**
- * Created by DELL on 29-12-2017.
- */
-
 public interface ForgotPassMobNumView extends BaseView {
 
     /**
@@ -21,21 +17,14 @@ public interface ForgotPassMobNumView extends BaseView {
     void setTitle();
 
     /**
-     * <h2>setCounryFlag</h2>
+     * <h2>setCountryFlag</h2>
      * <p>set the country code</p>
      * @param drawableID :flag resource
      * @param dialCOde : country code
      * @param minLength : minimum length phone number
      * @param maxLength : maximum length phone number
      */
-    void setCounryFlag(int drawableID,String dialCOde,int minLength,int maxLength);
-
-    /**
-     * <h2>setMaxLength</h2>
-     * <p>set the email address leangth</p>
-     * @param length : max length
-     */
-    void setMaxLength(int length);
+    void setCountryFlag(int drawableID,String dialCOde,int minLength,int maxLength);
 
     /**
      * <h2>editextAfterChanged</h2>
@@ -66,7 +55,7 @@ public interface ForgotPassMobNumView extends BaseView {
     /**
      * <h2>moveToLogin</h2>
      * <p>moving to mainLoginActivity</p>
-     * @param message : messgae
+     * @param message : message after API success
      */
     void moveToLogin(String message);
 

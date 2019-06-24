@@ -32,16 +32,21 @@ public interface PersonalView extends BaseView {
     void setTitle();
 
     /**
-     * <h2>setCounryFlag</h2>
+     * <h2>setCountryFlag</h2>
      * <p>passing the country code,flag,minlength phone number and maxlength phone number</p>
      * @param drawableID :Flag Resource
      * @param dialCOde :country code
      * @param minLength :minimum length phone number
      * @param maxLength :maximum length phone number
      */
-    void setCounryFlag(int drawableID,String dialCOde,int minLength,int maxLength);
+    void setCountryFlag(int drawableID,String dialCOde,int minLength,int maxLength);
 
 
+    /**
+     * <h1>setMaxLength</h1>
+     * <p>Set  maximum number of phone number for validation</p>
+     * @param length mobile number length
+     */
     void setMaxLength(int length);
 
     /**
