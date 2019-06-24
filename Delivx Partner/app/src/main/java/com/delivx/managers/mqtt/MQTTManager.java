@@ -53,9 +53,7 @@ import static com.delivx.utility.VariableConstant.MQTT_USERNAME;
 
 /**
  * <h1>MQTTManager</h1>
- * This class is used to handle the MQTT data
- * @author 3Embed
- * @since on 21-12-2017.
+ * <p>Mqtt Connection, Subscribe and manage the Mqtt messages</p>
  */
 public class MQTTManager
 {
@@ -67,8 +65,6 @@ public class MQTTManager
 
     private AcknowledgeHelper acknowledgeHelper;
     private PreferenceHelperDataSource helperDataSource;
-    private NetworkStateHolder holder;
-    private RxNetworkObserver rxNetworkObserver;
     private BookingManager bookingManager;
 
     @Inject
@@ -79,8 +75,6 @@ public class MQTTManager
         mContext = context;
         this.acknowledgeHelper=acknowledgeHelper;
         this.helperDataSource=dDataSource;
-        this.holder=holder;
-        this.rxNetworkObserver=rxNetworkObserver;
         this.bookingManager=bookingManager;
 
         mMQTTListener = new IMqttActionListener()
@@ -208,7 +202,7 @@ public class MQTTManager
                 }else if(jsonObject.has("bookingData")) {
 
                     switch (jsonObject.getJSONObject("bookingData").getString("action")){
-
+                        //Handle the Assign Booking from dispatcher
                         case "29":
                             if(isApplicationSentToBackground() || FORGROUND_LOCK) {
                                 Intent intent = new Intent(mContext, MainActivity.class);
@@ -223,6 +217,7 @@ public class MQTTManager
                             }
                             break;
 
+                        //Handle New Booking
                         case "11":
                             try{
                                 if(helperDataSource.getDriverChannel().equals(jsonObject.getJSONObject("bookingData").getString("chn"))){
@@ -251,11 +246,12 @@ public class MQTTManager
                             }
                             break;
 
+                        //handle the chat messages
                         case "16":
                             RXMqttMessageObserver.getInstance().emit(jsonObject);
                             break;
+                        //Handle Booking cancel
                         case "3":
-                            //cancel popup
                             if(IS_POP_UP_OPEN) {
                                 IS_POP_UP_OPEN = false;
                                 if(BookingPopUp.mediaPlayer!=null && BookingPopUp.mediaPlayer.isPlaying())
@@ -275,6 +271,7 @@ public class MQTTManager
                     int action=jsonObject.has("a")?jsonObject.getInt("a"):jsonObject.getInt("action");
                     switch (action){
 
+                        //Handle the Assign Booking from dispatcher
                         case 29:
                             if(isApplicationSentToBackground() || FORGROUND_LOCK) {
                                 Intent intent = new Intent(mContext, MainActivity.class);
@@ -289,6 +286,7 @@ public class MQTTManager
                             }
                             break;
 
+                        //Handle New Booking
                         case 11:
                             try{
                                 if(helperDataSource.getDriverChannel().equals(jsonObject.getString("chn"))){
@@ -314,13 +312,15 @@ public class MQTTManager
 
                             break;
 
+                        //handle the chat messages
                         case 10:
                         case 12:
                         case 16:
                             RXMqttMessageObserver.getInstance().emit(jsonObject);
                             break;
+
+                        //Handle Booking cancel
                         case 3:
-                            //cancel popup
                             if(IS_POP_UP_OPEN) {
                                 IS_POP_UP_OPEN = false;
                                 if(BookingPopUp.mediaPlayer!=null && BookingPopUp.mediaPlayer.isPlaying())
@@ -330,7 +330,6 @@ public class MQTTManager
                                         Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                 mContext.startActivity(intent);
                             }
-
                             break;
                     }
 
