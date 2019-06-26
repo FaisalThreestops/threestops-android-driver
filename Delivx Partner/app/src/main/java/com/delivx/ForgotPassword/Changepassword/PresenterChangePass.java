@@ -64,10 +64,12 @@ public class PresenterChangePass implements ChangePassPresenterContract
 
     @Override
     public void validatePassword(String pass, String confPass) {
+        //if new and confirm password empty
         if (pass.matches("") && confPass.matches(""))
         {
             view.showError(context.getResources().getString(R.string.entNewPass));
         }
+        //if new password is empty
         else if (pass.matches(""))
         {
             view.showError(context.getResources().getString(R.string.entNewPass));
@@ -75,16 +77,20 @@ public class PresenterChangePass implements ChangePassPresenterContract
        /* else if(!pass.matches("^*[a-zA-Z](?=.*\\d).{5,14}$")){
             view.showError(context.getResources().getString(R.string.pass_validation));
         }*/
+       //if confirm password is empty
         else if (confPass.matches(""))
         {
             view.showError(context.getResources().getString(R.string.reentrPass));
         }
+        //if new and confirm password is not empty
         else
         {
+            //if new and confirm password is mismatch
             if (!pass.matches(confPass)) {
-
                 view.showError(context.getResources().getString(R.string.passNotMactch));
-            } else {
+            }
+            //if new and confirm password is match
+            else {
                 updatePasswordApi(pass);
             }
         }

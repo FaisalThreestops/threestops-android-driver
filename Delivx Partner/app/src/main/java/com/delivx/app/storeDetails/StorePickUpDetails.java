@@ -93,7 +93,6 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements Store
         Utility.RtlConversion(this,presenter.getlanguageCode());
         setContentView(R.layout.activity_store_pick_up_details);
         ButterKnife.bind(this);
-
         initViews();
         presenter.getBundleData(getIntent().getExtras());
         presenter.setActionBar();
@@ -101,6 +100,10 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements Store
 
     }
 
+    /**
+     * <h2>initViews</h2>
+     * <h2>initializing the views</h2>
+     */
     public void initViews()
     {
         font= fontUtils.titaliumRegular();
@@ -266,9 +269,11 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements Store
     public void onClick(View view){
         switch (view.getId())
         {
+            //call to customer
             case R.id.iv_call_customer:
                 presenter.callCustomer(true);
                 break;
+                //call to store
             case R.id.iv_call_pickUp:
                 presenter.callCustomer(false);
                 break;
@@ -276,6 +281,7 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements Store
 
     }
 
+    //chat option in action bar
     @OnClick(R.id.iv_search)
     public void chattingOnclick(View view){
         presenter.openChat();

@@ -3,6 +3,7 @@ package com.delivx.app.main.homeFrag;
 import android.app.Activity;
 import android.content.Intent;
 import android.location.Location;
+import android.util.Log;
 
 import com.delivx.app.MyApplication;
 import com.delivx.app.bookingRequest.BookingPopUp;

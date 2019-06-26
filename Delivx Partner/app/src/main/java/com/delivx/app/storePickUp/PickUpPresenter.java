@@ -74,9 +74,11 @@ public class PickUpPresenter implements PickUpContract.PresenterOperations {
             view.showProgress();
         }
         final String status;
+        //if reaches the destination
         if(appointments.getOrderStatus().equals(AppConstants.BookingStatus.ReachedAtLocation))
             status=AppConstants.BookingStatus.Completed;
         else
+            //after pick up the item from store
             status=AppConstants.BookingStatus.JourneyStarted;
 
         Utility.printLog("Appointment Status: "+status);

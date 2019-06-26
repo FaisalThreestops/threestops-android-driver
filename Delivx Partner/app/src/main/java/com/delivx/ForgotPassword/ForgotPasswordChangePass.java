@@ -121,6 +121,10 @@ public class ForgotPasswordChangePass extends DaggerAppCompatActivity implements
         overridePendingTransition(R.anim.activity_open_scale, R.anim.activity_close_translate);
     }
 
+    /**
+     * <h2>initializeViews</h2>
+     * <p>Initializing the view(style,font)</p>
+     */
     private void initializeViews() {
 
         ClanaproNarrMedium = fontUtils.titaliumSemiBold();
@@ -155,6 +159,7 @@ public class ForgotPasswordChangePass extends DaggerAppCompatActivity implements
     public void onClick(View v) {
 
         switch (v.getId()) {
+            //event for save
             case R.id.tv_continue:
                 presenter.validatePassword(et_new_pass.getText().toString(),et_reenter_pass.getText().toString());
                 break;

@@ -147,6 +147,7 @@ public class CurrentUpcomingJobRVA extends RecyclerView.Adapter<CurrentUpcomingJ
             e.printStackTrace();
         }
 
+        //recyclerView appoinments
         holder.cv_singlerow_job.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -157,25 +158,27 @@ public class CurrentUpcomingJobRVA extends RecyclerView.Adapter<CurrentUpcomingJ
                 bundle.putSerializable("data",mData.get(position));
 
                 switch (mData.get(position).getOrderStatus()){
+                    //booking accepted
                     case "8":
                         intent = new Intent(context, StorePickUpDetails.class);
                         intent.putExtras(bundle);
                         context.startActivity(intent);
                         break;
-
+                        //booking ride
                     case "10":
                     case "12":
                         intent = new Intent(context, BookingRide.class);
                         intent.putExtras(bundle);
                         context.startActivity(intent);
                         break;
-
+                        //store pick up
                     case "11":
                     case "13":
                         intent = new Intent(context, StorePickUp.class);
                         intent.putExtras(bundle);
                         context.startActivity(intent);
                         break;
+                        //invoice
                     case "14":
                         intent = new Intent(context, InvoiceActivity.class);
                         intent.putExtras(bundle);

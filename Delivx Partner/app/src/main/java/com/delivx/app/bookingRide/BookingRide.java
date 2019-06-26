@@ -101,7 +101,10 @@ public class BookingRide extends DaggerAppCompatActivity implements OnMapReadyCa
 
     }
 
-
+    /**
+     * <h2>initLayout</h2>
+     * <p>initializing the views(font and style)</p>
+     */
     public void initLayout(){
 
         Typeface font= fontUtils.titaliumRegular();
@@ -251,18 +254,23 @@ public class BookingRide extends DaggerAppCompatActivity implements OnMapReadyCa
     @OnClick({R.id.tvCall,R.id.tvJobDetails,R.id.ivDirection,R.id.ivMyLocation,R.id.iv_search})
     public void onclick(View view){
         switch (view.getId()){
+            //call option
             case R.id.tvCall:
                 presenter.callCustomer();
                 break;
+                //job details
             case R.id.tvJobDetails:
                 presenter.getJobdetails();
                 break;
+                //chat option in action bar
             case R.id.iv_search:
                 presenter.openChat();
                 break;
+                //Direction option
             case R.id.ivDirection:
                 presenter.getDirection();
                 break;
+                //my current location
             case R.id.ivMyLocation:
                 presenter.getLatLong();
                 break;

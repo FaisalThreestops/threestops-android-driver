@@ -106,6 +106,10 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
         presenter.setActionBarTitle();
     }
 
+    /**
+     * <h2>initViews</h2>
+     * <p>initializing the views(fonts and style)</p>
+     */
     private void initViews() {
         font= fontUtils.titaliumRegular();
         fontBold=fontUtils.titaliumSemiBold();
@@ -186,6 +190,7 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
     public void setViews(AssignedAppointments appointments) {
 
         tv_cust_name.setText(appointments.getCustomerName());
+        //if reached destination
         if(appointments.getOrderStatus().equals(AppConstants.BookingStatus.ReachedAtLocation)){
             tv_dropup.setVisibility(View.GONE);
             tvAddItem.setVisibility(View.GONE);
@@ -193,6 +198,7 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
             tvStore.setText(appointments.getDropAddress());
             tv_status_text.setText(getResources().getString(R.string.delivered));
         }
+        //journey started
         else {
             tv_dropup.setText(appointments.getDropAddress());
             String text = "<b>" + appointments.getStoreName() + "</b> "+" : "+appointments.getPickUpAddress() ;
@@ -334,12 +340,15 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
 
         Bundle bundle=new Bundle();
         bundle.putSerializable("data",appointments);
+        //if delivered the item
         if(appointments.getOrderStatus().equals(AppConstants.BookingStatus.Completed)){
             Intent intent=new Intent(StorePickUp.this, InvoiceActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
             finish();
-        }else {
+        }
+        //journey started to delivery the item
+        else {
             Intent intent=new Intent(StorePickUp.this, BookingRide.class);
             intent.putExtras(bundle);
             startActivity(intent);
@@ -410,11 +419,13 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
 
         dialog.show();
     }
+    //call customer
     @OnClick(R.id.iv_call_customer)
     public void onClick(View view){
         presenter.callCustomer();
     }
 
+    //chat option
     @OnClick(R.id.iv_search)
     public void openChatOnclick(View view){
         presenter.openChat();

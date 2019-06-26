@@ -24,9 +24,6 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
-/**
- * Created by DELL on 02-02-2018.
- */
 
 public class StoreDetailsPresenter implements StoreDetailsContract.Presenter
 {
@@ -84,6 +81,7 @@ public class StoreDetailsPresenter implements StoreDetailsContract.Presenter
         if(view!=null){
             view.showProgress();
         }
+        //onTheWay->10
         Utility.printLog("Appointment Status: "+AppConstants.BookingStatus.OnTheWay);
         Observable<Response<ResponseBody>> bookingStatusRide=dispatcherService.bookingStatusRide(
                 preferenceHelperDataSource.getLanguage(),
@@ -155,9 +153,8 @@ public class StoreDetailsPresenter implements StoreDetailsContract.Presenter
         return preferenceHelperDataSource.getLanguageSettings().getLanguageCode();
     }
 
-    public void setAppointmentStatus(String status){
 
-
+    private void setAppointmentStatus(String status){
         try {
             JSONArray jsonArray=new JSONArray(preferenceHelperDataSource.getBookings());
             for (int i = 0; i < jsonArray.length(); i++) {

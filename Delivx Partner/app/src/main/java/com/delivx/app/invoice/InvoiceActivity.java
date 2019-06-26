@@ -81,6 +81,10 @@ public class InvoiceActivity extends DaggerAppCompatActivity implements
         presenter.setActionBarTitle();
     }
 
+    /**
+     * <h2>initViews</h2>
+     * <p>initializing the views(fonts and style)</p>
+     */
     public void initViews(){
 
         fontSemiBold= fontUtils.titaliumSemiBold();
@@ -177,26 +181,29 @@ public class InvoiceActivity extends DaggerAppCompatActivity implements
                 ratingbar4.setSelected(true);
                 break;
 
-
+                //event for relative layout
             case R.id.signature:
                 presenter.openSignaturePad();
                 break;
 
+                //clearing the signature
             case R.id.ivRefresh:
                 presenter.refresh();
                 break;
 
+                //back option in action bar
             case R.id.ivBackBtn:
                 presenter.onBackPressSign();
                 break;
 
+                //signature approved
             case R.id.tv_approve:
                 presenter.onSignatureApprove();
                 break;
 
+                //submit
             case R.id.tv_submit:
                 float rating =3;
-
                 if(ratingbar4.isSelected())
                 {
                     rating = 5;
@@ -246,7 +253,6 @@ public class InvoiceActivity extends DaggerAppCompatActivity implements
     public void onClear() {
         presenter.onSigned(null);
         ll_sign_here.setVisibility(View.VISIBLE);
-
     }
 
     @Override

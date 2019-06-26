@@ -215,7 +215,6 @@ public class BookingRidePresenter implements BookingRideContract.PresenterOperat
                                 appointments.setOrderStatus(finalStatus);
                                 setAppointmentStatus(finalStatus);
                                 updateDistanceAndTimerOnresult();
-
                                 view.onSuccess(appointments);
 
                             }else {

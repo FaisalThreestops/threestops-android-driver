@@ -7,9 +7,6 @@ import dagger.android.ContributesAndroidInjector;
 import com.delivx.dagger.ActivityScoped;
 import com.delivx.dagger.FragmentScoped;
 
-/**
- * Created by DELL on 01-02-2018.
- */
 
 @Module
 public abstract class HomeFragmentModule

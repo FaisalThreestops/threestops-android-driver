@@ -7,9 +7,6 @@ import com.delivx.pojo.AssignedAppointments;
 
 import java.util.ArrayList;
 
-/**
- * Created by DELL on 01-02-2018.
- */
 
 public interface HomeFragmentContract {
 
@@ -38,20 +35,34 @@ public interface HomeFragmentContract {
         /**
          * <h2>minimizeMap</h2>
          * <p>minimize the google map</p>
-         * @param appointments
+         * @param appointments appointment details pojo
          */
         void minimizeMap(ArrayList<AssignedAppointments> appointments);
 
+
+        /**
+         * <h1>addMarkers</h1>
+         * <p>add marker for all address, include pickup and delivery</p>
+         * @param appointments appoinment details pojo
+         */
         void addMarkers(ArrayList<AssignedAppointments> appointments);
 
+        /**
+         * <h1>removePickUpMarkers</h1>
+         * <p>remove pickup marker from map</p>
+         */
         void removePickUpMarkers();
 
+        /**
+         * <h1>removeDeliveryMarkers</h1>
+         * <p>remove delivery marker from map</p>
+         */
         void removeDeliveryMarkers();
 
         /**
          * <h2>showError</h2>
          * <p>show the error alert dailog</p>
-         * @param statusMsg
+         * @param statusMsg error message
          */
         void showError(String statusMsg);
     }
@@ -68,7 +79,7 @@ public interface HomeFragmentContract {
 
         /**
          * <h2>updateMasterStatus</h2>
-         * <p>updating the status of the driver</p>
+         * <p>updating the online and offline status of the driver</p>
          */
         void updateMasterStatus();
 
@@ -81,7 +92,7 @@ public interface HomeFragmentContract {
         /**
          * <h2>updateLocation</h2>
          * <p>updating the current location to sharedPreference</p>
-         * @param location
+         * @param location latitude and longitude
          */
         void updateLocation(Location location);
 
@@ -92,10 +103,21 @@ public interface HomeFragmentContract {
         void expandMap();
 
 
+        /**
+         * <h1>markerAllOnclik</h1>
+         * <p>click event for all text, show all location in map</p>
+         */
         void markerAllOnclik();
 
+        /**
+         * <h1>markerPickUpOnclik</h1>
+         * <p>click event for pickup text, show pickup locations only in map</p>
+         */
         void markerPickUpOnclik();
 
+        /**
+         *
+         */
         void markerDeliveryOnclik();
 
         /**
