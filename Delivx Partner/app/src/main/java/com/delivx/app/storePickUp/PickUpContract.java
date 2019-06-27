@@ -6,10 +6,6 @@ import com.delivx.BaseView;
 import com.delivx.pojo.AssignedAppointments;
 import com.delivx.pojo.ShipmentDetails;
 
-/**
- * Created by DELL on 06-02-2018.
- */
-
 public interface PickUpContract {
 
     interface ViewOperations extends BaseView
@@ -23,7 +19,7 @@ public interface PickUpContract {
         /**
          * <h2>setTitle</h2>
          * <p>set title to the action bar</p>
-         * @param title :text
+         * @param title Activity title
          */
         void setTitle(String title);
 
@@ -58,10 +54,10 @@ public interface PickUpContract {
         /**
          * <h2>openOrderEditDialog</h2>
          * <p>open the alert dialog to edit the order item</p>
-         * @param shipmentDetails
-         * @param currency : amount
+         * @param shipmentDetails booking details pojo
+         * @param assignedAppointments : Appointment details pojo
          */
-        void openOrderEditDialog(ShipmentDetails shipmentDetails, AssignedAppointments currency);
+        void openOrderEditDialog(ShipmentDetails shipmentDetails, AssignedAppointments assignedAppointments);
     }
 
     interface PresenterOperations
@@ -81,7 +77,7 @@ public interface PickUpContract {
         /**
          *<h2>getBundleData</h2>
          * <p>get the data from(BokkingRide)</p>
-         * @param bundle :data
+         * @param bundle Appointment data from previous activity
          */
         void getBundleData(Bundle bundle);
 
@@ -100,22 +96,22 @@ public interface PickUpContract {
         /**
          * <h2>editOrder</h2>
          * <p>edit the order items</p>
-         * @param shipmentDetails
+         * @param shipmentDetails booking details pojo
          */
         void editOrder(ShipmentDetails shipmentDetails);
 
         /**
          * <h2>updateOrder</h2>
          * <p>updating the edited items</p>
-         * @param shipmentDetails
-         * @param qty : quantity
+         * @param shipmentDetails booking details pojo
+         * @param qty  edited quantity
          */
         void updateOrder(ShipmentDetails shipmentDetails, String qty);
 
         /**
          * <h2>deleteItem</h2>
          * <p>deleting the items from the list</p>
-         * @param shipmentDetails : order items
+         * @param shipmentDetails booking details pojo
          */
         void deleteItem(ShipmentDetails shipmentDetails);
 

@@ -26,10 +26,6 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
-/**
- * Created by DELL on 06-02-2018.
- */
-
 public class PickUpPresenter implements PickUpContract.PresenterOperations {
 
     @Inject PickUpContract.ViewOperations view;
@@ -40,7 +36,7 @@ public class PickUpPresenter implements PickUpContract.PresenterOperations {
     private AssignedAppointments appointments;
 
     @Inject
-    public PickUpPresenter() {
+    PickUpPresenter() {
     }
 
 
@@ -174,7 +170,16 @@ public class PickUpPresenter implements PickUpContract.PresenterOperations {
         return preferenceHelperDataSource.getLanguageSettings().getLanguageCode();
     }
 
-    public void orderApi(final JSONArray jsonArray, final ShipmentDetails shipmentDetails, final String qty, final boolean isDelete){
+    /**
+     * <h1>orderApi</h1>
+     * <p>API call for edit the shipment item</p>
+     * @param jsonArray json format data included booking details
+     * @param shipmentDetails booking details pojo
+     * @param qty edited quantity
+     * @param isDelete   boolean value for check edit or delete
+     */
+    private void orderApi(final JSONArray jsonArray, final ShipmentDetails shipmentDetails,
+                          final String qty, final boolean isDelete){
         if(view!=null)
             view.showProgress();
 
@@ -212,6 +217,7 @@ public class PickUpPresenter implements PickUpContract.PresenterOperations {
                                 String sub_total=jsonObject.getString("subTotalAmount");
 
                                 appointments.setTotalAmount(totalAmount);
+                                appointments.setSubTotalAmount(sub_total);
                                 if(isDelete)
                                     view.setViews(appointments);
                                 else
@@ -244,6 +250,13 @@ public class PickUpPresenter implements PickUpContract.PresenterOperations {
                 });
     }
 
+
+    /**
+     * <h1>upadteItemDetails</h1>
+     * <p>add the quantity and set view for edited</p>
+     * @param shipmentDetails booking details pojo
+     * @param qty edited quantity
+     */
     private void upadteItemDetails(ShipmentDetails shipmentDetails, String qty) {
 
         for(int i=0;i<appointments.getShipmentDetails().size();i++){
@@ -255,7 +268,13 @@ public class PickUpPresenter implements PickUpContract.PresenterOperations {
         view.setViews(appointments);
     }
 
-    public JSONArray getItems(ShipmentDetails shipmentDetails, String qty ){
+    /**
+     * <h1>getItems</h1>
+     * @param shipmentDetails booking details poho
+     * @param qty edited quantity
+     * @return jsonarray for edit
+     */
+    private JSONArray getItems(ShipmentDetails shipmentDetails, String qty){
         JSONArray jsonArray=new JSONArray();
         try{
             for(int i=0;i<appointments.getShipmentDetails().size();i++)
@@ -263,13 +282,14 @@ public class PickUpPresenter implements PickUpContract.PresenterOperations {
                 JSONObject jsonObject=new JSONObject();
                 jsonObject.put("unitId",appointments.getShipmentDetails().get(i).getUnitId());
                 jsonObject.put("itemName",appointments.getShipmentDetails().get(i).getItemName());
-                jsonObject.put("quantity",appointments.getShipmentDetails().get(i).getQuantity());
+                jsonObject.put("quantity",Integer.parseInt(appointments.getShipmentDetails().get(i).getQuantity()));
                 jsonObject.put("childProductId",appointments.getShipmentDetails().get(i).getChildProductId());
                 jsonObject.put("itemImageURL",appointments.getShipmentDetails().get(i).getItemImageURL());
-                jsonObject.put("unitPrice",appointments.getShipmentDetails().get(i).getUnitPrice());
+                jsonObject.put("unitPrice",Float.parseFloat(appointments.getShipmentDetails().get(i).getUnitPrice()));
                 jsonObject.put("unitName",appointments.getShipmentDetails().get(i).getUnitName());
                 jsonObject.put("parentProductId",appointments.getShipmentDetails().get(i).getParentProductId());
-                jsonObject.put("addedToCartOn",appointments.getShipmentDetails().get(i).getAddedToCartOn());
+                jsonObject.put("addedToCartOn",Integer.parseInt(appointments.getShipmentDetails().get(i).getAddedToCartOn()));
+                jsonObject.put("finalPrice",Integer.parseInt(appointments.getShipmentDetails().get(i).getFinalPrice()));
 
                 if(jsonObject.getString("unitId").equals(shipmentDetails.getUnitId())){
                     jsonObject.put("quantity",qty);
@@ -286,9 +306,12 @@ public class PickUpPresenter implements PickUpContract.PresenterOperations {
     }
 
 
-    public void setAppointmentStatus(String status){
-
-
+    /**
+     * <h1>setAppointmentStatus</h1>
+     * <p>change booking status after  update </p>
+     * @param status updated booking status
+     */
+    private void setAppointmentStatus(String status){
         try {
             JSONArray jsonArray=new JSONArray(preferenceHelperDataSource.getBookings());
             for (int i = 0; i < jsonArray.length(); i++) {

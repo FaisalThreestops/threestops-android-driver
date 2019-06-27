@@ -27,22 +27,15 @@ import retrofit2.Response;
 
 public class StoreDetailsPresenter implements StoreDetailsContract.Presenter
 {
-    @Inject
-    Activity context;
-
-    @Inject
-    StoreDetailsContract.View view;
-
-    @Inject
-    PreferenceHelperDataSource preferenceHelperDataSource;
-
-    @Inject
-    DispatcherService dispatcherService;
+    @Inject   Activity context;
+    @Inject   StoreDetailsContract.View view;
+    @Inject   PreferenceHelperDataSource preferenceHelperDataSource;
+    @Inject   DispatcherService dispatcherService;
 
     private AssignedAppointments appointments;
 
     @Inject
-    public StoreDetailsPresenter() {
+    StoreDetailsPresenter() {
     }
 
     @Override
@@ -154,6 +147,11 @@ public class StoreDetailsPresenter implements StoreDetailsContract.Presenter
     }
 
 
+    /**
+     * <h1>setAppointmentStatus</h1>
+     * <p>Update booking status in shared preference</p>
+     * @param status booking status
+     */
     private void setAppointmentStatus(String status){
         try {
             JSONArray jsonArray=new JSONArray(preferenceHelperDataSource.getBookings());
@@ -172,10 +170,5 @@ public class StoreDetailsPresenter implements StoreDetailsContract.Presenter
         }
 
 
-    }
-
-    public JSONObject getAppointment(JSONArray jsonArray){
-
-        return null;
     }
 }

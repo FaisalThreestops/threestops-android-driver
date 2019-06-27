@@ -35,8 +35,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dagger.android.support.DaggerAppCompatActivity;
 
-public class StorePickUpDetails extends DaggerAppCompatActivity implements StoreDetailsContract.View{
-
+public class StorePickUpDetails extends DaggerAppCompatActivity implements
+        StoreDetailsContract.View{
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.tv_title) TextView tv_title;
@@ -65,9 +65,6 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements Store
     @BindView(R.id.rv_item_show)
     RecyclerView rv_item_show;
     private Typeface font,fontBold;
-
-
-
 
     @BindView(R.id.tv_paymentbreskdown) TextView tv_paymentbreskdown;
     @BindView(R.id.tv_subTotal) TextView tv_subTotal;
@@ -122,8 +119,6 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements Store
         tvProductsTitle.setTypeface(font);
         tvPriceTitle.setTypeface(fontBold);
         tvItems.setTypeface(fontBold);
-       /* tvGrandTotal.setTypeface(fontBold);
-        tvGrandTotalTitle.setTypeface(fontBold);*/
 
         tv_subTotal.setTypeface(font);
         tv_subTotal_val.setTypeface(font);
@@ -139,7 +134,6 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements Store
         seekbar.setSliderProgressCallback(new Slider.SliderProgressCallback() {
             @Override
             public void onSliderProgressChanged(int progress) {
-
                 if (progress > 65) {
                     seekbar.setProgress(100);
                     presenter.updateBookingStatus();
@@ -281,7 +275,6 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements Store
 
     }
 
-    //chat option in action bar
     @OnClick(R.id.iv_search)
     public void chattingOnclick(View view){
         presenter.openChat();
@@ -344,8 +337,6 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements Store
 
             }
         }
-     /*   tvGrandTotal.setText(appointments.getCurrencySymbol()+" "+
-                String.format(Locale.US,"%.2f",Float.parseFloat(appointments.getTotalAmount())));*/
     }
 
     public void addTaxItems(AssignedAppointments appointments){
