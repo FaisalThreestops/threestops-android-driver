@@ -46,7 +46,8 @@ public class BankListFragPresenter implements BankDetailscontract.PresenterOpera
 
     BankDetailscontract.ViewOperations view;
 
-    void getBankDetails() {
+    @Override
+    public void getBankDetails() {
         getAccount();
     }
 
@@ -79,7 +80,10 @@ public class BankListFragPresenter implements BankDetailscontract.PresenterOpera
         view.moveToNewStripeActivity(bundleBankDetails);
     }
 
-
+    /**
+     * <h2>getAccount</h2>
+     * <p>API call for get the bank details</p>
+     */
     private void getAccount() {
         view.showProgress();
         final Observable<Response<ResponseBody>> connectAccount=networkService.connectAccount(preferenceHelperDataSource.getLanguage(),

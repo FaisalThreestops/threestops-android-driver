@@ -322,6 +322,7 @@ public class BankNewStripeActivity extends DaggerAppCompatActivity implements Vi
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            //event for add file
             case R.id.ivAddFile:
                 String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
                 if (EasyPermissions.hasPermissions(this, perms)) {
@@ -333,10 +334,12 @@ public class BankNewStripeActivity extends DaggerAppCompatActivity implements Vi
                 }
                 break;
 
+                //event for save
             case R.id.tvSave:
                 presenter.onSave();
                 break;
 
+                //event for select the DOB
             case R.id.etDob:
                 presenter.openCalender();
                 break;

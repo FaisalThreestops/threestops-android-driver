@@ -92,6 +92,10 @@ public class HistoryFragment extends DaggerFragment implements TabLayout.OnTabSe
         return rootView;
     }
 
+    /**
+     * <h2>initViews</h2>
+     * <p>initializing the Views,setting the date format and set the RecyclerView</p>
+     */
     private void initViews()
     {
 
@@ -127,6 +131,11 @@ public class HistoryFragment extends DaggerFragment implements TabLayout.OnTabSe
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * <h2>initTabLayout</h2>
+     * <P>initializing the tab layout</P>
+     * @param selectableTab : tab count
+     */
     private void initTabLayout(final int selectableTab)
     {
         Date date = new Date();
@@ -139,6 +148,7 @@ public class HistoryFragment extends DaggerFragment implements TabLayout.OnTabSe
 
         for(int i = 0; i <= tabcount ;i++)
         {
+            Log.i("check", "initTabLayout: for i "+i);
             tabLayout.addTab(tabLayout.newTab());
         }
 
@@ -166,11 +176,14 @@ public class HistoryFragment extends DaggerFragment implements TabLayout.OnTabSe
             else
             {
                 endDate = tabDateFormat.format(c.getTime());
+                Log.i("check", "initTabLayout: endate "+endDate);
                 c.add(Calendar.DATE , -6);
                 startDate = tabDateFormat.format(c.getTime());
                 apiStartWeek.add(c.getTime());
+                Log.i("check", "initTabLayout: apiStartWeek "+apiStartWeek);
                 c.add(Calendar.DATE , -1);
                 tabLayout.getTabAt(i).setText(startDate + "-" + endDate);
+                Log.i(TAG, "initTabLayout: startDate - endDate" +startDate + "-" + endDate);
             }
         }
 
@@ -188,7 +201,10 @@ public class HistoryFragment extends DaggerFragment implements TabLayout.OnTabSe
 
     }
 
-
+    /**
+     * <h2>initBarChart</h2>
+     * <p>initializing the bar chart</p>
+     */
     private void initBarChart()
     {
         mChart.setDrawBarShadow(false);
@@ -230,12 +246,14 @@ public class HistoryFragment extends DaggerFragment implements TabLayout.OnTabSe
         if(selectedTabPosition == tabcount)
         {
             int count = differenceDays +1;
+            Log.i(TAG, "onTabSelected: if "+count);
             xAxis.setValueFormatter(new IndexAxisValueFormatter(currentCycleDays));
             xAxis.setLabelCount(count);
             mChart.notifyDataSetChanged();
         }
         else
         {
+            Log.i(TAG, "onTabSelected: else ");
             xAxis.setValueFormatter(new IndexAxisValueFormatter(pastCycleDays));
             xAxis.setLabelCount(7);
             mChart.notifyDataSetChanged();
@@ -314,7 +332,6 @@ public class HistoryFragment extends DaggerFragment implements TabLayout.OnTabSe
             set1.setHighLightColor(ContextCompat.getColor(getActivity(),R.color.colorPrimaryDark));
             Highlight highlight = new Highlight(highestPosition,0, 0);
             mChart.highlightValue(highlight, false);
-
             mChart.getData().notifyDataChanged();
             mChart.notifyDataSetChanged();
         }

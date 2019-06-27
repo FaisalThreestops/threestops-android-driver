@@ -85,17 +85,20 @@ public class BankNewStripePresenter implements StripeAccountContract.PresenterOp
 
     @Override
     public void init(Bundle bundle) {
-
+        //bundle is empty when 1st time adding the stripe
         if (bundle != null) {
             view.setValues(bundle);
         }
 
         String state = Environment.getExternalStorageState();
+        //state= mounted
         String filename = System.currentTimeMillis() + ".png";
+        //filename=1561095711190.png
         datePickerFragment = new DatePickerFragment();
 
         if (Environment.MEDIA_MOUNTED.equals(state)) {
             mFileTemp = new File(Environment.getExternalStorageDirectory(), filename);
+            //mFileTemp=/storage/emulated/0/1561095711190.png
         } else {
             mFileTemp = new File(context.getFilesDir(), filename);
         }
@@ -108,12 +111,14 @@ public class BankNewStripePresenter implements StripeAccountContract.PresenterOp
             if (resultCode == RESULT_OK)
             {
                 switch (requestCode) {
-
+                    //selecting the image from gallery
                     case REQUEST_CODE_GALLERY:
 
                         try {
+                            //reading the data
                             InputStream inputStream = context.getContentResolver().openInputStream(
                                     data.getData());
+                            // writing data to a file.
                             FileOutputStream fileOutputStream = new FileOutputStream(mFileTemp);
                             copyStream(inputStream, fileOutputStream);
                             fileOutputStream.close();
@@ -127,8 +132,10 @@ public class BankNewStripePresenter implements StripeAccountContract.PresenterOp
                         }
 
                         break;
+                    //selecting the image from camera
                     case REQUEST_CODE_TAKE_PICTURE:
                         isPicturetaken = true;
+                        //bitmap handles the image resources
                         bitmap = BitmapFactory.decodeFile(mFileTemp.getPath());
                         view.setImage(bitmap);
                         break;
@@ -179,6 +186,7 @@ public class BankNewStripePresenter implements StripeAccountContract.PresenterOp
         }
     }
 
+    //adding the bank details
     private void addBankDetails() {
         /*view.showProgress();*/
         String[] dateOfBirth = dob.split("/");
@@ -343,6 +351,10 @@ public class BankNewStripePresenter implements StripeAccountContract.PresenterOp
     }
 */
 
+    /**
+     * <h2>getIpAddress</h2>
+     * <p>API call to get the ip address</p>
+     */
     private void getIpAddress() {
 
         final Observable<Response<ResponseBody>> profile=networkService.ipAddess();
@@ -398,7 +410,9 @@ public class BankNewStripePresenter implements StripeAccountContract.PresenterOp
         }
     }
 
-
+    /**<h2>amzonUpload</h2>
+     * <p>uploading the image to amazon site</p>
+     */
     private void amzonUpload() {
 
         view.showProgress();
@@ -458,8 +472,11 @@ public class BankNewStripePresenter implements StripeAccountContract.PresenterOp
 
     }
 
-
-
+    /**
+     * <h2>validateFields</h2>
+     * <p>validating the fields</p>
+     * @return
+     */
     public boolean validateFields(){
 
         if(!isPicturetaken){
@@ -468,12 +485,14 @@ public class BankNewStripePresenter implements StripeAccountContract.PresenterOp
         }
 
         view.getFname();
+
         if(MyTextUtils.isEmpty(fname)){
             view.setFirstNameError();
             return false;
         }
 
         view.getLastName();
+
         if(MyTextUtils.isEmpty(lName)){
             view.setLastNameError();
             return false;

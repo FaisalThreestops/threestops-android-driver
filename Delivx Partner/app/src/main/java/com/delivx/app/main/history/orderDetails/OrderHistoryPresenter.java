@@ -29,10 +29,10 @@ public class OrderHistoryPresenter implements OrderHistoryContract.PresenterOper
     }
 
 
-    @Override
-    public void initActionBar() {
-//        view.setActionBar();
-    }
+//    @Override
+//    public void initActionBar() {
+////        view.setActionBar();
+//    }
 
     @Override
     public void getBundleData(Bundle extras) {

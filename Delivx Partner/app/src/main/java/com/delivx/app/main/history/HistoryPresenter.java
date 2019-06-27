@@ -58,8 +58,13 @@ public class HistoryPresenter implements HistoryContract.PresenterOperations {
         init();
     }
 
+    /**
+     * <h2>init</h2>
+     * <p>set the date format</p>
+     */
     void init(){
         XAxisFormat = new SimpleDateFormat("EEE", Locale.US);
+        Log.i("check", "init: "+XAxisFormat.toString());
         totalsForBar = new ArrayList<>();
         barEntries = new ArrayList<>();
         initDays();
@@ -139,11 +144,17 @@ public class HistoryPresenter implements HistoryContract.PresenterOperations {
     }
 
 
+    /**
+     * <h2>initDays</h2>
+     * <p>calculating the difference days between current day to previous stored date</p>
+     */
     private void initDays() {
+        Log.i("check", "initDays: ");
         Date date = new Date();
         Calendar c = Calendar.getInstance();
         c.setTime(date);
         String currentDay = XAxisFormat.format(c.getTime()).toUpperCase();
+        Log.i("check", "initDays: currentDay "+currentDay);
         differenceDays = 0;
         switch (currentDay) {
             case "SUN":
@@ -159,6 +170,7 @@ public class HistoryPresenter implements HistoryContract.PresenterOperations {
                 differenceDays = 3;
                 break;
             case "THU":
+                Log.i("check", "initDays: tuesday");
                 differenceDays = 4;
                 break;
             case "FRI":
@@ -174,7 +186,7 @@ public class HistoryPresenter implements HistoryContract.PresenterOperations {
         for (int i = 0; i <= differenceDays; i++) {
             currenCycleDays.add(XAxisFormat.format(c.getTime()).toUpperCase());
             c.add(Calendar.DATE, +1);
-            Log.d(TAG, "currentCycleDays: " + currenCycleDays.get(i));
+            Log.d("check", "currentCycleDays: " + currenCycleDays.get(i));
         }
 
         ArrayList<String> pastCycleDays = new ArrayList<>();
@@ -189,6 +201,13 @@ public class HistoryPresenter implements HistoryContract.PresenterOperations {
         view.onDayInitialized(differenceDays,currenCycleDays,pastCycleDays);
     }
 
+    /**
+     * <h2>handleDate</h2>
+     * <p>handling the data to set the values on the position</p>
+     * @param tripsPojo : tripsPojo is handling the data
+     * @param selectedTabPosition : tab position
+     * @param tabcount :tab count
+     */
     private void handleDate(TripsPojo tripsPojo, int selectedTabPosition, int tabcount) {
         double amountEarned = 0;
         for (int i = 0; i < tripsPojo.getData().getTotalEarnings().size(); i++) {

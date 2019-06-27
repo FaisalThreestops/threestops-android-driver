@@ -32,9 +32,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.DaggerFragment;
 
-/**
- * Created by Admin on 8/5/2017.
- */
 
 
 public class BankListFrag extends DaggerFragment implements BankDetailscontract.ViewOperations,BankDetailsRVA.RefreshBankDetails, View.OnClickListener {
@@ -70,6 +67,10 @@ public class BankListFrag extends DaggerFragment implements BankDetailscontract.
         return rootView;
     }
 
+    /**
+     * <h2>init</h2>
+     * <p>intializing the views(Fonts and style)</p>
+     */
     private void init() {
 
         tvStep2.setTypeface(fontUtils.titaliumRegular());
@@ -177,10 +178,12 @@ public class BankListFrag extends DaggerFragment implements BankDetailscontract.
     public void onClick(View v) {
 
         switch (v.getId()){
+            //event for addBankaccount
             case R.id.tvAddBankAccount:
                 bankListFragPresenter.addNewAccount();
                 break;
 
+                //event for stripeAccount
             case R.id.cvStipeDetails:
             case R.id.tvAddStripeAccount:
                 bankListFragPresenter.addNewStripeAccount();

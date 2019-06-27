@@ -75,11 +75,15 @@ public class HistoryOrderDetails extends DaggerAppCompatActivity /*implements Or
         ButterKnife.bind(this);
 
         initViews();
-        presenter.initActionBar();
+//        presenter.initActionBar();
         presenter.getBundleData(getIntent().getExtras());
 
     }
 
+    /**
+     * <h2>initViews</h2>
+     * <p>initializing the views by(fonts and style)</p>
+     */
     private void initViews()
     {
         tvHeaderTotalEarning.setTypeface(fontUtils.titaliumRegular());

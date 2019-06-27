@@ -14,6 +14,12 @@ public interface OrderHistoryContract {
     interface ViewOperation extends BaseView
     {
 //        void setActionBar();
+
+        /**
+         * <h2>setViews</h2>
+         * <p>set the views by values</p>
+         * @param appointment : appointment pojo details
+         */
         void setViews(Appointments appointment);
 //        void setTitle(String format);
 //        void setPickUpTime(String format);
@@ -24,7 +30,17 @@ public interface OrderHistoryContract {
 
     interface PresenterOperation
     {
-        void initActionBar();
+        /**
+         * <h2>initActionBar</h2>
+         * <p>initializing the action bar</p>
+         */
+//        void initActionBar();
+
+        /**
+         * <h2>getBundleData</h2>
+         * <p>get data from previous(HistoryTripsRVA)</p>
+         * @param extras : Appointments details
+         */
         void getBundleData(Bundle extras);
         void showOrderDetails();
         void hideOrderDetails();

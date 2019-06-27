@@ -22,9 +22,6 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by embed on 23/5/17.
- */
 
 public class HistoryTripsRVA extends RecyclerView.Adapter<HistoryTripsRVA.ViewHolder> {
 

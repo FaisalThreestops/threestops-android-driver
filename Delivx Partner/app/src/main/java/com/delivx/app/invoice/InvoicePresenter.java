@@ -131,6 +131,10 @@ public class InvoicePresenter implements InvoiceContract.PresenterOpetaions
         return preferenceHelperDataSource.getLanguageSettings().getLanguageCode();
     }
 
+    /**
+     * <h2>createFile</h2>
+     * <p>create the file to save the signature</p>
+     */
     private void createFile() {
         MyImageHandler myImageHandler = MyImageHandler.getInstance();
         File dir = myImageHandler.getAlbumStorageDir(context, VariableConstant.SIGNATURE_PIC_DIR, true);
@@ -142,6 +146,13 @@ public class InvoicePresenter implements InvoiceContract.PresenterOpetaions
         }
     }
 
+    /**
+     * <h2>saveBitmapToJPG</h2>
+     * <p>signature image saving in JPG format</p>
+     * @param bitmap : signature image resource
+     * @param photo : image
+     * @throws IOException : handling exception
+     */
     public void saveBitmapToJPG(Bitmap bitmap, File photo) throws IOException {
         Bitmap newBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(newBitmap);
@@ -152,6 +163,10 @@ public class InvoicePresenter implements InvoiceContract.PresenterOpetaions
         stream.close();
     }
 
+    /**
+     * <h2>uploadToAmazon</h2>
+     * <p>uploading the image to amazon site </p>
+     */
     public void uploadToAmazon(){
         view.showProgress();
         String BUCKETSUBFOLDER = VariableConstant.SIGNATURE_UPLOAD;
@@ -181,6 +196,11 @@ public class InvoicePresenter implements InvoiceContract.PresenterOpetaions
         });
     }
 
+    /**
+     * <h2>updateBookingStatus</h2>
+     * <p>API call for updating the Booking status</p>
+     * @param rating : rating (number of stars)
+     */
     public void updateBookingStatus(float rating) {
         if(view!=null){
             view.showProgress();

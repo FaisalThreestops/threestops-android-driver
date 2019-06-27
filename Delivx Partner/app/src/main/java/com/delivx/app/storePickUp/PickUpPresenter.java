@@ -263,14 +263,13 @@ public class PickUpPresenter implements PickUpContract.PresenterOperations {
             if(shipmentDetails.getUnitId().equals(appointments.getShipmentDetails().get(i).getUnitId())){
                 appointments.getShipmentDetails().get(i).setQuantity(qty);
             }
-
         }
         view.setViews(appointments);
     }
 
     /**
      * <h1>getItems</h1>
-     * @param shipmentDetails booking details poho
+     * @param shipmentDetails booking details pojo
      * @param qty edited quantity
      * @return jsonarray for edit
      */

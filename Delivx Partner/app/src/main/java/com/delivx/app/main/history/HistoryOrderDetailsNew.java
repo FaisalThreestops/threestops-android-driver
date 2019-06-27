@@ -94,6 +94,11 @@ public class HistoryOrderDetailsNew extends DaggerAppCompatActivity implements O
         presenter.getBundleData(getIntent().getExtras());
         setActionBar();
     }
+
+    /**
+     * <h2>setActionBar</h2>
+     * <p>setting the action bar</p>
+     */
     public void setActionBar() {
 
         setSupportActionBar(toolbar);
@@ -224,6 +229,11 @@ public class HistoryOrderDetailsNew extends DaggerAppCompatActivity implements O
         addItems(appointment);
     }
 
+    /**
+     * <h2>addItems</h2>
+     * <p>adding the delivery items list </p>
+     * @param appointments : appointments pojo details
+     */
     public void addItems( Appointments appointments){
         llItemContainer.removeAllViews();
         int size=appointments.getItems().size();
