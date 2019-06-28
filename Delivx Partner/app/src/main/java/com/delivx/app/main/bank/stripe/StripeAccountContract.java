@@ -18,7 +18,7 @@ public interface StripeAccountContract {
         /**
          * <h2>setValues</h2>
          * <p>set the view by values</p>
-         * @param bundle
+         * @param bundle : previously stored data
          */
         void setValues(Bundle bundle);
 
@@ -121,7 +121,7 @@ public interface StripeAccountContract {
         /**
          * <h2>showError</h2>
          * <p>displaying the error messages</p>
-         * @param string
+         * @param string : error message
          */
         void showError(String string);
 
@@ -248,7 +248,7 @@ public interface StripeAccountContract {
         /**
          * <h2>setPostalCode</h2>
          * <p>set the ssn view</p>
-         * @param postalCode
+         * @param postalCode :ssn
          */
         void setPostalCode(String postalCode);
 

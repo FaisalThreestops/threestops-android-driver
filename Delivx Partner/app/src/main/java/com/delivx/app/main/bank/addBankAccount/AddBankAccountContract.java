@@ -2,18 +2,11 @@ package com.delivx.app.main.bank.addBankAccount;
 
 import com.delivx.BaseView;
 
-/**
- * Created by DELL on 23-03-2018.
- */
 
 public interface AddBankAccountContract {
 
     interface ViewOperation extends BaseView
     {
-        void onSuccess(String msg);
-
-        void onFailure();
-
         /**
          * <h2>setNameError</h2>
          * <p>displaying the name error message </p>

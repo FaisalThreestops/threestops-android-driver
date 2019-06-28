@@ -99,7 +99,7 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
 
     /**
      * <h1>initializeViews</h1>
-     * <p>Initialize the widgets</p>
+     * <p>Initialize the view(fonts and styles</p>
      */
     private void initializeViews() {
         Typeface ClanaproNarrNews, ClanaproNarrMedium;

@@ -459,5 +459,4 @@ public class MQTTManager
         VariableConstant.APPISBACKGROUND = false;
         return false;
     }
-
 }

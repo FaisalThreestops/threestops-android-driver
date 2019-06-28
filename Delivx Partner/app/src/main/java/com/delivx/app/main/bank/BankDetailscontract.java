@@ -52,7 +52,7 @@ public interface BankDetailscontract {
         /**
          * <h2>moveToNewStripeActivity</h2>
          * <p>moving to next (BankNewStripeActivity) for adding new stripe account</p>
-         * @param bundleBankDetails
+         * @param bundleBankDetails : stripeDetailsPojo details
          */
         void moveToNewStripeActivity(Bundle bundleBankDetails);
     }

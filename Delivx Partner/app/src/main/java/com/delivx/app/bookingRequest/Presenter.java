@@ -152,7 +152,7 @@ public class Presenter implements BookingPopUpMainMVP.PresenterOperations {
 
     /**
      * <h1>cancelCoutDownTimer</h1>
-     * <p>if any error occur, stop the timer</p>
+     * <p>cancel or finish the timer count</p>
      */
     private void cancelCoutDownTimer(){
         if (countDownTimer != null) {

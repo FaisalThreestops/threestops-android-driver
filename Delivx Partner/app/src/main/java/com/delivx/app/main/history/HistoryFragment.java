@@ -292,20 +292,6 @@ public class HistoryFragment extends DaggerFragment implements TabLayout.OnTabSe
     }
 
     @Override
-    public void onFailure(int failure) {
-        if(failure==401){
-            getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
-            getActivity().finish();
-
-        }
-    }
-
-    @Override
-    public void onFailure() {
-        Toast.makeText(getActivity(),getString(R.string.serverError),Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
     public void setEmptyHistory() {
         tv_earned_value.setText("0");
 

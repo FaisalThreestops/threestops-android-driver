@@ -29,7 +29,7 @@ public interface BookingPopUpMainMVP {
 
         /**
          * <h1>showProgressbar</h1>
-         * <p>show progressbar</p>
+         * <p>showing the progress bar</p>
          */
         void showProgressbar();
 
@@ -41,6 +41,7 @@ public interface BookingPopUpMainMVP {
 
         /**
          * <h1>onTimerChanged</h1>
+         * <p>updating the timer count to UI</p>
          * @param progress : update the progress for timer
          * @param time time for show
          */
@@ -48,7 +49,7 @@ public interface BookingPopUpMainMVP {
 
         /**
          * <h1>onFinish</h1>
-         * <p>close media player and open Main Activity</p>
+         * <p>close media player and moves to Main Activity</p>
          */
         void onFinish();
 

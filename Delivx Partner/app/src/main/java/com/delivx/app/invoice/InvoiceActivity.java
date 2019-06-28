@@ -141,6 +141,7 @@ public class InvoiceActivity extends DaggerAppCompatActivity implements
     public void onClick(View view){
         switch (view.getId())
         {
+            //event for  1st ratingbar
             case R.id.ratingbar:
                 ratingbar.setSelected(true);
                 ratingbar1.setSelected(false);
@@ -148,7 +149,7 @@ public class InvoiceActivity extends DaggerAppCompatActivity implements
                 ratingbar3.setSelected(false);
                 ratingbar4.setSelected(false);
                 break;
-
+            //event for  2nd ratingbar
             case R.id.ratingbar1:
                 ratingbar.setSelected(true);
                 ratingbar1.setSelected(true);
@@ -156,7 +157,7 @@ public class InvoiceActivity extends DaggerAppCompatActivity implements
                 ratingbar3.setSelected(false);
                 ratingbar4.setSelected(false);
                 break;
-
+            //event for  3rd ratingbar
             case R.id.ratingbar2:
                 ratingbar.setSelected(true);
                 ratingbar1.setSelected(true);
@@ -164,7 +165,7 @@ public class InvoiceActivity extends DaggerAppCompatActivity implements
                 ratingbar3.setSelected(false);
                 ratingbar4.setSelected(false);
                 break;
-
+            //event for  4th ratingbar
             case R.id.ratingbar3:
                 ratingbar.setSelected(true);
                 ratingbar1.setSelected(true);
@@ -172,7 +173,7 @@ public class InvoiceActivity extends DaggerAppCompatActivity implements
                 ratingbar3.setSelected(true);
                 ratingbar4.setSelected(false);
                 break;
-
+            //event for  5th ratingbar
             case R.id.ratingbar4:
                 ratingbar.setSelected(true);
                 ratingbar1.setSelected(true);
@@ -227,13 +228,13 @@ public class InvoiceActivity extends DaggerAppCompatActivity implements
 
     }
 
-
-
+    @Override
     public void setTitle(String title,String bid) {
         toolBarTitle.setText(title);
         tv_bid.setText(bid);
     }
 
+    @Override
     public void setViews(String amount){
         tvBill.setText(amount);
     }

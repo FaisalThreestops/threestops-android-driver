@@ -141,26 +141,27 @@ public class MyProfileFrag extends DaggerFragment implements View.OnClickListene
     public void onClick(View v) {
 
         switch (v.getId()) {
+            //event for edit name
             case R.id.iv_name_edit:
                 presenter.editName();
                 break;
-
+            //event for phone number edit
             case R.id.iv_phone_edit:
                 presenter.editPhone();
                 break;
-
+            //event for password edit
             case R.id.iv_password_edit:
                 presenter.editPassword();
                 break;
-
+            //event for profile image
             case R.id.iv_prof_img:
                 presenter.profileEdit();
                 break;
-
+                ////event for logout the account
             case R.id.tvLogout:
                 presenter.logout();
                 break;
-
+                //event for select the language
             case R.id.tv_selected_language:
                 presenter.getLanguages();
                 break;
@@ -226,7 +227,7 @@ public class MyProfileFrag extends DaggerFragment implements View.OnClickListene
         presenter.onActivityResult( requestCode,  resultCode,  data);
     }
 
-
+    @Override
     public void startCropImage() {
         Intent intent = new Intent(getActivity(), CropImage.class);
         intent.putExtra(CropImage.IMAGE_PATH, VariableConstant.newFile.getPath());

@@ -48,6 +48,10 @@ public class BankNewAccountActivity extends DaggerAppCompatActivity implements A
         initViews();
     }
 
+    /**
+     * <h2>initViews</h2>
+     * <p>initializing the views(fonts and styles)</p>
+     */
     private void initViews()
     {
         setSupportActionBar(toolbar);
@@ -66,11 +70,12 @@ public class BankNewAccountActivity extends DaggerAppCompatActivity implements A
 
     }
 
-
+    //evrnt for save
     @OnClick(R.id.tvSave)
     public void onClick(View v){
         presenter.validateFields(etName.getText().toString(),etAccountNo.getText().toString(),etRoutingNo.getText().toString());
     }
+
     @Override
     public void disableError() {
 
@@ -92,17 +97,6 @@ public class BankNewAccountActivity extends DaggerAppCompatActivity implements A
     public void onBackPressed() {
         finish();
         overridePendingTransition(R.anim.stay, R.anim.top_to_bottom);
-    }
-
-    @Override
-    public void onSuccess(String msg) {
-        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
-        onBackPressed();
-    }
-
-    @Override
-    public void onFailure() {
-        Toast.makeText(this,getString(R.string.accountAdditionError),Toast.LENGTH_SHORT).show();
     }
 
     @Override

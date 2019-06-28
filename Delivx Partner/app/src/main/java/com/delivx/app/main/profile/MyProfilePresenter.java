@@ -263,6 +263,11 @@ public class MyProfilePresenter implements ProfileContract.PresenterOpetaions {
         }
     }
 
+    /**
+     * <h2>amzonUpload</h2>
+     * <p>uodating the image to amazon</p>
+     * @param file
+     */
     public void amzonUpload(File file) {
         String BUCKETSUBFOLDER = VariableConstant.PROFILE_PIC;
         Log.d(TAG, "amzonUpload: " + file);
@@ -288,6 +293,11 @@ public class MyProfilePresenter implements ProfileContract.PresenterOpetaions {
         });
     }
 
+    /**
+     * <h2>updateProfilePic</h2>
+     * <p>API call for updating the profile picture</p>
+     * @param url : url
+     */
     void updateProfilePic(final String url)
     {
         view.showProgress();

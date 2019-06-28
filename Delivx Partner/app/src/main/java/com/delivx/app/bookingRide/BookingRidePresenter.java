@@ -78,6 +78,11 @@ public class BookingRidePresenter implements BookingRideContract.PresenterOperat
         }
     }
 
+    /**
+     * <h2>setTimerText</h2>
+     * <p>setting the driver timer</p>
+     * @param jsonArray : jsonArray details
+     */
     private void setTimerText(JSONArray jsonArray) {
         try{
             JSONObject jsonObject=getJobDetails(jsonArray);
@@ -337,6 +342,10 @@ public class BookingRidePresenter implements BookingRideContract.PresenterOperat
         preferenceHelperDataSource.setTimeWhilePaused(0);
     }
 
+    /**
+     * <h2>mJobTimer</h2>
+     * <p>updating the timer to UI for Each seconds</p>
+     */
     private void mJobTimer() {
         preferenceHelperDataSource.setTimerStarted(true);
 
@@ -374,6 +383,7 @@ public class BookingRidePresenter implements BookingRideContract.PresenterOperat
 
     }
 
+    @Override
     public void onActDestroy(){
         runTimer = false;
         preferenceHelperDataSource.setTimeWhilePaused(System.currentTimeMillis());

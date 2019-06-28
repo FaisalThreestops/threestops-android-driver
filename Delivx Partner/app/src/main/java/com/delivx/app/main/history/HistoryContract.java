@@ -39,8 +39,7 @@ public interface HistoryContract
          * @param msg : error message
          */
         void onFailure(String msg);
-        void onFailure(int failure);
-        void onFailure();
+
 
         /**
          * <h2>setEmptyHistory</h2>

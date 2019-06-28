@@ -16,6 +16,7 @@ public interface BookingRideContract
     interface ViewOperations extends BaseView
     {
         /**
+         * <h2>initActionBar</h2>
          * <p>initializing the action bar</p>
          */
         void initActionBar();
@@ -23,14 +24,14 @@ public interface BookingRideContract
         /**
          * <h2>setTitle</h2>
          * <p>set text to title in action bar</p>
-         * @param orderStatus
+         * @param orderStatus : updating the status( where driver is) it depends on the status
          */
         void setTitle(String orderStatus);
 
         /**
          * <h2>setViews</h2>
          * <p>set the views by values</p>
-         * @param appointments : appointments pojo
+         * @param appointments : appointments details pojo
          */
         void setViews(AssignedAppointments appointments);
 
@@ -52,7 +53,7 @@ public interface BookingRideContract
         /**
          * <h2>setCarMarker</h2>
          * <p>set the updated location driver location</p>
-         * @param latLng :locatin
+         * @param latLng :location
          */
         void setCarMarker(Location latLng);
 
@@ -74,7 +75,7 @@ public interface BookingRideContract
         /**
          * <h2>onSuccess</h2>
          * <p>moving to next(StorePickUp) by passing data</p>
-         * @param appointments :appintments pojo
+         * @param appointments :appintmentsPoji details
          */
         void onSuccess(AssignedAppointments appointments);
 
@@ -88,7 +89,7 @@ public interface BookingRideContract
         /**
          * <h2>openJobDetails</h2>
          * <p>moving to StorePickUpDetails to get details </p>
-         * @param appointments : appointmentPojo data
+         * @param appointments : appointmentPojo details
          */
         void openJobDetails(AssignedAppointments appointments);
 
@@ -131,7 +132,7 @@ public interface BookingRideContract
         /**
          * <h2>getBundleData</h2>
          * <p>get the data from previous(storePickUpDetails)</p>
-         * @param bundle :data
+         * @param bundle : appointment details
          */
         void getBundleData(Bundle bundle);
 

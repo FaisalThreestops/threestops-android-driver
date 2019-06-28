@@ -23,18 +23,23 @@ public interface InvoiceContract
         /**
          * <h2>setTitle</h2>
          * <p>set the text to title in action bar</p>
-         * @param title : text
-         * @param bid :status
+         * @param title : activity title
+         * @param bid : status (online or offline)
          */
         void setTitle(String title,String bid);
 
         /**
          * <h2>setViews</h2>
          * <p>set the view by values</p>
-         * @param bill : billing amount
+         * @param bill : billing details
          */
         void setViews(String bill);
 
+        /**
+         * <h2>onSuccess</h2>
+         * <p>completed the invoice activity</p>
+         * @param appointments : appontmentsPojo details
+         */
         void onSuccess(AssignedAppointments appointments);
 
         /**
@@ -110,7 +115,11 @@ public interface InvoiceContract
          */
         void onBackPressSign();
 
-
+        /**
+         * <h2>onSigned</h2>
+         * <p>set the signature resource to presenter</p>
+         * @param signBitmap : signature resource
+         */
         void onSigned(Bitmap signBitmap);
 
         /**
