@@ -7,11 +7,6 @@ import com.delivx.dagger.ActivityScoped;
 import dagger.Binds;
 import dagger.Module;
 
-/**
- * Created by DELL on 22-03-2018.
- */
-
-
 @Module
 public abstract class StripeAccountModule {
     @Binds

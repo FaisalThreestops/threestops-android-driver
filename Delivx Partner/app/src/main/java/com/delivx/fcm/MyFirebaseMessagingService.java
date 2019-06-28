@@ -29,9 +29,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-/**
- * Created by embed on 16/9/16.
- */
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "MyFirebaseMsgService";
@@ -45,7 +42,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     /**
      * Called when message is received.
-     *
      * @param remoteMessage Object representing the message received from Firebase Cloud Messaging.
      */
     // [START receive_message]
@@ -97,9 +93,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     }
                 }
             }
-            /*if(action==12){
-                sendNotification(message,action);
-            }*/
 
             if("506".equals(action))
             {

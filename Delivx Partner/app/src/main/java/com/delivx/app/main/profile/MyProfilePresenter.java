@@ -69,7 +69,7 @@ public class MyProfilePresenter implements ProfileContract.PresenterOpetaions {
 
 
     @Inject
-    public MyProfilePresenter() {
+    MyProfilePresenter() {
         languagesLists = new ArrayList<>();
     }
 
@@ -84,7 +84,6 @@ public class MyProfilePresenter implements ProfileContract.PresenterOpetaions {
 
         if(preferenceHelperDataSource.getLanguageSettings()!=null && preferenceHelperDataSource.getLanguageSettings().getLanguageName()!=null)
             view.setLanguage(preferenceHelperDataSource.getLanguageSettings().getLanguageName(),false);
-
 
         view.showProgress();
         final Observable<Response<ResponseBody>> profile=networkService.profile(preferenceHelperDataSource.getLanguage(),preferenceHelperDataSource.getToken());
@@ -235,14 +234,11 @@ public class MyProfilePresenter implements ProfileContract.PresenterOpetaions {
                         fileName = VariableConstant.newFile.getName();
 
                         try {
-                            String[] type = fileName.split("\\.");
-
                             byte[] bytes = new byte[(int) VariableConstant.newFile.length()];
                             InputStream inputStream = context.getContentResolver().openInputStream(VariableConstant.newProfileImageUri);
                             if (inputStream != null) {
                                 inputStream.read(bytes);
                             }
-
                             Bitmap bMap = BitmapFactory.decodeFile(path);
                             Bitmap circle_bMap = Utility.getCircleCroppedBitmap(bMap);
                             view.setProfileImage(circle_bMap);
@@ -255,7 +251,6 @@ public class MyProfilePresenter implements ProfileContract.PresenterOpetaions {
                     break;
 
                 default:
-
                     Toast.makeText(context, context.getResources().getString(R.string.oops)
                             + " " + context.getResources().getString(R.string.smthWentWrong), Toast.LENGTH_LONG).show();
                     break;
@@ -265,10 +260,10 @@ public class MyProfilePresenter implements ProfileContract.PresenterOpetaions {
 
     /**
      * <h2>amzonUpload</h2>
-     * <p>uodating the image to amazon</p>
-     * @param file
+     * <p>updating the image to amazon</p>
+     * @param file image file
      */
-    public void amzonUpload(File file) {
+    private void amzonUpload(File file) {
         String BUCKETSUBFOLDER = VariableConstant.PROFILE_PIC;
         Log.d(TAG, "amzonUpload: " + file);
 
@@ -298,7 +293,7 @@ public class MyProfilePresenter implements ProfileContract.PresenterOpetaions {
      * <p>API call for updating the profile picture</p>
      * @param url : url
      */
-    void updateProfilePic(final String url)
+    private void updateProfilePic(final String url)
     {
         view.showProgress();
         final Observable<Response<ResponseBody>> profile=networkService.updateProfile(
@@ -329,8 +324,6 @@ public class MyProfilePresenter implements ProfileContract.PresenterOpetaions {
                             {
                                 jsonObject=new JSONObject(value.body().string());
                                 preferenceHelperDataSource.setProfilePic(url);
-//                                getProfileDetails();
-
                             }else
                             {
                                 jsonObject=new JSONObject(value.errorBody().string());
@@ -433,13 +426,6 @@ public class MyProfilePresenter implements ProfileContract.PresenterOpetaions {
             view.onError(context.getResources().getString(R.string.no_network));
         }
 
-    }
-
-    @Override
-    public void languageChanged(String langCode, String langName, int dir) {
-        preferenceHelperDataSource.setLanguage(langCode);
-        preferenceHelperDataSource.setLanguageSettings(new LanguagesList(langCode,langName));
-        view.setLanguage(langName,true);
     }
 
 }

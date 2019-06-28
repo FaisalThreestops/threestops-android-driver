@@ -21,9 +21,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.DaggerFragment;
 
-/**
- * Created by Admin on 8/3/2017.
- */
 
 public class SupportFrag extends DaggerFragment implements SupportContract.ViewOperation {
 
@@ -56,12 +53,10 @@ public class SupportFrag extends DaggerFragment implements SupportContract.ViewO
 
         presenter.attachView(this);
         presenter.getSupportLinks();
-
         return rootView;
     }
 
     public void initLayout() {
-
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         supportRVA = new SupportRVA(getActivity(), supportDatas, true);
         recyclerView.setAdapter(supportRVA);

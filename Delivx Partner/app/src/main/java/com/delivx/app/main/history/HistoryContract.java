@@ -6,9 +6,6 @@ import com.delivx.pojo.TripsPojo.Appointments;
 
 import java.util.ArrayList;
 
-/**
- * Created by DELL on 26-02-2018.
- */
 
 public interface HistoryContract
 {
@@ -26,10 +23,10 @@ public interface HistoryContract
         /**
          * <h2>setValues</h2>
          * <P>set the values to view</P>
-         * @param appointments
-         * @param barEntries
-         * @param total
-         * @param highestPosition
+         * @param appointments arrylist for appointment
+         * @param barEntries arraylist for x and y axis
+         * @param total total amount
+         * @param highestPosition set highest x and y axis in chart
          */
         void setValues(ArrayList<Appointments> appointments, ArrayList<BarEntry> barEntries, String total, int highestPosition);
 

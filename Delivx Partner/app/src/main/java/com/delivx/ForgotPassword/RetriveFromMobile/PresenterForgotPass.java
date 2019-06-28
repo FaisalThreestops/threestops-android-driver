@@ -196,10 +196,10 @@ public class PresenterForgotPass implements ForgotPassPresenterContract {
 
     /**
      * <h1>forgotPasswordApi</h1>
-     * <p>M</p>
-     * @param verifyType
-     * @param countryCode
-     * @param mob_mail
+     * <p>API call for verify phone number or mail id</p>
+     * @param verifyType email or phone
+     * @param countryCode country code
+     * @param mob_mail mobile number
      */
     private void forgotPasswordApi(final int verifyType, final String countryCode,
                                    final String mob_mail){

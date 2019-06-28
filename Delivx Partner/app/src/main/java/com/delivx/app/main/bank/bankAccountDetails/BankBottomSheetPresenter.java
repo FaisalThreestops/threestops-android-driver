@@ -2,10 +2,6 @@ package com.delivx.app.main.bank.bankAccountDetails;
 
 import org.json.JSONObject;
 
-/**
- * Created by murashid on 29-Aug-17.
- */
-
 public class BankBottomSheetPresenter implements BankBottomSheetModel.BankBottomSheetModelImplem {
 
     private BankBottomSheetPresenterImplem bankBottomSheetPresenterImplem;

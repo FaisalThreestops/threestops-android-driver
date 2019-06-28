@@ -50,20 +50,11 @@ import static android.app.Activity.RESULT_OK;
 
 public class BankNewStripePresenter implements StripeAccountContract.PresenterOperations {
 
-    @Inject
-    NetworkService networkService;
-
-    @Inject
-    Activity context;
-
-    @Inject
-    StripeAccountContract.ViewOperations view;
-
-    @Inject
-    Upload_file_AmazonS3 amazonS3;
-
-    @Inject
-    PreferenceHelperDataSource preferenceHelperDataSource;
+    @Inject   NetworkService networkService;
+    @Inject   Activity context;
+    @Inject   StripeAccountContract.ViewOperations view;
+    @Inject   Upload_file_AmazonS3 amazonS3;
+    @Inject   PreferenceHelperDataSource preferenceHelperDataSource;
 
 
     private final int REQUEST_CODE_GALLERY = 0x1;
@@ -182,13 +173,14 @@ public class BankNewStripePresenter implements StripeAccountContract.PresenterOp
     public void onSave() {
         if(validateFields()){
             amzonUpload();
-            /*addBankDetails();*/
         }
     }
 
-    //adding the bank details
+    /**
+     * <h1>addBankDetails</h1>
+     * <p>API call for adding the stripe account</p>
+     */
     private void addBankDetails() {
-        /*view.showProgress();*/
         String[] dateOfBirth = dob.split("/");
 
         Utility.printLog("bank sripe : "+ preferenceHelperDataSource.getToken()+"\n"+
@@ -208,7 +200,6 @@ public class BankNewStripePresenter implements StripeAccountContract.PresenterOp
                 Utility.currentDate()+"\n"+
                 ip);
 
-        /*view.showProgress();*/
         final Observable<Response<ResponseBody>> profile=networkService.createStripeAccount(preferenceHelperDataSource.getLanguage(),
                 preferenceHelperDataSource.getToken(),
                 preferenceHelperDataSource.getMyEmail(),
@@ -251,7 +242,6 @@ public class BankNewStripePresenter implements StripeAccountContract.PresenterOp
 
                                 default:
                                     String err =value.errorBody().string();
-                                    jsonObject=new JSONObject(err);
                                     Utility.BlueToast(context,err);
                                     Utility.printLog("bank stripe error getConnectAccount : "+value.errorBody().string());
                                     break;
@@ -345,11 +335,6 @@ public class BankNewStripePresenter implements StripeAccountContract.PresenterOp
         return preferenceHelperDataSource.getLanguageSettings().getLanguageCode();
     }
 
-    /*@Override
-    public void ipAddress(String ip) {
-        bankNewStripePresenterImplement.ipAddress(ip);
-    }
-*/
 
     /**
      * <h2>getIpAddress</h2>
@@ -374,7 +359,6 @@ public class BankNewStripePresenter implements StripeAccountContract.PresenterOp
                             {
                                 jsonObject=new JSONObject(value.body().string());
                                 ip=jsonObject.getString("ip");
-//                                ipAddress(message);
 
                             }else
                             {
@@ -401,7 +385,7 @@ public class BankNewStripePresenter implements StripeAccountContract.PresenterOp
                 });
     }
 
-    public static void copyStream(InputStream input, OutputStream output)
+    private static void copyStream(InputStream input, OutputStream output)
             throws IOException {
         byte[] buffer = new byte[1024];
         int bytesRead;
@@ -466,7 +450,6 @@ public class BankNewStripePresenter implements StripeAccountContract.PresenterOp
         @Override
         public void onDateSet(DatePicker v, int year, int monthOfYear, int dayOfMonth) {
             sentingCaimDate = Utility.sentingDateFormat(year, monthOfYear, dayOfMonth);
-//            etDob.setText(Utility.displayDateFormat(year, monthOfYear, dayOfMonth));
             view.setDate(Utility.displayDateFormat(year, monthOfYear, dayOfMonth));
         }
 
@@ -475,9 +458,9 @@ public class BankNewStripePresenter implements StripeAccountContract.PresenterOp
     /**
      * <h2>validateFields</h2>
      * <p>validating the fields</p>
-     * @return
+     * @return true: validate success, false : error
      */
-    public boolean validateFields(){
+    private boolean validateFields(){
 
         if(!isPicturetaken){
             view.showError(context.getString(R.string.plsUploadIdProf));

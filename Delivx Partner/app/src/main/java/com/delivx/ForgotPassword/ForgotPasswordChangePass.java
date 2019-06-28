@@ -31,7 +31,6 @@ import butterknife.OnClick;
 import dagger.android.support.DaggerAppCompatActivity;
 
 
-/**************************************************************************************************/
 public class ForgotPasswordChangePass extends DaggerAppCompatActivity implements View.OnClickListener,ChangePassView {
 
     private Typeface ClanaproNarrMedium,ClanaproNarrNews;

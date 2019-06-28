@@ -1,4 +1,4 @@
-package com.delivx.app.main.history;
+package com.delivx.app.main.history.orderDetails;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;

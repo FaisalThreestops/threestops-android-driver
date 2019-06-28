@@ -70,9 +70,10 @@ public class BankNewAccountActivity extends DaggerAppCompatActivity implements A
 
     }
 
-    //evrnt for save
+
     @OnClick(R.id.tvSave)
     public void onClick(View v){
+        //event for save
         presenter.validateFields(etName.getText().toString(),etAccountNo.getText().toString(),etRoutingNo.getText().toString());
     }
 

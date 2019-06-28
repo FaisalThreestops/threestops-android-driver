@@ -100,25 +100,13 @@ public class BankNewStripeActivity extends DaggerAppCompatActivity implements Vi
         onBackPressed();
     }
 
-   
-
-    /**********************************************************************************************/
-
-   /* @Override
-    public void ipAddress(String ip) {
-        this.ip = ip;
-        Log.d(TAG, "ipAddress: " + ip);
-    }*/
 
     /**
-     * <h1>initActionBar</h1>
-     * initilize the action bar
+     * <h1>initViews</h1>
+     * <p>initialize widgets </p>
      */
-
     private void initViews() {
-
         setSupportActionBar(toolbar);
-
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -350,7 +338,6 @@ public class BankNewStripeActivity extends DaggerAppCompatActivity implements Vi
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
-////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
     public void selectImage(boolean isPicturetaken) {
@@ -364,11 +351,11 @@ public class BankNewStripeActivity extends DaggerAppCompatActivity implements Vi
         mDialog.setCancelable(false);
         mDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
 
-        Button btnCamera = (Button) view.findViewById(R.id.camera);
-        Button btnCancel = (Button) view.findViewById(R.id.cancel);
-        Button btnGallery = (Button) view.findViewById(R.id.gallery);
-        Button btnRemove = (Button) view.findViewById(R.id.removephoto);
-        TextView tvHeader = (TextView) view.findViewById(R.id.tvHeader);
+        Button btnCamera = view.findViewById(R.id.camera);
+        Button btnCancel = view.findViewById(R.id.cancel);
+        Button btnGallery = view.findViewById(R.id.gallery);
+        Button btnRemove = view.findViewById(R.id.removephoto);
+        TextView tvHeader = view.findViewById(R.id.tvHeader);
 
         btnCamera.setTypeface(fontUtils.titaliumRegular());
         btnCancel.setTypeface(fontUtils.titaliumRegular());

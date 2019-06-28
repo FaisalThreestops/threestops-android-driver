@@ -59,9 +59,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dagger.android.support.DaggerFragment;
 
-/**
- * Created by DELL on 01-02-2018.
- */
 @ActivityScoped
 public class HomeFragment extends DaggerFragment implements HomeFragmentContract.View, OnMapReadyCallback, LocationUtil.GetLocationListener, View.OnClickListener {
 
@@ -101,13 +98,9 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
     @BindView(R.id.tvMarkerDelivery)
     TextView tvMarkerDelivery;
 
-    @Inject
-    HomeFragmentContract.Presenter presenter;
-
-    @Inject
-    PreferenceHelperDataSource preferenceHelperDataSource;
-
-    @Inject FontUtils fontUtils;
+    @Inject   HomeFragmentContract.Presenter presenter;
+    @Inject   PreferenceHelperDataSource preferenceHelperDataSource;
+    @Inject   FontUtils fontUtils;
 
     private boolean first=false;
     private PicassoMarker marker;
@@ -144,9 +137,9 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
      */
     public void initLayoutId(){
 
-        tv_on_off_statas = (TextView) getActivity().findViewById(R.id.tv_on_off_statas);
-        button_menu = (ImageView) getActivity().findViewById(R.id.button_menu);
-        button_back = (ImageView) getActivity().findViewById(R.id.button_back);
+        tv_on_off_statas = getActivity().findViewById(R.id.tv_on_off_statas);
+        button_menu = getActivity().findViewById(R.id.button_menu);
+        button_back = getActivity().findViewById(R.id.button_back);
         Typeface fontBold=fontUtils.titaliumSemiBold();
         Typeface font=fontUtils.titaliumRegular();
         tv_on_off_statas.setTypeface(fontBold);
@@ -159,8 +152,6 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-//        ll_bookings.setVisibility(View.VISIBLE);
-
         mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.frag_map);
         mapFragment.getMapAsync(this);
     }
@@ -198,15 +189,6 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
             layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
             layoutParams.setMargins(0, 0, marginPixels, marginPixels);
             map.getUiSettings().setMyLocationButtonEnabled(false);
-            /*try{
-                boolean success = map.setMapStyle(
-                        MapStyleOptions.loadRawResourceStyle(getActivity(), R.raw.style_json));
-                if (!success) {
-                    // Handle map style load failure
-                }
-            }catch (Exception e){
-                e.printStackTrace();
-            }*/
 
         }
         setGoogleMap();
@@ -226,10 +208,6 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
             LatLng latlng = new LatLng(preferenceHelperDataSource.getDriverCurrentLat(), preferenceHelperDataSource.getDriverCurrentLongi());
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 16.0f));
             marker = new PicassoMarker(map.addMarker(new MarkerOptions().position(latlng).title("First Point")));
-            /*Picasso.with(getActivity()).load(R.drawable.ic_launcher).resize(50, 50).into(marker);*/
-
-//            setCarMarker(latlng);
-
             ivMyLocation.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -243,6 +221,11 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
     }
 
 
+    /**
+     * <h1>setCarMarker</h1>
+     * <p>set the marker in map</p>
+     * @param location latitude and longitude
+     */
     public void setCarMarker(final Location location) {
         mCurrentLoc = location;
 
@@ -289,14 +272,6 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
         mPreviousLoc = mCurrentLoc;
     }
 
-//    public void setCarMarker(LatLng latLng) {
-//        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
-//        map.getUiSettings().setZoomControlsEnabled(false);
-//
-//        if (marker != null)
-//            marker.getmMarker().setPosition(latLng);
-//    }
-
     @Override
     public void updateLocation(Location location) {
         if (map != null) {
@@ -305,15 +280,12 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 16.0f));
                 first=false;
             }
-
-
             if (marker != null) {
                 setCarMarker(location);
             }
             presenter.updateLocation(location);
         }
     }
-
     @Override
     public void location_Error(String error) {
 
@@ -324,8 +296,7 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
     public void onResume() {
         super.onResume();
         VariableConstant.FORGROUND_LOCK = false;
-//        workerClass.getCurrentStatus();
-        if (locationUtilObj != null /*&& !locationUtilObj.isGoogleAPIConnected()*/) {
+        if (locationUtilObj != null ) {
             locationUtilObj.checkLocationSettings();
             locationUtilObj.restart_location_update();
         }
@@ -393,15 +364,12 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
                 tv_on_off_statas.setText(getString(R.string.go_offline));
                 tv_on_off_statas.setSelected(true);
                 startUpdateLocation();
-                /*MyPubnub.getInstance(getActivity()).stopPubnub();
-                MyPubnub.getInstance(getActivity()).subscribe();*/
                 break;
                 //offline
             case 4:
                 tv_on_off_statas.setText(getString(R.string.go_online));
                 tv_on_off_statas.setSelected(false);
                 stopUpdateLocation();
-//                MyPubnub.getInstance(getActivity()).stopPubnub();
                 break;
 
         }
@@ -451,10 +419,7 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
     @Override
     public void addMarkers(ArrayList<AssignedAppointments> appointments)
     {
-        /*removePickUpMarkers();
-        removeDeliveryMarkers();*/
         map.clear();
-
         tvMarkerPickUp.setTextColor(getActivity().getResources().getColor(R.color.color_sup_txt));
         tvMarkerAll.setTextColor(getActivity().getResources().getColor(R.color.colorPrimary));
         tvMarkerDelivery.setTextColor(getActivity().getResources().getColor(R.color.color_sup_txt));
@@ -568,13 +533,11 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
 
     }
 
-    public void hideList()
-    {
-        ll_bookings.setVisibility(View.GONE);
-    }
-
-    //updating the location
-    public void startUpdateLocation()
+    /**
+     * <h1>startUpdateLocation</h1>
+     * <p>start LocationUpdate Service</p>
+     */
+    private void startUpdateLocation()
     {
         if(!Utility.isMyServiceRunning(LocationUpdateService.class,getActivity())){
             Intent startIntent = new Intent(getActivity(), LocationUpdateService.class);
@@ -583,8 +546,11 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
         }
     }
 
-    //stop updating the location
-    public void stopUpdateLocation()
+    /**
+     * <h1>stopUpdateLocation</h1>
+     * <p>stop LocationUpdate Service</p>
+     */
+    private void stopUpdateLocation()
     {
         if(Utility.isMyServiceRunning(LocationUpdateService.class,getActivity())){
             Intent stopIntent = new Intent(getActivity(), LocationUpdateService.class);

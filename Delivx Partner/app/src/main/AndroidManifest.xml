@@ -75,7 +75,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustNothing" />
         <activity
-            android:name="com.delivx.app.main.history.HistoryOrderDetailsNew"
+            android:name="com.delivx.app.main.history.orderDetails.HistoryOrderDetailsNew"
             android:screenOrientation="portrait"
              />
         <activity
@@ -93,10 +93,7 @@
             android:name="com.delivx.ForgotPassword.ForgotPasswordChangePass"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible" />
-        <activity
-            android:name="com.delivx.app.CancelReason"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|stateAlwaysHidden" />
+
         <activity
             android:name="com.delivx.app.bookingRequest.BookingPopUp"
             android:screenOrientation="portrait" />
@@ -192,9 +189,6 @@
             android:screenOrientation="portrait"
             />
 
-        <activity android:name="com.delivx.app.main.history.orderDetails.HistoryOrderDetails"
-            android:screenOrientation="portrait"
-            />
 
         <activity android:name="com.delivx.mqttChat.ChattingActivity"
             android:screenOrientation="portrait"

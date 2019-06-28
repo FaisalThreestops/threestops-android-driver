@@ -24,7 +24,7 @@ import com.delivx.app.main.bank.addBankAccount.BankNewAccountActivity;
 import com.delivx.app.main.bank.stripe.BankNewStripeActivity;
 import com.delivx.app.main.bank.stripe.StripeAccountModule;
 import com.delivx.app.main.history.HistoryModule;
-import com.delivx.app.main.history.HistoryOrderDetailsNew;
+import com.delivx.app.main.history.orderDetails.HistoryOrderDetailsNew;
 import com.delivx.app.main.history.orderDetails.OrderHistoryModule;
 import com.delivx.app.main.homeFrag.HomeFragmentModule;
 import com.delivx.app.main.profile.ProfileFragmentModule;

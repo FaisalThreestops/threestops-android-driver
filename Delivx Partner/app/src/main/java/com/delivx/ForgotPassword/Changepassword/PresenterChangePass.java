@@ -20,24 +20,16 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
-/**
- * Created by DELL on 03-01-2018.
- */
-
 public class PresenterChangePass implements ChangePassPresenterContract
 {
     @Inject ChangePassView view;
-
     @Inject Activity context;
-
     @Inject NetworkService networkService;
-
     @Inject PreferenceHelperDataSource preferenceHelperDataSource;
 
     private String OTP,MobNum,Ccode;
 
-    @Inject
-    public PresenterChangePass() {
+    @Inject  public PresenterChangePass() {
     }
 
     @Override

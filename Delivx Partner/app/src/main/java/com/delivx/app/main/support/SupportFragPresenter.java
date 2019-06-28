@@ -24,24 +24,17 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
-/**
- * Created by murashid on 25-Aug-17.
- */
-
 public class SupportFragPresenter implements SupportContract.PresenterOperation {
 
     private SupportFragPresenterImplement presenterImplement;
 
-    @Inject
-    NetworkService networkService;
-    @Inject
-    PreferenceHelperDataSource preferenceHelperDataSource;
+    @Inject  NetworkService networkService;
+    @Inject  PreferenceHelperDataSource preferenceHelperDataSource;
 
-    SupportContract.ViewOperation view;
+    private  SupportContract.ViewOperation view;
+    @Inject   Activity context;
     @Inject
-    Activity context;
-    @Inject
-    public SupportFragPresenter() {
+    SupportFragPresenter() {
     }
 
 
@@ -123,8 +116,10 @@ public class SupportFragPresenter implements SupportContract.PresenterOperation 
         supportApi();
     }
 
+
+
+
     interface SupportFragPresenterImplement {
-        void startProgressBar();
 
         void stopProgressBar();
 

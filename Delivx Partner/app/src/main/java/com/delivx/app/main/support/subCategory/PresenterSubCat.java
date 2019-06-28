@@ -10,18 +10,13 @@ import java.util.Collection;
 
 import javax.inject.Inject;
 
-/**
- * Created by DELL on 07-03-2018.
- */
-
 public class PresenterSubCat implements SubCatContract.PresenterOperation {
 
     @Inject SubCatContract.ViewOperation view;
     private ArrayList<SupportData> supportDatas = new ArrayList<>();
     String title="";
     @Inject    PreferenceHelperDataSource preferenceHelperDataSource;
-    @Inject
-    public PresenterSubCat() {
+    @Inject    PresenterSubCat() {
     }
 
     @Override

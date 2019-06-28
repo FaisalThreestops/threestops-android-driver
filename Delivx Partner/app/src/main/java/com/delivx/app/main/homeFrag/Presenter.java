@@ -38,9 +38,6 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
-/**
- * Created by DELL on 01-02-2018.
- */
 
 public class Presenter implements HomeFragmentContract.Presenter {
 
@@ -48,17 +45,10 @@ public class Presenter implements HomeFragmentContract.Presenter {
     private boolean isMapInFullView=false;
     HomeFragmentContract.View view;
 
-    @Inject
-    NetworkService networkService;
-
-    @Inject
-    Activity context;
-
-    @Inject
-    DispatcherService dispatcherService;
-
-    @Inject
-    PreferenceHelperDataSource preferenceHelperDataSource;
+    @Inject   NetworkService networkService;
+    @Inject   Activity context;
+    @Inject   DispatcherService dispatcherService;
+    @Inject   PreferenceHelperDataSource preferenceHelperDataSource;
     private ArrayList<AssignedAppointments> appointments;
 
     @Inject
@@ -71,6 +61,7 @@ public class Presenter implements HomeFragmentContract.Presenter {
 
     /**
      * <h2>subscribeBookingAssign</h2>
+     * <p>subscribe assigned booking from dispatcher </p>
      */
     private void subscribeBookingAssign()
     {
@@ -198,6 +189,11 @@ public class Presenter implements HomeFragmentContract.Presenter {
 
     }
 
+
+    /**
+     * <h1>setAppointments</h1>
+     * <p>set  booking details to shared preference</p>
+     */
     private void setAppointments() {
         try {
             JSONArray oldArray = new JSONArray();
@@ -329,7 +325,6 @@ public class Presenter implements HomeFragmentContract.Presenter {
                             }else
                             {
                                 jsonObject=new JSONObject(value.errorBody().string());
-//                                view.setError(value.code(),jsonObject.getString("message"));
                             }
 
                             Utility.printLog("status : "+jsonObject.toString());

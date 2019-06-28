@@ -8,9 +8,6 @@ import com.delivx.pojo.bank.LegalEntity;
 
 import java.util.ArrayList;
 
-/**
- * Created by DELL on 20-03-2018.
- */
 
 public interface BankDetailscontract {
 

@@ -7,9 +7,6 @@ import dagger.Binds;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
-/**
- * Created by DELL on 20-03-2018.
- */
 @Module
 public abstract class BankDetailsModule
 {

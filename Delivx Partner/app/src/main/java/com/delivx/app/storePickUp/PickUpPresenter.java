@@ -288,7 +288,7 @@ public class PickUpPresenter implements PickUpContract.PresenterOperations {
                 jsonObject.put("unitName",appointments.getShipmentDetails().get(i).getUnitName());
                 jsonObject.put("parentProductId",appointments.getShipmentDetails().get(i).getParentProductId());
                 jsonObject.put("addedToCartOn",Integer.parseInt(appointments.getShipmentDetails().get(i).getAddedToCartOn()));
-                jsonObject.put("finalPrice",Integer.parseInt(appointments.getShipmentDetails().get(i).getFinalPrice()));
+                jsonObject.put("finalPrice",Float.parseFloat(appointments.getShipmentDetails().get(i).getFinalPrice()));
 
                 if(jsonObject.getString("unitId").equals(shipmentDetails.getUnitId())){
                     jsonObject.put("quantity",qty);

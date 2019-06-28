@@ -70,14 +70,9 @@ public class HistoryFragment extends DaggerFragment implements TabLayout.OnTabSe
     @BindView(R.id.tv_earned_value)TextView tv_earned_value;
     @BindView(R.id.tabLayout) TabLayout tabLayout;
 
-    @Inject
-    FontUtils fontUtils;
-
-    @Inject
-    HistoryContract.PresenterOperations presenter;
-
-    @Inject
-    public HistoryFragment() {
+    @Inject   FontUtils fontUtils;
+    @Inject   HistoryContract.PresenterOperations presenter;
+    @Inject   public HistoryFragment() {
     }
 
     @Override
@@ -127,9 +122,6 @@ public class HistoryFragment extends DaggerFragment implements TabLayout.OnTabSe
         initTabLayout(tabcount);
         initBarChart();
     }
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * <h2>initTabLayout</h2>

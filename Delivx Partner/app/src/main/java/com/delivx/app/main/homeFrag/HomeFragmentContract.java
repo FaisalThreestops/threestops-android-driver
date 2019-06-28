@@ -116,7 +116,8 @@ public interface HomeFragmentContract {
         void markerPickUpOnclik();
 
         /**
-         *
+         *<h1>markerDeliveryOnclik</h1>
+         * <p>remove pickup marker</p>
          */
         void markerDeliveryOnclik();
 

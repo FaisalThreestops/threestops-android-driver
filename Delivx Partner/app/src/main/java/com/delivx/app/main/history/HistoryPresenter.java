@@ -37,20 +37,13 @@ public class HistoryPresenter implements HistoryContract.PresenterOperations {
     private int differenceDays = 0;
     private ArrayList<Float> totalsForBar;
     private ArrayList<BarEntry> barEntries;
-
-
-    @Inject
-    NetworkService networkService;
-
-    @Inject
-    PreferenceHelperDataSource preferenceHelperDataSource;
+    @Inject   NetworkService networkService;
+    @Inject   PreferenceHelperDataSource preferenceHelperDataSource;
 
     HistoryContract.ViewOperations view;
 
     @Inject
-    public HistoryPresenter() {
-
-
+    HistoryPresenter() {
     }
 
     public void attachView(HistoryContract.ViewOperations view){
@@ -62,7 +55,7 @@ public class HistoryPresenter implements HistoryContract.PresenterOperations {
      * <h2>init</h2>
      * <p>set the date format</p>
      */
-    void init(){
+    private void init(){
         XAxisFormat = new SimpleDateFormat("EEE", Locale.US);
         Log.i("check", "init: "+XAxisFormat.toString());
         totalsForBar = new ArrayList<>();

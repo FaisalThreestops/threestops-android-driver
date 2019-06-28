@@ -48,6 +48,12 @@ public interface ProfileContract {
          */
         void setProfileImage(Bitmap circle_bMap);
 
+        /**
+         * <h1>setLanguageDialog</h1>
+         * <p>shoe the language change dialog</p>
+         * @param data language data
+         * @param indexOf language index
+         */
         void setLanguageDialog(ArrayList<LanguagesList> data, int indexOf);
 
         /**
@@ -114,10 +120,9 @@ public interface ProfileContract {
 
         /**
          * <h2>getLanguages</h2>
-         * <p>get the langaugeCode</p>
+         * <p>get the language Code</p>
          */
         void getLanguages();
 
-        void languageChanged(String langCode, String langName, int dir);
     }
 }

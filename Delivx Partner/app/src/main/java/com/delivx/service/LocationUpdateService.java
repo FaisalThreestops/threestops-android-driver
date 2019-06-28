@@ -64,10 +64,6 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
-/**
- * Created by Admin on 7/24/2017.
- */
-
 public class LocationUpdateService
         extends DaggerService
         implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {

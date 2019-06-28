@@ -17,9 +17,6 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
-/**
- * Created by murashid on 26-Aug-17.
- */
 
 public class BankNewAccountPresenter implements AddBankAccountContract.PresenterOperations {
 
@@ -36,6 +33,13 @@ public class BankNewAccountPresenter implements AddBankAccountContract.Presenter
     @Inject
     AddBankAccountContract.ViewOperation view;
 
+    /**
+     * <h1>createBankAccount</h1>
+     * <p>API call for  create bank account</p>
+     * @param name name of the bank holder
+     * @param acc account number
+     * @param routing routing number
+     */
     private void createBankAccount(String name, String acc, String routing){
 
         view.showProgress();
@@ -65,8 +69,6 @@ public class BankNewAccountPresenter implements AddBankAccountContract.Presenter
                             if(value.code()==200)
                             {
                                 jsonObject=new JSONObject(value.body().string());
-//                               bankNewAccountModelImplement.onSuccess(jsonObject.getString("errMsg"));
-
                             }else
                             {
                                 jsonObject=new JSONObject(value.errorBody().string());

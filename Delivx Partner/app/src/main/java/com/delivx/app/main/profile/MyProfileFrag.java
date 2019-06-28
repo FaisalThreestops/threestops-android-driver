@@ -43,7 +43,8 @@ import dagger.android.support.DaggerFragment;
 import eu.janmuller.android.simplecropimage.CropImage;
 
 
-public class MyProfileFrag extends DaggerFragment implements View.OnClickListener,ProfileContract.ViewOperations {
+public class MyProfileFrag extends DaggerFragment implements View.OnClickListener,
+        ProfileContract.ViewOperations {
 
     private String TAG = MyProfileFrag.class.getSimpleName();
     private View rootView;
@@ -112,8 +113,11 @@ public class MyProfileFrag extends DaggerFragment implements View.OnClickListene
         }
     }
 
+    /**
+     * <h1>initializeViews</h1>
+     * <p>Initialize widgets </p>
+     */
     private void initializeViews() {
-
         Typeface clanaproNarrNews = fontUtils.titaliumRegular();
         tv_name.setTypeface(clanaproNarrNews);
         tv_logout.setTypeface(clanaproNarrNews);

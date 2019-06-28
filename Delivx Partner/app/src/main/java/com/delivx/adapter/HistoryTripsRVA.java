@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.delivx.app.main.history.HistoryOrderDetailsNew;
+import com.delivx.app.main.history.orderDetails.HistoryOrderDetailsNew;
 import com.driver.delivx.R;
 import com.delivx.pojo.TripsPojo.Appointments;
 import com.delivx.utility.FontUtils;

@@ -65,14 +65,14 @@ public class WebViewActivity extends DaggerAppCompatActivity implements WebViewC
         pDialog = new ProgressDialog(this);
         pDialog.setMessage(getString(R.string.loading));
         pDialog.setCancelable(true);
-
         startWebView(url);
     }
 
-
-
+    /**
+     * <h1>Initialize the web view</h1>
+     * @param url : url for set in web view
+     */
     private void startWebView(String url) {
-
         webView.setHorizontalScrollBarEnabled(false);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setUseWideViewPort(false);

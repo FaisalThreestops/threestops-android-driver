@@ -20,9 +20,6 @@ import com.driver.delivx.R;
 import com.delivx.utility.Utility;
 import com.delivx.utility.VariableConstant;
 
-/**
- * Created by embed on 20/5/17.
- */
 
 
 public class ChangePasswordDialog extends Dialog {
@@ -37,7 +34,6 @@ public class ChangePasswordDialog extends Dialog {
     private View view_;
     PreferenceHelperDataSource preferenceHelperDataSource;
 
-    /**********************************************************************************************/
     public ChangePasswordDialog(Context context, String from, RefreshProfile refreshProfile,PreferenceHelperDataSource preferenceHelperDataSource) {
         super(context);
         this.context = context;
@@ -48,7 +44,6 @@ public class ChangePasswordDialog extends Dialog {
 
     }
 
-    /**********************************************************************************************/
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,16 +66,16 @@ public class ChangePasswordDialog extends Dialog {
         Typeface ClanaproNarrMedium = Typeface.createFromAsset(getContext().getAssets(), "fonts/TITILLIUMWEB-SEMIBOLD.TTF");
         TextView tv_verify_msg, tv_oldpass;
 
-        tv_verify_msg = (TextView) passwordDialog.findViewById(R.id.tv_verify_msg);
+        tv_verify_msg = passwordDialog.findViewById(R.id.tv_verify_msg);
         tv_verify_msg.setTypeface(ClanaproNarrNews);
 
-        tv_oldpass = (TextView) passwordDialog.findViewById(R.id.tv_oldpass);
+        tv_oldpass = passwordDialog.findViewById(R.id.tv_oldpass);
         tv_oldpass.setTypeface(ClanaproNarrNews);
 
-        et_oldpass = (EditText) passwordDialog.findViewById(R.id.et_oldpass);
+        et_oldpass = passwordDialog.findViewById(R.id.et_oldpass);
         tv_oldpass.setTypeface(ClanaproNarrNews);
 
-        tv_confirm = (TextView) passwordDialog.findViewById(R.id.tv_confirm);
+        tv_confirm = passwordDialog.findViewById(R.id.tv_confirm);
         tv_confirm.setTypeface(ClanaproNarrMedium);
         view_ = passwordDialog.findViewById(R.id.view_);
 
@@ -114,14 +109,13 @@ public class ChangePasswordDialog extends Dialog {
             public void onClick(View v) {
                 if (from.equals(from_pass)) {
                     OldPasswordVerify();
-                } else /*if (from.equals(from_signup))*/ {
+                } else  {
                     refreshProfile.onRefresh();
                 }
             }
         });
 
     }
-    /**********************************************************************************************/
     @Override
     public void show() {
         super.show();
@@ -133,7 +127,11 @@ public class ChangePasswordDialog extends Dialog {
         passwordDialog.dismiss();
     }
 
-    /**********************************************************************************************/
+
+    /**
+     * <h1>OldPasswordVerify</h1>
+     * <p>validating password</p>
+     */
     private void OldPasswordVerify() {
         String oldpass = et_oldpass.getText().toString();
 
@@ -151,7 +149,6 @@ public class ChangePasswordDialog extends Dialog {
         }
 
     }
-
 
     public interface RefreshProfile {
         void onRefresh();

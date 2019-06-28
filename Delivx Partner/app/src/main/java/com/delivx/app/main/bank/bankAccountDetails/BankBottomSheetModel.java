@@ -7,10 +7,6 @@ import com.delivx.utility.ServiceUrl;
 
 import org.json.JSONObject;
 
-/**
- * Created by murashid on 29-Aug-17.
- */
-
 public class BankBottomSheetModel {
 
     private static final String TAG = "BankBottomSheet";
