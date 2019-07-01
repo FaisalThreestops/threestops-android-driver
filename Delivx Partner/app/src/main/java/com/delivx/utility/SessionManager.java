@@ -6,9 +6,6 @@ import android.content.SharedPreferences;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-/**
- * Created by embed on 18/5/16.
- */
 public class SessionManager {
 
 

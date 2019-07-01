@@ -96,7 +96,7 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Check the language code for RTL UI Check
+        //Check if the language code needs RTL changes to the UI
         Utility.RtlConversion(this,preferenceHelperDataSource.getLanguageSettings().getLanguageCode());
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
@@ -204,9 +204,8 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
             R.id.tv_log_forgortpass,R.id.tv_log_signup,R.id.tv_selected_language})
     @Override
     public void onClick(View v) {
-
         switch (v.getId()) {
-            //sign in button
+            //Hide keyboard, Disable the sign in button, validate user inputs and invoking the login presenter
             case R.id.tv_log_login:
                 hideSoftKeyboard();
                 enableDisableSignIn(false);
@@ -215,37 +214,37 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
                     loginPresenter.validateCredentials(et_phone_num.getText().toString(),et_log_mob.getText().toString(), et_log_pass.getText().toString());
                 break;
 
-            //forgot textView
+            //Invoke the forgot password activity
             case R.id.tv_log_forgortpass:
                 loginPresenter.forgotPassOnclick();
                 break;
 
-            //signUp button
+            //Invoke the user signup activity
             case R.id.tv_log_signup:
                 loginPresenter.signUpOnclick();
                 break;
 
-            //avoid keyboard
+            //Hide keyboard
             case R.id.activityRoot:
                 loginPresenter.onOutSideTouch();
                 break;
 
-            //select phone login
+            //Select Login by Phone Number
             case R.id.tv_option_phone:
                 loginPresenter.choosePhoneLogin();
                 break;
 
-            //select email login
+            //Select Login by Email
             case R.id.tv_option_email:
                 loginPresenter.chooseEmailLogin();
                 break;
 
-            //change country code
+            //Invoke the activity to choose the country code
             case R.id.tvCountryCode:
                 loginPresenter.showDialogForCountryPicker();
                 break;
 
-            //change language
+            //Invoke the activity to change the language
             case R.id.tv_selected_language:
                 hideSoftKeyboard();
                 loginPresenter.getLanguages();
@@ -257,11 +256,11 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
     @AfterPermissionGranted(VariableConstant.RC_READ_PHONE_STATE)
     private void methodRequiresOnePermission() {
         String[] perms = {Manifest.permission.READ_PHONE_STATE};
-        //setting the DeviceId if permission is allowed
+        //Set the DeviceId if permission is allowed
         if (EasyPermissions.hasPermissions(this, perms)) {
             preferenceHelperDataSource.setDeviceId(Utility.getDeviceId(LoginActivity.this));
         }
-        //if permission is delayed
+        //Show the alert if the permission is delayed
         else {
             EasyPermissions.requestPermissions(this, getString(R.string.read_phone_state_permission_message),
                     VariableConstant.RC_READ_PHONE_STATE, perms);
@@ -417,6 +416,12 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
+
+    /**
+     * <h2>enableDisableSignIn</h2>
+     * <p>enabling or disabling the sign in based on the boolean option</p>
+     * @param enable : true(enable), false(disable)
+     */
     public void enableDisableSignIn(boolean enable){
         tv_log_login.setEnabled(enable);
         if(enable)

@@ -5,10 +5,8 @@ import com.delivx.login.language.LanguagesList;
 
 import java.util.ArrayList;
 
-/**
- * <h2>LoginView</h2>
- * <p>Interface have control of all view which interact via methods</p>
- */
+
+
 public interface LoginView extends BaseView {
 
     /**

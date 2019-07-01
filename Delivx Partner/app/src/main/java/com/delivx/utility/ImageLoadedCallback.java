@@ -10,8 +10,6 @@ import com.squareup.picasso.Callback;
  * callback class for progress bar for
  * image loading
  * after image load setting progress bar visibility gone
- *
- * @author embed
  */
 public class ImageLoadedCallback implements Callback {
     ProgressBar progressBar;

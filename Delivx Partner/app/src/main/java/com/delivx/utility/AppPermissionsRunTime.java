@@ -17,9 +17,6 @@ import com.driver.delivx.R;
 import java.util.ArrayList;
 
 
-/**
- * Created by PrashantSingh on 3/14/16.
- */
 public class AppPermissionsRunTime {
     //private ArrayList<String> requestedPermissionsList = null;
     private static ArrayList<String> requiredPermissionsList = null;

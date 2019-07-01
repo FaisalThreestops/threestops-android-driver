@@ -4,9 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-/**
- * Created by ads on 11/05/17.
- */
 
 public class SigninData {
     private String chn;

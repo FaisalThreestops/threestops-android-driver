@@ -18,9 +18,6 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okio.Buffer;
 
-/**
- * Created by ankur on 10/6/16.
- */
 public class OkHttp3Connection {
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");

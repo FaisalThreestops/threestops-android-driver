@@ -2,9 +2,7 @@ package com.delivx.pojo.bank;
 
 import java.io.Serializable;
 
-/**
- * Created by DELL on 23-03-2018.
- */
+
 
 public class StripeResponse implements Serializable {
 

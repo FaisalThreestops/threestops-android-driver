@@ -7,10 +7,6 @@ import com.delivx.dagger.ActivityScoped;
 import dagger.Binds;
 import dagger.Module;
 
-/**
- * Created by DELL on 08-02-2018.
- */
-
 @Module
 public abstract class InvoiceModule {
     @ActivityScoped

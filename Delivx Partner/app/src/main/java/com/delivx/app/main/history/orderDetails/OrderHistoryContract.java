@@ -5,15 +5,11 @@ import android.os.Bundle;
 import com.delivx.BaseView;
 import com.delivx.pojo.TripsPojo.Appointments;
 
-/**
- * Created by DELL on 16-03-2018.
- */
 
 public interface OrderHistoryContract {
 
     interface ViewOperation extends BaseView
     {
-//        void setActionBar();
 
         /**
          * <h2>setViews</h2>
@@ -21,20 +17,10 @@ public interface OrderHistoryContract {
          * @param appointment : appointment pojo details
          */
         void setViews(Appointments appointment);
-//        void setTitle(String format);
-//        void setPickUpTime(String format);
-//        void setDropTime(String format);
-//        void showItems();
-//        void hideItems();
     }
 
     interface PresenterOperation
     {
-        /**
-         * <h2>initActionBar</h2>
-         * <p>initializing the action bar</p>
-         */
-//        void initActionBar();
 
         /**
          * <h2>getBundleData</h2>
@@ -42,9 +28,12 @@ public interface OrderHistoryContract {
          * @param extras : Appointments details
          */
         void getBundleData(Bundle extras);
-        void showOrderDetails();
-        void hideOrderDetails();
 
+        /**
+         * <h2>getlanguageCode</h2>
+         * <p>get the languageCode</p>
+         * @return : languageCode
+         */
         String getlanguageCode();
     }
 

@@ -2,9 +2,6 @@ package com.delivx.pojo;
 
 import java.io.Serializable;
 
-/**
- * Created by ads on 10/05/17.
- */
 
 public class ValidatorPojo implements Serializable {
     private String errNum;

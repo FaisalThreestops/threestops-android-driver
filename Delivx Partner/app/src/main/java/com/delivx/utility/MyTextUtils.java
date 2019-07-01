@@ -3,10 +3,6 @@ package com.delivx.utility;
 import android.support.annotation.Nullable;
 import android.util.Patterns;
 
-/**
- * Created by DELL on 08-01-2018.
- */
-
 public class MyTextUtils {
 
     /**

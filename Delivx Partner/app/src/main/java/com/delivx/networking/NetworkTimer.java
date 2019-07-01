@@ -1,10 +1,6 @@
 package com.delivx.networking;
 
-/**
- * @since  12/20/2017.
- * @author 3Embed.
- * @version 1.0.
- */
+
 public class NetworkTimer extends Thread
 {
     private int SLEEP_TIME=1000;

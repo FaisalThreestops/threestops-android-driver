@@ -3,9 +3,6 @@ package com.delivx.pojo;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- * Created by embed on 15/5/17.
- */
 
 public class VehicleTypePojo implements Serializable {
 

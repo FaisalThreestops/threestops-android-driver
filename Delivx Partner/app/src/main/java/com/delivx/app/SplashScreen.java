@@ -16,7 +16,6 @@ import javax.inject.Inject;
 import dagger.android.support.DaggerAppCompatActivity;
 import io.fabric.sdk.android.Fabric;
 
-/**************************************************************************************************/
 public class SplashScreen extends DaggerAppCompatActivity {
 
     @Inject
@@ -25,7 +24,7 @@ public class SplashScreen extends DaggerAppCompatActivity {
     private Handler handler;
 
 
-    /**********************************************************************************************/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

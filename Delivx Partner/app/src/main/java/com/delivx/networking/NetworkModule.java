@@ -1,8 +1,6 @@
 package com.delivx.networking;
 
-/**
- * Created by DELL on 27-12-2017.
- */
+
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.driver.delivx.BuildConfig;

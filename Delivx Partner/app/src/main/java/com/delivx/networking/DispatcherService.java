@@ -9,10 +9,6 @@ import retrofit2.http.Header;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 
-/**
- * Created by DELL on 31-01-2018.
- */
-
 public interface DispatcherService
 {
     @POST("driver/bookingAck")

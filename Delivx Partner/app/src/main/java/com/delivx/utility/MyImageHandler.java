@@ -18,9 +18,6 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
-/**
- * Created by 3embed on 26/07/16.
- */
 public class MyImageHandler {
 
     private static MyImageHandler myImageHandler;

@@ -240,9 +240,9 @@ public class LoginPresenterImpl implements LoginPresenter
 
     /**
      * <h2>onError<h2/>
-     * <p>this method have a api error message and this message will
-     * show to their and will stop progress dialog</p>
-     * @param error will get api error message and show to the user
+     * <p>This method shows the error received from the API call
+     * in the view and hide the progress bar</p>
+     * @param error This is the error received from the API
      */
     public void onError(String error) {
         if (loginView != null) {
@@ -330,8 +330,8 @@ public class LoginPresenterImpl implements LoginPresenter
 
     /**
      * <h1>setSignInData</h1>
-     * <p>handle the login response ,
-     * storing the data in shared preference and subscribe the MQTT Topic</p>
+     * <p>Handle the login response ,
+     * store the config data in shared preference, and subscribe the MQTT Topic.</p>
      * @param data sign in response
      * @param password password for login
      */

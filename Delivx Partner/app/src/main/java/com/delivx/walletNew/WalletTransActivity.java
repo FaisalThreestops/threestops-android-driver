@@ -33,10 +33,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.DaggerAppCompatActivity;
 
-/**
- * <h1>WalletFragment</h1>
- * <p> Class to load WalletTransActivity and show all transactions list </p>
- */
 public class WalletTransActivity extends DaggerAppCompatActivity
         implements WalletTransactionContract.WalletTrasactionView
 {
@@ -102,14 +98,17 @@ public class WalletTransActivity extends DaggerAppCompatActivity
         });
     }
 
+    @Override
     public void setAllTransactionsAL(ArrayList<CreditDebitTransctions> allTransactionsAL) {
         this.allTransactionsAL = allTransactionsAL;
     }
 
+    @Override
     public void setDebitTransactionsAL(ArrayList<CreditDebitTransctions> debitTransactionsAL) {
         this.debitTransactionsAL = debitTransactionsAL;
     }
 
+    @Override
     public void setCreditTransactionsAL(ArrayList<CreditDebitTransctions> creditTransactionsAL) {
         this.creditTransactionsAL = creditTransactionsAL;
     }
@@ -210,22 +209,6 @@ public class WalletTransActivity extends DaggerAppCompatActivity
     }
 
 
-    /**
-     *<h2>showAlert</h2>
-     * <p> method to show alert that these is no internet connectivity there </p>
-     */
-    @Override
-    public void noInternetAlert()
-    {
-//        alerts.showNetworkAlert(this);
-    }
-
-
-
-    /**
-     *<h2>walletTransactionsApiSuccessViewNotifier</h2>
-     * <p> method to update fields data on the success response of api </p>
-     */
     @Override
     public void walletTransactionsApiSuccessViewNotifier()
     {

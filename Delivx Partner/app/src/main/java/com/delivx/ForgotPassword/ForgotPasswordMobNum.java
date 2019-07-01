@@ -252,11 +252,11 @@ public class ForgotPasswordMobNum extends DaggerAppCompatActivity implements Vie
     public void onClick(View v) {
 
         switch (v.getId()) {
-            //event for next
+            //event for next button
             case R.id.tv_forgot_next:
                 presenter.validatePhone(et_forgot_mob.getText().toString(),countryCode.getText().toString());
                 break;
-            //event for picking the country code
+            //event for picking up the country code
             case R.id.code:
                 presenter.showDialogForCountryPicker();
                 break;

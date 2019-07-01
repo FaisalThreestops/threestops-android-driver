@@ -1,9 +1,5 @@
 package com.delivx;
 
-/**
- * Created by DELL on 28-12-2017.
- */
-
 public interface BaseView<T> {
 
     void networkError(String message);

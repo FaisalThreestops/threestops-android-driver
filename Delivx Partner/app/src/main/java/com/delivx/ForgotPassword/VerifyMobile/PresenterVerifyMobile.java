@@ -181,6 +181,11 @@ public class PresenterVerifyMobile implements VerifyMobilePresenterContract {
         return preferenceHelperDataSource.getLanguageSettings().getLanguageCode();
     }
 
+    /**
+     * <h2>verifyOtpApi</h2>
+     * <p>Invoke API call to verify the OTP</p>
+     * @param otp : OTP numbers
+     */
     public void verifyOtpApi(final String otp){
         view.showProgress();
 

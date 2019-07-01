@@ -3,9 +3,6 @@ package com.delivx.mqttChat;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- * Created by DELL on 30-03-2018.
- */
 
 public class ChatHistoryResponse implements Serializable {
 

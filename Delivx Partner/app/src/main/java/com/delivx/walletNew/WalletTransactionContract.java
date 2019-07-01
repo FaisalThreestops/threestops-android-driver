@@ -10,6 +10,10 @@ public interface WalletTransactionContract
 
     interface WalletTrasactionView
     {
+        /**
+         *<h2>walletTransactionsApiSuccessViewNotifier</h2>
+         * <p> method to update fields data on the success response of api </p>
+         */
         void walletTransactionsApiSuccessViewNotifier();
 
         /**
@@ -34,13 +38,6 @@ public interface WalletTransactionContract
          * @param msg: alert message to be displayed
          */
         void showAlert(String title, String msg);
-
-
-        /**
-         * <h2>noInternetAlert</h2>
-         * <p> method to trigger activity/fragment alert interface to show alert that there isnot internet connectivity </p>
-         */
-        void noInternetAlert();
 
         /**
          * <H>Hide Progress bar</H>
@@ -69,6 +66,12 @@ public interface WalletTransactionContract
          */
         void setCreditTransactionsAL(ArrayList<CreditDebitTransctions> creditTransactionsAL);
 
+        /**
+         * <h2>setWallet</h2>
+         * <p>set the walletBalance in the view</p>
+         * @param walletBalance : total Balance
+         * @param inr : CurrencySymbol
+         */
         void setWallet(String walletBalance, String inr);
     }
 
@@ -90,6 +93,11 @@ public interface WalletTransactionContract
          */
         void initLoadTransactions(boolean isToLoadMore, boolean isFromOnRefresh);
 
+        /**
+         * <h2>getlanguageCode</h2>
+         * <p>get the languageCode</p>
+         * @return : languageCode
+         */
         String getlanguageCode();
 
     }

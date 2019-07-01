@@ -3,9 +3,6 @@ package com.delivx.pojo.TripsPojo;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- * Created by embed on 23/5/17.
- */
 
 public class TripsData implements Serializable {
 

@@ -26,14 +26,6 @@ import android.widget.LinearLayout;
 
 import com.driver.delivx.R;
 
-
-/**
- * UIActionSheet
- * 
- * @author Baoyz
- * 
- * @date 2014-6-6 12:36:53
- */
 public class ActionSheet extends Fragment implements OnClickListener {
     private static final String ARG_CANCEL_BUTTON_TITLE = "cancel_button_title";
     private static final String ARG_OTHER_BUTTON_TITLES = "other_button_titles";

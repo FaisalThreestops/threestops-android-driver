@@ -5,11 +5,6 @@ import org.json.JSONObject;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 
-/**
- * <h>ChatDataObervable</h>
- * Created by Ali on 12/22/2017.
- */
-
 public class ChatDataObervable extends Observable<JSONObject>
 {
     private static ChatDataObervable chatDataObervable;

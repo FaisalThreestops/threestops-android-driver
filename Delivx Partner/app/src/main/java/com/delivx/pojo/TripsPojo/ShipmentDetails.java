@@ -2,9 +2,7 @@ package com.delivx.pojo.TripsPojo;
 
 import java.io.Serializable;
 
-/**
- * Created by embed on 23/5/17.
- */
+
 
 public class ShipmentDetails implements Serializable {
 

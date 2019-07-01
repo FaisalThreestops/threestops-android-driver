@@ -27,12 +27,10 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
-
-
 public class BankListFragPresenter implements BankDetailscontract.PresenterOperations  {
 
     @Inject
-    public BankListFragPresenter() {
+    BankListFragPresenter() {
     }
 
     @Inject

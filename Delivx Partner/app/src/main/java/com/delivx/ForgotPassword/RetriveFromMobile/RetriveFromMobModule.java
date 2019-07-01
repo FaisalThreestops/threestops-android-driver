@@ -8,11 +8,6 @@ import com.delivx.dagger.ActivityScoped;
 import dagger.Binds;
 import dagger.Module;
 
-/**
- * Created by DELL on 29-12-2017.
- */
-
-
 @Module
 public abstract class RetriveFromMobModule {
 

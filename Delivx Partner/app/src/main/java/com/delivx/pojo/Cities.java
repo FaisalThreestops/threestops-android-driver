@@ -2,9 +2,6 @@ package com.delivx.pojo;
 
 import java.io.Serializable;
 
-/**
- * Created by DELL on 10-01-2018.
- */
 
 public class Cities implements Serializable
 {

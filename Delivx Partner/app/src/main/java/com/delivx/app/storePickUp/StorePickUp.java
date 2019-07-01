@@ -299,7 +299,11 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
         tvGrandTotal.setText(appointments.getCurrencySymbol()+" "+String.format(Locale.US,"%.2f",Float.parseFloat(appointments.getTotalAmount())));
     }
 
-
+    /**
+     * addTaxItems
+     * <p>calculating abs adding the taxView layout</p>
+     * @param appointments : appointmentsPojo details
+     */
     public void addTaxItems(AssignedAppointments appointments){
         tax_added = true;
 

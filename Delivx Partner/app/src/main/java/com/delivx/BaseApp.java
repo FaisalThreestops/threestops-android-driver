@@ -5,10 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import java.io.File;
 
-/*
- * <h2>BaseApp</h2>
- *
- * */
 public class BaseApp extends AppCompatActivity
 {
     @Override

@@ -129,7 +129,11 @@ public class EditProfilePresenter implements EditProfileContract.PresenterOperat
         this.re_pass=re_pass;
     }
 
-
+    /**
+     * <h2>validPassword</h2>
+     * <p>validating the password</p>
+     * @return : True(valid), False(invalid)
+     */
     private boolean validPassword()
     {
         Utility.printLog("validPassword pass: "+pass+", re pass: "+re_pass);
@@ -155,6 +159,12 @@ public class EditProfilePresenter implements EditProfileContract.PresenterOperat
         return true;
     }
 
+    /**
+     * <h2>updateProfile</h2>
+     * <p>updating the edited profile</p>
+     * @param value : edited field
+     * @param type :data
+     */
     private void updateProfile(String value,String type)
     {
         String password=null,mobile=null,cCode=null,name=null;
@@ -235,6 +245,10 @@ public class EditProfilePresenter implements EditProfileContract.PresenterOperat
                 });
     }
 
+    /**
+     * <h2>validaEmailPhone</h2>
+     * <p>validating the email or phone number</p>
+     */
     private void validaEmailPhone()
     {
         view.showProgress();
@@ -286,6 +300,10 @@ public class EditProfilePresenter implements EditProfileContract.PresenterOperat
                 });
     }
 
+    /**
+     * <h2>sendOtpApi</h2>
+     * <p>Invoke API call to send the otp</p>
+     */
     private void sendOtpApi() {
 
         view.showProgress();
@@ -372,6 +390,13 @@ public class EditProfilePresenter implements EditProfileContract.PresenterOperat
             }
         }
     }
+
+    /**
+     * <h2>getResId</h2>
+     * <p>get the flag resouce</p>
+     * @param drawableName : flag resource
+     * @return : interger value
+     */
     public static int getResId(String drawableName) {
         try {
             Class<R.drawable> res = R.drawable.class;

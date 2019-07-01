@@ -10,25 +10,16 @@ import dagger.Module;
 @Module
 public abstract class LoginDaggerModule {
 
-    /**
-     * <P>This method provides activity reference</P>
-     * @return activity.
-     */
+
     @ActivityScoped
     @Binds
     abstract Activity getActivity(LoginActivity activity);
-    /**
-     * <P>This method provides LoginView reference</P>
-     * @return LoginView.
-     */
+
     @Binds
     @ActivityScoped
     abstract   LoginView getView(LoginActivity view);
 
-    /**
-     * <P>This method provides Login BookingRidePresenter  reference</P>
-     * @return LoginPresenterImpl.
-     */
+
     @Binds
     @ActivityScoped
     abstract  LoginPresenter getPresenter(LoginPresenterImpl presenter);

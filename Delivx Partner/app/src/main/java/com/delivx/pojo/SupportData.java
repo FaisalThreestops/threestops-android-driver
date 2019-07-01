@@ -3,9 +3,6 @@ package com.delivx.pojo;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- * Created by Admin on 8/3/2017.
- */
 
 public class SupportData implements Serializable {
     private String name;

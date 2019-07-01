@@ -45,7 +45,7 @@ public class HistoryPresenter implements HistoryContract.PresenterOperations {
     @Inject
     HistoryPresenter() {
     }
-
+    @Override
     public void attachView(HistoryContract.ViewOperations view){
         this.view=view;
         init();

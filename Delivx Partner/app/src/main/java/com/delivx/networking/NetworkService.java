@@ -15,9 +15,6 @@ import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
-/**
- * Created by DELL on 27-12-2017.
- */
 
 public interface NetworkService {
 

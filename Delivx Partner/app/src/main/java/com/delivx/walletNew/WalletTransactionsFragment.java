@@ -28,10 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.DaggerFragment;
 
-/**
- * <h1>WalletTransactionsFragment</h1>
- * <p> Fragment to show wallet all transactions list according to fragment instances for the view pager of WalletTransActivity </p>
- */
+
 @ActivityScoped
 public class WalletTransactionsFragment extends DaggerFragment
 {

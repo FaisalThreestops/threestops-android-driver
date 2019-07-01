@@ -28,9 +28,7 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
-/**
- * Created by DELL on 05-02-2018.
- */
+
 
 public class BookingRidePresenter implements BookingRideContract.PresenterOperations
 {
@@ -48,7 +46,7 @@ public class BookingRidePresenter implements BookingRideContract.PresenterOperat
 
 
     @Inject
-    public BookingRidePresenter()
+    BookingRidePresenter()
     {
     }
 
@@ -262,6 +260,7 @@ public class BookingRidePresenter implements BookingRideContract.PresenterOperat
         return preferenceHelperDataSource.getLanguageSettings().getLanguageCode();
     }
 
+    //API call to set the Distance
     Observer<JSONArray> observer=new Observer<JSONArray>() {
         @Override
         public void onSubscribe(Disposable d) {
@@ -284,8 +283,12 @@ public class BookingRidePresenter implements BookingRideContract.PresenterOperat
         }
     };
 
-
-    public void setDistanceText(JSONArray value){
+    /**
+     * <h2>setDistanceText</h2>
+     * <p>set the Booking ride distance</p>
+     * @param value : JSONArray to get distance
+     */
+    private void setDistanceText(JSONArray value){
         if(value!=null){
             JSONObject jsonObject=getJobDetails(value);
             if(jsonObject!=null){
@@ -301,7 +304,13 @@ public class BookingRidePresenter implements BookingRideContract.PresenterOperat
         }
     }
 
-    public JSONObject getJobDetails(JSONArray jsonArray){
+    /**
+     * <h2>getJobDetails</h2>
+     * <p>get the booking appointments</p>
+     * @param jsonArray : jsonArray
+     * @return : JSON object included booking id
+     */
+    private JSONObject getJobDetails(JSONArray jsonArray){
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 JSONObject jsonObject = (JSONObject) jsonArray.get(i);
@@ -315,7 +324,11 @@ public class BookingRidePresenter implements BookingRideContract.PresenterOperat
         return null;
     }
 
-    public void updateDistanceAndTimerOnresult(){
+    /**
+     * <h2>updateDistanceAndTimerOnresult</h2>
+     * <p>updating the driver Distance and Timer</p>
+     */
+    private void updateDistanceAndTimerOnresult(){
 
         try {
             JSONArray jsonArray=new JSONArray(preferenceHelperDataSource.getBookings());
@@ -389,6 +402,11 @@ public class BookingRidePresenter implements BookingRideContract.PresenterOperat
         preferenceHelperDataSource.setTimeWhilePaused(System.currentTimeMillis());
     }
 
+    /**
+     * <h2>mSubStractTimePaused</h2>
+     * <p>substracting the paused time</p>
+     * @param jsonObject : jsonObject(to get paused time)
+     */
     private void mSubStractTimePaused(JSONObject jsonObject) {
         try {
 
@@ -414,7 +432,12 @@ public class BookingRidePresenter implements BookingRideContract.PresenterOperat
 
     }
 
-    public void setAppointmentStatus(String status){
+    /**
+     * <h2>setAppointmentStatus</h2>
+     * <p>set the appointmentStatus</p>
+     * @param status :(journeyStarted and ready)
+     */
+    private void setAppointmentStatus(String status){
 
 
         try {

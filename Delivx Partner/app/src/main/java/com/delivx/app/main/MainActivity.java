@@ -71,10 +71,7 @@ import dagger.android.support.DaggerAppCompatActivity;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
-/**
- * <h1>MainActivity</h1>
- * <p>Activity for controlling the fragments using NavigationView</p>
- */
+
 public class MainActivity extends DaggerAppCompatActivity
         implements MainView,NavigationView.OnNavigationItemSelectedListener,
         View.OnClickListener, EasyPermissions.PermissionCallbacks,

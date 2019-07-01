@@ -14,10 +14,6 @@ import com.delivx.utility.SessionManager;
 import com.delivx.utility.Utility;
 
 
-/**
- * Created by anubhootigupta on 29/11/16.
- */
-
 public class PortalFrag extends Fragment {
     private ProgressDialog mDialog;
 

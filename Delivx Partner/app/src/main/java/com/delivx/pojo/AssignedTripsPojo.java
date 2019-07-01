@@ -2,9 +2,6 @@ package com.delivx.pojo;
 
 import java.io.Serializable;
 
-/**
- * Created by ads on 15/05/17.
- */
 
 public class AssignedTripsPojo implements Serializable {
     private int errFlag = -1;

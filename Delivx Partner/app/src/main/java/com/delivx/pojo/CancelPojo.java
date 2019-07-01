@@ -2,9 +2,6 @@ package com.delivx.pojo;
 
 import java.util.ArrayList;
 
-/**
- * Created by embed on 5/6/17.
- */
 
 public class CancelPojo {
 

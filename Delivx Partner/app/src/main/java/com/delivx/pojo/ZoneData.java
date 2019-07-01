@@ -3,9 +3,6 @@ package com.delivx.pojo;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- * Created by DELL on 10-01-2018.
- */
 
 public class ZoneData implements Serializable {
     private String id;

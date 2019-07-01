@@ -52,7 +52,7 @@ public interface ForgotPasswordVerifyView extends BaseView {
 
     /**
      * <h2>startNextActivity</h2>
-     * <p>moving to ForgotPasswordChangePass to change password</p>
+     * <p>Move to the ForgotPasswordChangePass activity to the change password</p>
      * @param otp :otp
      * @param mob :mobile number
      * @param cCode :country code
@@ -61,6 +61,7 @@ public interface ForgotPasswordVerifyView extends BaseView {
 
     /**
      * <h2>mSetResult</h2>
+     * <p>finish this activity and moving to EditProfileActivity</p>
      */
     void mSetResult();
 

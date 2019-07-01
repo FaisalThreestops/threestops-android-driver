@@ -89,7 +89,6 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
         }
         ButterKnife.bind(this);
         IS_POP_UP_OPEN=true;
-
         initializeViews();
         presenter.getBundleData(getIntent());
         presenter.startTimer();
@@ -197,7 +196,7 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
 
     @Override
     public void onSuccess(String msg) {
-//        Toast.makeText(BookingPopUp.this, msg, Toast.LENGTH_SHORT).show();
+
     }
 
     @Override

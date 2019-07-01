@@ -111,7 +111,7 @@ public interface PersonalPresenterContract {
     /**
      * <h2>onCitySelected</h2>
      * <p>verifying the city to add the profile</p>
-     * @param cities
+     * @param cities : cities list
      */
     void onCitySelected(ArrayList<Cities> cities);
 

@@ -3,9 +3,6 @@ package com.delivx.pojo;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- * Created by ads on 17/05/17.
- */
 
 public class ShipmentDetails implements Serializable {
 

@@ -26,7 +26,6 @@ import retrofit2.Response;
 
 public class SupportFragPresenter implements SupportContract.PresenterOperation {
 
-    private SupportFragPresenterImplement presenterImplement;
 
     @Inject  NetworkService networkService;
     @Inject  PreferenceHelperDataSource preferenceHelperDataSource;
@@ -43,6 +42,10 @@ public class SupportFragPresenter implements SupportContract.PresenterOperation 
         this.view=view;
     }
 
+    /**
+     * <h2>supportApi</h2>
+     * <p>Invoke API call to get the support details</p>
+     */
     private void supportApi() {
         view.showProgress();
         final Observable<Response<ResponseBody>> profile=networkService.support(preferenceHelperDataSource.getLanguage());
@@ -95,39 +98,10 @@ public class SupportFragPresenter implements SupportContract.PresenterOperation 
                 });
     }
 
-
-    public void onFailure(String failureMsg) {
-        presenterImplement.stopProgressBar();
-        presenterImplement.onFailure(failureMsg);
-    }
-
-    public void onFailure() {
-        presenterImplement.stopProgressBar();
-        presenterImplement.onFailure();
-    }
-
-    public void onSuccess(ArrayList<SupportData> supportDatas) {
-        presenterImplement.stopProgressBar();
-        presenterImplement.getSupportDetails(supportDatas);
-    }
-
     @Override
     public void getSupportLinks() {
         supportApi();
     }
 
-
-
-
-    interface SupportFragPresenterImplement {
-
-        void stopProgressBar();
-
-        void onFailure(String msg);
-
-        void onFailure();
-
-        void getSupportDetails(ArrayList<SupportData> supportDatas);
-    }
 }
 

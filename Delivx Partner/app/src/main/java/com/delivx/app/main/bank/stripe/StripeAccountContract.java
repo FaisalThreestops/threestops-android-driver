@@ -13,6 +13,12 @@ import java.io.File;
 public interface StripeAccountContract {
 
     interface ViewOperations extends BaseView{
+
+        /**
+         * <h2>onSuccess</h2>
+         * <p>Toast for succesful added strip acoount</p>
+         * @param msg : toast messgae
+         */
         void onSuccess(String msg);
 
         /**

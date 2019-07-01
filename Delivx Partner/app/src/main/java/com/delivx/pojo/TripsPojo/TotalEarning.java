@@ -2,9 +2,7 @@ package com.delivx.pojo.TripsPojo;
 
 import java.io.Serializable;
 
-/**
- * Created by Admin on 7/3/2017.
- */
+
 
 public class TotalEarning implements Serializable {
     private String amt;

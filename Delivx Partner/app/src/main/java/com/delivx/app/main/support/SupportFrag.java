@@ -56,6 +56,10 @@ public class SupportFrag extends DaggerFragment implements SupportContract.ViewO
         return rootView;
     }
 
+    /**
+     * <h2>initLayout</h2>
+     * <p>initializing the recyclerView for supportView</p>
+     */
     public void initLayout() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         supportRVA = new SupportRVA(getActivity(), supportDatas, true);

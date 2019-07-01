@@ -2,10 +2,7 @@ package com.delivx.login;
 
 import android.content.Intent;
 
-/**
- * <h2>LoginPresenter</h2>
- * <p>presenter class for login Acitivity</p>
- */
+
 public interface LoginPresenter {
 
     /**
@@ -43,7 +40,7 @@ public interface LoginPresenter {
 
     /**
      * <h1>getBundleData</h1>
-     * <p>for getting the intent message for the user</p>
+     * <p>Used to get the user's data via intent to check if the user was previously logged in or not</p>
      * @param intent  message from other activity
      */
     void getBundleData(Intent intent);
@@ -74,25 +71,25 @@ public interface LoginPresenter {
 
     /**
      * <h1>getCountryCode</h1>
-     * <p>fetch country code from shared preference</p>
+     * <p>Fetch country code from shared preference</p>
      */
     void getCountryCode();
 
     /**
      * <h1>unSubScribeMQTT</h1>
-     * <p>unsubscribe the MQTT which already subscribed</p>
+     * <p>Unsubscribe the subscribed MQTT Topic</p>
      */
     void unSubScribeMQTT();
 
     /**
      * <h1>getLanguages</h1>
-     * <p>api call for get the languages</p>
+     * <p>API call to fetch the active languages on the app</p>
      */
     void getLanguages();
 
     /**
      * <h1>languageChanged</h1>
-     * <p>store the language details after language selection event callback </p>
+     * <p>Store the language details after language selection event callback </p>
      * @param langCode language code
      * @param langName language name
      */

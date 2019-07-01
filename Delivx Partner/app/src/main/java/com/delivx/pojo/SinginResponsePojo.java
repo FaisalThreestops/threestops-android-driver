@@ -2,9 +2,6 @@ package com.delivx.pojo;
 
 import java.io.Serializable;
 
-/**
- * Created by ads on 11/05/17.
- */
 
 public class SinginResponsePojo implements Serializable {
     private int errNum;

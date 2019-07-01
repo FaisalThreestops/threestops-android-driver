@@ -6,9 +6,6 @@ import android.os.Bundle;
 import com.delivx.BaseView;
 import com.delivx.pojo.AssignedAppointments;
 
-/**
- * Created by DELL on 10-10-2017.
- */
 
 public interface InvoiceContract
 {
@@ -137,7 +134,7 @@ public interface InvoiceContract
         /**
          * <h2>completeBooking</h2>
          * <p>booking completed</p>
-         * @param rating : rating(starts)
+         * @param rating : rating(stars)
          */
         void completeBooking(float rating);
 

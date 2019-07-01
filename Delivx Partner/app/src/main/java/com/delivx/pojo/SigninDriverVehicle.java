@@ -1,8 +1,5 @@
 package com.delivx.pojo;
 
-/**
- * Created by ads on 11/05/17.
- */
 
 public class SigninDriverVehicle {
     private boolean selected;

@@ -98,11 +98,10 @@ public class ChattingAdapter extends RecyclerView.Adapter
         private RelativeLayout rlCustMsg,rlProMsg;
         private ImageView ivChatSendStatus,ivCustSendPic,ivProReceivedPic;
         private TextView tvCustMsg,tvProMsg;
-//        private AppTypeface appTypeface;
+
         private double width,height;
         public ViewHolders(View itemView) {
             super(itemView);
-//            appTypeface = AppTypeface.getInstance(mContext);
             double size[];
             size = Scaler.getScalingFactor(mContext);
             ivChatSendStatus = (ImageView) itemView.findViewById(R.id.ivChatSendStatus);
@@ -112,8 +111,7 @@ public class ChattingAdapter extends RecyclerView.Adapter
             tvProMsg = (TextView) itemView.findViewById(R.id.tvProMsg);
             rlCustMsg = (RelativeLayout) itemView.findViewById(R.id.rlCustMsg);
             rlProMsg = (RelativeLayout) itemView.findViewById(R.id.rlProMsg);
-           /* tvCustMsg.setTypeface(appTypeface.getHind_regular());
-            tvProMsg.setTypeface(appTypeface.getHind_regular());*/
+
             width = 200*size[0];
             height = 200*size[1];
 

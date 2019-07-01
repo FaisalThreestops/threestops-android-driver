@@ -31,14 +31,6 @@ public class OrderHistoryPresenter implements OrderHistoryContract.PresenterOper
     }
 
     @Override
-    public void showOrderDetails() {
-    }
-
-    @Override
-    public void hideOrderDetails() {
-    }
-
-    @Override
     public String getlanguageCode() {
         return preferenceHelperDataSource.getLanguageSettings().getLanguageCode();
     }

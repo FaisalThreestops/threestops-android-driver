@@ -3,10 +3,6 @@ package com.delivx.pojo;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- * Created by Admin on 7/20/2017.
- */
-
 public class ConfigData implements Serializable {
 
     private String driverApiInterval;

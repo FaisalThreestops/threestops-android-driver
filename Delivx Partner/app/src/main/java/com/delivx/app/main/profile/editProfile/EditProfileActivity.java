@@ -96,9 +96,6 @@ public class EditProfileActivity extends DaggerAppCompatActivity implements View
 
     @Override
     public void setMaxLength(int length) {
-        /*InputFilter[] fArray = new InputFilter[1];
-        fArray[0] = new InputFilter.LengthFilter(length);
-        et_phone_num.setFilters(fArray);*/
     }
 
     @Override

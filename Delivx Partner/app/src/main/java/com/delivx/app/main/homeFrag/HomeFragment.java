@@ -194,7 +194,10 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
         setGoogleMap();
     }
 
-
+    /**
+     * <h2>setGoogleMap</h2>
+     * <p>implementing the google map</p>
+     */
     public void setGoogleMap() {
         Utility.printLog("setGoogleMap context "+getActivity());
 
@@ -226,7 +229,7 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
      * <p>set the marker in map</p>
      * @param location latitude and longitude
      */
-    public void setCarMarker(final Location location) {
+    private void setCarMarker(final Location location) {
         mCurrentLoc = location;
 
         if (mPreviousLoc == null) {

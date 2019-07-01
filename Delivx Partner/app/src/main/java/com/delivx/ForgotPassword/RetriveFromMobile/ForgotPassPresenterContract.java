@@ -48,7 +48,7 @@ public interface ForgotPassPresenterContract {
 
     /**
      * <h2>validatePhone</h2>
-     * <p>validating the phone number</p>
+     * <p>Validating the phone number</p>
      * @param mob :mobile number
      * @param countryCode :country code
      */

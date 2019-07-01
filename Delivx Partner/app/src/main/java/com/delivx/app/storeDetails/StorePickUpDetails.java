@@ -339,6 +339,11 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements
         }
     }
 
+    /**
+     * <h2>addTaxItems</h2>
+     * <p>calculate and adding the tax view layout</p>
+     * @param appointments
+     */
     public void addTaxItems(AssignedAppointments appointments){
         tax_added = true;
         int size=appointments.getExclusiveTaxes().size();

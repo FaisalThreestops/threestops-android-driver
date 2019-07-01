@@ -2,9 +2,6 @@ package com.delivx.pojo.bank;
 
 import java.util.ArrayList;
 
-/**
- * Created by murashid on 29-Aug-17.
- */
 
 public class ExternalAccounts {
     ArrayList<BankList> data;

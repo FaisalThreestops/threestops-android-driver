@@ -52,8 +52,12 @@ public class PresenterForgotPass implements ForgotPassPresenterContract {
     PresenterForgotPass() {
     }
 
-
-
+    /**
+     * <h2>getResId</h2>
+     * <p>get the flag image resource</p>
+     * @param drawableName : flag resource name
+     * @return : integer value
+     */
     private static int getResId(String drawableName) {
         try {
             Class<R.drawable> res = R.drawable.class;
@@ -157,7 +161,7 @@ public class PresenterForgotPass implements ForgotPassPresenterContract {
             if (Patterns.EMAIL_ADDRESS.matcher(mob_mail).matches()) {
                 forgotPasswordApi(2,"",mob_mail);
             }
-            //if phone match
+            //if mobile number length matches
             else if (Utility.phoneNumberLengthValidation(mob_mail,countryCode)) {
                 forgotPasswordApi(1,countryCode,mob_mail);
             } else {
@@ -196,7 +200,7 @@ public class PresenterForgotPass implements ForgotPassPresenterContract {
 
     /**
      * <h1>forgotPasswordApi</h1>
-     * <p>API call for verify phone number or mail id</p>
+     * <p>API call to verify mobile number or email</p>
      * @param verifyType email or phone
      * @param countryCode country code
      * @param mob_mail mobile number
@@ -225,7 +229,7 @@ public class PresenterForgotPass implements ForgotPassPresenterContract {
 
                             if(value.code()==200){
                                 jsonObject=new JSONObject(value.body().string());
-                                //mobile number verification
+                                //check if the mobile number exists in the platform database
                                 if(verifyType==1){
                                     view.startNextActivity(countryCode,mob_mail);
                                 }else {
@@ -233,7 +237,7 @@ public class PresenterForgotPass implements ForgotPassPresenterContract {
                                 }
 
                             }else {
-                                //email address verification
+                                //check if the email exists in the platform database
                                 if(value.code()==202 && verifyType==2){
                                     jsonObject=new JSONObject(value.body().string());
                                     view.moveToLogin(jsonObject.getString("message"));

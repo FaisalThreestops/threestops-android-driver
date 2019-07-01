@@ -18,9 +18,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by DELL on 31-08-2017.
- */
 
 public class CouchDbHandler {
 

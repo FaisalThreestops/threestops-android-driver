@@ -20,9 +20,6 @@ import com.driver.delivx.R;
 import java.io.File;
 import java.util.ArrayList;
 
-/**
- * Created by embed on 20/10/16.
- */
 public class ImageEditUpload implements ActionSheet.ActionSheetListener {
 
     private static final int CAMERA_PIC = 11, GALLERY_PIC = 12;

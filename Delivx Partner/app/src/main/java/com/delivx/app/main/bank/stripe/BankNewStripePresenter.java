@@ -71,7 +71,7 @@ public class BankNewStripePresenter implements StripeAccountContract.PresenterOp
 
 
     @Inject
-    public BankNewStripePresenter() {
+    BankNewStripePresenter() {
     }
 
     @Override
@@ -385,6 +385,13 @@ public class BankNewStripePresenter implements StripeAccountContract.PresenterOp
                 });
     }
 
+    /**
+     * <h2>copyStream</h2>
+     * <p>copy the read inputStream to output</p>
+     * @param input : readed data
+     * @param output : copying the readed data
+     * @throws IOException : execption
+     */
     private static void copyStream(InputStream input, OutputStream output)
             throws IOException {
         byte[] buffer = new byte[1024];

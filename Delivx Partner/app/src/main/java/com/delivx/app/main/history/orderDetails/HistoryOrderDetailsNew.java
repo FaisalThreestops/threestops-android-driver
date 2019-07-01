@@ -7,16 +7,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.delivx.app.main.history.orderDetails.OrderHistoryContract;
 import com.delivx.utility.Utility;
 import com.driver.delivx.R;
 import com.delivx.pojo.TripsPojo.Appointments;
 import com.delivx.utility.FontUtils;
-import com.squareup.picasso.Picasso;
 
 import java.util.Locale;
 
@@ -223,8 +220,6 @@ public class HistoryOrderDetailsNew extends DaggerAppCompatActivity implements O
         tvPickUp_name.setText(appointment.getCustomerName());
         tv_drop_name.setText(appointment.getStoreName());
         tv_type_of_delivery_value.setText(appointment.getStoreTypeMsg());
-
-
 
         addItems(appointment);
     }

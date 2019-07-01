@@ -2,9 +2,7 @@ package com.delivx.pojo.bank;
 
 import java.io.Serializable;
 
-/**
- * Created by murashid on 29-Aug-17.
- */
+
 
 public class BankList implements Serializable {
     private String id;

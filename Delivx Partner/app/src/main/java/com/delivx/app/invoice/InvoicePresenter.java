@@ -35,10 +35,6 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
-/**
- * Created by DELL on 08-02-2018.
- */
-
 public class InvoicePresenter implements InvoiceContract.PresenterOpetaions
 {
 
@@ -55,7 +51,7 @@ public class InvoicePresenter implements InvoiceContract.PresenterOpetaions
     private String signatureUrl="";
 
     @Inject
-    public InvoicePresenter()
+    InvoicePresenter()
     {
     }
 
@@ -201,7 +197,7 @@ public class InvoicePresenter implements InvoiceContract.PresenterOpetaions
      * <p>API call for updating the Booking status</p>
      * @param rating : rating (number of stars)
      */
-    public void updateBookingStatus(float rating) {
+    private void updateBookingStatus(float rating) {
         if(view!=null){
             view.showProgress();
         }

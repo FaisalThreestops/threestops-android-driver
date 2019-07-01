@@ -5,9 +5,6 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- * Created by ads on 15/05/17.
- */
 
 public class AssignedTripData implements Serializable {
     private ArrayList<AssignedAppointments> appointments;

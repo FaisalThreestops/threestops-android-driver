@@ -20,8 +20,6 @@ import com.driver.delivx.R;
 import com.delivx.utility.Utility;
 import com.delivx.utility.VariableConstant;
 
-
-
 public class ChangePasswordDialog extends Dialog {
     RefreshProfile refreshProfile;
     private Context context;
@@ -151,6 +149,10 @@ public class ChangePasswordDialog extends Dialog {
     }
 
     public interface RefreshProfile {
+        /**
+         * <h2>onRefresh</h2>
+         * <p>removing the dialog</p>
+         */
         void onRefresh();
     }
 

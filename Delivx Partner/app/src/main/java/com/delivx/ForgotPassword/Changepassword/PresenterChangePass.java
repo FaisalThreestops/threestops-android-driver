@@ -56,7 +56,7 @@ public class PresenterChangePass implements ChangePassPresenterContract
 
     @Override
     public void validatePassword(String pass, String confPass) {
-        //if new and confirm password empty
+        //if new and confirm password are empty
         if (pass.matches("") && confPass.matches(""))
         {
             view.showError(context.getResources().getString(R.string.entNewPass));
@@ -74,14 +74,14 @@ public class PresenterChangePass implements ChangePassPresenterContract
         {
             view.showError(context.getResources().getString(R.string.reentrPass));
         }
-        //if new and confirm password is not empty
+        //if new and confirm password are not empty
         else
         {
-            //if new and confirm password is mismatch
+            //if new and confirm password do not match
             if (!pass.matches(confPass)) {
                 view.showError(context.getResources().getString(R.string.passNotMactch));
             }
-            //if new and confirm password is match
+            //if new and confirm password match
             else {
                 updatePasswordApi(pass);
             }
@@ -94,6 +94,11 @@ public class PresenterChangePass implements ChangePassPresenterContract
         return preferenceHelperDataSource.getLanguageSettings().getLanguageCode();
     }
 
+    /**
+     * <h2>updatePasswordApi</h2>
+     * <p>Invoke API for update the password</p>
+     * @param password
+     */
     public void updatePasswordApi(String password){
 
         Observable<Response<ResponseBody>> updatePassword=networkService.password(preferenceHelperDataSource.getLanguage(),MobNum,Ccode,OTP,password);

@@ -8,8 +8,6 @@ import java.util.regex.Pattern;
 /**
  * <h1>TextUtil</h1>
  * This class is used to check for texts related checks
- *@author  3Embed
- * @since on 23-11-2017.
  */
 
 public class TextUtil

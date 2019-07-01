@@ -3,7 +3,6 @@ package com.delivx.utility;
 import android.view.View;
 
 /**
- * Created by ads on 11/05/17.
  * <h2>DisableError</h2>
  * <p>this interface use for disable error message showing on text input layouts</p>
  */

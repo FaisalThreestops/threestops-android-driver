@@ -16,11 +16,6 @@ import com.amazonaws.services.s3.model.DeleteObjectRequest;
 
 import java.io.File;
 
-/**
- * Created by shobhit on 21/4/16.
- */
-
-
 public class Upload_file_AmazonS3 {
     private static Upload_file_AmazonS3 uploadAmazonS3;
     private CognitoCachingCredentialsProvider credentialsProvider = null;

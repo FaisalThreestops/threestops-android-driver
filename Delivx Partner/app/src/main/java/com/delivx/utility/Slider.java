@@ -6,9 +6,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.SeekBar;
 
-/**
- * Created by embed on 29/12/16.
- */
 public class Slider extends SeekBar {
     private Drawable mThumb;
     private SliderProgressCallback sliderProgressCallback;

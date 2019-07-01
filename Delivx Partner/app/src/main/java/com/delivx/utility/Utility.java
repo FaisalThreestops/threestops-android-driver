@@ -68,9 +68,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by ads on 16/06/16.
- */
 public class Utility {
 
     private static String PREFS_NAME = "preference";

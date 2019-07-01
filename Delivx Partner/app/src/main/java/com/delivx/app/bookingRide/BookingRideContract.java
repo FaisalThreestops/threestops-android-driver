@@ -7,10 +7,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.delivx.BaseView;
 import com.delivx.pojo.AssignedAppointments;
 
-/**
- * Created by DELL on 05-02-2018.
- */
-
 public interface BookingRideContract
 {
     interface ViewOperations extends BaseView
@@ -95,7 +91,7 @@ public interface BookingRideContract
 
         /**
          * <h2>setDistanceText</h2>
-         * <p>set the destination distance </p>
+         * <p>set the booking ride distance </p>
          * @param distance :distances
          */
         void setDistanceText(String distance);

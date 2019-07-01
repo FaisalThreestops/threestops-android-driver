@@ -7,10 +7,6 @@ import dagger.Binds;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
-/**
- * Created by DELL on 05-03-2018.
- */
-
 @Module
 public abstract class SupportModule {
     @FragmentScoped

@@ -2,9 +2,6 @@ package com.delivx.pojo;
 
 import java.io.Serializable;
 
-/**
- * Created by embed on 19/5/17.
- */
 
 public class ProfilePojo implements Serializable {
 

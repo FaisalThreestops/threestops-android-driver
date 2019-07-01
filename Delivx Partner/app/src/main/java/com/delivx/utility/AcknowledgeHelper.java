@@ -16,10 +16,6 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
-/**
- * Created by ads on 17/05/17.
- */
-
 public class AcknowledgeHelper {
     private String TAG = "AcknowledgeHelper";
 

@@ -1,9 +1,5 @@
 package com.delivx.pojo;
 
-/**
- * Created by ads on 09/05/17.
- */
-
 public class OperatorsData {
 
     private String id;

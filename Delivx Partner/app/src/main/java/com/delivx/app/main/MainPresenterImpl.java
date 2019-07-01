@@ -36,10 +36,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Response;
 
 
-/**
- * <h1>MainPresenterImpl</h1>
- * <p>model class for implementing the Main Activity</p>
- */
+
 public class MainPresenterImpl implements MainPresenter {
 
     @Inject  AcknowledgeHelper acknowledgeHelper;
@@ -199,6 +196,11 @@ public class MainPresenterImpl implements MainPresenter {
         }
     };
 
+    /**
+     * <h2>getBookingDetails</h2>
+     * <p>get the booking details</p>
+     * @param jsonObject: get the status
+     */
     private void getBookingDetails(final JSONObject jsonObject) {
         try{
             if(helperDataSource.getDriverChannel().equals(jsonObject.getString("chn"))){

@@ -7,10 +7,6 @@ import java.util.ArrayList;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 
-/**
- * Created by DELL on 01-03-2018.
- */
-
 public class RXMqttMessageObserver extends Observable<JSONObject> {
 
     static RXMqttMessageObserver changeObserver=null;

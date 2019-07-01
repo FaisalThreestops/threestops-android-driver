@@ -1,9 +1,5 @@
 package com.delivx.mqttChat;
 
-/**
- * <h>ChatData</h>
- * Created by Ali on 12/22/2017.
- */
 
 public class ChatData
 {

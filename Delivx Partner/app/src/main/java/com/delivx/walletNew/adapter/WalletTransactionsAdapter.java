@@ -22,8 +22,6 @@ import java.util.Locale;
 /**
  * <h1>WalletTransactionsAdapter</h1>
  * This class is used to inflate the wallet transactions list
- *
- * @since 20/09/17.
  */
 public class WalletTransactionsAdapter extends RecyclerView.Adapter<WalletTransactionsAdapter.WalletViewHolder> {
 
