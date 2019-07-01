@@ -16,12 +16,6 @@ import com.delivx.utility.Scaler;
 
 import java.util.ArrayList;
 
-
-/**
- * <h>ChattingAdapter</h>
- * Created by Ali on 12/22/2017.
- */
-
 public class ChattingAdapter extends RecyclerView.Adapter
 {
     private Context mContext;

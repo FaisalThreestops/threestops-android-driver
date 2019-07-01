@@ -59,6 +59,7 @@ public class ChattingActivity extends DaggerAppCompatActivity implements Chattin
     public void onClick(View view)
     {
         switch (view.getId()){
+            //event for send
             case R.id.tvSend:
                presenter.message(etMsg.getText().toString());
                etMsg.setText("");
@@ -99,7 +100,10 @@ public class ChattingActivity extends DaggerAppCompatActivity implements Chattin
         finish();
     }
 
-
+    /**
+     * <h2>scrollToBottom</h2>
+     * <p>ScrollToBottom when new message were updated</p>
+     */
     private void scrollToBottom() {
         rcvChatMsg.scrollToPosition(cAdapter.getItemCount() - 1);
     }

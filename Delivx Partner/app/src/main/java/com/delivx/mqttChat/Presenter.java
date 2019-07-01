@@ -22,9 +22,7 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
-/**
- * Created by DELL on 29-03-2018.
- */
+
 
 public class Presenter implements ChattingContract.PresenterOperations {
 
@@ -100,9 +98,11 @@ public class Presenter implements ChattingContract.PresenterOperations {
                                         }else {
                                             chatHistoryResponse.getData().get(i).setCustProType(2);
                                         }
+                                        //adding the data(message) to arrayList
                                         chatDataArry.add(chatHistoryResponse.getData().get(i));
                                     }
 //                                    chatDataArry.addAll(chatHistoryResponse.getData());
+                                    //reverse the arraylist(messages)
                                     Collections.reverse(chatDataArry);
                                     view.updateData(chatDataArry);
                                 }
@@ -138,6 +138,7 @@ public class Presenter implements ChattingContract.PresenterOperations {
 
     @Override
     public void message(String message) {
+        //if message is not empty
         if(!message.trim().isEmpty())
         {
             sendMessage(message);
@@ -193,6 +194,11 @@ public class Presenter implements ChattingContract.PresenterOperations {
         ChatDataObervable.getInstance().subscribe(observer);
     }
 
+    /**
+     * <h2>sendMessage</h2>
+     * <p>Invoking the API call</p>
+     * @param content : message
+     */
     private void sendMessage(final String content){
 
         final long timeStamp=System.currentTimeMillis();
