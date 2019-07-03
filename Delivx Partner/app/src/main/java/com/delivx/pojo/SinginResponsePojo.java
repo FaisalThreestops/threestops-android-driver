@@ -2,7 +2,6 @@ package com.delivx.pojo;
 
 import java.io.Serializable;
 
-
 public class SinginResponsePojo implements Serializable {
     private int errNum;
     private int errFlag = -1;

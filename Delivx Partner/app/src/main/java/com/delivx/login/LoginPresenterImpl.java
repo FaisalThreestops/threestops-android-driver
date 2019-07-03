@@ -350,6 +350,11 @@ public class LoginPresenterImpl implements LoginPresenter
         preferenceHelperDataSource.setPassword(password);
         preferenceHelperDataSource.setMyEmail(data.getEmail());
 
+        preferenceHelperDataSource.setDefaultBankAccount(data.getDefaultBankAccount());
+        preferenceHelperDataSource.setCountry(data.getCountry());
+        preferenceHelperDataSource.setCurrency(data.getCurrency());
+        preferenceHelperDataSource.setEnableBankAccount(data.getEnableBankAccount());
+
         Utility.printLog("pushTopics shared pref "+preferenceHelperDataSource.getPushTopic());
         try {
             Utility.subscribeOrUnsubscribeTopics(new JSONArray(preferenceHelperDataSource.getPushTopic()),true);

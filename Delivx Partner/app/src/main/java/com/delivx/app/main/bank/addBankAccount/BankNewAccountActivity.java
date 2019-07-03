@@ -63,6 +63,7 @@ public class BankNewAccountActivity extends DaggerAppCompatActivity implements A
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.vector_cancel);
         }
 
+        etAccountNo.setHint(presenter.getAccountNoHint());
         etName.setTypeface(fontUtils.titaliumRegular());
         etAccountNo.setTypeface(fontUtils.titaliumRegular());
         etRoutingNo.setTypeface(fontUtils.titaliumRegular());

@@ -20,6 +20,12 @@ public class SigninData {
     private String profilePic;
     private String pushTopic;
     private String email;
+
+    private String defaultBankAccount;
+    private String country;
+    private String currency;
+    private String enableBankAccount;
+
     private ArrayList<SigninDriverVehicle> vehicles;
 
     public String getEmail() {
@@ -132,6 +138,39 @@ public class SigninData {
 
     public void setVehicles(ArrayList<SigninDriverVehicle> vehicles) {
         this.vehicles = vehicles;
+    }
+
+
+    public String getDefaultBankAccount() {
+        return defaultBankAccount;
+    }
+
+    public void setDefaultBankAccount(String defaultBankAccount) {
+        this.defaultBankAccount = defaultBankAccount;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public String getEnableBankAccount() {
+        return enableBankAccount;
+    }
+
+    public void setEnableBankAccount(String enableBankAccount) {
+        this.enableBankAccount = enableBankAccount;
     }
 
     @Override

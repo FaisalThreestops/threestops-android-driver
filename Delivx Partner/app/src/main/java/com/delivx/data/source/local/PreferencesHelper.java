@@ -10,10 +10,6 @@ import com.delivx.data.source.PreferenceHelperDataSource;
 import javax.inject.Inject;
 
 
-/**
- * Created by DELL on 21-12-2017.
- */
-
 
 public class PreferencesHelper implements PreferenceHelperDataSource {
 
@@ -433,6 +429,54 @@ public class PreferencesHelper implements PreferenceHelperDataSource {
 
     }
 
+
+
+
+
+
+    @Override
+    public void setDefaultBankAccount(String bankaccount) {
+        editor.putString(PreferenceKeys.KeysEntry.BANK_ACCOUT,bankaccount);
+        editor.commit();
+    }
+
+    @Override
+    public String getDefaultBankAccount() {
+        return sharedPreferences.getString(PreferenceKeys.KeysEntry.BANK_ACCOUT,"Account Number");
+    }
+
+    @Override
+    public void setCountry(String country) {
+        editor.putString(PreferenceKeys.KeysEntry.COUNTRY,country);
+        editor.commit();
+    }
+
+    @Override
+    public String getCountry() {
+        return sharedPreferences.getString(PreferenceKeys.KeysEntry.COUNTRY,"IN");
+    }
+
+    @Override
+    public void setCurrency(String currency) {
+        editor.putString(PreferenceKeys.KeysEntry.CURRENCY,currency);
+        editor.commit();
+    }
+
+    @Override
+    public String getCurrency() {
+        return sharedPreferences.getString(PreferenceKeys.KeysEntry.CURRENCY,"INR");
+    }
+
+    @Override
+    public void setEnableBankAccount(String enableBank) {
+        editor.putString(PreferenceKeys.KeysEntry.ENABLE_BANK_ACCCOUNT,enableBank);
+        editor.commit();
+    }
+
+    @Override
+    public String getEnableBankAccount() {
+        return sharedPreferences.getString(PreferenceKeys.KeysEntry.ENABLE_BANK_ACCCOUNT,"1");
+    }
 
 
 }

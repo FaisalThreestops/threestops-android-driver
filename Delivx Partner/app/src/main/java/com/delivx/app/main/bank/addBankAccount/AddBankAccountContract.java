@@ -50,5 +50,7 @@ public interface AddBankAccountContract {
          */
         String getlanguageCode();
 
+        String getAccountNoHint();
+
     }
 }

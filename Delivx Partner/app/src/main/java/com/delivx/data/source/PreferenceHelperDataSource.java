@@ -2,9 +2,6 @@ package com.delivx.data.source;
 
 import com.delivx.login.language.LanguagesList;
 
-/**
- * Created by DELL on 21-12-2017.
- */
 
 public interface PreferenceHelperDataSource
 {
@@ -373,6 +370,20 @@ public interface PreferenceHelperDataSource
      *  @param languageSettings   language data
      **/
     void setLanguageSettings(LanguagesList languageSettings);
+
+
+
+    void setDefaultBankAccount(String bankaccount);
+    String getDefaultBankAccount();
+
+    void setCountry(String country);
+    String getCountry();
+
+    void setCurrency(String currency);
+    String getCurrency();
+
+    void setEnableBankAccount(String enableBank);
+    String getEnableBankAccount();
 
 
 }

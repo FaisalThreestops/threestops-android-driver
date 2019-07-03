@@ -204,7 +204,7 @@ public class BankNewStripePresenter implements StripeAccountContract.PresenterOp
                 preferenceHelperDataSource.getToken(),
                 preferenceHelperDataSource.getMyEmail(),
                 city,
-                "US",
+                preferenceHelperDataSource.getCountry(),
                 address,
                 postalCode,
                 state,

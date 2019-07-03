@@ -41,6 +41,10 @@ public class PreferenceKeys
         public static final String PASSWORD = "password";
         public static final String LANGUAGE="language";
         public static final String EMAIL="email";
+        public static final String BANK_ACCOUT = "BANK_ACCOUT";
+        public static final String COUNTRY = "COUNTRY";
+        public static final String CURRENCY = "CURRENCY";
+        public static final String ENABLE_BANK_ACCCOUNT = "enableBankAccount";
     }
 }
 

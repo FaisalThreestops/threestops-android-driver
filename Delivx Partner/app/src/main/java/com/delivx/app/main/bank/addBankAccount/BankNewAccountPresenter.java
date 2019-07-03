@@ -49,7 +49,7 @@ public class BankNewAccountPresenter implements AddBankAccountContract.Presenter
                 acc,
                 routing,
                 name,
-                "US"
+                preferenceHelperDataSource.getCountry()
 
         );
         externalAccount.observeOn(AndroidSchedulers.mainThread())
@@ -121,5 +121,10 @@ public class BankNewAccountPresenter implements AddBankAccountContract.Presenter
     @Override
     public String getlanguageCode() {
         return preferenceHelperDataSource.getLanguageSettings().getLanguageCode();
+    }
+
+    @Override
+    public String getAccountNoHint() {
+        return preferenceHelperDataSource.getDefaultBankAccount().concat("*");
     }
 }
