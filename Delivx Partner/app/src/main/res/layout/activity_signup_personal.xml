@@ -90,9 +90,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/fname"
+                            android:textAlignment="viewStart"
                             android:inputType="textCapWords"
                             android:minLines="1"
-                            android:textSize="@dimen/spFourteen" />
+                            android:textSize="@dimen/spFourteen"
+                            android:gravity="start" />
 
                     </android.support.design.widget.TextInputLayout>
 
@@ -107,7 +109,9 @@
                             android:hint="@string/lname"
                             android:inputType="textCapWords"
                             android:minLines="1"
-                            android:textSize="@dimen/spFourteen" />
+                            android:textSize="@dimen/spFourteen"
+                            android:textAlignment="viewStart"
+                            android:gravity="start" />
 
                     </android.support.design.widget.TextInputLayout>
 
@@ -206,10 +210,12 @@
                         android:hint="@string/phone_num"
                         android:focusableInTouchMode="true"
                         android:focusable="true"
+                        android:textAlignment="viewStart"
                         android:inputType="number"
                         android:maxLength="16"
                         android:minLines="1"
-                        android:textSize="@dimen/spFourteen" />
+                        android:textSize="@dimen/spFourteen"
+                        android:gravity="start" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -229,7 +235,9 @@
                     android:focusable="true"
                     android:inputType="textEmailAddress"
                     android:minLines="1"
-                    android:textSize="@dimen/spFourteen" />
+                    android:textSize="@dimen/spFourteen"
+                    android:textAlignment="viewStart"
+                    android:gravity="start" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -245,7 +253,10 @@
                     android:hint="@string/password_signup"
                     android:inputType="textPassword"
                     android:minLines="1"
-                    android:textSize="@dimen/spFourteen" />
+                    android:textSize="@dimen/spFourteen"
+                    android:textAlignment="viewStart"
+                    android:gravity="start"
+                    />
 
             </android.support.design.widget.TextInputLayout>
 

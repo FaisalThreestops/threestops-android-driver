@@ -34,9 +34,11 @@
                     android:id="@+id/tvOrderStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textAlignment="viewStart"
                     android:text="Not Picked"
                     android:textColor="@color/app_color_off"
-                    android:textSize="@dimen/spFourteen" />
+                    android:textSize="@dimen/spFourteen"
+                    android:gravity="start" />
 
                 <TextView
                     android:id="@+id/tv_deliveryfee"
@@ -44,9 +46,10 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:text="$100"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:textColor="@color/green_selectr"
-                    android:textSize="@dimen/spTwelve" />
+                    android:textSize="@dimen/spTwelve"
+                    android:layout_alignParentRight="true" />
 
             </RelativeLayout>
 

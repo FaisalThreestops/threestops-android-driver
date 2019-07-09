@@ -105,6 +105,7 @@ public class SignupPersonal extends DaggerAppCompatActivity implements View.OnCl
         overridePendingTransition(R.anim.bottem_slide_down, R.anim.stay_activity);
         ButterKnife.bind(this);
         initializeViews();
+        et_fname.requestFocus();
         presenter.setActionBar();
         presenter.setActionBarTitle();
     }

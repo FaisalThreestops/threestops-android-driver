@@ -208,8 +208,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
+                        android:textAlignment="viewStart"
                         android:hint="@string/email_address"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:gravity="start" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -244,8 +246,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
+                android:textAlignment="viewStart"
                 android:inputType="textPassword"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:gravity="start" />
 
         </android.support.design.widget.TextInputLayout>
 

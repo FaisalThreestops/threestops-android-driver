@@ -41,7 +41,8 @@
             android:textSize="14sp"
             android:textColor="@color/color_sup_txt"
             android:textAllCaps="true"
-            android:gravity="right"/>
+           android:textAlignment="viewEnd"
+            android:gravity="end"/>
 
     </LinearLayout>
 

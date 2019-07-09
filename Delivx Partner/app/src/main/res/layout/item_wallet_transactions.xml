@@ -23,13 +23,15 @@
             android:textSize="@dimen/spTwelve"
             android:textColor="@color/grayLightTextColor"
             android:gravity="start|center_vertical"
-           android:layout_gravity="start|center_vertical"/>
+            android:layout_gravity="start|center_vertical"
+            android:textDirection="locale"
+            android:textAlignment="viewStart"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="@dimen/dpTen"
-        android:background="@color/colord6d6d6" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/dpTen"
+            android:background="@color/colord6d6d6" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -69,7 +71,11 @@
                 android:paddingLeft="@dimen/dpFifteen"
                 android:paddingStart="@dimen/dpFifteen"
                 android:paddingRight="@dimen/dpFifteen"
-                android:paddingEnd="@dimen/dpFifteen"/>
+                android:paddingEnd="@dimen/dpFifteen"
+                android:textDirection="locale"
+                android:textAlignment="viewStart"
+                android:text="xxxxx"/>
+
         </RelativeLayout>
 
         <View
@@ -95,7 +101,9 @@
                 android:textSize="@dimen/spTwelve"
                 android:textColor="@color/grayLightTextColor"
                 android:gravity="start|center_vertical"
-                android:layout_gravity="start|center_vertical"/>
+                android:layout_gravity="start|center_vertical"
+                android:textDirection="locale"
+                android:textAlignment="viewStart"/>
 
             <TextView
                 android:id="@+id/tv_wallet_transaction_bid"
@@ -105,7 +113,11 @@
                 android:textSize="@dimen/spTwelve"
                 android:textColor="@color/grayLightTextColor"
                 android:layout_gravity="end|center_vertical"
-                android:gravity="end|center_vertical" />
+                android:gravity="end|center_vertical"
+                android:textDirection="locale"/>
+
         </LinearLayout>
+
     </LinearLayout>
+
 </android.support.v7.widget.CardView>

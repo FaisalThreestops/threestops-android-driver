@@ -377,7 +377,8 @@
                         android:textSize="12sp"
                         android:textColor="@color/gunsmoke"
                         android:textAllCaps="true"
-                        android:gravity="right"/>
+                       android:textAlignment="viewEnd"
+                        android:gravity="end" />
 
                 </LinearLayout>
 
@@ -425,6 +426,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/color_sup_txt"
                         android:textSize="14sp"
+                        android:textAlignment="viewStart"
                         />
                     <TextView
                         android:id="@+id/tv_subTotal_val"
@@ -451,6 +453,7 @@
                     <TextView
                         android:id="@+id/tv_Tax"
                         android:layout_weight="1"
+                        android:textAlignment="viewStart"
                         android:layout_gravity="start"
                         android:text="@string/tax"
                         android:layout_width="wrap_content"
@@ -481,6 +484,7 @@
                     <TextView
                         android:id="@+id/tv_delCharge"
                         android:layout_weight="1"
+                        android:textAlignment="viewStart"
                         android:layout_gravity="start"
                         android:text="@string/delvery_charge"
                         android:layout_width="wrap_content"
@@ -512,6 +516,7 @@
                     <TextView
                         android:id="@+id/tv_discount"
                         android:layout_weight="1"
+                        android:textAlignment="viewStart"
                         android:layout_gravity="start"
                         android:text="Discount"
                         android:layout_width="wrap_content"
@@ -548,6 +553,7 @@
                     <TextView
                         android:id="@+id/tv_subToatal"
                         android:layout_weight="1"
+                        android:textAlignment="viewStart"
                         android:layout_gravity="start"
                         android:text="Total"
                         android:layout_width="wrap_content"
@@ -609,17 +615,22 @@
                     android:layout_marginRight="@dimen/dpSixteen"
                     android:layout_marginEnd="@dimen/dpSixteen"
                     >
+                    <ImageView
+                        android:src="@drawable/cash"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"/>
                     <TextView
                         android:id="@+id/tvCash"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.75"
-                        android:drawableLeft="@drawable/cash"
+                        android:paddingStart="@dimen/spFifteen"
                         android:textColor="@color/color_sup_txt"
                         android:textSize="@dimen/spSixteen"
                         android:text="@string/cash"
                         android:drawablePadding="10dp"
-                        />
+                        android:paddingLeft="@dimen/spFifteen" />
 
                     <TextView
                         android:id="@+id/tvCashValue"
@@ -649,17 +660,22 @@
                     android:layout_marginRight="@dimen/dpSixteen"
                     android:layout_marginEnd="@dimen/dpSixteen"
                     >
+                    <ImageView
+                        android:src="@drawable/card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"/>
                     <TextView
                         android:id="@+id/tvCard"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.75"
-                        android:drawableLeft="@drawable/card"
                         android:textColor="@color/color_sup_txt"
                         android:textSize="@dimen/spSixteen"
                         android:text="@string/card"
+                        android:paddingStart="@dimen/spFifteen"
                         android:drawablePadding="10dp"
-                        />
+                        android:paddingLeft="@dimen/spFifteen" />
 
                     <TextView
                         android:id="@+id/tvCardValue"
@@ -688,17 +704,22 @@
                     android:layout_marginRight="@dimen/dpSixteen"
                     android:layout_marginEnd="@dimen/dpSixteen"
                     >
+                    <ImageView
+                        android:src="@drawable/wallet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"/>
                     <TextView
                         android:id="@+id/tvWallet"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.75"
-                        android:drawableLeft="@drawable/wallet"
+                      android:paddingStart="@dimen/spFifteen"
                         android:textColor="@color/color_sup_txt"
                         android:textSize="@dimen/spSixteen"
                         android:text="@string/payments"
                         android:drawablePadding="10dp"
-                        />
+                        android:paddingLeft="@dimen/spFifteen" />
 
                     <TextView
                         android:id="@+id/tvWalletValue"
@@ -753,6 +774,7 @@
                 <TextView
                     android:id="@+id/tv_earned"
                     android:layout_weight="1"
+                    android:textAlignment="viewStart"
                     android:layout_gravity="start"
                     android:text="Driver earnings"
                     android:layout_width="wrap_content"
@@ -782,6 +804,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="@dimen/dpThirty"
+        android:textAlignment="viewStart"
         android:background="@color/green"
         android:paddingBottom="@dimen/dpTen"
         android:paddingEnd="@dimen/dpTwenty"
@@ -790,6 +813,7 @@
         android:paddingStart="@dimen/dpTwenty"
         android:paddingTop="@dimen/dpTen"
         android:text="ORDER COMPLETED"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:gravity="start" />
 
 </RelativeLayout>
