@@ -24,7 +24,9 @@ public class SigninData {
     private String defaultBankAccount;
     private String country;
     private String currency;
+    private String cityId;
     private String enableBankAccount;
+    private ArrayList<String> serviceZones;
 
     private ArrayList<SigninDriverVehicle> vehicles;
 
@@ -173,10 +175,19 @@ public class SigninData {
         this.enableBankAccount = enableBankAccount;
     }
 
-    @Override
-    public String toString() {
-        return "{" +
-                "vehicles\":" + vehicles +
-                "}";
+    public String getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(String cityId) {
+        this.cityId = cityId;
+    }
+
+    public ArrayList<String> getServiceZones() {
+        return serviceZones;
+    }
+
+    public void setServiceZones(ArrayList<String> serviceZones) {
+        this.serviceZones = serviceZones;
     }
 }

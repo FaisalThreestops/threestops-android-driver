@@ -411,6 +411,15 @@ public class LocationUpdateService
                             Utility.printLog("testing unsubScribed Mqtt Topic :   "+preferenceHelperDataSource.getDriverID());
                         }
 
+
+                        if(preferenceHelperDataSource.getServiceZoneList().getServiceZones().size()>0)
+                            for(int i=0;i<preferenceHelperDataSource.getServiceZoneList().getServiceZones().size();i++){
+                                String topic = "onlineDrivers/".concat(preferenceHelperDataSource.getCityId().concat("/").concat(preferenceHelperDataSource.getServiceZoneList().getServiceZones().get(i)));
+                                Utility.printLog("subscribed Mqtt Zone topic :  "+topic);
+                                ((MyApplication)getApplication()).unSubscribeMqtt(topic);
+
+                            }
+
                         MyApplication.getInstance().connectMQTT();
                     }
 
@@ -429,8 +438,10 @@ public class LocationUpdateService
                             prevLatTimer=preferenceHelperDataSource.getDriverCurrentLat();
                             prevLongTimer=preferenceHelperDataSource.getDriverCurrentLongi();
                             publishLocation(preferenceHelperDataSource.getDriverCurrentLat(), preferenceHelperDataSource.getDriverCurrentLongi(),1);
+                            updateLocationMQTT(preferenceHelperDataSource.getDriverCurrentLat(), preferenceHelperDataSource.getDriverCurrentLongi(),1);
 
                         }else {
+                            updateLocationMQTT(preferenceHelperDataSource.getDriverCurrentLat(), preferenceHelperDataSource.getDriverCurrentLongi(),0);
                             publishLocation(preferenceHelperDataSource.getDriverCurrentLat(),preferenceHelperDataSource.getDriverCurrentLongi(),0);
                         }
 
@@ -617,6 +628,48 @@ public class LocationUpdateService
             });
         }
 
+
+    }
+
+
+    private void updateLocationMQTT(Double latitude,Double longitude, int transit){
+
+        JSONObject reqObject = new JSONObject();
+
+        Utility.printLog("Location UpdateookingStatus()");
+
+        try {
+            reqObject.put("longitude", longitude);
+            reqObject.put("latitude", latitude);
+            reqObject.put("locationHeading", bearing + "");
+            reqObject.put("driverId", preferenceHelperDataSource.getDriverID());
+            reqObject.put("transit",transit);
+            reqObject.put("status",preferenceHelperDataSource.getMasterStatus());
+            reqObject.put("batteryPer",battery_level);
+            reqObject.put("deviceType",String.valueOf(VariableConstant.DEVICE_TYPE));
+            reqObject.put("appVersion",version);
+
+
+            if(((MyApplication)getApplication()).isMQTTConnected())
+            {
+                ((MyApplication)getApplication()).publishMqtt(reqObject);
+
+            }else {
+
+                if(preferenceHelperDataSource.getServiceZoneList().getServiceZones().size()>0)
+                    for(int i=0;i<preferenceHelperDataSource.getServiceZoneList().getServiceZones().size();i++){
+                        String topic = "onlineDrivers/".concat(preferenceHelperDataSource.getCityId().concat("/").concat(preferenceHelperDataSource.getServiceZoneList().getServiceZones().get(i)));
+                        Utility.printLog("unsubScribed Mqtt Zone topic :  "+topic);
+
+                        ((MyApplication)getApplication()).unSubscribeMqtt(topic);
+                    }
+
+                MyApplication.getInstance().connectMQTT();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 }

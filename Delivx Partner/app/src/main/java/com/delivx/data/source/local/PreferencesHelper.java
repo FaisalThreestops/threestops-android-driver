@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.delivx.login.language.LanguagesList;
+import com.delivx.pojo.ServiceZoneList;
 import com.google.gson.Gson;
 import com.delivx.data.source.PreferenceHelperDataSource;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -477,6 +480,58 @@ public class PreferencesHelper implements PreferenceHelperDataSource {
     public String getEnableBankAccount() {
         return sharedPreferences.getString(PreferenceKeys.KeysEntry.ENABLE_BANK_ACCCOUNT,"1");
     }
+
+
+    private static final String serviceZoneList_ = "ServiceZoneList";
+    @Override
+    public ServiceZoneList getServiceZoneList() {
+        String jsonString = sharedPreferences.getString(serviceZoneList_, "");
+        return new Gson().fromJson(jsonString, ServiceZoneList.class);
+    }
+
+    @Override
+    public void setServiceZoneList(ServiceZoneList serviceZoneList) {
+        if (serviceZoneList != null)
+        {
+            String jsonString = new Gson().toJson(serviceZoneList);
+            editor.putString(serviceZoneList_, jsonString);
+            editor.commit();
+        }
+        else
+        {
+            editor.putString(serviceZoneList_, "");
+            editor.commit();
+        }
+
+    }
+
+
+
+
+
+    @Override
+    public void setCityId(String cityId) {
+        editor.putString(PreferenceKeys.KeysEntry.CITY_ID,cityId);
+        editor.commit();
+    }
+
+    @Override
+    public String getCityId() {
+        return sharedPreferences.getString(PreferenceKeys.KeysEntry.CITY_ID,"");
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

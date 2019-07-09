@@ -1,6 +1,9 @@
 package com.delivx.data.source;
 
 import com.delivx.login.language.LanguagesList;
+import com.delivx.pojo.ServiceZoneList;
+
+import java.util.ArrayList;
 
 
 public interface PreferenceHelperDataSource
@@ -382,8 +385,17 @@ public interface PreferenceHelperDataSource
     void setCurrency(String currency);
     String getCurrency();
 
+
     void setEnableBankAccount(String enableBank);
     String getEnableBankAccount();
+
+    ServiceZoneList getServiceZoneList();
+    void setServiceZoneList(ServiceZoneList serviceZoneList);
+
+    void setCityId(String cityId);
+    String getCityId();
+
+
 
 
 }

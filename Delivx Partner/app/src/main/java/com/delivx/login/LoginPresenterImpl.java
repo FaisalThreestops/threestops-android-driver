@@ -11,6 +11,7 @@ import com.delivx.login.language.LanguagesList;
 import com.delivx.login.language.LanguagesPojo;
 import com.delivx.managers.mqtt.MQTTManager;
 import com.delivx.networking.LanguageApiService;
+import com.delivx.pojo.ServiceZoneList;
 import com.google.gson.Gson;
 import com.delivx.app.MyApplication;
 import com.delivx.utility.country_picker.CountryPicker;
@@ -349,6 +350,12 @@ public class LoginPresenterImpl implements LoginPresenter
         preferenceHelperDataSource.setIsLogin(true);
         preferenceHelperDataSource.setPassword(password);
         preferenceHelperDataSource.setMyEmail(data.getEmail());
+
+
+        preferenceHelperDataSource.setCityId(data.getCityId());
+        ServiceZoneList serviceZoneList = new ServiceZoneList();
+        serviceZoneList.setServiceZones(data.getServiceZones());
+        preferenceHelperDataSource.setServiceZoneList(serviceZoneList);
 
         preferenceHelperDataSource.setDefaultBankAccount(data.getDefaultBankAccount());
         preferenceHelperDataSource.setCountry(data.getCountry());

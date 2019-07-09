@@ -86,6 +86,14 @@ public class MQTTManager
                 if(mqttAndroidClient!=null && mqttAndroidClient.isConnected()) {
                     subscribeToTopic(helperDataSource.getDriverChannel());
                     subscribeToTopic(helperDataSource.getDriverChannel_msg());
+
+                    if(helperDataSource.getServiceZoneList().getServiceZones().size()>0)
+                    for(int i=0;i<helperDataSource.getServiceZoneList().getServiceZones().size();i++){
+                        String topic = "onlineDrivers/".concat(helperDataSource.getCityId().concat("/").concat(helperDataSource.getServiceZoneList().getServiceZones().get(i)));
+                        Utility.printLog("subscribed Mqtt Zone topic :  "+topic);
+                        subscribeToTopic(topic);
+                    }
+
                     holder.setConnected(true);
                     Utility.printLog(TAG + " TEST MQTT" +" connected " + mqttAndroidClient.getClientId());
                     rxNetworkObserver.publishData(holder);
@@ -346,6 +354,26 @@ public class MQTTManager
         mqttConnectOptions.setUserName(MQTT_USERNAME);
         mqttConnectOptions.setPassword(MQTT_PASSWORD.toCharArray());
         connectMQTTClient(mContext);
+    }
+
+
+    /**
+     * <h1>publish</h1>
+     * @param jsonObject : body to publish
+     */
+    public void publish(JSONObject jsonObject){Utility.printLog("mqtt message status : " );
+        try {
+
+            if(helperDataSource.getServiceZoneList().getServiceZones().size()>0)
+                for(int i=0;i<helperDataSource.getServiceZoneList().getServiceZones().size();i++){
+                    String topic = "onlineDrivers/".concat(helperDataSource.getCityId().concat("/").concat(helperDataSource.getServiceZoneList().getServiceZones().get(i)));
+                    Utility.printLog("published Mqtt Zone topic :  "+topic);
+                    mqttAndroidClient.publish(topic,jsonObject.toString().getBytes(),2,false);
+
+                }
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
     }
 
 

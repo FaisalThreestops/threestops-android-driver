@@ -12,6 +12,9 @@ import com.delivx.dagger.DaggerAppComponent;
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.managers.mqtt.MQTTManager;
 import com.delivx.service.CouchDbHandler;
+
+import org.json.JSONObject;
+
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjector;
@@ -91,6 +94,11 @@ public class MyApplication extends DaggerApplication {
     public boolean isMQTTConnected()
     {
         return mqttManager.isMQTTConnected();
+    }
+
+    public void publishMqtt(JSONObject reqObject)
+    {
+        mqttManager.publish(reqObject);
     }
 
     public void unSubscribeMqtt(String topic)

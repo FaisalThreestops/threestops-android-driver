@@ -45,6 +45,7 @@ public class PreferenceKeys
         public static final String COUNTRY = "COUNTRY";
         public static final String CURRENCY = "CURRENCY";
         public static final String ENABLE_BANK_ACCCOUNT = "enableBankAccount";
+        public static final String CITY_ID ="CITY_ID" ;
     }
 }
 
