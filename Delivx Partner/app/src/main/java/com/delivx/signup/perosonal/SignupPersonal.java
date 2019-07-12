@@ -223,6 +223,9 @@ public class SignupPersonal extends DaggerAppCompatActivity implements View.OnCl
     @Override
     public void setCityTextView(String zone) {
         tv_signup_city.setText(zone);
+        if(tv_signup_city.getText().toString().equals("")){
+            tv_signup_zone.setText("");
+        }
     }
 
     @Override

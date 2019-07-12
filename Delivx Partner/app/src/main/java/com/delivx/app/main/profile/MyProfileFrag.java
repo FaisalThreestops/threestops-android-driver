@@ -22,6 +22,7 @@ import com.delivx.login.language.LanguagesList;
 import com.delivx.service.LocationUpdateService;
 import com.delivx.utility.AppConstants;
 import com.delivx.utility.DialogHelper;
+import com.delivx.utility.TextUtil;
 import com.driver.delivx.R;
 import com.delivx.pojo.ProfileData;
 import com.delivx.utility.CircleImageView;
@@ -177,7 +178,7 @@ public class MyProfileFrag extends DaggerFragment implements View.OnClickListene
         tv_prof_name.setText(profileData.getName());
         tv_email_value.setText(profileData.getEmail());
         tv_prof_phone.setText(profileData.getPhone());
-        if(profileData.getAccountType().equals("3")){
+        if(!TextUtil.isEmpty(profileData.getAccountType())&&profileData.getAccountType().equals("3")){
             tv_plan_type.setText(profileData.getStoreName());
             tv_plan.setText(getActivity().getResources().getString(R.string.store_name));
         }else {
@@ -189,7 +190,7 @@ public class MyProfileFrag extends DaggerFragment implements View.OnClickListene
         tv_prof_vech_number.setText(profileData.getVehiclePlatNo());
         String url = profileData.getProfilePic();
 
-        if (!url.equals(null) || !url.equals("")) {
+        if (!TextUtil.isEmpty(url)) {
             if (url.contains(" ")) {
                 url = url.replace(" ", "%20");
             }

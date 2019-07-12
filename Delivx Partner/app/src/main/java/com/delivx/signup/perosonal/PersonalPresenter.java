@@ -80,6 +80,7 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
     private String  profile_pic = "profile_pic", licence_pic = "add_licence",licence_pic_back="license_back";;
     private JSONObject jsonObjectSignUp=new JSONObject();
     private String cityID="",cityName="";
+    private String setcityname="";
 
 
     @Inject
@@ -509,6 +510,7 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
                     selectedCity.put(s.getCityId());
                 }
             }
+         setcityname=zoneNames;
         view.setCityTextView(zoneNames);
     }
 
@@ -738,6 +740,10 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
     @Override
     public String getCityId()
     {
+        if(setcityname.equals(""))
+        {
+            return "";
+        }
         return cityID;
     }
 
