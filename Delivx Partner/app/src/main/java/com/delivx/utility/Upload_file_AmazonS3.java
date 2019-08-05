@@ -185,7 +185,7 @@ public class Upload_file_AmazonS3 {
             credentialsProvider = new CognitoCachingCredentialsProvider(
                     context.getApplicationContext(),
                     pool_id, // Identity Pool ID
-                    Regions.AP_SOUTH_1 // Region
+                    Regions.US_EAST_2 // Region
             );
         }
         return credentialsProvider;

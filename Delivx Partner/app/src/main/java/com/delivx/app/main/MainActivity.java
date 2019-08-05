@@ -546,14 +546,14 @@ public class MainActivity extends DaggerAppCompatActivity
 
     @Override
     public void setError(final int code, String msg) {
-        if(code==498){
+        if(code==498 || code==440){
             logout();
             return;
         }
         Utility.mShowMessage(getResources().getString(R.string.message), msg, this, new Utility.AlertDialogCallBack() {
             @Override
             public void onOkPressed() {
-                if(code==498){
+                if(code==498 || code==440){
                     logout();
                 }
             }

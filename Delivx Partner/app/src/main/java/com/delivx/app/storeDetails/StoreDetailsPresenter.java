@@ -1,9 +1,14 @@
 package com.delivx.app.storeDetails;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
+import com.delivx.app.MyApplication;
 import com.delivx.data.source.PreferenceHelperDataSource;
+import com.delivx.login.LoginActivity;
+import com.delivx.login.language.LanguagesList;
+import com.delivx.service.LocationUpdateService;
 import com.driver.delivx.R;
 import com.delivx.networking.DispatcherService;
 import com.delivx.pojo.AssignedAppointments;
@@ -99,18 +104,36 @@ public class StoreDetailsPresenter implements StoreDetailsContract.Presenter
                             view.hideProgress();
                         }
                         try {
-                            JSONObject jsonObject;
-                            if(value.code()==200){
-                                jsonObject=new JSONObject(value.body().string());
-                                setAppointmentStatus(AppConstants.BookingStatus.OnTheWay);
-                                view.onSuccess(appointments);
+                            JSONObject jsonObject = null;
+                            switch (value.code()) {
+                                //success
+                                case 200:
+                                    jsonObject=new JSONObject(value.body().string());
+                                    setAppointmentStatus(AppConstants.BookingStatus.OnTheWay);
+                                    view.onSuccess(appointments);
+                                    break;
 
+                                case 440:
+                                case 498:
+                                    Utility.printLog("pushTopics shared pref "+preferenceHelperDataSource.getPushTopic());
+                                    Utility.subscribeOrUnsubscribeTopics(new JSONArray(preferenceHelperDataSource.getPushTopic()),false);
+                                    LanguagesList languagesList = preferenceHelperDataSource.getLanguageSettings();
+                                    preferenceHelperDataSource.clearSharedPredf();
+                                    preferenceHelperDataSource.setLanguageSettings(languagesList);
+                                    ((MyApplication)context.getApplicationContext()).disconnectMqtt();
+                                    context.startActivity(new Intent(context, LoginActivity.class));
+                                    if(Utility.isMyServiceRunning(LocationUpdateService.class, context))
+                                    {
+                                        Intent stopIntent = new Intent(context, LocationUpdateService.class);
+                                        stopIntent.setAction(AppConstants.ACTION.STOPFOREGROUND_ACTION);
+                                        context.startService(stopIntent);
+                                    }
 
-                            }else {
-                                jsonObject=new JSONObject(value.errorBody().string());
-                                view.onError(jsonObject.getString("message"));
+                                    break;
+                                default:
+                                    jsonObject=new JSONObject(value.errorBody().string());
+                                    break;
                             }
-
                             Utility.printLog("bookingStatusRide : "+jsonObject.toString());
 
                         }catch (Exception e)

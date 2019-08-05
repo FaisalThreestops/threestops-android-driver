@@ -6,12 +6,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 
+import com.delivx.app.MyApplication;
+import com.delivx.login.LoginActivity;
+import com.delivx.login.language.LanguagesList;
+import com.delivx.service.LocationUpdateService;
+import com.delivx.utility.AppConstants;
 import com.google.gson.Gson;
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.networking.DispatcherService;
 import com.delivx.pojo.NewBookingMQTTResponse;
 import com.delivx.utility.Utility;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.inject.Inject;
@@ -114,14 +120,32 @@ public class Presenter implements BookingPopUpMainMVP.PresenterOperations {
                             view.dismissProgressbar();
                         }
                         try {
-                            JSONObject jsonObject;
-                            if(value.code()==200){
-                                jsonObject=new JSONObject(value.body().string());
-                                view.onSuccess(jsonObject.getString("message"));
+                            JSONObject jsonObject = null;
+                            switch (value.code()){
+                                case 200:
+                                    jsonObject=new JSONObject(value.body().string());
+                                    view.onSuccess(jsonObject.getString("message"));
+                                    break;
+                                case 440:
+                                case 498:
+                                    Utility.printLog("pushTopics shared pref "+preferenceHelperDataSource.getPushTopic());
+                                    Utility.subscribeOrUnsubscribeTopics(new JSONArray(preferenceHelperDataSource.getPushTopic()),false);
+                                    LanguagesList languagesList = preferenceHelperDataSource.getLanguageSettings();
+                                    preferenceHelperDataSource.clearSharedPredf();
+                                    preferenceHelperDataSource.setLanguageSettings(languagesList);
+                                    ((MyApplication)context.getApplicationContext()).disconnectMqtt();
+                                    context.startActivity(new Intent(context, LoginActivity.class));
+                                    if(Utility.isMyServiceRunning(LocationUpdateService.class, context))
+                                    {
+                                        Intent stopIntent = new Intent(context, LocationUpdateService.class);
+                                        stopIntent.setAction(AppConstants.ACTION.STOPFOREGROUND_ACTION);
+                                        context.startService(stopIntent);
+                                    }
 
-                            }else {
-                                jsonObject=new JSONObject(value.errorBody().string());
-                                view.onSuccess(jsonObject.getString("message"));
+                                    break;
+                                default:
+                                    jsonObject=new JSONObject(value.errorBody().string());
+                                    break;
                             }
                             cancelCoutDownTimer();
 

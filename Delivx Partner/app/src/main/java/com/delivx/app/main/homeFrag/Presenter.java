@@ -129,7 +129,7 @@ public class Presenter implements HomeFragmentContract.Presenter {
                             view.hideProgress();
 
                         try {
-                            JSONObject jsonObject;
+                            JSONObject jsonObject = null;
 
                             switch (value.code()){
                                 //success
@@ -147,6 +147,7 @@ public class Presenter implements HomeFragmentContract.Presenter {
                                     preferenceHelperDataSource.setMasterStatus(tripsPojo.getData().getMasterStatus());
                                     break;
                                     //session expired
+                                case 440:
                                 case 498:
                                     Utility.printLog("pushTopics shared pref "+preferenceHelperDataSource.getPushTopic());
                                     Utility.subscribeOrUnsubscribeTopics(new JSONArray(preferenceHelperDataSource.getPushTopic()),false);
@@ -167,6 +168,7 @@ public class Presenter implements HomeFragmentContract.Presenter {
                                     jsonObject=new JSONObject(value.errorBody().string());
                                     break;
                             }
+                            Utility.printLog("bookingStatusRide : "+jsonObject.toString());
 
                         }catch (Exception e)
                         {

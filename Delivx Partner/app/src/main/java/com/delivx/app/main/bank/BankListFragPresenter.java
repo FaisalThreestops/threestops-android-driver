@@ -1,8 +1,15 @@
 package com.delivx.app.main.bank;
 
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
+import com.delivx.app.MyApplication;
+import com.delivx.login.LoginActivity;
+import com.delivx.login.language.LanguagesList;
+import com.delivx.service.LocationUpdateService;
+import com.delivx.utility.AppConstants;
 import com.google.gson.Gson;
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.networking.NetworkService;
@@ -11,6 +18,7 @@ import com.delivx.pojo.bank.StripeDetailsPojo;
 import com.delivx.pojo.bank.StripeResponse;
 import com.delivx.utility.Utility;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,6 +43,9 @@ public class BankListFragPresenter implements BankDetailscontract.PresenterOpera
 
     @Inject
     NetworkService networkService;
+
+    @Inject
+    Activity context;
 
     @Inject
     PreferenceHelperDataSource preferenceHelperDataSource;
@@ -99,24 +110,42 @@ public class BankListFragPresenter implements BankDetailscontract.PresenterOpera
                             view.hideProgress();
 
                         try {
-                            JSONObject jsonObject;
-                            if(value.code()==200)
-                            {
-                                jsonObject=new JSONObject(value.body().string());
-                                stripeResponse = new Gson().fromJson(jsonObject.toString(), StripeResponse.class);
-                                stripeDetailsPojo=stripeResponse.getData();
-                                Utility.printLog("connectAccount : "+jsonObject.toString());
+                            JSONObject jsonObject = null;
+                            switch (value.code()) {
+                                //success
+                                case 200:jsonObject=new JSONObject(value.body().string());
+                                    stripeResponse = new Gson().fromJson(jsonObject.toString(), StripeResponse.class);
+                                    stripeDetailsPojo=stripeResponse.getData();
+                                    Utility.printLog("connectAccount : "+jsonObject.toString());
 
-                                view.onSuccess(stripeDetailsPojo.getLegal_entity(), stripeDetailsPojo.getExternal_accounts().getData());
+                                    view.onSuccess(stripeDetailsPojo.getLegal_entity(), stripeDetailsPojo.getExternal_accounts().getData());
+                                    break;
 
-                            }else if(value.code()==400)
-                            {
-                                jsonObject=new JSONObject(value.errorBody().string());
-                                view.showAddStipe();
-                            }else
-                            {
-                                jsonObject=new JSONObject(value.errorBody().string());
-                                view.onFailure(jsonObject.getString("message"));
+                                case 400:
+                                    jsonObject=new JSONObject(value.errorBody().string());
+                                    view.showAddStipe();
+                                    break;
+
+                                case 440:
+                                case 498:
+                                    Utility.printLog("pushTopics shared pref "+preferenceHelperDataSource.getPushTopic());
+                                    Utility.subscribeOrUnsubscribeTopics(new JSONArray(preferenceHelperDataSource.getPushTopic()),false);
+                                    LanguagesList languagesList = preferenceHelperDataSource.getLanguageSettings();
+                                    preferenceHelperDataSource.clearSharedPredf();
+                                    preferenceHelperDataSource.setLanguageSettings(languagesList);
+                                    ((MyApplication)context.getApplicationContext()).disconnectMqtt();
+                                    context.startActivity(new Intent(context, LoginActivity.class));
+                                    if(Utility.isMyServiceRunning(LocationUpdateService.class, context))
+                                    {
+                                        Intent stopIntent = new Intent(context, LocationUpdateService.class);
+                                        stopIntent.setAction(AppConstants.ACTION.STOPFOREGROUND_ACTION);
+                                        context.startService(stopIntent);
+                                    }
+
+                                    break;
+                                default:
+                                    jsonObject=new JSONObject(value.errorBody().string());
+                                    break;
                             }
 
                             Utility.printLog("connectAccount : "+jsonObject.toString());

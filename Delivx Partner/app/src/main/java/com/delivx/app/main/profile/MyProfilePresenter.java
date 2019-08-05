@@ -13,9 +13,13 @@ import android.util.Log;
 import android.view.Window;
 import android.widget.Toast;
 
+import com.delivx.app.MyApplication;
+import com.delivx.login.LoginActivity;
 import com.delivx.login.language.LanguagesList;
 import com.delivx.login.language.LanguagesPojo;
 import com.delivx.networking.LanguageApiService;
+import com.delivx.service.LocationUpdateService;
+import com.delivx.utility.AppConstants;
 import com.google.gson.Gson;
 import com.delivx.app.main.profile.editProfile.ChangePasswordDialog;
 import com.delivx.data.source.PreferenceHelperDataSource;
@@ -28,6 +32,7 @@ import com.delivx.utility.Upload_file_AmazonS3;
 import com.delivx.utility.Utility;
 import com.delivx.utility.VariableConstant;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -100,20 +105,38 @@ public class MyProfilePresenter implements ProfileContract.PresenterOpetaions {
                             view.hideProgress();
 
                         try {
-                            JSONObject jsonObject;
-                            if(value.code()==200)
-                            {
-                                jsonObject=new JSONObject(value.body().string());
-                                Gson gson=new Gson();
-                                ProfilePojo profilePojo = gson.fromJson(jsonObject.toString(), ProfilePojo.class);
-                                preferenceHelperDataSource.setMyName(profilePojo.getData().getName());
-                                preferenceHelperDataSource.setProfilePic(profilePojo.getData().getProfilePic());
-                                view.setProfileDetails(profilePojo.getData());
+                            JSONObject jsonObject = null;
+                            switch (value.code()){
+                                //success
+                                case 200:
+                                    jsonObject=new JSONObject(value.body().string());
+                                    Gson gson=new Gson();
+                                    ProfilePojo profilePojo = gson.fromJson(jsonObject.toString(), ProfilePojo.class);
+                                    preferenceHelperDataSource.setMyName(profilePojo.getData().getName());
+                                    preferenceHelperDataSource.setProfilePic(profilePojo.getData().getProfilePic());
+                                    view.setProfileDetails(profilePojo.getData());
+                                    break;
 
-                            }else
-                            {
-                                jsonObject=new JSONObject(value.errorBody().string());
-                                view.onError(jsonObject.getString("message"));
+                                case 440:
+                                case 498:
+                                    Utility.printLog("pushTopics shared pref "+preferenceHelperDataSource.getPushTopic());
+                                    Utility.subscribeOrUnsubscribeTopics(new JSONArray(preferenceHelperDataSource.getPushTopic()),false);
+                                    LanguagesList languagesList = preferenceHelperDataSource.getLanguageSettings();
+                                    preferenceHelperDataSource.clearSharedPredf();
+                                    preferenceHelperDataSource.setLanguageSettings(languagesList);
+                                    ((MyApplication)context.getApplicationContext()).disconnectMqtt();
+                                    context.startActivity(new Intent(context, LoginActivity.class));
+                                    if(Utility.isMyServiceRunning(LocationUpdateService.class, context))
+                                    {
+                                        Intent stopIntent = new Intent(context, LocationUpdateService.class);
+                                        stopIntent.setAction(AppConstants.ACTION.STOPFOREGROUND_ACTION);
+                                        context.startService(stopIntent);
+                                    }
+
+                                    break;
+                                default:
+                                    jsonObject=new JSONObject(value.errorBody().string());
+                                    break;
                             }
 
                             Utility.printLog("profileApi : "+jsonObject.toString());
