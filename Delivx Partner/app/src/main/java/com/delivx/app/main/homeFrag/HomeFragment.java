@@ -111,6 +111,7 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
     private ArrayList<Marker> pickUp=new ArrayList<>();
     private ArrayList<Marker> delivery=new ArrayList<>();
     private AlertDialog alertDialog;
+    private String driverType;
 
     @Inject
     public HomeFragment() {
@@ -148,7 +149,8 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
         tvMarkerAll.setTypeface(font);
         tvMarkerPickUp.setTypeface(font);
         tvMarkerDelivery.setTypeface(font);
-        adapter = new CurrentUpcomingJobRVA(getActivity(), appointments,fontUtils);
+        driverType=preferenceHelperDataSource.getDriverType();
+        adapter = new CurrentUpcomingJobRVA(getActivity(), appointments,fontUtils,driverType);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();

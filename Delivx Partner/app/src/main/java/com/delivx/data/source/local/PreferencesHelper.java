@@ -134,6 +134,17 @@ public class PreferencesHelper implements PreferenceHelperDataSource {
     }
 
     @Override
+    public void setDriverType(String status) {
+        editor.putString(PreferenceKeys.KeysEntry.DRIVER_TYPE, status);
+        editor.commit();
+    }
+
+    @Override
+    public String getDriverType() {
+        return sharedPreferences.getString(PreferenceKeys.KeysEntry.DRIVER_TYPE, "@");
+    }
+
+    @Override
     public void setMasterStatus(int status) {
         editor.putInt(PreferenceKeys.KeysEntry.DRIVER_STATUS, status);
         editor.commit();

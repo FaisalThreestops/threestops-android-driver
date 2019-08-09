@@ -16,6 +16,7 @@ import com.delivx.app.bookingRide.BookingRide;
 import com.delivx.app.invoice.InvoiceActivity;
 import com.delivx.app.storeDetails.StorePickUpDetails;
 import com.delivx.app.storePickUp.StorePickUp;
+import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.utility.AppConstants;
 import com.driver.delivx.R;
 import com.delivx.pojo.AssignedAppointments;
@@ -25,6 +26,8 @@ import com.delivx.utility.Utility;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,13 +45,15 @@ public class CurrentUpcomingJobRVA extends RecyclerView.Adapter<CurrentUpcomingJ
     private View view;
     private ArrayList<AssignedAppointments> mData;
     FontUtils fontUtils;
+    private  String driverType;
 
     /**********************************************************************************************/
-    public CurrentUpcomingJobRVA(Context context, ArrayList<AssignedAppointments> mData,FontUtils fontUtils) {
+    public CurrentUpcomingJobRVA(Context context, ArrayList<AssignedAppointments> mData,FontUtils fontUtils,String driverType) {
         this.context = context;
         this.mData = mData;
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
         this.fontUtils=fontUtils;
+        this.driverType=driverType;
     }
 
     /**********************************************************************************************/
@@ -157,39 +162,59 @@ public class CurrentUpcomingJobRVA extends RecyclerView.Adapter<CurrentUpcomingJ
                 Bundle bundle=new Bundle();
                 bundle.putSerializable("data",mData.get(position));
 
-                switch (mData.get(position).getOrderStatus()){
-                    //booking accepted
-                    case "8":
-                        intent = new Intent(context, StorePickUpDetails.class);
-                        intent.putExtras(bundle);
-                        context.startActivity(intent);
-                        break;
-                        //booking ride
-                    case "10":
-                    case "12":
-                        intent = new Intent(context, BookingRide.class);
-                        intent.putExtras(bundle);
-                        context.startActivity(intent);
-                        break;
-                        //store pick up
-                    case "11":
-                    case "13":
-                        intent = new Intent(context, StorePickUp.class);
-                        intent.putExtras(bundle);
-                        context.startActivity(intent);
-                        break;
-                        //invoice
-                    case "14":
-                        intent = new Intent(context, InvoiceActivity.class);
-                        intent.putExtras(bundle);
-                        context.startActivity(intent);
-                        break;
-
-
+                if(driverType.equals("2")){
+                    switch (mData.get(position).getOrderStatus()) {
+                        case "8":
+                        case "13":
+                            intent = new Intent(context, StorePickUp.class);
+                            intent.putExtras(bundle);
+                            context.startActivity(intent);
+                            break;
+                        case "12":
+                            intent = new Intent(context, BookingRide.class);
+                            intent.putExtras(bundle);
+                            context.startActivity(intent);
+                            break;
+                        case "14":
+                            intent = new Intent(context, InvoiceActivity.class);
+                            intent.putExtras(bundle);
+                            context.startActivity(intent);
+                            break;
+                    }
                 }
-                Utility.printLog("printing : " + mData.get(index).toString());
+                else {
+                    switch (mData.get(position).getOrderStatus()) {
+                        //booking accepted
+                        case "8":
+                            intent = new Intent(context, StorePickUpDetails.class);
+                            intent.putExtras(bundle);
+                            context.startActivity(intent);
+                            break;
+                        //booking ride
+                        case "10":
+                        case "12":
+                            intent = new Intent(context, BookingRide.class);
+                            intent.putExtras(bundle);
+                            context.startActivity(intent);
+                            break;
+                        //store pick up
+                        case "11":
+                        case "13":
+                            intent = new Intent(context, StorePickUp.class);
+                            intent.putExtras(bundle);
+                            context.startActivity(intent);
+                            break;
+                        //invoice
+                        case "14":
+                            intent = new Intent(context, InvoiceActivity.class);
+                            intent.putExtras(bundle);
+                            context.startActivity(intent);
+                            break;
 
 
+                    }
+                    Utility.printLog("printing : " + mData.get(index).toString());
+                }
             }
         });
 

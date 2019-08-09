@@ -30,6 +30,8 @@ public class SigninData {
 
     private ArrayList<SigninDriverVehicle> vehicles;
 
+    private String driverType;
+
     public String getEmail() {
         return email;
     }
@@ -189,5 +191,13 @@ public class SigninData {
 
     public void setServiceZones(ArrayList<String> serviceZones) {
         this.serviceZones = serviceZones;
+    }
+
+    public String getDriverType() {
+        return driverType;
+    }
+
+    public void setDriverType(String driverType) {
+        this.driverType = driverType;
     }
 }
