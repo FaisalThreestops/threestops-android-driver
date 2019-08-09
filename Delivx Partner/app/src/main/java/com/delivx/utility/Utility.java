@@ -32,6 +32,7 @@ import android.provider.Settings;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
+import android.text.format.DateFormat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -346,6 +347,13 @@ public class Utility {
         if (true) {
             Log.d(VariableConstant.PARENT_FOLDER, str);
         }
+    }
+
+    public static String getDate(long time) {
+        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+        cal.setTimeInMillis(time * 1000);
+        String date = DateFormat.format("MMM d, yyyy h:mm a", cal).toString();
+        return date;
     }
 
     public static void printLog(String msg) {

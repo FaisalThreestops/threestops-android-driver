@@ -73,6 +73,10 @@ public class AssignedAppointments implements Serializable {
 
     private String excTax;
 
+    private String orderDateTimeStamp;
+
+    private String dueDatetimeTimeStamp;
+
     private ArrayList<ExclusiveTaxes> exclusiveTaxes;
 
     private boolean isCominigFromStore;
@@ -373,5 +377,20 @@ public class AssignedAppointments implements Serializable {
 
     public void setExclusiveTaxes(ArrayList<ExclusiveTaxes> exclusiveTaxes) {
         this.exclusiveTaxes = exclusiveTaxes;
+    }
+    public String getOrderDateTimeStamp() {
+        return orderDateTimeStamp;
+    }
+
+    public void setOrderDateTimeStamp(String orderDateTimeStamp) {
+        this.orderDateTimeStamp = orderDateTimeStamp;
+    }
+
+    public String getDueDatetimeTimeStamp() {
+        return dueDatetimeTimeStamp;
+    }
+
+    public void setDueDatetimeTimeStamp(String dueDatetimeTimeStamp) {
+        this.dueDatetimeTimeStamp = dueDatetimeTimeStamp;
     }
 }
