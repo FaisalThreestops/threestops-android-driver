@@ -264,7 +264,7 @@
 
                     <TextView
                         android:id="@+id/tvItems"
-                        android:layout_weight="1.7"
+                        android:layout_weight="1.8"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@string/items"
@@ -274,7 +274,7 @@
 
                     <TextView
                         android:id="@+id/tv_qty"
-                        android:layout_weight="0.6"
+                        android:layout_weight="0.5"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@string/quant"

@@ -171,6 +171,60 @@
             </RelativeLayout>
 
             <TextView
+                android:id="@+id/tv_customer_details"
+                android:layout_marginTop="@dimen/dpTen"
+                android:gravity="center_vertical"
+                android:paddingEnd="@dimen/dpTen"
+                android:paddingRight="@dimen/dpTen"
+                android:paddingBottom="@dimen/dpFifteen"
+                android:paddingTop="@dimen/dpFifteen"
+                android:background="@color/backgroundcolor"
+                android:paddingLeft="@dimen/dpTwenty"
+                android:paddingStart="@dimen/dpTwenty"
+                android:text="@string/customer_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/lig_green2"
+                android:textSize="14sp"
+                android:textAllCaps="true"
+                android:visibility="gone"
+               />
+
+
+            <RelativeLayout
+                android:id="@+id/rl_customer_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/dpFifteen"
+                android:layout_marginLeft="@dimen/dpTwenty"
+                android:layout_marginRight="@dimen/dpTwenty"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_cust_name_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/customer_name"
+                    android:textSize="@dimen/spSixteen"
+                    android:textColor="@color/color_sup_txt"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+
+                <TextView
+                    android:id="@+id/tv_cust_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/grocery"
+                    android:textSize="@dimen/spSixteen"
+                    android:textColor="@color/color_sup_txt"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+
+
+            </RelativeLayout>
+
+            <TextView
                 android:id="@+id/tv_addressTitle"
                 android:layout_marginTop="@dimen/dpTen"
                 android:gravity="center_vertical"
@@ -348,7 +402,7 @@
 
                     <TextView
                         android:id="@+id/tv_items"
-                        android:layout_weight="1.8"
+                        android:layout_weight="2.0"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@string/items"
@@ -370,7 +424,7 @@
 
                     <TextView
                         android:id="@+id/tv_price"
-                        android:layout_weight="0.8"
+                        android:layout_weight="0.6"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@string/price"
@@ -412,6 +466,7 @@
 
 
                 <LinearLayout
+                    android:id="@+id/ll_subTotal"
                     android:weightSum="2"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"

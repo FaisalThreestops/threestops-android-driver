@@ -240,8 +240,14 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
             tvPriceTitle.setText(this.getResources().getString(R.string.quant));
             tvPriceTitle.setGravity(Gravity.RIGHT);
             ll_subTotal.setVisibility(View.GONE);
-            tv_cancel.setVisibility(View.VISIBLE);
-            tv_cancel.setPaintFlags(tv_cancel.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+            tvProductHint.setVisibility(View.GONE);
+            if(appointments.getOrderStatus().equals(AppConstants.BookingStatus.ReachedAtLocation)){
+                tv_cancel.setVisibility(View.GONE);
+            }
+            else {
+                tv_cancel.setVisibility(View.VISIBLE);
+                tv_cancel.setPaintFlags(tv_cancel.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+            }
         } else {
             ll_estimate_value.setVisibility(View.GONE);
             view_estimate.setVisibility(View.GONE);

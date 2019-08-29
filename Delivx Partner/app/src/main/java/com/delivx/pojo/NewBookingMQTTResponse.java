@@ -41,6 +41,8 @@ public class NewBookingMQTTResponse implements Serializable {
     private String msg;
     private int ExpiryTimer;
     private int PingId;
+    private String storeType;
+
     private String storeTypeMsg;
     private String dueDatetimeTimeStamp;
 
@@ -266,5 +268,13 @@ public class NewBookingMQTTResponse implements Serializable {
 
     public void setDeliveryDatetimeTimeStamp(String dueDatetimeTimeStamp) {
         this.dueDatetimeTimeStamp = dueDatetimeTimeStamp;
+    }
+
+    public String getStoreType() {
+        return storeType;
+    }
+
+    public void setStoreType(String storeType) {
+        this.storeType = storeType;
     }
 }

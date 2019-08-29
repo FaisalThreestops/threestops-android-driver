@@ -608,5 +608,6 @@
     <string name="cancel_order">Cancel Order</string>
     <string name="cancelOrderWarning">Cancellation Reasons</string>
     <string name="message1">Message</string>
+    <string name="customer_details">Customer DETAILS</string>
 
 </resources>
