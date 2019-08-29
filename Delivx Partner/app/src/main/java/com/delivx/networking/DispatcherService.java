@@ -37,6 +37,8 @@ public interface DispatcherService
                                                           @Field("rating") String rating,
                                                           @Field("review") String review,
                                                           @Field("receiverName") String receiverName,
+                                                          @Field("slotId") String slotId,
+                                                          @Field("storeId") String storeId,
                                                           @Field("receiverPhone") String receiverPhone);
 
 

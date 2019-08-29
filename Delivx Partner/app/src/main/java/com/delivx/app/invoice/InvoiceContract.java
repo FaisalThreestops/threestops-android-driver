@@ -95,7 +95,7 @@ public interface InvoiceContract
 
         /**
          * <h2>getBundleData</h2>
-         * <p>get the data from (StorePickUp)</p>
+         * <p>get the data from (SlotAppointmentActivity)</p>
          * @param bundle : data
          */
         void getBundleData(Bundle bundle);

@@ -44,6 +44,8 @@ public class Presenter implements HomeFragmentContract.Presenter {
     private RxBookingAssignObserver rxBookingAssignObserver;
     private boolean isMapInFullView=false;
     HomeFragmentContract.View view;
+    private boolean assignManually=false;
+
 
     @Inject   NetworkService networkService;
     @Inject   Activity context;
@@ -112,6 +114,8 @@ public class Presenter implements HomeFragmentContract.Presenter {
 
     @Override
     public void getAssignedTRips() {
+
+        if(assignManually==false)
         view.showProgress();
 
         Observable<Response<ResponseBody>> assignedTrips=networkService.assignedTrips(
@@ -361,7 +365,8 @@ public class Presenter implements HomeFragmentContract.Presenter {
         @Override
         public void onNext(JSONObject value) {
             try {
-                if(value.getInt("action")==16){
+                if(value.getInt("action")==16 || value.getInt("action")==29){
+                    assignManually=true;
                     getAssignedTRips();
                 }
                 else if(value.getInt("action")==10){
@@ -387,4 +392,9 @@ public class Presenter implements HomeFragmentContract.Presenter {
 
         }
     };
+
+    @Override
+    public void getDriverScheduleType() {
+        view.driverStatusType(preferenceHelperDataSource.getDriverScheduleType());
+    }
 }

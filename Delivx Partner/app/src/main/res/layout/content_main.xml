@@ -89,7 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/dpFifteen"
+            android:layout_marginTop="@dimen/dpFive"
             android:background="@drawable/selector_ofline_online"
             android:gravity="center"
             android:paddingBottom="@dimen/dpFifteen"

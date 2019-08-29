@@ -28,6 +28,8 @@ public class SigninData {
     private String enableBankAccount;
     private ArrayList<String> serviceZones;
 
+    private int driverScheduleType;
+
     private ArrayList<SigninDriverVehicle> vehicles;
 
     private String driverType;
@@ -199,5 +201,13 @@ public class SigninData {
 
     public void setDriverType(String driverType) {
         this.driverType = driverType;
+    }
+
+    public int getDriverScheduleType() {
+        return driverScheduleType;
+    }
+
+    public void setDriverScheduleType(int driverScheduleType) {
+        this.driverScheduleType = driverScheduleType;
     }
 }

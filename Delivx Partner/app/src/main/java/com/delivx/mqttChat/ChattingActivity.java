@@ -33,7 +33,7 @@ public class ChattingActivity extends DaggerAppCompatActivity implements Chattin
 
     @Inject FontUtils appTypeface;
     @BindView(R.id.ivAddFiles) ImageView ivAddFiles ;
-    @BindView(R.id.ivBackBtn) ImageView ivBackBtn ;
+    @BindView(R.id.ivBackBtn) ImageView ivBackBtnivBackBtn ;
     @BindView(R.id.toolbarChatting) Toolbar toolbarChatting;
     @BindView(R.id.chatProgress) ProgressBar chatProgress;
     @BindView(R.id.tvchatproname) TextView tvchatproname ;

@@ -2,6 +2,8 @@ package com.delivx.networking;
 
 import com.delivx.service.LatLngBody;
 
+import org.json.JSONObject;
+
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
@@ -13,6 +15,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 
@@ -53,6 +56,20 @@ public interface NetworkService {
                                                   @Field("mobile") String mobile,
                                                   @Field("countryCode")String countryCode,
                                                   @Field("code") String otp);
+
+    @PATCH("/update/order")
+    @FormUrlEncoded
+    Observable<Response<ResponseBody>> updateQty(@Header("language") String language,
+                                                 @Header("authorization") String authorization,
+                                                 @Field("items") JSONObject oldItems,
+                                                 @Field("newItems") JSONObject newItems,
+                                                 @Field("updateType") String updateType,
+                                                 @Field("extraNote") String extraNote,
+                                                 @Field("ipAddress") String ipAddress,
+                                                 @Field("orderId") Double orderId,
+                                                 @Field("deliveryCharge") Double deliveryCharge,
+                                                 @Field("latitude") Double latitude,
+                                                 @Field("longitude") Double longitude);
 
     @PATCH("driver/password")
     @FormUrlEncoded
@@ -256,5 +273,28 @@ public interface NetworkService {
     Observable<Response<ResponseBody>> getWalletTransaction(@Header("authorization") String authToken,
                                                             @Header("language") String language,
                                                             @Path("pageIndex") String pageIndex);
+
+    @GET("productsSearchByStoreId/{storeId}/{index}/{limit}/{search}")
+    Observable<Response<ResponseBody>> getSearchItems(@Header("authorization") String authToken,
+                                                      @Header("language") String language,
+                                                      @Path("storeId") String storeId,
+                                                      @Path("index") String index,
+                                                      @Path("limit") String limit,
+                                                      @Path("search") String search);
+
+    @PUT("driver/order")
+    @FormUrlEncoded
+    Observable<Response<ResponseBody>> cancelOrder(@Header("authorization") String authorization,
+                                                   @Header("language") String language,
+                                                   @Field("reason") String reason,
+                                                   @Field("ipAddress") String extraNote,
+                                                   @Field("orderId") String orderId,
+                                                   @Field("latitude") String latitude,
+                                                   @Field("longitude") String longitude);
+
+
+    @GET("driver/cancellationReasons")
+    Observable<Response<ResponseBody>> cancelReason (@Header("language") String language,
+                                                      @Header("authorization") String authorization);
 }
 

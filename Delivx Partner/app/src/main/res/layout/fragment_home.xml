@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <LinearLayout
@@ -115,5 +116,51 @@
             />
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_slot_flow"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/abarMain"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@color/colorPrimary"/>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cvShift"
+            android:background="@color/white"
+            app:cardElevation="2dp"
+            app:cardCornerRadius="0dp"
+            android:layout_below="@+id/abarMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvShift"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_14dp"
+                android:layout_marginBottom="@dimen/dimen_14dp"
+                android:textSize="@dimen/spTwenty"
+                android:textColor="@color/green_grc"
+                android:text="@string/shifts"
+                android:gravity="center" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvSlots"
+            android:layout_below="@+id/cvShift"
+            android:layout_marginTop="@dimen/dpFifteen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background"
+            android:visibility="gone"
+            >
+        </android.support.v7.widget.RecyclerView>
+
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -4,6 +4,10 @@ import android.os.Bundle;
 
 import com.delivx.BaseView;
 import com.delivx.pojo.AssignedAppointments;
+import com.delivx.pojo.Cancel.CancelData;
+import com.delivx.pojo.Cancel.CancelDataPojo;
+
+import java.util.ArrayList;
 
 public interface StoreDetailsContract
 {
@@ -55,6 +59,16 @@ public interface StoreDetailsContract
          * <p>if appointments are not available hiding the views</p>
          */
         void hideViews();
+
+        void hideKeyboard();
+
+        void hideSeekBar();
+
+        void moveHomeActivity();
+
+        void cancelDialog(CancelData cancelData);
+
+
     }
     interface Presenter{
 
@@ -84,6 +98,7 @@ public interface StoreDetailsContract
          */
         void callCustomer(boolean isCustomer);
 
+        void cancelReason();
         /**
          * <h2>updateBookingStatus</h2>
          * <p>Calling the API to update the seekbar status</p>
@@ -96,6 +111,9 @@ public interface StoreDetailsContract
          */
         void openChat();
 
+        void hideSoftKeyboard();
+
+        void cancelOrder();
         /**
          * <h2>getlanguageCode</h2>
          * <p>get the language code</p>

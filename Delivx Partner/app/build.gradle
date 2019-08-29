@@ -33,14 +33,18 @@ android {
         }
 
         buildConfigField "int", "LIMIT", "100"
-        buildConfigField "String", "BASEURL", "\"https://api.deliv-x.com/\""
-        buildConfigField "String", "DISPATCHER_BASE", "\"https://api.deliv-x.com/\""
-        buildConfigField "String", "MESSAGE_BASE", "\"https://api.deliv-x.com/\""
+//        buildConfigField "String", "BASEURL", "\"https://api.deliv-x.com/\""
+//        buildConfigField "String", "DISPATCHER_BASE", "\"https://api.deliv-x.com/\""
+//        buildConfigField "String", "MESSAGE_BASE", "\"https://api.deliv-x.com/\""
 
-//        buildConfigField "String", "BASEURL", "\"https://apidev.deliv-x.com/\""
-//        buildConfigField "String", "DISPATCHER_BASE", "\"https://apidev.deliv-x.com/\""
-//        buildConfigField "String", "MESSAGE_BASE", "\"https://apidev.deliv-x.com/\""
+        buildConfigField "String", "BASEURL", "\"https://apidev.deliv-x.com/\""
+        buildConfigField "String", "DISPATCHER_BASE", "\"https://apidev.deliv-x.com/\""
+        buildConfigField "String", "MESSAGE_BASE", "\"https://apidev.deliv-x.com/\""
 
+       /* buildConfigField "String", "BASEURL", "\"https://api.ingredienta.app/\""
+        buildConfigField "String", "DISPATCHER_BASE", "\"https://api.ingredienta.app/\""
+        buildConfigField "String", "MESSAGE_BASE", "\"https://api.ingredienta.app/\""
+*/
         buildConfigField "String", "LANGUAGE_URL", "\"https://offers.deliv-x.com/\""
         buildConfigField "int", "CACHETIME", "432000" // 5days
     }
@@ -81,7 +85,7 @@ dependencies {
     compile 'com.android.support:cardview-v7:28.0.0'
     compile 'pub.devrel:easypermissions:0.4.0'
     compile 'com.android.support.constraint:constraint-layout:1.1.3'
-    compile 'com.google.code.gson:gson:2.3.+'
+    compile 'com.google.code.gson:gson:2.3'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.squareup.okhttp3:okhttp:3.9.1'
     compile 'com.android.support:support-v4:28.0.0'

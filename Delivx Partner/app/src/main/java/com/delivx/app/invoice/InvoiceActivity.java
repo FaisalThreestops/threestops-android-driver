@@ -1,6 +1,7 @@
 package com.delivx.app.invoice;
 
 import android.Manifest;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.delivx.app.main.MainActivity;
 import com.github.gcacace.signaturepad.views.SignaturePad;
 import com.driver.delivx.R;
 import com.delivx.pojo.AssignedAppointments;
@@ -122,6 +124,8 @@ public class InvoiceActivity extends DaggerAppCompatActivity implements
 
     @Override
     public void onSuccess(AssignedAppointments appointments) {
+        Intent intent=new Intent(this, MainActivity.class);
+        startActivity(intent);
         finish();
     }
 

@@ -120,37 +120,23 @@ public class Presenter implements BookingPopUpMainMVP.PresenterOperations {
                             view.dismissProgressbar();
                         }
                         try {
-                            JSONObject jsonObject = null;
-                            switch (value.code()){
-                                case 200:
-                                    jsonObject=new JSONObject(value.body().string());
-                                    view.onSuccess(jsonObject.getString("message"));
-                                    break;
-                                case 440:
-                                case 498:
-                                    Utility.printLog("pushTopics shared pref "+preferenceHelperDataSource.getPushTopic());
-                                    Utility.subscribeOrUnsubscribeTopics(new JSONArray(preferenceHelperDataSource.getPushTopic()),false);
-                                    LanguagesList languagesList = preferenceHelperDataSource.getLanguageSettings();
-                                    preferenceHelperDataSource.clearSharedPredf();
-                                    preferenceHelperDataSource.setLanguageSettings(languagesList);
-                                    ((MyApplication)context.getApplicationContext()).disconnectMqtt();
-                                    context.startActivity(new Intent(context, LoginActivity.class));
-                                    if(Utility.isMyServiceRunning(LocationUpdateService.class, context))
-                                    {
-                                        Intent stopIntent = new Intent(context, LocationUpdateService.class);
-                                        stopIntent.setAction(AppConstants.ACTION.STOPFOREGROUND_ACTION);
-                                        context.startService(stopIntent);
-                                    }
+                            JSONObject jsonObject;
+                            Utility.printLog("value.code() "+value.code());
+                            if(value.code()==200){
+                                Utility.printLog("value.code() "+value.code());
+//                                Utility.printLog("value.code() "+value.body().string());
+                                String response=value.body().string();
+                                Utility.printLog("value.code() "+response);
+                                jsonObject=new JSONObject(response);
+                                view.onSuccess(jsonObject.getString("message"));
 
-                                    break;
-                                default:
-                                    jsonObject=new JSONObject(value.errorBody().string());
-                                    break;
+                            }else {
+                                jsonObject=new JSONObject(value.errorBody().string());
+                                view.onSuccess(jsonObject.getString("message"));
                             }
                             cancelCoutDownTimer();
 
                             Utility.printLog("respondToRequest : "+jsonObject.toString());
-
                         }catch (Exception e)
                         {
                             Utility.printLog("respondToRequest : Catch :"+e.getMessage());

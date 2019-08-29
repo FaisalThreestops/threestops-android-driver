@@ -9,6 +9,14 @@ import com.delivx.ForgotPassword.ForgotPasswordMobNum;
 import com.delivx.ForgotPassword.ForgotPasswordVerify;
 import com.delivx.ForgotPassword.RetriveFromMobile.RetriveFromMobModule;
 import com.delivx.ForgotPassword.VerifyMobile.VerifyMobileModule;
+import com.delivx.app.OrderEdit.OrderEditActivity;
+import com.delivx.app.OrderEdit.OrderEditModule;
+import com.delivx.app.ReplaceItem.ReplaceItemsActivity;
+import com.delivx.app.ReplaceItem.ReplaceModule;
+import com.delivx.app.SelectedStore.SelectedStoreIDModule;
+import com.delivx.app.SelectedStore.SelectedStoreIdActivity;
+import com.delivx.app.SlotAppointments.SlotAppointmentActivity;
+import com.delivx.app.SlotAppointments.SlotAppointmentModule;
 import com.delivx.app.SplashScreen;
 import com.delivx.app.bookingRequest.BookingPopUp;
 import com.delivx.app.bookingRequest.BookingPopupModule;
@@ -119,6 +127,22 @@ public abstract class ActivityBindingModule {
     @ActivityScoped
     @ContributesAndroidInjector(modules ={PickUpModule.class})
     abstract StorePickUp storePickUp();
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules ={ReplaceModule.class})
+    abstract ReplaceItemsActivity replaceItemsActivity();
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules ={OrderEditModule.class})
+    abstract OrderEditActivity orderEditActivity();
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules ={SlotAppointmentModule.class})
+    abstract SlotAppointmentActivity slotAppointmentsActiv();
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules ={SelectedStoreIDModule.class})
+    abstract SelectedStoreIdActivity selectedStoreIdActivity();
 
     @ActivityScoped
     @ContributesAndroidInjector(modules ={InvoiceModule.class})

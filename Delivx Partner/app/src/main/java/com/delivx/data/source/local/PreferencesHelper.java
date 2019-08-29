@@ -532,17 +532,14 @@ public class PreferencesHelper implements PreferenceHelperDataSource {
 
     }
 
+    @Override
+    public void setDriverScheduleType(int driverStatus) {
+        editor.putInt(PreferenceKeys.KeysEntry.DRS,driverStatus);
+        editor.commit();
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
+    @Override
+    public int getDriverScheduleType() {
+        return sharedPreferences.getInt(PreferenceKeys.KeysEntry.DRS,0);
+    }
 }

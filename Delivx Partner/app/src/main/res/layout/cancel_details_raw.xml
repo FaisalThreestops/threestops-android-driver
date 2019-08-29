@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dpTwenty"
+        android:layout_marginRight="@dimen/dpTwenty"
+        android:paddingBottom="@dimen/dpFifteen"
+        android:paddingTop="@dimen/dpFifteen">
+
+        <RadioButton
+            android:layoutDirection="rtl"
+            android:id="@+id/radioBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dpFive"
+            android:layout_marginLeft="@dimen/dpFive"
+            android:button="@drawable/radio_button_selector"
+            android:textSize="@dimen/spTwelve" />
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/reasonTv"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:paddingRight="@dimen/dpTen"
+            android:paddingLeft="@dimen/dpTen"
+            android:gravity="start"
+            android:textAlignment="viewStart"/>
+
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dpOne"
+        android:background="@color/colorwildsand" />
+
+</LinearLayout>

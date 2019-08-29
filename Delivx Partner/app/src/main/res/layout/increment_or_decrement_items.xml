@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <LinearLayout
+        android:id="@+id/items_list_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:layout_below="@+id/action_title"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        >
+        <TextView
+            android:id="@+id/tvItem_Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:text="White Bread"
+            android:textSize="18sp"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/lig_green2"
+                android:text="@string/unit"
+                android:textSize="16sp"
+                android:layout_weight="0.3"
+                />
+            <TextView
+                android:id="@+id/unit"
+                android:layout_marginLeft="@dimen/dpFive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.9"
+                android:gravity="center"
+                android:background="@drawable/shape_to_add_buttuon"
+                android:layout_height="30dp">
+
+                <ImageView
+                    android:id="@+id/minus_iv"
+                    android:layout_width="@dimen/dpTwenty"
+                    android:layout_height="@dimen/dpTwenty"
+                    android:layout_marginLeft="2dp"
+                    android:background="@color/white"
+                    android:src="@drawable/minus"
+                    />
+
+                <TextView
+                    android:id="@+id/items_quantity_tv"
+                    android:layout_width="40dp"
+                    android:gravity="center"
+                    android:background="@color/white"
+                    android:layout_height="wrap_content"
+                    />
+
+                <ImageView
+                    android:id="@+id/plus_iv"
+                    android:layout_width="@dimen/dpTwenty"
+                    android:layout_height="@dimen/dpTwenty"
+                    android:src="@drawable/plus"
+                    android:layout_marginRight="2dp"
+                    android:background="@color/white"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

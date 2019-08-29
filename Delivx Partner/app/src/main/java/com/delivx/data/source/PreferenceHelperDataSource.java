@@ -401,7 +401,7 @@ public interface PreferenceHelperDataSource
     void setCityId(String cityId);
     String getCityId();
 
+    void setDriverScheduleType(int driverStatus);
 
-
-
+    int getDriverScheduleType();
 }

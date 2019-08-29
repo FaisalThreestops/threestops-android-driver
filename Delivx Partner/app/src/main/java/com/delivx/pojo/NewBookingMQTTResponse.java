@@ -42,6 +42,7 @@ public class NewBookingMQTTResponse implements Serializable {
     private int ExpiryTimer;
     private int PingId;
     private String storeTypeMsg;
+    private String dueDatetimeTimeStamp;
 
     public String getCurrency() {
         return currency;
@@ -257,5 +258,13 @@ public class NewBookingMQTTResponse implements Serializable {
 
     public void setStoreTypeMsg(String storeTypeMsg) {
         this.storeTypeMsg = storeTypeMsg;
+    }
+
+    public String getDeliveryDatetimeTimeStamp() {
+        return dueDatetimeTimeStamp;
+    }
+
+    public void setDeliveryDatetimeTimeStamp(String dueDatetimeTimeStamp) {
+        this.dueDatetimeTimeStamp = dueDatetimeTimeStamp;
     }
 }

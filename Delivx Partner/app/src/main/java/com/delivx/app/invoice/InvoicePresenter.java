@@ -214,7 +214,8 @@ public class InvoicePresenter implements InvoiceContract.PresenterOpetaions
                 AppConstants.BookingStatus.Done,
                 preferenceHelperDataSource.getDriverCurrentLat(),
                 preferenceHelperDataSource.getDriverCurrentLongi(),
-                "1000",signatureUrl, String.valueOf(rating),null,null,null);
+                "1000",signatureUrl, String.valueOf(rating),null,null,null,"","a");
+
 
         bookingStatusRide.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
