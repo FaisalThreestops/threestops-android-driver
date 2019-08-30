@@ -89,6 +89,8 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
     @BindView(R.id.tv_qty)TextView tv_qty;
     @BindView(R.id.ll_subTotal) LinearLayout ll_subTotal;
     @BindView(R.id.tv_cancel) TextView tv_cancel;
+    @BindView(R.id.tv_estimate_value) TextView tv_estimate_value;
+    @BindView(R.id.tv_customer_value) TextView tv_customer_value;
     private AlertDialog.Builder alertDialog;
 
 
@@ -258,6 +260,14 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
             tv_cancel.setVisibility(View.GONE);
         }
 
+        tv_estimate_value.setText(appointments.getCurrencySymbol()+""+appointments.getEstimatedPackageValue());
+        tv_customer_value.setText(appointments.getExtraNote());
+
+        if(appointments.getExtraNote().equals("")){
+            ll_customer_note.setVisibility(View.GONE);
+            view_customer.setVisibility(View.GONE);
+        }
+
 
         if(appointments.getPaymentType().equals("2"))
             tv_payment_type.setText(getResources().getString(R.string.cash));
@@ -308,7 +318,11 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
                 }
 
                 int quantity= Integer.parseInt(appointments.getShipmentDetails().get(i).getQuantity());
+
+                if(!appointments.getStoreType().equals("7"))
                 itemUnit.setText(appointments.getShipmentDetails().get(i).getQuantity()+"("+appointments.getShipmentDetails().get(i).getUnitName()+")");
+                else
+                    itemUnit.setText(appointments.getShipmentDetails().get(i).getQuantity());
 
 
                 float unitPrice= Float.parseFloat(appointments.getShipmentDetails().get(i).getFinalPrice());
