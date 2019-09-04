@@ -154,7 +154,7 @@ public class BookingRidePresenter implements BookingRideContract.PresenterOperat
     public void getMarkers()
     {
         if(appointments.getOrderStatus().equals(AppConstants.BookingStatus.JourneyStarted)){
-            if(!appointments.getDropLatLng().isEmpty()){
+            if(!appointments.getDropLatLng().isEmpty() && !appointments.getDropLatLng().contains("null")){
                 String[] latLong = appointments.getDropLatLng().split(",");
                 LatLng customer = new LatLng(Double.valueOf(latLong[0]), Double.valueOf(latLong[1]));
 
@@ -164,7 +164,7 @@ public class BookingRidePresenter implements BookingRideContract.PresenterOperat
             }
         }else
         {
-            if(!appointments.getPickUpLatLng().isEmpty()){
+            if(!appointments.getPickUpLatLng().isEmpty() && !appointments.getDropLatLng().contains("null")){
                 String[] latLong = appointments.getPickUpLatLng().split(",");
                 LatLng customer = new LatLng(Double.valueOf(latLong[0]), Double.valueOf(latLong[1]));
 
