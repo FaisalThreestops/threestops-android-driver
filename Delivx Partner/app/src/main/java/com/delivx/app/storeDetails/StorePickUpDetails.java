@@ -386,7 +386,7 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements
         if(size>0){
             for(int i=0;i<size;i++){
                 LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                View view = inflater.inflate(R.layout.history_item_show_single_raw, null);
+                View view = inflater.inflate(R.layout.history_item_show_single2, null);
 
                 TextView itemName= view.findViewById(R.id.tvItemName);
                 itemName.setTypeface(font);
@@ -396,6 +396,17 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements
                 itemPrice.setTypeface(font);
 
                 if(appointments.getStoreType().equals("7")){
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 2f);
+                    itemName.setLayoutParams(params);
+                    itemName.setGravity(Gravity.START);
+
+                    LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f);
+                    itemUnit.setLayoutParams(params1);
+                    itemUnit.setGravity(Gravity.END);
+
+                    LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 0f);
+                    itemPrice.setLayoutParams(params2);
+                    itemPrice.setGravity(Gravity.END);
                     itemPrice.setVisibility(View.GONE);
                 }else {
                     itemPrice.setVisibility(View.VISIBLE);
@@ -403,7 +414,10 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements
 
                 itemName.setText(appointments.getShipmentDetails().get(i).getItemName());
                 int quantity= Integer.parseInt(appointments.getShipmentDetails().get(i).getQuantity());
-                itemUnit.setText(String.valueOf(quantity));
+                if(!appointments.getStoreType().equals("7"))
+                    itemUnit.setText(appointments.getShipmentDetails().get(i).getQuantity()+"("+appointments.getShipmentDetails().get(i).getUnitName()+")");
+                else
+                    itemUnit.setText(appointments.getShipmentDetails().get(i).getQuantity());
 
 
                 String unitPriceStr=appointments.getShipmentDetails().get(i).getUnitPrice();

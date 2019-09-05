@@ -141,8 +141,6 @@ public class BookingRidePresenter implements BookingRideContract.PresenterOperat
                 view.openGoogleMap(uri);
             }
         }
-
-
     }
 
     @Override

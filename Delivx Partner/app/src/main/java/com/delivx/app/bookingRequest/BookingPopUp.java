@@ -144,8 +144,8 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
         else
             tv_popup_drop.setText(this.getResources().getString(R.string.drop));
         tv_popup_droploc.setText(newBookingMQTTResponse.getCustomerName()+":"+newBookingMQTTResponse.getDrop1());
-//        tv_droptime.setText(Utility.getDate(Long.parseLong(newBookingMQTTResponse.getDeliveryDatetimeTimeStamp())));
-        tv_droptime.setText(Utility.formatDateWeek(newBookingMQTTResponse.getDropDt()));
+        tv_droptime.setText(Utility.getDate(Long.parseLong(newBookingMQTTResponse.getDeliveryDatetimeTimeStamp())));
+//        tv_droptime.setText(Utility.formatDateWeek(newBookingMQTTResponse.getDropDt()));
         tvordertype.setText(newBookingMQTTResponse.getStoreTypeMsg());
 
         if(newBookingMQTTResponse.getPaymentType().equals("2"))

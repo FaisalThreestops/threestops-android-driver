@@ -327,7 +327,7 @@
 
                     <TextView
                         android:id="@+id/tvItems"
-                        android:layout_weight="2.0"
+                        android:layout_weight="1.6"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@string/items"
@@ -337,19 +337,18 @@
 
                     <TextView
                         android:id="@+id/tv_qty"
-                        android:layout_weight="0.4"
+                        android:layout_weight="0.7"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@string/quant"
                         android:textSize="12sp"
                         android:textColor="@color/gunsmoke"
                         android:textAllCaps="true"
-                        android:gravity="end"
-                        android:layout_gravity="center"/>
+                        android:gravity="center" />
 
                     <TextView
                         android:id="@+id/tvPriceTitle"
-                        android:layout_weight="0.6"
+                        android:layout_weight="0.7"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@string/price"

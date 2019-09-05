@@ -91,7 +91,9 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
     @BindView(R.id.tv_cancel) TextView tv_cancel;
     @BindView(R.id.tv_estimate_value) TextView tv_estimate_value;
     @BindView(R.id.tv_customer_value) TextView tv_customer_value;
+
     private AlertDialog.Builder alertDialog;
+
 
 
 
@@ -285,6 +287,18 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
         tv_discount_val.setText(appointments.getCurrencySymbol()+" "+String.format("%.2f", appliedDiscount));
 
 
+        /*LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 0f);
+        tvPriceTitle.setLayoutParams(params);
+        tvPriceTitle.setGravity(Gravity.START);
+        tvPriceTitle.setVisibility(View.GONE);
+
+        LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f);
+        tv_qty.setLayoutParams(params1);
+        tv_qty.setGravity(Gravity.START);
+
+        LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 2f);
+        tvItems.setLayoutParams(params2);
+        tvItems.setGravity(Gravity.END);*/
         addItems(appointments);
     }
 
@@ -296,7 +310,7 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
         if(size>0){
             for(int i=0;i<size;i++){
                 LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                View view = inflater.inflate(R.layout.history_item_show_single_raw, null);
+                View view = inflater.inflate(R.layout.history_item_show_single2, null);
 
                 TextView itemName= view.findViewById(R.id.tvItemName);
                 itemName.setTypeface(font);
@@ -305,13 +319,25 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
                 TextView itemUnit= view.findViewById(R.id.tvQuantity);
                 itemPrice.setTypeface(font);
 
-
                 String item=appointments.getShipmentDetails().get(i).getItemName();
                 SpannableString spannableString=new SpannableString(item);
                 spannableString.setSpan(new UnderlineSpan(),0,spannableString.length(),0);
                 itemName.setText(spannableString);
 
+
+
                 if(appointments.getStoreType().equals("7")){
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 2f);
+                    itemName.setLayoutParams(params);
+                    itemName.setGravity(Gravity.START);
+
+                    LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f);
+                    itemUnit.setLayoutParams(params1);
+                    itemUnit.setGravity(Gravity.END);
+
+                    LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 0f);
+                    itemPrice.setLayoutParams(params2);
+                    itemPrice.setGravity(Gravity.END);
                     itemPrice.setVisibility(View.GONE);
                 }else {
                     itemPrice.setVisibility(View.VISIBLE);
