@@ -265,7 +265,7 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
         tv_estimate_value.setText(appointments.getCurrencySymbol()+""+appointments.getEstimatedPackageValue());
         tv_customer_value.setText(appointments.getExtraNote());
 
-        if(appointments.getExtraNote().equals("")){
+        if(appointments.getStoreType().equals("7") &&  appointments.getExtraNote().equals("")){
             ll_customer_note.setVisibility(View.GONE);
             view_customer.setVisibility(View.GONE);
         }
@@ -669,6 +669,7 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
                         presenter.cancelOrder();
                     }
                 });
+
         alertDialog.setNegativeButton(this.getString(R.string.cancel), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();

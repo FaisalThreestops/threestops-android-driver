@@ -440,8 +440,6 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
 
                     }
                     previousSlotId = slotId;
-
-
                 }
                 appointments.clear();
                 appointments.addAll(assignedTripsTemp);

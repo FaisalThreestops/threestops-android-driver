@@ -753,7 +753,7 @@ public class Utility {
     public static String getDay(long time) {
         Calendar cal = Calendar.getInstance(Locale.getDefault());
         cal.setTimeInMillis(time * 1000);
-        String date = DateFormat.format("dd", cal).toString();
+        String date = DateFormat.format("MM-dd", cal).toString();
         return date;
     }
 

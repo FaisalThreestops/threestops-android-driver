@@ -443,11 +443,6 @@ public class PreferencesHelper implements PreferenceHelperDataSource {
 
     }
 
-
-
-
-
-
     @Override
     public void setDefaultBankAccount(String bankaccount) {
         editor.putString(PreferenceKeys.KeysEntry.BANK_ACCOUT,bankaccount);

@@ -1,6 +1,7 @@
 package com.delivx.app.bookingRide;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -11,6 +12,7 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -27,6 +29,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.delivx.data.source.PreferenceHelperDataSource;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -86,6 +89,9 @@ public class BookingRide extends DaggerAppCompatActivity implements OnMapReadyCa
     private Marker customer_marker;
     private LocationUtil locationUtilObj;
     private boolean first=false;
+    private int index;
+    @Inject
+    PreferenceHelperDataSource preferenceHelperDataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +100,7 @@ public class BookingRide extends DaggerAppCompatActivity implements OnMapReadyCa
         setContentView(R.layout.activity_booking_ride);
         ButterKnife.bind(this);
         presenter.getBundleData(getIntent().getExtras());
-
+        index = getIntent().getIntExtra("index", 0);
         initLayout();
         presenter.setActionBar();
         presenter.setActionBarTitle();
@@ -387,13 +393,23 @@ public class BookingRide extends DaggerAppCompatActivity implements OnMapReadyCa
     }
     @Override
     public void onSuccess(AssignedAppointments appointments) {
-
-        Intent intent=new Intent(BookingRide.this, StorePickUp.class);
-        Bundle bundle=new Bundle();
-        bundle.putSerializable("data",appointments);
-        intent.putExtras(bundle);
-        startActivity(intent);
-        finish();
+        if (preferenceHelperDataSource.getDriverScheduleType() == 0) {
+            Intent intent = new Intent(BookingRide.this, StorePickUp.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("data", appointments);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            finish();
+        }
+        else{
+            Intent intent = new Intent(BookingRide.this, StorePickUp.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("data", appointments);
+            bundle.putInt("index", index);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            startActivityForResult(intent, 123);
+        }
     }
 
     @Override
@@ -427,5 +443,26 @@ public class BookingRide extends DaggerAppCompatActivity implements OnMapReadyCa
     protected void onDestroy() {
         super.onDestroy();
         presenter.onActDestroy();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data != null) {
+
+            switch (requestCode) {
+
+                case 123:
+
+                    if (resultCode == Activity.RESULT_CANCELED) {
+                        setResult(Activity.RESULT_CANCELED, data);
+                        finish();
+                    }
+
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

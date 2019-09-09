@@ -229,7 +229,7 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements
         tv_estimate_value.setText(appointments.getCurrencySymbol()+""+appointments.getEstimatedPackageValue());
         tv_customer_value.setText(appointments.getExtraNote());
 
-        if(appointments.getExtraNote().equals("")){
+        if(appointments.getStoreType().equals("7") && appointments.getExtraNote().equals("")){
             ll_customer_note.setVisibility(View.GONE);
             view_customer.setVisibility(View.GONE);
         }

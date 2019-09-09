@@ -78,12 +78,14 @@ public class Set_the_order_list_rva extends RecyclerView.Adapter<Set_the_order_l
 
                     case "12":
                         if(sameStoreBookingID.size()==count) {
-                            Intent intent2 = new Intent(context, BookingRide.class);
-                            Bundle bundle2 = new Bundle();
-                            bundle2.putSerializable("data", sameStoreBookingID.get(i));
-                            bundle2.putInt("index",i);
-                            intent2.putExtras(bundle2);
-                            context.startActivity(intent2);
+//                            Intent intent2 = new Intent(context, BookingRide.class);
+//                            Bundle bundle2 = new Bundle();
+//                            bundle2.putSerializable("data", sameStoreBookingID.get(i));
+//                            bundle2.putInt("index",i);
+//                            intent2.putExtras(bundle2);
+//                            context.startActivity(intent2);
+                            SelectedStoreIdActivity selectedStoreIdActivity = (SelectedStoreIdActivity) context;
+                            selectedStoreIdActivity.MoveToBookingRide(sameStoreBookingID.get(i), i);
                         }
                         else{
                             errorMessage.errorToast("some items are not picked");

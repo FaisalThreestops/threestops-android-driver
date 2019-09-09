@@ -206,9 +206,9 @@ public class SelectedStoreIdActivity extends DaggerAppCompatActivity implements 
         super.onActivityResult(requestCode, resultCode, data);
 
         Log.d("exe", "data" + data);
-        Bundle bundle = data.getExtras();
-        if (data != null) {
 
+        if (data != null) {
+            Bundle bundle = data.getExtras();
 
             if (resultCode == Activity.RESULT_OK) {
 
@@ -243,6 +243,16 @@ public class SelectedStoreIdActivity extends DaggerAppCompatActivity implements 
         bundle4.putInt("index", updIndex);
         intent4.putExtras(bundle4);
         startActivityForResult(intent4, 123);
+    }
+
+    public void MoveToBookingRide(AssignedAppointments assignedAppointments, int updIndex) {
+        Log.d("exe", "updIndex" + updIndex);
+        Intent intent = new Intent(this, BookingRide.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("data", assignedAppointments);
+        bundle.putInt("index", updIndex);
+        intent.putExtras(bundle);
+        startActivityForResult(intent, 123);
     }
 
 
