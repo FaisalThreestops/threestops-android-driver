@@ -3,7 +3,7 @@ package com.delivx.app.main.homeFrag;
 import android.app.Activity;
 import android.content.Intent;
 import android.location.Location;
-import android.util.Log;
+
 
 import com.delivx.app.MyApplication;
 import com.delivx.app.bookingRequest.BookingPopUp;
@@ -43,7 +43,7 @@ public class Presenter implements HomeFragmentContract.Presenter {
 
     private RxBookingAssignObserver rxBookingAssignObserver;
     private boolean isMapInFullView=false;
-    HomeFragmentContract.View view;
+    private HomeFragmentContract.View view;
     private boolean assignManually=false;
 
 
@@ -192,7 +192,6 @@ public class Presenter implements HomeFragmentContract.Presenter {
                             view.hideProgress();
                     }
                 });
-
     }
 
 
@@ -221,8 +220,8 @@ public class Presenter implements HomeFragmentContract.Presenter {
                         found = true;
                         break;
                     }
-
                 }
+
                 if (!found) {
                     JSONObject jsonObject = new JSONObject();
                     try {
@@ -304,9 +303,9 @@ public class Presenter implements HomeFragmentContract.Presenter {
      * <p>Invoke API for updating the status of the driver</p>
      * @param masterStatus : 3.online,, 4.offline
      */
-    public void updateMasterStatusApi(final int masterStatus) {
-        view.showProgress();
+    private void updateMasterStatusApi(final int masterStatus) {
 
+        view.showProgress();
         Observable<Response<ResponseBody>> status=dispatcherService.status(
                 /*preferenceHelperDataSource.getLanguage()*/"0",preferenceHelperDataSource.getToken(),masterStatus);
         status.observeOn(AndroidSchedulers.mainThread())
@@ -356,7 +355,7 @@ public class Presenter implements HomeFragmentContract.Presenter {
 
     }
 
-    Observer<JSONObject> observer=new Observer<JSONObject>() {
+    private Observer<JSONObject> observer=new Observer<JSONObject>() {
         @Override
         public void onSubscribe(Disposable d) {
 

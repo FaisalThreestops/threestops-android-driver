@@ -1,12 +1,14 @@
 package com.delivx.app.invoice;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -66,6 +68,8 @@ public class InvoiceActivity extends DaggerAppCompatActivity implements
     @BindView(R.id.tvSignHere) TextView tvSignHere;
     @BindView(R.id.include_actionbar) View actionbar;
     private Typeface fontSemiBold,fontBold;
+    private AssignedAppointments appointments;
+    private int index;
 
     @Inject InvoiceContract.PresenterOpetaions presenter;
     @Inject FontUtils fontUtils;
@@ -76,7 +80,7 @@ public class InvoiceActivity extends DaggerAppCompatActivity implements
         Utility.RtlConversion(this,presenter.getlanguageCode());
         setContentView(R.layout.activity_invoice);
         ButterKnife.bind(this);
-
+        index = getIntent().getIntExtra("index", 0);
         initViews();
         presenter.getBundleData(getIntent().getExtras());
         presenter.setActionBar();
@@ -239,7 +243,8 @@ public class InvoiceActivity extends DaggerAppCompatActivity implements
     }
 
     @Override
-    public void setViews(String amount){
+    public void setViews(String amount,AssignedAppointments appointments){
+        this.appointments=appointments;
         tvBill.setText(amount);
     }
 
@@ -335,5 +340,30 @@ public class InvoiceActivity extends DaggerAppCompatActivity implements
             EasyPermissions.requestPermissions(this, getString(R.string.read_storage_and_camera_state_permission_message),
                     VariableConstant.RC_READ_WRITE_CAMERA_STATE, perms);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (appointments != null) {
+
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("updAppointments", appointments);
+            bundle.putInt("updIndex", index);
+            Intent intent = new Intent();
+            intent.putExtras(bundle);
+            setResult(Activity.RESULT_CANCELED, intent);
+        }
+        finish();
     }
 }

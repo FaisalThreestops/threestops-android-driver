@@ -78,7 +78,7 @@ public class InvoicePresenter implements InvoiceContract.PresenterOpetaions
             appointments= (AssignedAppointments) bundle.getSerializable("data");
             newSignatureName = appointments.getBid() + ".jpg";
             float bill= Float.parseFloat(appointments.getTotalAmount());
-            view.setViews(appointments.getCurrencySymbol()+" "+String.format(Locale.US,"%.2f",bill));
+            view.setViews(appointments.getCurrencySymbol()+" "+String.format(Locale.US,"%.2f",bill),appointments);
         }
     }
 

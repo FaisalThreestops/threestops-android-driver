@@ -426,7 +426,6 @@ public class BookingRide extends DaggerAppCompatActivity implements OnMapReadyCa
         bundle.putString("from","JOB_DETAILS");
         intent.putExtras(bundle);
         startActivity(intent);
-
     }
 
     @Override

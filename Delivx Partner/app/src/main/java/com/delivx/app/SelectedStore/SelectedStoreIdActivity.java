@@ -212,8 +212,6 @@ public class SelectedStoreIdActivity extends DaggerAppCompatActivity implements 
 
             if (resultCode == Activity.RESULT_OK) {
 
-
-
                 AssignedAppointments updAppointments = (AssignedAppointments) bundle.getSerializable("data");
                 updIndex = bundle.getInt("updIndex");
                 //if (updAppointments!=null) {

@@ -642,7 +642,6 @@ public class MainActivity extends DaggerAppCompatActivity
     @Override
     public void onNetworkConnectionChanged(boolean isConnected) {
         presenter.checkForNetwork(isConnected);
-
     }
 
 
@@ -657,7 +656,6 @@ public class MainActivity extends DaggerAppCompatActivity
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT);
-
 
         TextView tvTryAgain= dialog.findViewById(R.id.tvTryAgain);
         tvTryAgain.setTypeface(fontUtils.titaliumRegular());

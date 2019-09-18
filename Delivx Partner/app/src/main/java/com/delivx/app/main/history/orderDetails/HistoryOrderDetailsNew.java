@@ -212,14 +212,20 @@ public class HistoryOrderDetailsNew extends DaggerAppCompatActivity implements O
         tv_delCharge_val.setText(appointment.getCurrencySymbol()+" "+String.format("%.2f", deliveryCharge));
         double totalAmount = Double.parseDouble(appointment.getTotalAmount());
         tv_subToatal_val.setText(appointment.getCurrencySymbol()+" "+String.format("%.2f", totalAmount));
-        double appliedDiscount = Double.parseDouble(appointment.getItems().get(0).getAppliedDiscount());
-        tv_discount_val.setText(appointment.getCurrencySymbol()+" "+String.format("%.2f", appliedDiscount));
+        if(appointment.getItems().get(0).getAppliedDiscount()!=null) {
+            double appliedDiscount = Double.parseDouble(appointment.getItems().get(0).getAppliedDiscount());
+            tv_discount_val.setText(appointment.getCurrencySymbol() + " " + String.format("%.2f", appliedDiscount));
+        }else{
+            tv_discount_val.setText(appointment.getCurrencySymbol() + " 0.00");
+        }
 
         if(appointment.getTax().matches("0"))
             ll_discount.setVisibility(View.GONE);
 
-        if(appointment.getItems().get(0).getAppliedDiscount().matches("0"))
-            ll_tax.setVisibility(View.GONE);
+        if(appointment.getItems().get(0).getAppliedDiscount()!=null) {
+            if (appointment.getItems().get(0).getAppliedDiscount().matches("0"))
+                ll_tax.setVisibility(View.GONE);
+        }
 
         double paidByCash = Double.parseDouble(appointment.getPaidByCash());
         tvCashValue.setText(appointment.getCurrencySymbol()+" "+String.format("%.2f", paidByCash));
@@ -273,8 +279,13 @@ public class HistoryOrderDetailsNew extends DaggerAppCompatActivity implements O
                 if(appointments.getStoreType().equals("7")){
                     tvItemPrice.setVisibility(View.GONE);
                 }
+                float unitPrice;
                 int quantity= Integer.parseInt(appointments.getItems().get(i).getQuantity());
-                float unitPrice= Float.parseFloat(appointments.getItems().get(i).getUnitPrice());
+                if(appointments.getItems().get(i).getUnitPrice()!=null) {
+                    unitPrice = Float.parseFloat(appointments.getItems().get(i).getUnitPrice());
+                }else{
+                    unitPrice=0.00f;
+                }
 
                 String item=appointments.getItems().get(i).getItemName();
 

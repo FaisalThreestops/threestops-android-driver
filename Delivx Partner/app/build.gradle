@@ -37,13 +37,13 @@ android {
 //        buildConfigField "String", "DISPATCHER_BASE", "\"https://api.deliv-x.com/\""
 //        buildConfigField "String", "MESSAGE_BASE", "\"https://api.deliv-x.com/\""
 
-        buildConfigField "String", "BASEURL", "\"https://apidev.deliv-x.com/\""
+      /*  buildConfigField "String", "BASEURL", "\"https://apidev.deliv-x.com/\""
         buildConfigField "String", "DISPATCHER_BASE", "\"https://apidev.deliv-x.com/\""
-        buildConfigField "String", "MESSAGE_BASE", "\"https://apidev.deliv-x.com/\""
+        buildConfigField "String", "MESSAGE_BASE", "\"https://apidev.deliv-x.com/\""*/
 
-        /*buildConfigField "String", "BASEURL", "\"https://api.ingredienta.app/\""
+        buildConfigField "String", "BASEURL", "\"https://api.ingredienta.app/\""
         buildConfigField "String", "DISPATCHER_BASE", "\"https://api.ingredienta.app/\""
-        buildConfigField "String", "MESSAGE_BASE", "\"https://api.ingredienta.app/\""*/
+        buildConfigField "String", "MESSAGE_BASE", "\"https://api.ingredienta.app/\""
 
         buildConfigField "String", "LANGUAGE_URL", "\"https://offers.deliv-x.com/\""
         buildConfigField "int", "CACHETIME", "432000" // 5days

@@ -473,8 +473,7 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
             else{
                 Intent intent = new Intent(StorePickUp.this, InvoiceActivity.class);
                 intent.putExtras(bundle);
-                startActivity(intent);
-                finish();
+                startActivityForResult(intent,123);
             }
         }
     }
@@ -601,16 +600,14 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
 
                 case 123:
                     if (resultCode == Activity.RESULT_OK) {
-
                         Bundle bundle = data.getExtras();
                         AssignedAppointments appointments = (AssignedAppointments) bundle.getSerializable("data");
                         presenter.getResultBundle(appointments);
                     }
+                    break;
             }
         }
     }
-
-
 
 
     @Override

@@ -77,6 +77,7 @@ public class BookingRidePresenter implements BookingRideContract.PresenterOperat
                 setDistanceText(jsonArray);
                 setTimerText(jsonArray);
             } catch (JSONException e) {
+                e.printStackTrace();
             }
         }
     }

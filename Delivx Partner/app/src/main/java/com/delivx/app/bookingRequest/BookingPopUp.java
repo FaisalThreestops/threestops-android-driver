@@ -139,7 +139,7 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
         tvPayment.setText(newBookingMQTTResponse.getPaymentType());
         tv_popup_pickuploc.setText(newBookingMQTTResponse.getStoreName()+":"+newBookingMQTTResponse.getAdr1());
         tv_pickuptime.setText(Utility.formatDateWeek(newBookingMQTTResponse.getDt()));
-        if(newBookingMQTTResponse.getStoreType().equals("7"))
+        if(newBookingMQTTResponse.getStoreType()!=null && newBookingMQTTResponse.getStoreType().equals("7"))
             tv_popup_drop.setText(this.getResources().getString(R.string.delivery));
         else
             tv_popup_drop.setText(this.getResources().getString(R.string.drop));

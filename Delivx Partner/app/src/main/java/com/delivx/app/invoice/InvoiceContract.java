@@ -30,7 +30,7 @@ public interface InvoiceContract
          * <p>set the view by values</p>
          * @param bill : billing details
          */
-        void setViews(String bill);
+        void setViews(String bill,AssignedAppointments appointments);
 
         /**
          * <h2>onSuccess</h2>
