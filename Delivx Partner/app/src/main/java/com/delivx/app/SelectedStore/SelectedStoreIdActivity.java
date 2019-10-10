@@ -167,7 +167,6 @@ public class SelectedStoreIdActivity extends DaggerAppCompatActivity implements 
         if (Integer.parseInt(appointments.get(0).getOrderStatus()) >= (Integer.parseInt(AppConstants.BookingStatus.Arrived))) {
             hideSeekBar.setVisibility(View.GONE);
         }
-
     }
 
 
@@ -228,8 +227,6 @@ public class SelectedStoreIdActivity extends DaggerAppCompatActivity implements 
                 sortedStoreIDRVA.notifyDataSetChanged();
             }
         }
-
-
     }
 
 

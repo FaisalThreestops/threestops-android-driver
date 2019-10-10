@@ -47,7 +47,7 @@ public class VariableConstant {
     public static final String SIGNATURE_PIC_DIR = PARENT_FOLDER + "/sign";
 
     public static final int RESPONSE_CODE_SUCCESS = 200;
-    public static final String LOGIN="login_activity";;
+    public static final String LOGIN="login_activity";
     public static boolean IS_PROFILE_EDITED = false;
     public static boolean EDIT_PASSWORD_DIALOG = false;
     public static Uri newProfileImageUri;

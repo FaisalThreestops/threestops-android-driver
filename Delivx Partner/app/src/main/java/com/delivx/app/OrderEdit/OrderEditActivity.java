@@ -116,7 +116,6 @@ public class OrderEditActivity extends DaggerAppCompatActivity implements OrderE
     @Override
     public void initActionBar() {
         setSupportActionBar(toolbar);
-
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -93,7 +93,6 @@
                         android:id="@+id/tvStore"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:maxLines="2"
                         android:text="10th Cross St, RBI Colony, Ganga Nagar, Bengaluru, Karnataka 560024"
                         android:textColor="@color/lightBlackText"
                         android:textSize="@dimen/spSixteen" />
@@ -607,7 +606,6 @@
                             android:id="@+id/tv_dropup"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:maxLines="2"
                             android:text="10th Cross St, RBI Colony, Ganga Nagar, Bengaluru, Karnataka 560024"
                             android:textColor="@color/color_sup_txt"
                             android:textSize="@dimen/spSixteen" />

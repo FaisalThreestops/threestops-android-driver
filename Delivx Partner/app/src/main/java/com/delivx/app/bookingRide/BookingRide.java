@@ -339,7 +339,6 @@ public class BookingRide extends DaggerAppCompatActivity implements OnMapReadyCa
 
         if(marker!=null)
             marker.getmMarker().setPosition(latLng);
-
     }
 
     @Override
@@ -375,7 +374,6 @@ public class BookingRide extends DaggerAppCompatActivity implements OnMapReadyCa
 
     @Override
     public void openGoogleMap(String uri) {
-
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
         intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
         startActivity(intent);
@@ -384,13 +382,13 @@ public class BookingRide extends DaggerAppCompatActivity implements OnMapReadyCa
 
     @Override
     public void openChatAct(AssignedAppointments appointments) {
-
         Intent intent=new Intent(this,ChattingActivity.class);
         intent.putExtra("BID",appointments.getBid());
         intent.putExtra("CUST_ID",appointments.getCustomerId());
         intent.putExtra("CUST_NAME",appointments.getCustomerName());
         startActivity(intent);
     }
+
     @Override
     public void onSuccess(AssignedAppointments appointments) {
         if (preferenceHelperDataSource.getDriverScheduleType() == 0) {
@@ -458,8 +456,6 @@ public class BookingRide extends DaggerAppCompatActivity implements OnMapReadyCa
                         finish();
                     }
 
-                    break;
-                default:
                     break;
             }
         }

@@ -163,14 +163,14 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
         mediaPlayer.start();
     }
 
-    @OnClick({R.id.ll_booking_popup,R.id.btnReject})
+    @OnClick({R.id.circular_progress_bar,R.id.btnReject})
     @Override
     public void onClick(View v) {
 
         switch (v.getId())
         {
             //Accept Booking
-            case R.id.ll_booking_popup:
+            case R.id.circular_progress_bar:
                 presenter.updateApptRequest(AppConstants.BookingStatus.Accept);
                 break;
 
@@ -190,7 +190,6 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
 
     @Override
     public void onBackPressed() {
-
     }
 
     @Override

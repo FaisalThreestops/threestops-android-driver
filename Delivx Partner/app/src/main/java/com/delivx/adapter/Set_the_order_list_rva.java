@@ -62,9 +62,7 @@ public class Set_the_order_list_rva extends RecyclerView.Adapter<Set_the_order_l
         viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //   Log.d("exe", "sameStoreBookingID.get(i).getOrderStatus()" + sameStoreBookingID.get(i).getOrderStatus() + "po" + i);
                 Utility.printLog("updated item : " + "sameStoreBookingID.get(i).getOrderStatus()" + sameStoreBookingID.get(i).getOrderStatus() + "po" + i);
-
                 switch (sameStoreBookingID.get(i).getOrderStatus()) {
 
                     case "8":

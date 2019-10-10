@@ -384,6 +384,7 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
 
                 final int finalI = i;
 
+
                 if(!appointments.getStoreType().equals("7")) {
                     itemName.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -442,6 +443,7 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
 
     @Override
     public void onSuccess(AssignedAppointments appointments) {
+        //normal flow
         if (preferenceHelperDataSource.getDriverScheduleType() == 0) {
             Bundle bundle = new Bundle();
             bundle.putSerializable("data", appointments);
@@ -460,6 +462,7 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
                 finish();
             }
         }
+        //slot flow
         else {
             Bundle bundle = new Bundle();
             bundle.putSerializable("data", appointments);
@@ -490,11 +493,9 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
             Bundle bundle = new Bundle();
             bundle.putSerializable("data", appointments);
             bundle.putSerializable("shipment", shipmentDetails);
-
             for (int i = 0; i < appointments.getShipmentDetails().size(); i++) {
                 Log.d("exe", "addToCartOnStorePickClick" + appointments.getShipmentDetails().get(i).getAddedToCartOn() + "ItemName" + appointments.getShipmentDetails().get(i).getItemName());
             }
-
             Intent intent = new Intent(StorePickUp.this, OrderEditActivity.class);
             intent.putExtras(bundle);
             startActivityForResult(intent, 123);
@@ -603,6 +604,11 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
                         Bundle bundle = data.getExtras();
                         AssignedAppointments appointments = (AssignedAppointments) bundle.getSerializable("data");
                         presenter.getResultBundle(appointments);
+                    }
+                    else if(resultCode==Activity.RESULT_CANCELED)
+                    {
+                        setResult(Activity.RESULT_CANCELED, data);
+                        finish();
                     }
                     break;
             }
