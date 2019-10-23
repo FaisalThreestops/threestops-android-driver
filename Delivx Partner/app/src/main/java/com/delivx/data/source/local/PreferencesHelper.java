@@ -134,6 +134,17 @@ public class PreferencesHelper implements PreferenceHelperDataSource {
     }
 
     @Override
+    public void setDriverType(String status) {
+        editor.putString(PreferenceKeys.KeysEntry.DRIVER_TYPE, status);
+        editor.commit();
+    }
+
+    @Override
+    public String getDriverType() {
+        return sharedPreferences.getString(PreferenceKeys.KeysEntry.DRIVER_TYPE, "@");
+    }
+
+    @Override
     public void setMasterStatus(int status) {
         editor.putInt(PreferenceKeys.KeysEntry.DRIVER_STATUS, status);
         editor.commit();
@@ -432,11 +443,6 @@ public class PreferencesHelper implements PreferenceHelperDataSource {
 
     }
 
-
-
-
-
-
     @Override
     public void setDefaultBankAccount(String bankaccount) {
         editor.putString(PreferenceKeys.KeysEntry.BANK_ACCOUT,bankaccount);
@@ -521,17 +527,14 @@ public class PreferencesHelper implements PreferenceHelperDataSource {
 
     }
 
+    @Override
+    public void setDriverScheduleType(int driverStatus) {
+        editor.putInt(PreferenceKeys.KeysEntry.DRS,driverStatus);
+        editor.commit();
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
+    @Override
+    public int getDriverScheduleType() {
+        return sharedPreferences.getInt(PreferenceKeys.KeysEntry.DRS,0);
+    }
 }

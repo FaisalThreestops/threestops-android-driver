@@ -30,6 +30,7 @@ import com.delivx.RxObservers.RXMqttMessageObserver;
 import com.delivx.app.main.MainActivity;
 import com.delivx.app.MyApplication;
 import com.delivx.data.source.PreferenceHelperDataSource;
+import com.delivx.utility.TextUtil;
 import com.driver.delivx.R;
 import com.delivx.networking.DispatcherService;
 import com.delivx.networking.NetworkService;
@@ -235,7 +236,7 @@ public class LocationUpdateService
         try
         {
 
-            if (intent.getAction().equals(AppConstants.ACTION.STARTFOREGROUND_ACTION))
+            if (intent!=null && !TextUtil.isEmpty(intent.getAction()) &&intent.getAction().equals(AppConstants.ACTION.STARTFOREGROUND_ACTION))
             {
                 Intent notificationIntent = new Intent(this, MainActivity.class);
                 notificationIntent.setAction(AppConstants.ACTION.MAIN_ACTION);
@@ -276,7 +277,7 @@ public class LocationUpdateService
 
 
             }
-            else if (intent.getAction().equals(
+            else if (intent!=null && intent.getAction().equals(
                     AppConstants.ACTION.STOPFOREGROUND_ACTION)) {
                 stopForeground(true);
                 stopSelf();

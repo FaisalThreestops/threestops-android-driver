@@ -1,16 +1,27 @@
 package com.delivx.app.storeDetails;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -18,7 +29,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.delivx.adapter.LaunderListRVA;
+import com.delivx.adapter.ReasonRVA;
 import com.delivx.app.bookingRide.BookingRide;
+import com.delivx.app.main.MainActivity;
+import com.delivx.app.storePickUp.StorePickUp;
+import com.delivx.pojo.Cancel.CancelData;
 import com.driver.delivx.R;
 import com.delivx.mqttChat.ChattingActivity;
 import com.delivx.pojo.AssignedAppointments;
@@ -50,25 +65,36 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements
     @BindView(R.id.tv_drop_up_title) TextView tv_drop_up_title;
     @BindView(R.id.tv_dropup) TextView tv_dropup;
     @BindView(R.id.tv_payment_title) TextView tv_payment_title;
+    @BindView(R.id.tv_estimate_title)TextView tv_estimate_title;
+    @BindView(R.id.tv_customer_notes)TextView tv_customer_notes;
     @BindView(R.id.tv_payment_type) TextView tv_payment_type;
+    @BindView(R.id.ll_estimate_value) LinearLayout ll_estimate_value;
+    @BindView(R.id.tv_customer_value) TextView tv_customer_value;
+    @BindView(R.id.ll_customer_note) LinearLayout ll_customer_note;
+    @BindView(R.id.tv_estimate_value) TextView tv_estimate_value;
     @BindView(R.id.tvProductsTitle) TextView tvProductsTitle;
     @BindView(R.id.tvPriceTitle) TextView tvPriceTitle;
     @BindView(R.id.tvItems) TextView tvItems;
+    @BindView(R.id.tv_qty)TextView tv_qty;
     @BindView(R.id.tv_status_text) TextView tv_status_text;
     @BindView(R.id.ll_item_container) LinearLayout ll_item_container;
     @BindView(R.id.ll_tax) LinearLayout ll_tax;
     @BindView(R.id.ll_tax_item_container) LinearLayout ll_tax_item_container;
+    @BindView(R.id.ll_subTotal) LinearLayout ll_subTotal;
     @BindView(R.id.tv_tax) TextView tv_tax;
     @BindView(R.id.myseek) Slider seekbar;
     @BindView(R.id.progressBar) ProgressBar progressBar;
     @BindView(R.id.Bottomlayout) RelativeLayout bottomLayout;
     @BindView(R.id.rv_item_show)
     RecyclerView rv_item_show;
+    @BindView(R.id.view_estimate) View view_estimate;
+    @BindView(R.id.view_customer) View view_customer;
     private Typeface font,fontBold;
 
     @BindView(R.id.tv_paymentbreskdown) TextView tv_paymentbreskdown;
     @BindView(R.id.tv_subTotal) TextView tv_subTotal;
     @BindView(R.id.tv_subTotal_val) TextView tv_subTotal_val;
+    @BindView(R.id.tv_cancel) TextView tv_cancel;
     @BindView(R.id.tv_delCharge) TextView tv_delCharge;
     @BindView(R.id.tv_delCharge_val) TextView tv_delCharge_val;
     @BindView(R.id.tv_discount) TextView tv_discount;
@@ -78,6 +104,8 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements
     @BindView(R.id.tv_subToatal_val) TextView tv_subToatal_val;
 
     private boolean tax_added = false;
+    private Dialog dialog;
+    private AlertDialog.Builder alertDialog;
 
     @Inject
     StoreDetailsContract.Presenter presenter;
@@ -114,8 +142,13 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements
         tv_pickup.setTypeface(font);
         tv_drop_up_title.setTypeface(font);
         tv_dropup.setTypeface(font);
+        tv_cancel.setTypeface(font);
         tv_payment_title.setTypeface(font);
+        tv_estimate_title.setTypeface(font);
+        tv_customer_notes.setTypeface(font);
+        tv_customer_value.setTypeface(font);
         tv_payment_type.setTypeface(font);
+        tv_estimate_value.setTypeface(font);
         tvProductsTitle.setTypeface(font);
         tvPriceTitle.setTypeface(fontBold);
         tvItems.setTypeface(fontBold);
@@ -140,9 +173,6 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements
                 }
             }
         });
-
-
-
     }
 
     @Override
@@ -174,6 +204,35 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements
         else
             tv_payment_type.setText(getResources().getString(R.string.card));
 
+        if(appointments.getStoreType().equals("7")) {
+            ll_estimate_value.setVisibility(View.VISIBLE);
+            view_estimate.setVisibility(View.VISIBLE);
+            ll_customer_note.setVisibility(View.VISIBLE);
+            view_customer.setVisibility(View.VISIBLE);
+            tvPriceTitle.setVisibility(View.VISIBLE);
+            tv_qty.setVisibility(View.INVISIBLE);
+            tvPriceTitle.setText(this.getResources().getString(R.string.quant));
+            tvPriceTitle.setGravity(Gravity.RIGHT);
+            ll_subTotal.setVisibility(View.GONE);
+            tv_cancel.setVisibility(View.VISIBLE);
+            tv_cancel.setPaintFlags(tv_cancel.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        } else {
+            ll_estimate_value.setVisibility(View.GONE);
+            view_estimate.setVisibility(View.GONE);
+            ll_customer_note.setVisibility(View.GONE);
+            view_customer.setVisibility(View.GONE);
+            tv_qty.setVisibility(View.VISIBLE);
+            ll_subTotal.setVisibility(View.VISIBLE);
+            tv_cancel.setVisibility(View.GONE);
+        }
+
+        tv_estimate_value.setText(appointments.getCurrencySymbol()+""+appointments.getEstimatedPackageValue());
+        tv_customer_value.setText(appointments.getExtraNote());
+
+        if(appointments.getStoreType().equals("7") && appointments.getExtraNote().equals("")){
+            ll_customer_note.setVisibility(View.GONE);
+            view_customer.setVisibility(View.GONE);
+        }
 
         if(appointments.getStoreType().matches("5") &&
                 !appointments.isCominigFromStore()){
@@ -241,6 +300,41 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements
         bottomLayout.setVisibility(View.GONE);
         iv_call_pickUp.setVisibility(View.GONE);
         iv_call_customer.setVisibility(View.GONE);
+        tv_cancel.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void hideSeekBar() {
+        bottomLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void cancelDialog(CancelData cancelData) {
+        dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.cancel_reason_row);
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        presenter.hideSoftKeyboard();
+        ReasonRVA reasonRVA = new ReasonRVA(this, cancelData,1);
+        RecyclerView rv_reasons = dialog.findViewById(R.id.bottomSheetReasonRv);
+//        Button confirm=dialog.findViewById(R.id.createNewListTv);
+        ImageView cancelDialog=dialog.findViewById(R.id.iv_jobdetails);
+        rv_reasons.setLayoutManager(new LinearLayoutManager(this));
+        rv_reasons.setAdapter(reasonRVA);
+        reasonRVA.notifyDataSetChanged();
+//        confirm.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                presenter.cancelOrder();
+//            }
+//        });
+        cancelDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     @Override
@@ -259,7 +353,7 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements
     }
 
 
-    @OnClick({R.id.iv_call_customer,R.id.iv_call_pickUp})
+    @OnClick({R.id.iv_call_customer,R.id.iv_call_pickUp,R.id.tv_cancel})
     public void onClick(View view){
         switch (view.getId())
         {
@@ -271,6 +365,11 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements
             case R.id.iv_call_pickUp:
                 presenter.callCustomer(false);
                 break;
+
+            case R.id.tv_cancel:
+                presenter.cancelReason();
+                break;
+
         }
 
     }
@@ -287,7 +386,7 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements
         if(size>0){
             for(int i=0;i<size;i++){
                 LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                View view = inflater.inflate(R.layout.history_item_show_single_raw, null);
+                View view = inflater.inflate(R.layout.history_item_show_single2, null);
 
                 TextView itemName= view.findViewById(R.id.tvItemName);
                 itemName.setTypeface(font);
@@ -296,9 +395,29 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements
                 TextView itemUnit= view.findViewById(R.id.tvQuantity);
                 itemPrice.setTypeface(font);
 
+                if(appointments.getStoreType().equals("7")){
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 2f);
+                    itemName.setLayoutParams(params);
+                    itemName.setGravity(Gravity.START);
+
+                    LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f);
+                    itemUnit.setLayoutParams(params1);
+                    itemUnit.setGravity(Gravity.END);
+
+                    LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 0f);
+                    itemPrice.setLayoutParams(params2);
+                    itemPrice.setGravity(Gravity.END);
+                    itemPrice.setVisibility(View.GONE);
+                }else {
+                    itemPrice.setVisibility(View.VISIBLE);
+                }
+
                 itemName.setText(appointments.getShipmentDetails().get(i).getItemName());
                 int quantity= Integer.parseInt(appointments.getShipmentDetails().get(i).getQuantity());
-                itemUnit.setText(String.valueOf(quantity));
+                if(!appointments.getStoreType().equals("7"))
+                    itemUnit.setText(appointments.getShipmentDetails().get(i).getQuantity()+"("+appointments.getShipmentDetails().get(i).getUnitName()+")");
+                else
+                    itemUnit.setText(appointments.getShipmentDetails().get(i).getQuantity());
 
 
                 String unitPriceStr=appointments.getShipmentDetails().get(i).getUnitPrice();
@@ -372,7 +491,6 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements
 
                 ll_tax_item_container.addView(view);
 
-
             }
         }
     }
@@ -385,6 +503,23 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void hideKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+    }
+
+    @Override
+    public void moveHomeActivity() {
+        Intent intent=new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
      @Override
     public void openChatAct(AssignedAppointments appointments) {
 
@@ -393,7 +528,24 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements
         intent.putExtra("CUST_ID",appointments.getCustomerId());
         intent.putExtra("CUST_NAME",appointments.getCustomerName());
         startActivity(intent);
+    }
 
-
+    public void showDialog(){
+        alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle(getApplicationContext().getResources().getString(R.string.message));
+        alertDialog.setMessage(getApplicationContext().getResources().getString(R.string.want_to_cancel_item));
+        alertDialog.setCancelable(false);
+        alertDialog.setPositiveButton(this.getString(R.string.ok),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        presenter.cancelOrder();
+                    }
+                });
+        alertDialog.setNegativeButton(this.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alertDialog.show();
     }
 }

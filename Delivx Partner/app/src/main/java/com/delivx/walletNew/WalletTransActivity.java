@@ -129,8 +129,8 @@ public class WalletTransActivity extends DaggerAppCompatActivity
         TabLayout tabLayout =  findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         String tabTitles[]  = new String[]{all, debit, credit};
-        WalletViewPagerAdapter viewPagerAdapter = new WalletViewPagerAdapter(getSupportFragmentManager());
 
+        WalletViewPagerAdapter viewPagerAdapter = new WalletViewPagerAdapter(getSupportFragmentManager());
 
         this.allTransactionsFrag = WalletTransactionsFragment.getNewInstance();
         viewPagerAdapter.addFragment(allTransactionsFrag, tabTitles[0]);
@@ -140,8 +140,9 @@ public class WalletTransActivity extends DaggerAppCompatActivity
 
         this.creditsFrag = WalletTransactionsFragment.getNewInstance();
         viewPagerAdapter.addFragment(creditsFrag, tabTitles[2]);
-        viewPagerAdapter.notifyDataSetChanged();
 
+
+        viewPagerAdapter.notifyDataSetChanged();
         viewPager.setAdapter(viewPagerAdapter);
     }
 
@@ -250,6 +251,5 @@ public class WalletTransActivity extends DaggerAppCompatActivity
         finish();
         overridePendingTransition(R.anim.activity_open_scale, R.anim.activity_close_translate);
     }
-
 }
 

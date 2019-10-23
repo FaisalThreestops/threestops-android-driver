@@ -1,7 +1,13 @@
 package com.delivx.app.main.support;
 
 import android.app.Activity;
+import android.content.Intent;
 
+import com.delivx.app.MyApplication;
+import com.delivx.login.LoginActivity;
+import com.delivx.login.language.LanguagesList;
+import com.delivx.service.LocationUpdateService;
+import com.delivx.utility.AppConstants;
 import com.google.gson.Gson;
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.driver.delivx.R;
@@ -10,6 +16,7 @@ import com.delivx.pojo.SupportData;
 import com.delivx.pojo.SupportPojo;
 import com.delivx.utility.Utility;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -62,17 +69,42 @@ public class SupportFragPresenter implements SupportContract.PresenterOperation 
                             view.hideProgress();
 
                         try {
-                            JSONObject jsonObject;
-                            if(value.code()==200)
-                            {
-                                jsonObject=new JSONObject(value.body().string());
-                                SupportPojo supportPojo = new Gson().fromJson(jsonObject.toString(), SupportPojo.class);
-                                view.setSupportDetails(supportPojo.getData());
+                            JSONObject jsonObject = null;
 
-                            }else
-                            {
-                                jsonObject=new JSONObject(value.errorBody().string());
-                                view.onError(jsonObject.getString("message"));
+                            switch (value.code()) {
+                                //success
+                                case 200:
+                                    jsonObject=new JSONObject(value.body().string());
+                                    SupportPojo supportPojo = new Gson().fromJson(jsonObject.toString(), SupportPojo.class);
+                                    view.setSupportDetails(supportPojo.getData());
+                                    break;
+                                    
+                                case 400:
+                                    jsonObject=new JSONObject(value.errorBody().string());
+                                    view.onError(jsonObject.getString("message"));
+                                    break;
+                                    
+
+                                case 440:
+                                case 498:
+                                    Utility.printLog("pushTopics shared pref "+preferenceHelperDataSource.getPushTopic());
+                                    Utility.subscribeOrUnsubscribeTopics(new JSONArray(preferenceHelperDataSource.getPushTopic()),false);
+                                    LanguagesList languagesList = preferenceHelperDataSource.getLanguageSettings();
+                                    preferenceHelperDataSource.clearSharedPredf();
+                                    preferenceHelperDataSource.setLanguageSettings(languagesList);
+                                    ((MyApplication)context.getApplicationContext()).disconnectMqtt();
+                                    context.startActivity(new Intent(context, LoginActivity.class));
+                                    if(Utility.isMyServiceRunning(LocationUpdateService.class, context))
+                                    {
+                                        Intent stopIntent = new Intent(context, LocationUpdateService.class);
+                                        stopIntent.setAction(AppConstants.ACTION.STOPFOREGROUND_ACTION);
+                                        context.startService(stopIntent);
+                                    }
+
+                                    break;
+                                default:
+                                    jsonObject=new JSONObject(value.errorBody().string());
+                                    break;
                             }
 
                             Utility.printLog("supportApi : "+jsonObject.toString());

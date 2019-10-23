@@ -114,6 +114,12 @@ public interface PreferenceHelperDataSource
      * This method is used to get Last Booking id
      */
     String getLastBooking();
+
+
+    void setDriverType(String driverType);
+
+    String getDriverType();
+
     /**
      * <h2>setMasterStatus</h2>
      * This method is used to set the Master Status
@@ -395,7 +401,7 @@ public interface PreferenceHelperDataSource
     void setCityId(String cityId);
     String getCityId();
 
+    void setDriverScheduleType(int driverStatus);
 
-
-
+    int getDriverScheduleType();
 }

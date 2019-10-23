@@ -30,7 +30,7 @@ public interface InvoiceContract
          * <p>set the view by values</p>
          * @param bill : billing details
          */
-        void setViews(String bill);
+        void setViews(String bill,AssignedAppointments appointments);
 
         /**
          * <h2>onSuccess</h2>
@@ -95,7 +95,7 @@ public interface InvoiceContract
 
         /**
          * <h2>getBundleData</h2>
-         * <p>get the data from (StorePickUp)</p>
+         * <p>get the data from (SlotAppointmentActivity)</p>
          * @param bundle : data
          */
         void getBundleData(Bundle bundle);

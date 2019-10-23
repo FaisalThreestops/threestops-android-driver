@@ -70,7 +70,7 @@ public interface BookingRideContract
 
         /**
          * <h2>onSuccess</h2>
-         * <p>moving to next(StorePickUp) by passing data</p>
+         * <p>moving to next(SlotAppointmentActivity) by passing data</p>
          * @param appointments :appintmentsPoji details
          */
         void onSuccess(AssignedAppointments appointments);

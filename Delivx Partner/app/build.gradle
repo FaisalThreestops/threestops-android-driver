@@ -24,8 +24,8 @@ android {
         applicationId "com.driver.delivx"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 9
-        versionName "1.0.8"
+        versionCode 10
+        versionName "1.0.9"
         multiDexEnabled true
 
         dexOptions {
@@ -33,13 +33,17 @@ android {
         }
 
         buildConfigField "int", "LIMIT", "100"
-        /*buildConfigField "String", "BASEURL", "\"https://api.deliv-x.com/\""
-        buildConfigField "String", "DISPATCHER_BASE", "\"https://api.deliv-x.com/\""
-        buildConfigField "String", "MESSAGE_BASE", "\"https://api.deliv-x.com/\""*/
+//        buildConfigField "String", "BASEURL", "\"https://api.deliv-x.com/\""
+//        buildConfigField "String", "DISPATCHER_BASE", "\"https://api.deliv-x.com/\""
+//        buildConfigField "String", "MESSAGE_BASE", "\"https://api.deliv-x.com/\""
 
         buildConfigField "String", "BASEURL", "\"https://apidev.deliv-x.com/\""
         buildConfigField "String", "DISPATCHER_BASE", "\"https://apidev.deliv-x.com/\""
         buildConfigField "String", "MESSAGE_BASE", "\"https://apidev.deliv-x.com/\""
+
+       /* buildConfigField "String", "BASEURL", "\"https://api.ingredienta.app/\""
+        buildConfigField "String", "DISPATCHER_BASE", "\"https://api.ingredienta.app/\""
+        buildConfigField "String", "MESSAGE_BASE", "\"https://api.ingredienta.app/\""*/
 
         buildConfigField "String", "LANGUAGE_URL", "\"https://offers.deliv-x.com/\""
         buildConfigField "int", "CACHETIME", "432000" // 5days
@@ -81,7 +85,7 @@ dependencies {
     compile 'com.android.support:cardview-v7:28.0.0'
     compile 'pub.devrel:easypermissions:0.4.0'
     compile 'com.android.support.constraint:constraint-layout:1.1.3'
-    compile 'com.google.code.gson:gson:2.3.+'
+    compile 'com.google.code.gson:gson:2.3'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.squareup.okhttp3:okhttp:3.9.1'
     compile 'com.android.support:support-v4:28.0.0'
@@ -93,7 +97,7 @@ dependencies {
     compile 'com.google.firebase:firebase-messaging:17.3.4'
     compile 'com.mikhaellopez:circularprogressbar:1.1.0'
     compile 'com.github.gcacace:signature-pad:1.2.1'
-    compile 'com.amazonaws:aws-android-sdk-s3:2.2.22'
+    compile 'com.amazonaws:aws-android-sdk-s3:2.13.5'
     compile 'com.couchbase.lite:couchbase-lite-android:1.4.0'
     compile 'io.card:android-sdk:5.5.1'
     compile 'org.greenrobot:eventbus:3.0.0'

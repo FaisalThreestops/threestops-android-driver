@@ -33,9 +33,9 @@ public class VariableConstant {
     public static final String MQTT_PASSWORD =  "dZuxnpHxXD86Sz8g";
 
     //AWS image Upload Details
-    public static final String BUCKET_NAME = "grocerufly";
-    public static final String AMAZON_BASE_URL = "https://s3.amazonaws.com/";
-    public static final String COGNITO_POOL_ID = "ap-south-1:23fd5020-068c-4452-997a-d084a640a136";
+    public static final String BUCKET_NAME = "delivx";
+    public static final String AMAZON_BASE_URL = "https://delivx.s3.amazonaws.com/";
+    public static final String COGNITO_POOL_ID = "us-east-2:d4ab8048-939a-4bea-a78d-16dff1e519f8";
 
     //Image Upload URL Folder path in AWS
     public static final String PROFILE_PIC = "driver/ProfilePics/";
@@ -47,7 +47,7 @@ public class VariableConstant {
     public static final String SIGNATURE_PIC_DIR = PARENT_FOLDER + "/sign";
 
     public static final int RESPONSE_CODE_SUCCESS = 200;
-    public static final String LOGIN="login_activity";;
+    public static final String LOGIN="login_activity";
     public static boolean IS_PROFILE_EDITED = false;
     public static boolean EDIT_PASSWORD_DIALOG = false;
     public static Uri newProfileImageUri;

@@ -6,8 +6,8 @@
     android:background="@color/white">
 
     <include
-        android:id="@+id/include_actionbar"
-        layout="@layout/actionbar" />
+    android:id="@+id/include_actionbar"
+    layout="@layout/actionbar" />
 
     <ScrollView
         android:id="@+id/sv_signup"

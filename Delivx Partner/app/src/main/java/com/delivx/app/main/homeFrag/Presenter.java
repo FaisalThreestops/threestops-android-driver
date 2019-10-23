@@ -3,7 +3,7 @@ package com.delivx.app.main.homeFrag;
 import android.app.Activity;
 import android.content.Intent;
 import android.location.Location;
-import android.util.Log;
+
 
 import com.delivx.app.MyApplication;
 import com.delivx.app.bookingRequest.BookingPopUp;
@@ -43,7 +43,9 @@ public class Presenter implements HomeFragmentContract.Presenter {
 
     private RxBookingAssignObserver rxBookingAssignObserver;
     private boolean isMapInFullView=false;
-    HomeFragmentContract.View view;
+    private HomeFragmentContract.View view;
+    private boolean assignManually=false;
+
 
     @Inject   NetworkService networkService;
     @Inject   Activity context;
@@ -112,6 +114,8 @@ public class Presenter implements HomeFragmentContract.Presenter {
 
     @Override
     public void getAssignedTRips() {
+
+        if(assignManually==false)
         view.showProgress();
 
         Observable<Response<ResponseBody>> assignedTrips=networkService.assignedTrips(
@@ -129,7 +133,7 @@ public class Presenter implements HomeFragmentContract.Presenter {
                             view.hideProgress();
 
                         try {
-                            JSONObject jsonObject;
+                            JSONObject jsonObject = null;
 
                             switch (value.code()){
                                 //success
@@ -147,6 +151,7 @@ public class Presenter implements HomeFragmentContract.Presenter {
                                     preferenceHelperDataSource.setMasterStatus(tripsPojo.getData().getMasterStatus());
                                     break;
                                     //session expired
+                                case 440:
                                 case 498:
                                     Utility.printLog("pushTopics shared pref "+preferenceHelperDataSource.getPushTopic());
                                     Utility.subscribeOrUnsubscribeTopics(new JSONArray(preferenceHelperDataSource.getPushTopic()),false);
@@ -167,6 +172,7 @@ public class Presenter implements HomeFragmentContract.Presenter {
                                     jsonObject=new JSONObject(value.errorBody().string());
                                     break;
                             }
+                            Utility.printLog("bookingStatusRide : "+jsonObject.toString());
 
                         }catch (Exception e)
                         {
@@ -186,7 +192,6 @@ public class Presenter implements HomeFragmentContract.Presenter {
                             view.hideProgress();
                     }
                 });
-
     }
 
 
@@ -215,8 +220,8 @@ public class Presenter implements HomeFragmentContract.Presenter {
                         found = true;
                         break;
                     }
-
                 }
+
                 if (!found) {
                     JSONObject jsonObject = new JSONObject();
                     try {
@@ -298,9 +303,9 @@ public class Presenter implements HomeFragmentContract.Presenter {
      * <p>Invoke API for updating the status of the driver</p>
      * @param masterStatus : 3.online,, 4.offline
      */
-    public void updateMasterStatusApi(final int masterStatus) {
-        view.showProgress();
+    private void updateMasterStatusApi(final int masterStatus) {
 
+        view.showProgress();
         Observable<Response<ResponseBody>> status=dispatcherService.status(
                 /*preferenceHelperDataSource.getLanguage()*/"0",preferenceHelperDataSource.getToken(),masterStatus);
         status.observeOn(AndroidSchedulers.mainThread())
@@ -350,7 +355,7 @@ public class Presenter implements HomeFragmentContract.Presenter {
 
     }
 
-    Observer<JSONObject> observer=new Observer<JSONObject>() {
+    private Observer<JSONObject> observer=new Observer<JSONObject>() {
         @Override
         public void onSubscribe(Disposable d) {
 
@@ -359,7 +364,8 @@ public class Presenter implements HomeFragmentContract.Presenter {
         @Override
         public void onNext(JSONObject value) {
             try {
-                if(value.getInt("action")==16){
+                if(value.getInt("action")==16 || value.getInt("action")==29){
+                    assignManually=true;
                     getAssignedTRips();
                 }
                 else if(value.getInt("action")==10){
@@ -385,4 +391,9 @@ public class Presenter implements HomeFragmentContract.Presenter {
 
         }
     };
+
+    @Override
+    public void getDriverScheduleType() {
+        view.driverStatusType(preferenceHelperDataSource.getDriverScheduleType());
+    }
 }

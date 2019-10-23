@@ -582,4 +582,32 @@
     <string name="taxes">Taxes :</string>
     <string name="order_id_dot">Order Id : </string>
     <string name="order_type">Order type</string>
+
+    <string name="shifts">SHIFTS:</string>
+    <string name="oid">OID</string>
+    <string name="picked">Picked</string>
+    <string name="product_name">PRODUCT NAME</string>
+    <string name="unit_cost">Unit Cost:</string>
+    <string name="total_price">Total price:</string>
+    <string name="replace_item">Replace Item</string>
+    <string name="cancel_item">Cancel Item</string>
+    <string name="return_partially">Return Partially</string>
+    <string name="return_completely">Return Completely</string>
+    <string name="edited_item">Edit Item</string>
+    <string name="want_to_cancel_item">Are you sure you want to cancel the item?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="search_item">Search Item</string>
+    <string name="return_item_completely">Would you like to return the item completely?</string>
+    <string name="last_item_delet_text">This is the last item in the order, cancelling this item will cancel the entire order. Please confirm to proceed ?</string>
+    <string name="today">Today</string>
+    <string name="days_ago">days ago</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="estimate_value">ESTIMATE PACKAGE VALUE</string>
+    <string name="customer_notes">CUSTOMER NOTES</string>
+    <string name="cancel_order">Cancel Order</string>
+    <string name="cancelOrderWarning">Cancellation Reasons</string>
+    <string name="message1">Message</string>
+    <string name="customer_details">Customer DETAILS</string>
+
 </resources>

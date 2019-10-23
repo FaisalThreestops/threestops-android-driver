@@ -211,7 +211,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="@dimen/dpFive"
-                    android:maxLines="2"
                     android:text="Culinary works,1241 East Main ,Culinary works,1241 East Main ,Culinary works,1241 East Main ,Culinary works,1241 East Main ,Culinary works,1241 East Main St,\nStamford,CT 06902, USA"
                     android:textColor="@color/white"
                     android:textSize="@dimen/spFourteen" />
@@ -271,7 +270,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/dptwo"
                     android:lineSpacingExtra="@dimen/dptwo"
-                    android:maxLines="2"
                     android:text="Culinary works,1241 East Main St,\nStamford,CT 06902, USA"
                     android:textColor="@color/white"
                     android:textSize="@dimen/spFourteen" />

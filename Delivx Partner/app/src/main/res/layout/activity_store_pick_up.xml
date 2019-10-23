@@ -48,16 +48,7 @@
 
     </RelativeLayout>
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:visibility="gone"
-        />
+
 
     <ScrollView
         android:id="@+id/scrollView2"
@@ -102,15 +93,122 @@
                         android:id="@+id/tvStore"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:maxLines="2"
                         android:text="10th Cross St, RBI Colony, Ganga Nagar, Bengaluru, Karnataka 560024"
                         android:textColor="@color/lightBlackText"
                         android:textSize="@dimen/spSixteen" />
 
                 </LinearLayout>
-
-
             </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_estimate_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:visibility="gone"
+          >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_estimate_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/estimate_value"
+                android:textAllCaps="true"
+                android:textColor="@color/lig_green2"
+                android:textSize="@dimen/spFourteen" />
+
+            <TextView
+                android:id="@+id/tv_estimate_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/color_sup_txt"
+                android:textSize="@dimen/spSixteen" />
+
+        </LinearLayout>
+        </LinearLayout>
+
+            <View
+                android:id="@+id/view_estimate"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dpOne"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@color/divider2"
+                android:visibility="gone"
+               />
+
+        <LinearLayout
+            android:id="@+id/ll_customer_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:visibility="gone"
+            >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_customer_notes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/customer_notes"
+                android:textAllCaps="true"
+                android:textColor="@color/lig_green2"
+                android:textSize="@dimen/spFourteen" />
+
+            <TextView
+                android:id="@+id/tv_customer_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/color_sup_txt"
+                android:textSize="@dimen/spSixteen" />
+
+        </LinearLayout>
+
+        </LinearLayout>
+
+            <View
+                android:id="@+id/view_customer"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dpOne"
+                android:layout_marginTop="5dp"
+                android:background="@color/divider2"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
+                android:visibility="gone"/>
+
+
+
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -156,7 +254,7 @@
 
                     <TextView
                         android:id="@+id/tvItems"
-                        android:layout_weight="1.8"
+                        android:layout_weight="1.6"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@string/items"
@@ -166,7 +264,7 @@
 
                     <TextView
                         android:id="@+id/tv_qty"
-                        android:layout_weight="0.4"
+                        android:layout_weight="0.7"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@string/quant"
@@ -178,7 +276,7 @@
 
                     <TextView
                         android:id="@+id/tvPriceTitle"
-                        android:layout_weight="0.8"
+                        android:layout_weight="0.7"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@string/price"
@@ -188,6 +286,46 @@
                         android:gravity="right"/>
 
                 </LinearLayout>
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                   >
+
+                    <TextView
+                        android:text="@string/items"
+                        android:id="@+id/tvName12"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"/>
+
+                    <TextView
+                        android:id="@+id/tvQty12"
+                        android:text="@string/quant"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintRight_toLeftOf="@+id/tvPriceTitle12"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:textAlignment="center"
+                        app:layout_constraintHorizontal_bias="1"/>
+
+                    <TextView
+                        android:id="@+id/tvPriceTitle12"
+                        android:text="@string/price"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintLeft_toRightOf="@+id/tvName12"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintHorizontal_bias="1"
+                        android:textAlignment="viewEnd"
+                        android:gravity="end"
+                        />
+                </android.support.constraint.ConstraintLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -237,6 +375,7 @@
 
 
                 <LinearLayout
+                    android:id="@+id/ll_subTotal"
                     android:weightSum="2"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -467,7 +606,6 @@
                             android:id="@+id/tv_dropup"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:maxLines="2"
                             android:text="10th Cross St, RBI Colony, Ganga Nagar, Bengaluru, Karnataka 560024"
                             android:textColor="@color/color_sup_txt"
                             android:textSize="@dimen/spSixteen" />
@@ -514,7 +652,34 @@
 
             </LinearLayout>
 
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/dpFifteen"
+                android:layout_marginBottom="@dimen/dpFifteen"
+                android:background="@color/gunsmoke_view" />
+
+            <TextView
+                android:id="@+id/tv_cancel"
+                android:layout_marginTop="@dimen/dpTwenty"
+                android:layout_marginBottom="@dimen/dpTwenty"
+                android:layout_gravity="center"
+                android:text="@string/cancel_order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blue"
+                android:textSize="14sp"
+                />
+
         </LinearLayout>
     </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        />
 
 </RelativeLayout>

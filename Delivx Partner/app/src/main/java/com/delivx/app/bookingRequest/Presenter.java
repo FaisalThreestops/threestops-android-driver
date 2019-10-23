@@ -6,12 +6,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 
+import com.delivx.app.MyApplication;
+import com.delivx.login.LoginActivity;
+import com.delivx.login.language.LanguagesList;
+import com.delivx.service.LocationUpdateService;
+import com.delivx.utility.AppConstants;
 import com.google.gson.Gson;
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.networking.DispatcherService;
 import com.delivx.pojo.NewBookingMQTTResponse;
 import com.delivx.utility.Utility;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.inject.Inject;
@@ -115,8 +121,13 @@ public class Presenter implements BookingPopUpMainMVP.PresenterOperations {
                         }
                         try {
                             JSONObject jsonObject;
+                            Utility.printLog("value.code() "+value.code());
                             if(value.code()==200){
-                                jsonObject=new JSONObject(value.body().string());
+                                Utility.printLog("value.code() "+value.code());
+//                                Utility.printLog("value.code() "+value.body().string());
+                                String response=value.body().string();
+                                Utility.printLog("value.code() "+response);
+                                jsonObject=new JSONObject(response);
                                 view.onSuccess(jsonObject.getString("message"));
 
                             }else {
@@ -126,7 +137,6 @@ public class Presenter implements BookingPopUpMainMVP.PresenterOperations {
                             cancelCoutDownTimer();
 
                             Utility.printLog("respondToRequest : "+jsonObject.toString());
-
                         }catch (Exception e)
                         {
                             Utility.printLog("respondToRequest : Catch :"+e.getMessage());

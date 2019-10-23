@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.delivx.utility.Utility;
@@ -74,6 +75,11 @@ public class HistoryOrderDetailsNew extends DaggerAppCompatActivity implements O
     @BindView(R.id.tvPickUp_name) TextView tvPickUp_name;
     @BindView(R.id.tv_drop_name) TextView tv_drop_name;
     @BindView(R.id.tv_orderStatus) TextView tv_orderStatus;
+    @BindView(R.id.tv_customer_details)TextView tv_customer_details;
+    @BindView(R.id.rl_customer_details)
+    RelativeLayout rl_customer_details;
+    @BindView(R.id.tv_cust_name)TextView tv_cust_name;
+    @BindView(R.id.ll_subTotal) LinearLayout ll_subTotal;
 
 
     @Inject
@@ -173,6 +179,23 @@ public class HistoryOrderDetailsNew extends DaggerAppCompatActivity implements O
         tv_drop_name.setTypeface(fontUtils.clanaproNarrNews());
         tv_orderStatus.setTypeface(fontUtils.clanaproNarrMedium());
 
+
+        if(appointment.getStoreType().equals("7")){
+            tv_customer_details.setVisibility(View.VISIBLE);
+            rl_customer_details.setVisibility(View.VISIBLE);
+            tvPickUp_name.setText(this.getResources().getString(R.string.pickup));
+            tv_drop_name.setText(this.getResources().getString(R.string.delivery));
+            tv_qty.setVisibility(View.INVISIBLE);
+            tv_price.setText(this.getResources().getString(R.string.quant));
+            ll_subTotal.setVisibility(View.GONE);
+        }
+        else{
+            tvPickUp_name.setText(appointment.getCustomerName());
+            tv_drop_name.setText(appointment.getStoreName());
+        }
+
+
+        tv_cust_name.setText(appointment.getCustomerName());
         tv_title.setText(Utility.parseDateToddMMyyyy(appointment.getBookingDate()));
         tv_bid.setText(getResources().getString(R.string.order_id_dot)+appointment.getOrderId());
         tvDrop.setText(appointment.getDropAddress());
@@ -189,14 +212,20 @@ public class HistoryOrderDetailsNew extends DaggerAppCompatActivity implements O
         tv_delCharge_val.setText(appointment.getCurrencySymbol()+" "+String.format("%.2f", deliveryCharge));
         double totalAmount = Double.parseDouble(appointment.getTotalAmount());
         tv_subToatal_val.setText(appointment.getCurrencySymbol()+" "+String.format("%.2f", totalAmount));
-        double appliedDiscount = Double.parseDouble(appointment.getItems().get(0).getAppliedDiscount());
-        tv_discount_val.setText(appointment.getCurrencySymbol()+" "+String.format("%.2f", appliedDiscount));
+        if(appointment.getItems().get(0).getAppliedDiscount()!=null) {
+            double appliedDiscount = Double.parseDouble(appointment.getItems().get(0).getAppliedDiscount());
+            tv_discount_val.setText(appointment.getCurrencySymbol() + " " + String.format("%.2f", appliedDiscount));
+        }else{
+            tv_discount_val.setText(appointment.getCurrencySymbol() + " 0.00");
+        }
 
         if(appointment.getTax().matches("0"))
             ll_discount.setVisibility(View.GONE);
 
-        if(appointment.getItems().get(0).getAppliedDiscount().matches("0"))
-            ll_tax.setVisibility(View.GONE);
+        if(appointment.getItems().get(0).getAppliedDiscount()!=null) {
+            if (appointment.getItems().get(0).getAppliedDiscount().matches("0"))
+                ll_tax.setVisibility(View.GONE);
+        }
 
         double paidByCash = Double.parseDouble(appointment.getPaidByCash());
         tvCashValue.setText(appointment.getCurrencySymbol()+" "+String.format("%.2f", paidByCash));
@@ -217,8 +246,8 @@ public class HistoryOrderDetailsNew extends DaggerAppCompatActivity implements O
         if(appointment.getPaidByCard().matches("0"))
             ll_card.setVisibility(View.GONE);
 
-        tvPickUp_name.setText(appointment.getCustomerName());
-        tv_drop_name.setText(appointment.getStoreName());
+
+
         tv_type_of_delivery_value.setText(appointment.getStoreTypeMsg());
 
         addItems(appointment);
@@ -247,9 +276,16 @@ public class HistoryOrderDetailsNew extends DaggerAppCompatActivity implements O
                 TextView tvItemPrice= view.findViewById(R.id.tvItemPrice);
                 tvItemPrice.setTypeface(fontUtils.clanaproNarrNews());
 
-
+                if(appointments.getStoreType().equals("7")){
+                    tvItemPrice.setVisibility(View.GONE);
+                }
+                float unitPrice;
                 int quantity= Integer.parseInt(appointments.getItems().get(i).getQuantity());
-                float unitPrice= Float.parseFloat(appointments.getItems().get(i).getUnitPrice());
+                if(appointments.getItems().get(i).getUnitPrice()!=null) {
+                    unitPrice = Float.parseFloat(appointments.getItems().get(i).getUnitPrice());
+                }else{
+                    unitPrice=0.00f;
+                }
 
                 String item=appointments.getItems().get(i).getItemName();
 

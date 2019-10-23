@@ -65,6 +65,9 @@ public interface HomeFragmentContract {
          * @param statusMsg error message
          */
         void showError(String statusMsg);
+
+        void driverStatusType(int driverStatus);
+
     }
 
 
@@ -126,5 +129,7 @@ public interface HomeFragmentContract {
          * <p>check whether the booking popup media player ring</p>
          */
         void checkBookingPopUp();
+
+        void getDriverScheduleType();
     }
 }

@@ -84,7 +84,6 @@ public class BankDetailsRVA extends RecyclerView.Adapter<BankDetailsRVA.ViewHold
                 BottomSheetDialogFragment bottomSheetDialogFragment = BankBottomSheetFragment.newInstance(bankLists.get(position),refreshBankDetails);
                 bottomSheetDialogFragment.show(fragmentManager, bottomSheetDialogFragment.getTag());
                 break;
-
         }
     }
 

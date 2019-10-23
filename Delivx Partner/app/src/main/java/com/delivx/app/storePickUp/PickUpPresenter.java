@@ -1,9 +1,16 @@
 package com.delivx.app.storePickUp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
+import com.delivx.app.MyApplication;
 import com.delivx.data.source.PreferenceHelperDataSource;
+import com.delivx.login.LoginActivity;
+import com.delivx.login.language.LanguagesList;
+import com.delivx.pojo.Cancel.CancelDataPojo;
+import com.delivx.service.LocationUpdateService;
 import com.driver.delivx.R;
 import com.delivx.networking.DispatcherService;
 import com.delivx.networking.NetworkService;
@@ -11,6 +18,7 @@ import com.delivx.pojo.AssignedAppointments;
 import com.delivx.pojo.ShipmentDetails;
 import com.delivx.utility.AppConstants;
 import com.delivx.utility.Utility;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,6 +42,7 @@ public class PickUpPresenter implements PickUpContract.PresenterOperations {
     @Inject NetworkService networkService;
     @Inject PreferenceHelperDataSource preferenceHelperDataSource;
     private AssignedAppointments appointments;
+    Gson gson = new Gson();
 
     @Inject
     PickUpPresenter() {
@@ -85,7 +94,7 @@ public class PickUpPresenter implements PickUpContract.PresenterOperations {
                 status,
                 preferenceHelperDataSource.getDriverCurrentLat(),
                 preferenceHelperDataSource.getDriverCurrentLongi(),
-                null,null,null,null,null,null);
+                null,null,null,null,null,null,null,null);
 
         bookingStatusRide.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -102,16 +111,36 @@ public class PickUpPresenter implements PickUpContract.PresenterOperations {
                             view.hideProgress();
                         }
                         try {
-                            JSONObject jsonObject;
-                            if(value.code()==200){
-                                jsonObject=new JSONObject(value.body().string());
-                                appointments.setOrderStatus(status);
-                                setAppointmentStatus(status);
-                                view.onSuccess(appointments);
+                            JSONObject jsonObject = null;
+                            switch (value.code()) {
+                                //success
+                                case 200:
+                                    jsonObject=new JSONObject(value.body().string());
+                                    appointments.setOrderStatus(status);
+                                    setAppointmentStatus(status);
+                                    view.onSuccess(appointments);
+                                    break;
 
-                            }else {
-                                jsonObject=new JSONObject(value.errorBody().string());
-                                view.onError(jsonObject.getString("message"));
+                                case 440:
+                                case 498:
+                                    Utility.printLog("pushTopics shared pref "+preferenceHelperDataSource.getPushTopic());
+                                    Utility.subscribeOrUnsubscribeTopics(new JSONArray(preferenceHelperDataSource.getPushTopic()),false);
+                                    LanguagesList languagesList = preferenceHelperDataSource.getLanguageSettings();
+                                    preferenceHelperDataSource.clearSharedPredf();
+                                    preferenceHelperDataSource.setLanguageSettings(languagesList);
+                                    ((MyApplication)context.getApplicationContext()).disconnectMqtt();
+                                    context.startActivity(new Intent(context, LoginActivity.class));
+                                    if(Utility.isMyServiceRunning(LocationUpdateService.class, context))
+                                    {
+                                        Intent stopIntent = new Intent(context, LocationUpdateService.class);
+                                        stopIntent.setAction(AppConstants.ACTION.STOPFOREGROUND_ACTION);
+                                        context.startService(stopIntent);
+                                    }
+
+                                    break;
+                                default:
+                                    jsonObject=new JSONObject(value.errorBody().string());
+                                    break;
                             }
 
                             Utility.printLog("bookingStatusRide : "+jsonObject.toString());
@@ -326,5 +355,160 @@ public class PickUpPresenter implements PickUpContract.PresenterOperations {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public void getResultBundle(AssignedAppointments appointments) {
+        this.appointments.getShipmentDetails().clear();
+        this.appointments.setShipmentDetails(appointments.getShipmentDetails());
+        this.appointments.setStoreId(appointments.getStoreId());
+        this.appointments.setSubTotalAmount(appointments.getSubTotalAmount());
+        this.appointments.setDeliveryCharge(appointments.getDeliveryCharge());
+        this.appointments.setDiscount(appointments.getDiscount());
+        this.appointments.setTotalAmount(appointments.getTotalAmount());
+        for(int i=0;i<appointments.getShipmentDetails().size();i++) {
+            this.appointments.getShipmentDetails().get(i).setMileageMetric(appointments.getMileageMetric());
+            this.appointments.getShipmentDetails().get(i).setCurrencySymbol(appointments.getCurrencySymbol());
+            this.appointments.getShipmentDetails().get(i).setCurrency(appointments.getCurrency());
+        }
+        view.setViews(this.appointments);
+    }
+
+    public void cancelReason(){
+        if(view!=null){
+            view.showProgress();
+        }
+        Observable<Response<ResponseBody>> assignedTrips=networkService.cancelReason(
+                preferenceHelperDataSource.getLanguage(),preferenceHelperDataSource.getToken());
+        assignedTrips.observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Response<ResponseBody>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Response<ResponseBody> value) {
+
+                        if(view!=null){
+                            view.hideProgress();
+                        }
+                        try {
+                            JSONObject jsonObject = null;
+                            switch (value.code()) {
+                                //success
+                                case 200:
+                                    String res=value.body().string();
+                                    jsonObject=new JSONObject(res);
+                                    CancelDataPojo cancelPojo=gson.fromJson(jsonObject.toString(),CancelDataPojo.class);
+                                    view.cancelDialog(cancelPojo.getData());
+                                    Log.i("cancel", "cancelResponse: "+res);
+                                    Utility.printLog("cancelResponse "+jsonObject.toString());
+                                    break;
+
+                                case 440:
+                                case 498:
+                                    Utility.printLog("pushTopics shared pref "+preferenceHelperDataSource.getPushTopic());
+                                    Utility.subscribeOrUnsubscribeTopics(new JSONArray(preferenceHelperDataSource.getPushTopic()),false);
+                                    LanguagesList languagesList = preferenceHelperDataSource.getLanguageSettings();
+                                    preferenceHelperDataSource.clearSharedPredf();
+                                    preferenceHelperDataSource.setLanguageSettings(languagesList);
+                                    ((MyApplication)context.getApplicationContext()).disconnectMqtt();
+                                    context.startActivity(new Intent(context, LoginActivity.class));
+                                    if(Utility.isMyServiceRunning(LocationUpdateService.class, context))
+                                    {
+                                        Intent stopIntent = new Intent(context, LocationUpdateService.class);
+                                        stopIntent.setAction(AppConstants.ACTION.STOPFOREGROUND_ACTION);
+                                        context.startService(stopIntent);
+                                    }
+
+                                    break;
+                                default:
+                                    jsonObject=new JSONObject(value.errorBody().string());
+                                    break;
+                            }
+                            Utility.printLog("bookingStatusRide : "+jsonObject.toString());
+
+                        }catch (Exception e)
+                        {
+                            Utility.printLog("bookingStatusRide : Catch :"+e.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if(view!=null){
+                            view.hideProgress();
+                        }
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        if(view!=null){
+                            view.hideProgress();
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void cancelOrder() {
+        if(view!=null)
+            view.showProgress();
+
+        Observable<Response<ResponseBody>> updateOrder=networkService.cancelOrder(
+                preferenceHelperDataSource.getToken(),
+                preferenceHelperDataSource.getLanguage(),
+                "",
+                "emfke",
+                appointments.getBid(),
+                preferenceHelperDataSource.getDriverCurrentLat()+"",
+                preferenceHelperDataSource.getDriverCurrentLongi()+""
+        );
+        updateOrder.observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Response<ResponseBody>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Response<ResponseBody> value) {
+                        if(view!=null)
+                            view.hideProgress();
+
+                        try {
+                            JSONObject jsonObject;
+                            if(value.code()==200|| value.code()==201){
+                                String res = value.body().string();
+                                Utility.printLog("updated item : "+res);
+                                jsonObject=new JSONObject(res);
+                                view.moveHomeActivity();
+
+                            }else {
+                                jsonObject=new JSONObject(value.errorBody().string());
+                            }
+
+                            Utility.printLog("updateOrderApi : "+jsonObject.toString());
+
+                        }catch (Exception e)
+                        {
+                            Utility.printLog("updateOrderApi : Catch :"+e.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if(view!=null)
+                            view.hideProgress();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        if(view!=null)
+                            view.hideProgress();
+                    }
+                });
     }
 }

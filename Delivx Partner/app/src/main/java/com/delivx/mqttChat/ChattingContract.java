@@ -42,8 +42,8 @@ public interface ChattingContract {
 
                 /**
                  * <h2>getData</h2>
-                 * <p>get the data from previous(StorePickUp,StorePickUpDetails and BookingRide)</p>
-                 * @param intent :(StorePickUp,StorePickUpDetails and BookingRide)
+                 * <p>get the data from previous(SlotAppointmentActivity,StorePickUpDetails and BookingRide)</p>
+                 * @param intent :(SlotAppointmentActivity,StorePickUpDetails and BookingRide)
                  */
                 void getData(Intent intent);
 

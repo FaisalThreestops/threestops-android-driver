@@ -139,10 +139,14 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
         tvPayment.setText(newBookingMQTTResponse.getPaymentType());
         tv_popup_pickuploc.setText(newBookingMQTTResponse.getStoreName()+":"+newBookingMQTTResponse.getAdr1());
         tv_pickuptime.setText(Utility.formatDateWeek(newBookingMQTTResponse.getDt()));
+        if(newBookingMQTTResponse.getStoreType()!=null && newBookingMQTTResponse.getStoreType().equals("7"))
+            tv_popup_drop.setText(this.getResources().getString(R.string.delivery));
+        else
+            tv_popup_drop.setText(this.getResources().getString(R.string.drop));
         tv_popup_droploc.setText(newBookingMQTTResponse.getCustomerName()+":"+newBookingMQTTResponse.getDrop1());
-        tv_droptime.setText(Utility.formatDateWeek(newBookingMQTTResponse.getDropDt()));
+        tv_droptime.setText(Utility.getDate(Long.parseLong(newBookingMQTTResponse.getDeliveryDatetimeTimeStamp())));
+//        tv_droptime.setText(Utility.formatDateWeek(newBookingMQTTResponse.getDropDt()));
         tvordertype.setText(newBookingMQTTResponse.getStoreTypeMsg());
-
 
         if(newBookingMQTTResponse.getPaymentType().equals("2"))
             tvPayment.setText(getResources().getString(R.string.cash));
@@ -159,14 +163,14 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
         mediaPlayer.start();
     }
 
-    @OnClick({R.id.ll_booking_popup,R.id.btnReject})
+    @OnClick({R.id.circular_progress_bar,R.id.btnReject})
     @Override
     public void onClick(View v) {
 
         switch (v.getId())
         {
             //Accept Booking
-            case R.id.ll_booking_popup:
+            case R.id.circular_progress_bar:
                 presenter.updateApptRequest(AppConstants.BookingStatus.Accept);
                 break;
 
@@ -186,7 +190,6 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
 
     @Override
     public void onBackPressed() {
-
     }
 
     @Override

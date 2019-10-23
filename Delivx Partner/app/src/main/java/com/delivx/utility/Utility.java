@@ -32,6 +32,7 @@ import android.provider.Settings;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
+import android.text.format.DateFormat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -241,6 +242,45 @@ public class Utility {
         return dateFormat;
     }
 
+    public static String getMonthDay(String time) {
+        String inputPattern = "yyyy-MM-dd HH:mm:ss";
+        String outputPattern = "MMM d";
+        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern, Locale.US);
+        SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern, Locale.US);
+
+        Date date = null;
+        String str = null;
+
+        try {
+            date = inputFormat.parse(time);
+            str = outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            Log.d("exe", "ParseException" + e.getMessage());
+        }
+        return str;
+    }
+
+    public static String getMonth(String time) {
+        String inputPattern = "yyyy-MM-dd HH:mm:ss";
+        String outputPattern = "d";
+        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern, Locale.US);
+        SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern, Locale.US);
+
+        Date date = null;
+        String str = null;
+
+        try {
+            date = inputFormat.parse(time);
+            str = outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            Log.d("exe", "ParseException" + e.getMessage());
+        }
+        return str;
+    }
+
+
 
     public static String sentingDateNotEdited(String displayDate) {
         String[] date = displayDate.split("-");
@@ -346,6 +386,20 @@ public class Utility {
         if (true) {
             Log.d(VariableConstant.PARENT_FOLDER, str);
         }
+    }
+
+    public static String getDate(long time) {
+        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+        cal.setTimeInMillis(time * 1000);
+        String date = DateFormat.format("hh:mm a", cal).toString();
+        return date;
+    }
+
+    public static String getDateFormat(long time) {
+        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+        cal.setTimeInMillis(time * 1000);
+        String date = DateFormat.format("MMM dd, hh:mm a", cal).toString();
+        return date;
     }
 
     public static void printLog(String msg) {
@@ -694,6 +748,13 @@ public class Utility {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static String getDay(long time) {
+        Calendar cal = Calendar.getInstance(Locale.getDefault());
+        cal.setTimeInMillis(time * 1000);
+        String date = DateFormat.format("MM-dd", cal).toString();
+        return date;
     }
 
     //Friday, 13 April, 11:30 Am

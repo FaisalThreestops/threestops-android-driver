@@ -59,9 +59,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 if(received.has("action")){
                     action = received.getInt("action");
                 }
-                if(received.has("msg")){
-                    message = received.getString("msg");
+//                if(received.has("msg")){
+//                    message = received.getString("msg");
+//                }
+
+                if(received.has("title")){
+                    message = received.getString("title");
                 }
+
                 if(received.has("message")){
                     message = received.getString("message");
                 }
@@ -77,7 +82,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             }
 
             Log.d(TAG, "Message data orderID: " +data+" : "+acknowledgeHelper);
-            if(action==11||action==10){
+            if(action==11||action==10 ||  action==29){
                 JSONObject jsonObject;
                 if(data.contains("bookingData")){
                     try {
@@ -114,11 +119,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
         }
 
-
-
-
-
-//        sendNotification(message, received);
+        if(action==10 || action==29)
+        sendNotification(message);
     }
 
 
@@ -129,7 +131,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      *
      * @param messageBody FCM message body received.
      */
-    private void sendNotification(String messageBody, int action) {
+    private void sendNotification(String messageBody) {
 
         Intent intent;
         intent = new Intent(MyFirebaseMessagingService.this, SplashScreen.class);

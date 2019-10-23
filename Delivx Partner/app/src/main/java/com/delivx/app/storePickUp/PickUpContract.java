@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.delivx.BaseView;
 import com.delivx.pojo.AssignedAppointments;
+import com.delivx.pojo.Cancel.CancelData;
 import com.delivx.pojo.ShipmentDetails;
 
 public interface PickUpContract {
@@ -58,6 +59,10 @@ public interface PickUpContract {
          * @param assignedAppointments : Appointment details pojo
          */
         void openOrderEditDialog(ShipmentDetails shipmentDetails, AssignedAppointments assignedAppointments);
+
+        void cancelDialog(CancelData cancelData);
+
+        void moveHomeActivity();
     }
 
     interface PresenterOperations
@@ -121,11 +126,16 @@ public interface PickUpContract {
          */
         void openChat();
 
+        void cancelReason();
+
+        void cancelOrder();
         /**
          * <h2>getlanguageCode</h2>
          * <p>get the country code</p>
          * @return : languageCode
          */
         String getlanguageCode();
+
+        void getResultBundle(AssignedAppointments appointments);
     }
 }

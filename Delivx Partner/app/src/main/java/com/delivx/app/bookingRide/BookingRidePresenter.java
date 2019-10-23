@@ -1,9 +1,14 @@
 package com.delivx.app.bookingRide;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.delivx.app.MyApplication;
+import com.delivx.login.LoginActivity;
+import com.delivx.login.language.LanguagesList;
+import com.delivx.service.LocationUpdateService;
 import com.google.android.gms.maps.model.LatLng;
 import com.delivx.RxObservers.RXDistanceChangeObserver;
 import com.delivx.data.source.PreferenceHelperDataSource;
@@ -72,6 +77,7 @@ public class BookingRidePresenter implements BookingRideContract.PresenterOperat
                 setDistanceText(jsonArray);
                 setTimerText(jsonArray);
             } catch (JSONException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -136,8 +142,6 @@ public class BookingRidePresenter implements BookingRideContract.PresenterOperat
                 view.openGoogleMap(uri);
             }
         }
-
-
     }
 
     @Override
@@ -149,7 +153,7 @@ public class BookingRidePresenter implements BookingRideContract.PresenterOperat
     public void getMarkers()
     {
         if(appointments.getOrderStatus().equals(AppConstants.BookingStatus.JourneyStarted)){
-            if(!appointments.getDropLatLng().isEmpty()){
+            if(!appointments.getDropLatLng().isEmpty() && !appointments.getDropLatLng().contains("null")){
                 String[] latLong = appointments.getDropLatLng().split(",");
                 LatLng customer = new LatLng(Double.valueOf(latLong[0]), Double.valueOf(latLong[1]));
 
@@ -159,7 +163,7 @@ public class BookingRidePresenter implements BookingRideContract.PresenterOperat
             }
         }else
         {
-            if(!appointments.getPickUpLatLng().isEmpty()){
+            if(!appointments.getPickUpLatLng().isEmpty() && !appointments.getDropLatLng().contains("null")){
                 String[] latLong = appointments.getPickUpLatLng().split(",");
                 LatLng customer = new LatLng(Double.valueOf(latLong[0]), Double.valueOf(latLong[1]));
 
@@ -195,7 +199,7 @@ public class BookingRidePresenter implements BookingRideContract.PresenterOperat
                 null,
                 null,
                 null,
-                null);
+                null,"","lmm");
 
         final String finalStatus = status;
         bookingStatusRide.observeOn(AndroidSchedulers.mainThread())
@@ -212,17 +216,35 @@ public class BookingRidePresenter implements BookingRideContract.PresenterOperat
                             view.hideProgress();
                         }
                         try {
-                            JSONObject jsonObject;
-                            if(value.code()==200){
-                                jsonObject=new JSONObject(value.body().string());
-                                appointments.setOrderStatus(finalStatus);
-                                setAppointmentStatus(finalStatus);
-                                updateDistanceAndTimerOnresult();
-                                view.onSuccess(appointments);
+                            JSONObject jsonObject = null;
+                            switch (value.code()){
+                                case 200:
+                                    jsonObject=new JSONObject(value.body().string());
+                                    appointments.setOrderStatus(finalStatus);
+                                    setAppointmentStatus(finalStatus);
+                                    updateDistanceAndTimerOnresult();
+                                    view.onSuccess(appointments);
+                                    break;
+                                case 440:
+                                case 498:
+                                    Utility.printLog("pushTopics shared pref "+preferenceHelperDataSource.getPushTopic());
+                                    Utility.subscribeOrUnsubscribeTopics(new JSONArray(preferenceHelperDataSource.getPushTopic()),false);
+                                    LanguagesList languagesList = preferenceHelperDataSource.getLanguageSettings();
+                                    preferenceHelperDataSource.clearSharedPredf();
+                                    preferenceHelperDataSource.setLanguageSettings(languagesList);
+                                    ((MyApplication)context.getApplicationContext()).disconnectMqtt();
+                                    context.startActivity(new Intent(context, LoginActivity.class));
+                                    if(Utility.isMyServiceRunning(LocationUpdateService.class, context))
+                                    {
+                                        Intent stopIntent = new Intent(context, LocationUpdateService.class);
+                                        stopIntent.setAction(AppConstants.ACTION.STOPFOREGROUND_ACTION);
+                                        context.startService(stopIntent);
+                                    }
 
-                            }else {
-                                jsonObject=new JSONObject(value.errorBody().string());
-                                view.onError(jsonObject.getString("message"));
+                                    break;
+                                default:
+                                    jsonObject=new JSONObject(value.errorBody().string());
+                                    break;
                             }
 
                             Utility.printLog("bookingStatusRide : "+jsonObject.toString());

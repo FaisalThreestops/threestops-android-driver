@@ -1,10 +1,13 @@
 package com.delivx.pojo;
 
+import com.delivx.utility.Utility;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 
-public class AssignedAppointments implements Serializable {
+public class AssignedAppointments implements Serializable, Comparator<AssignedAppointments> {
     private String customerEmail;
 
     private String customerPhone;
@@ -73,9 +76,26 @@ public class AssignedAppointments implements Serializable {
 
     private String excTax;
 
+    private String orderDateTimeStamp;
+
+    private String dueDatetimeTimeStamp;
+
+    private String estimatedPackageValue;
+
+    private String extraNote;
+
+
     private ArrayList<ExclusiveTaxes> exclusiveTaxes;
 
     private boolean isCominigFromStore;
+
+    private String slotStartTime;
+    private String slotEndTime;
+    private String slotId;
+    private String storeId;
+    private String discount;
+    private int itemType;
+
 
     public String getStorePhone() {
         return storePhone;
@@ -374,4 +394,93 @@ public class AssignedAppointments implements Serializable {
     public void setExclusiveTaxes(ArrayList<ExclusiveTaxes> exclusiveTaxes) {
         this.exclusiveTaxes = exclusiveTaxes;
     }
+    public String getOrderDateTimeStamp() {
+        return orderDateTimeStamp;
+    }
+
+    public void setOrderDateTimeStamp(String orderDateTimeStamp) {
+        this.orderDateTimeStamp = orderDateTimeStamp;
+    }
+
+    public String getDueDatetimeTimeStamp() {
+        return dueDatetimeTimeStamp;
+    }
+
+    public void setDueDatetimeTimeStamp(String dueDatetimeTimeStamp) {
+        this.dueDatetimeTimeStamp = dueDatetimeTimeStamp;
+    }
+
+    public String getSlotStartTime() {
+        return slotStartTime;
+    }
+
+    public void setSlotStartTime(String slotStartTime) {
+        this.slotStartTime = slotStartTime;
+    }
+
+    public String getSlotEndTime() {
+        return slotEndTime;
+    }
+
+    public void setSlotEndTime(String slotEndTime) {
+        this.slotEndTime = slotEndTime;
+    }
+
+    public String getSlotId() {
+        return slotId;
+    }
+
+    public void setSlotId(String slotId) {
+        this.slotId = slotId;
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId;
+    }
+
+    public String getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(String discount) {
+        this.discount = discount;
+    }
+
+    public int getItemType() {
+        return itemType;
+    }
+
+    public void setItemType(int itemType) {
+        this.itemType = itemType;
+    }
+
+    public String getEstimatedPackageValue() {
+        return estimatedPackageValue;
+    }
+
+    public void setEstimatedPackageValue(String estimatedPackageValue) {
+        this.estimatedPackageValue = estimatedPackageValue;
+    }
+
+    public String getExtraNote() {
+        return extraNote;
+    }
+
+    public void setExtraNote(String extraNote) {
+        this.extraNote = extraNote;
+    }
+
+
+    @Override
+    public int compare(AssignedAppointments o1, AssignedAppointments o2) {
+
+        return o1.getSlotId().compareTo(o2.getSlotId());
+//        return Utility.getMonthDay(o1.getDueDatetime()).compareTo(Utility.getMonthDay(o2.getDueDatetime()));
+
+    }
+
 }

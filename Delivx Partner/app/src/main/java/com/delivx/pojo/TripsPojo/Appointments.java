@@ -73,6 +73,16 @@ public class Appointments implements Serializable {
 
     private String tax;
 
+    public String getStoreType() {
+        return storeType;
+    }
+
+    public void setStoreType(String storeType) {
+        this.storeType = storeType;
+    }
+
+    private String storeType;
+
     private String storeEarning;
 
     private String storeLogo;

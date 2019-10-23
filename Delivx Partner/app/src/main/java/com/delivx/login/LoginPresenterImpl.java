@@ -291,6 +291,7 @@ public class LoginPresenterImpl implements LoginPresenter
                         jsonObject=new JSONObject(res);
                         Gson gson=new Gson();
                         SinginResponsePojo signInResponse=gson.fromJson(jsonObject.toString(),SinginResponsePojo.class);
+                        preferenceHelperDataSource.setDriverType(signInResponse.getData().getDriverType());
                         preferenceHelperDataSource.setPushTopic(jsonObject.getJSONObject("data").getString("fcmTopics"));
                         setSignInData(signInResponse.getData(),password);
                         Utility.printLog("LoginResponse : "+jsonObject.toString());
@@ -338,6 +339,8 @@ public class LoginPresenterImpl implements LoginPresenter
      */
     private void setSignInData(SigninData data, String password){
         preferenceHelperDataSource.setDriverChannel(data.getChn());
+        //driver schedulerType(0,1)
+        preferenceHelperDataSource.setDriverScheduleType(data.getDriverScheduleType());
         String driver_channel = "message/"+data.getMid();
         Utility.printLog("login driver_channel "+driver_channel);
         preferenceHelperDataSource.setDriverChannel_msg(driver_channel);

@@ -1,8 +1,15 @@
 package com.delivx.app.main.history;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 
+import com.delivx.app.MyApplication;
+import com.delivx.login.LoginActivity;
+import com.delivx.login.language.LanguagesList;
 import com.delivx.pojo.TripsPojo.Appointments;
+import com.delivx.service.LocationUpdateService;
+import com.delivx.utility.AppConstants;
 import com.google.gson.Gson;
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.networking.NetworkService;
@@ -10,6 +17,7 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.delivx.pojo.TripsPojo.TripsPojo;
 import com.delivx.utility.Utility;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
@@ -39,6 +47,8 @@ public class HistoryPresenter implements HistoryContract.PresenterOperations {
     private ArrayList<BarEntry> barEntries;
     @Inject   NetworkService networkService;
     @Inject   PreferenceHelperDataSource preferenceHelperDataSource;
+    @Inject
+    Activity context;
 
     HistoryContract.ViewOperations view;
 
@@ -93,29 +103,46 @@ public class HistoryPresenter implements HistoryContract.PresenterOperations {
 
                         try {
                             Utility.printLog("HistoryRes"+value.code());
+                            String response=null;
                             TripsPojo tripsPojo;
-                            if(value.code()==200){
-                                String response=value.body().string();
-                                Utility.printLog("orderApi : "+response);
-                                Gson gson=new Gson();
-                                tripsPojo=gson.fromJson(response,TripsPojo.class);
-                                if(tripsPojo.getData()!=null)
-                                    handleDate(tripsPojo, selectedTabPosition, tabcount);
+                            switch (value.code()){
+                                case 200:
+                                     response=value.body().string();
+                                    Utility.printLog("orderApi : "+response);
+                                    Gson gson=new Gson();
+                                    tripsPojo=gson.fromJson(response,TripsPojo.class);
+                                    if(tripsPojo.getData()!=null)
+                                        handleDate(tripsPojo, selectedTabPosition, tabcount);
+                                    break;
+
+                                case 440:
+                                case 498:
+                                    Utility.printLog("pushTopics shared pref "+preferenceHelperDataSource.getPushTopic());
+                                    Utility.subscribeOrUnsubscribeTopics(new JSONArray(preferenceHelperDataSource.getPushTopic()),false);
+                                    LanguagesList languagesList = preferenceHelperDataSource.getLanguageSettings();
+                                    preferenceHelperDataSource.clearSharedPredf();
+                                    preferenceHelperDataSource.setLanguageSettings(languagesList);
+                                    ((MyApplication)context.getApplicationContext()).disconnectMqtt();
+                                    context.startActivity(new Intent(context, LoginActivity.class));
+                                    if(Utility.isMyServiceRunning(LocationUpdateService.class, context))
+                                    {
+                                        Intent stopIntent = new Intent(context, LocationUpdateService.class);
+                                        stopIntent.setAction(AppConstants.ACTION.STOPFOREGROUND_ACTION);
+                                        context.startService(stopIntent);
+                                    }
+                                    break;
+                                    default:
+                                        view.setEmptyHistory();
+                                        barEntries = new ArrayList<>();
+                                        ArrayList<Appointments> appointments = new ArrayList<>();
+                                        view.setValues(appointments,barEntries,"0",0);
+                                        String err = value.errorBody().string();
+                                        Utility.printLog("  HistoryRes err : "+err);
+                                        JSONObject jsonObject = new JSONObject(err);
+                                        view.onFailure(jsonObject.getString("message"));
+                                        break;
                             }
-                            else {
-                                view.setEmptyHistory();
-                                barEntries = new ArrayList<>();
-                                ArrayList<Appointments> appointments = new ArrayList<>();
-                                view.setValues(appointments,barEntries,"0",0);
-                                String err = value.errorBody().string();
-                                Utility.printLog("  HistoryRes err : "+err);
-                                JSONObject jsonObject = new JSONObject(err);
-                                view.onFailure(jsonObject.getString("message"));
-
-
-
-
-                            }
+                            Utility.printLog("bookingStatusRide : "+response);
                         }catch (Exception e)
                         {
                             Utility.printLog("orderApi : Catch :"+e.getMessage());

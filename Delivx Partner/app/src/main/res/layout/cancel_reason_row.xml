@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/mainCancelCl"
+    android:paddingBottom="@dimen/dpFive"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary">
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:paddingTop="@dimen/dpFive"
+                android:text="@string/cancelOrderWarning"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/spFourteen" />
+
+        <ImageView
+            android:id="@+id/iv_jobdetails"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="@dimen/dpEight"
+            android:layout_marginRight="@dimen/dpEight"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/selector_signup_close" />
+    </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dpOne"
+            android:background="@color/colorwildsand" />
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/bottomSheetReasonRv"
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="240dp"
+                    android:layout_marginTop="@dimen/dpFive">
+
+                </android.support.v7.widget.RecyclerView>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dpTen"
+                    android:layout_marginEnd="@dimen/dpTwenty"
+                    android:layout_marginLeft="@dimen/dpTwenty"
+                    android:layout_marginRight="@dimen/dpTwenty"
+                    android:layout_marginStart="@dimen/dpTwenty"
+                    android:layout_marginTop="@dimen/dpTen"
+                    android:background="@drawable/btn_drop_shadow"
+                    android:visibility="gone">
+
+                    <Button
+                        android:id="@+id/createNewListTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:gravity="center"
+                        android:text="@string/confirm"
+                        android:textColor="@color/white" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:id="@+id/progressBarPb"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="gone"
+        />
+</android.support.constraint.ConstraintLayout>
+
+    <!--
+    <LinearLayout
+    android:id="@+id/listNameEtTl"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/twenty_dp"
+    android:layout_marginLeft="@dimen/twenty_dp"
+    android:layout_marginRight="@dimen/twenty_dp"
+    android:layout_marginStart="@dimen/twenty_dp"
+    android:layout_marginTop="@dimen/five_dp"
+    android:orientation="horizontal"
+    android:visibility="vis">
+
+    <widget.TextInputLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <EditText
+            android:id="@+id/listNameEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/enterNameForList"
+            android:paddingTop="@dimen/five_dp"
+            android:textColor="@color/colorTuna"
+            android:textSize="@dimen/fifteen_sp" />
+
+    </widget.TextInputLayout>
+
+
+    <TextView
+        android:id="@+id/addNewListTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/five_dp"
+        android:layout_marginStart="@dimen/five_dp"
+        android:background="@drawable/button_bag"
+        android:gravity="center"
+        android:paddingBottom="@dimen/ten_dp"
+        android:paddingLeft="@dimen/fifteen_dp"
+        android:paddingRight="@dimen/fifteen_dp"
+        android:paddingTop="@dimen/ten_dp"
+        android:text="@string/add"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/twelve_sp" />
+
+    </LinearLayout>-->

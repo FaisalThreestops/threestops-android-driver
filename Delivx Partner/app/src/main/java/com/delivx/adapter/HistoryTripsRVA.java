@@ -71,9 +71,16 @@ public class HistoryTripsRVA extends RecyclerView.Adapter<HistoryTripsRVA.ViewHo
         holder.tv_pickup_loc.setText(appointments.get(position).getPickAddress());
         holder.tv_drop_loc.setText(appointments.get(position).getDropAddress());
         holder.tv_deliveryfee.setText(appointments.get(position).getCurrencySymbol() + "" + appointments.get(position).getTotalAmount());
+        if(appointments.get(position).getStoreType().equals("7")){
+            holder.tv_pickup_loc_header.setText(context.getResources().getString(R.string.pickup));
+            holder.tv_drop_loc_header.setText(context.getResources().getString(R.string.delivery));
+        }
+        else {
+            holder.tv_pickup_loc_header.setText(appointments.get(position).getStoreName());
+            holder.tv_drop_loc_header.setText(appointments.get(position).getCustomerName());
+        }
 
-        holder.tv_pickup_loc_header.setText(appointments.get(position).getStoreName());
-        holder.tv_drop_loc_header.setText(appointments.get(position).getCustomerName());
+
 
         String date = Utility.DateFormatChange(appointments.get(position).getBookingDate());
         holder.tv_date_time.setText(date);
