@@ -262,6 +262,7 @@ public class SignupPersonal extends DaggerAppCompatActivity implements View.OnCl
         et_license_no.setTypeface(ClanaproNarrNews);
         tv_next.setTypeface(ClanaproNarrMedium);
 
+        et_fname.requestFocus();
         presenter.getCountryCode();
 
     }
