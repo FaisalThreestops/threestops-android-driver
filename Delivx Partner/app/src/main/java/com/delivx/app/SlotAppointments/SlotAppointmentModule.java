@@ -1,4 +1,4 @@
-package com.delivx.app.SlotAppointments;
+package com.delivx.app.slotAppointments;
 
 import android.app.Activity;
 

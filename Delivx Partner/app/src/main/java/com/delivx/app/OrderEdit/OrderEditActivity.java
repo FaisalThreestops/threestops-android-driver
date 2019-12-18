@@ -1,36 +1,23 @@
-package com.delivx.app.OrderEdit;
+package com.delivx.app.orderEdit;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
-import android.text.SpannableString;
-import android.text.style.UnderlineSpan;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.delivx.app.ReplaceItem.ReplaceItemsActivity;
-import com.delivx.app.bookingRide.BookingRide;
-import com.delivx.app.invoice.InvoiceActivity;
+import com.delivx.app.replaceItem.ReplaceItemsActivity;
 import com.delivx.app.main.MainActivity;
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.mqttChat.ChattingActivity;
@@ -38,11 +25,8 @@ import com.delivx.pojo.AssignedAppointments;
 import com.delivx.pojo.ShipmentDetails;
 import com.delivx.utility.AppConstants;
 import com.delivx.utility.FontUtils;
-import com.delivx.utility.Slider;
 import com.delivx.utility.Utility;
 import com.driver.delivx.R;
-
-import java.util.Locale;
 
 import javax.inject.Inject;
 

@@ -296,13 +296,10 @@ public class LoginPresenterImpl implements LoginPresenter
                         setSignInData(signInResponse.getData(),password);
                         Utility.printLog("LoginResponse : "+jsonObject.toString());
                     }else {
-
                         jsonObject=new JSONObject(value.errorBody().string());
                         loginView.showError(jsonObject.getString("message"));
                         Utility.printLog("LoginResponse : "+value.errorBody().string());
                     }
-
-
                 }catch (JSONException e)
                 {
                     Utility.printLog("LoginResponse : Catch :"+e.getMessage());

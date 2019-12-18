@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.delivx.app.SlotAppointments.SlotAppointmentActivity;
+import com.delivx.app.slotAppointments.SlotAppointmentActivity;
 import com.delivx.pojo.AssignedAppointments;
 import com.delivx.utility.Utility;
 import com.driver.delivx.R;
@@ -21,6 +21,8 @@ import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.delivx.utility.VariableConstant.DATA;
 
 public class SlotFlowJobRVA extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     Context context;
@@ -75,7 +77,7 @@ public class SlotFlowJobRVA extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     if (passingAssignmentTrips.size() > 0) {
                         Intent intent = new Intent(context, SlotAppointmentActivity.class);
                         Bundle bundle = new Bundle();
-                        bundle.putSerializable("data", passingAssignmentTrips);
+                        bundle.putSerializable(DATA, passingAssignmentTrips);
                         intent.putExtras(bundle);
                         context.startActivity(intent);
                     } else {

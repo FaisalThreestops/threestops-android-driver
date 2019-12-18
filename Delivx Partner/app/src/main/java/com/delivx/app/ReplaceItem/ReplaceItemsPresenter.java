@@ -1,14 +1,10 @@
-package com.delivx.app.ReplaceItem;
+package com.delivx.app.replaceItem;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.delivx.app.MyApplication;
 import com.delivx.data.source.PreferenceHelperDataSource;
-import com.delivx.login.LoginActivity;
-import com.delivx.login.language.LanguagesList;
 import com.delivx.networking.DispatcherService;
 import com.delivx.networking.NetworkService;
 import com.delivx.pojo.AssignedAppointments;
@@ -18,8 +14,6 @@ import com.delivx.pojo.SearchPojo.Data;
 import com.delivx.pojo.SearchPojo.SearchPojoItems;
 import com.delivx.pojo.SearchPojo.Units;
 import com.delivx.pojo.ShipmentDetails;
-import com.delivx.service.LocationUpdateService;
-import com.delivx.utility.AppConstants;
 import com.delivx.utility.Utility;
 import com.driver.delivx.R;
 import com.google.gson.Gson;

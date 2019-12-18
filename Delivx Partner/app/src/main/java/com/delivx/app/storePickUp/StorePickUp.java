@@ -32,7 +32,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.delivx.adapter.ReasonRVA;
-import com.delivx.app.OrderEdit.OrderEditActivity;
+import com.delivx.app.orderEdit.OrderEditActivity;
 import com.delivx.app.bookingRide.BookingRide;
 import com.delivx.app.invoice.InvoiceActivity;
 import com.delivx.app.main.MainActivity;

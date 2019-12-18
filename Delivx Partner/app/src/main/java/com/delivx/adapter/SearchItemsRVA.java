@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.delivx.app.ReplaceItem.ReplaceItemsActivity;
+import com.delivx.app.replaceItem.ReplaceItemsActivity;
 import com.delivx.pojo.SearchPojo.Data;
 import com.driver.delivx.R;
 

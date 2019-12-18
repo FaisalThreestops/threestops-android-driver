@@ -12,8 +12,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.delivx.app.SelectedStore.SelectedStoreIdActivity;
-import com.delivx.app.bookingRide.BookingRide;
+import com.delivx.app.selectedStore.SelectedStoreIdActivity;
 import com.delivx.app.invoice.InvoiceActivity;
 import com.delivx.app.storeDetails.StorePickUpDetails;
 import com.delivx.pojo.AssignedAppointments;

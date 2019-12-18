@@ -1,6 +1,7 @@
 package com.delivx.fcm;
 
 import android.app.ActivityManager;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
@@ -10,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -82,7 +84,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             }
 
             Log.d(TAG, "Message data orderID: " +data+" : "+acknowledgeHelper);
-            if(action==11||action==10 ||  action==29){
+            if(action==11||action==10 ||  action==29|| action==14){
                 JSONObject jsonObject;
                 if(data.contains("bookingData")){
                     try {
@@ -119,8 +121,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
         }
 
-        if(action==10 || action==29)
-        sendNotification(message);
+        if(action!=1)
+        sendNotification(message,action);
     }
 
 
@@ -131,7 +133,51 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      *
      * @param messageBody FCM message body received.
      */
-    private void sendNotification(String messageBody) {
+    private void sendNotification(String messageBody, int action) {
+        Intent intent;
+        intent = new Intent(MyFirebaseMessagingService.this, SplashScreen.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
+            PendingIntent.FLAG_ONE_SHOT);
+
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_launcher);
+
+        NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
+        bigText.bigText(messageBody);
+        bigText.setBigContentTitle(this.getString(R.string.app_name));
+        NotificationManager notificationManager = (NotificationManager) this.getSystemService(
+            Context.NOTIFICATION_SERVICE);
+
+        assert notificationManager != null;
+        notificationManager.cancel(0);
+
+        PendingIntent pendingIntent1 = PendingIntent.getActivity(this, 0, intent,
+            PendingIntent.FLAG_ONE_SHOT);
+        String CHANNEL_ID = getApplicationContext().getString(R.string.app_name_withoutSpace);
+        ;// The id of the channel.
+        CharSequence name = getApplicationContext().getString(R.string.app_name);
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+            .setSmallIcon(R.drawable.ic_launcher)
+            .setContentTitle(getString(R.string.app_name))
+            .setContentText(messageBody)
+            .setContentIntent(pendingIntent1)
+            .setChannelId(CHANNEL_ID)
+            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setSound(defaultSoundUri)
+            .setAutoCancel(true)
+            .setLargeIcon(bitmap)
+            .setStyle(bigText);
+
+        notificationManager.notify(0, notificationBuilder.build());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+            notificationManager.createNotificationChannel(mChannel);
+        }
+    }
+    /*private void sendNotification(String messageBody) {
 
         Intent intent;
         intent = new Intent(MyFirebaseMessagingService.this, SplashScreen.class);
@@ -166,10 +212,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        notificationManager.notify(0 *//* ID of notification *//*, notificationBuilder.build());
 
 
-    }
+    }*/
 
 
     public static boolean isApplicationSentToBackground(final Context context)

@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.delivx.app.SlotAppointments.SlotAppointmentActivity;
+import com.delivx.app.slotAppointments.SlotAppointmentActivity;
 import com.delivx.pojo.AssignedAppointments;
 import com.driver.delivx.R;
 

@@ -177,22 +177,22 @@
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name="com.delivx.app.SlotAppointments.SlotAppointmentActivity"
+            android:name="com.delivx.app.slotAppointments.SlotAppointmentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name="com.delivx.app.SelectedStore.SelectedStoreIdActivity"
+            android:name="com.delivx.app.selectedStore.SelectedStoreIdActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name="com.delivx.app.OrderEdit.OrderEditActivity"
+            android:name="com.delivx.app.orderEdit.OrderEditActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name="com.delivx.app.ReplaceItem.ReplaceItemsActivity"
+            android:name="com.delivx.app.replaceItem.ReplaceItemsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
 

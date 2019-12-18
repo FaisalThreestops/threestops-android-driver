@@ -324,6 +324,7 @@ public class MQTTManager
                         case 10:
                         case 12:
                         case 16:
+                        case 14:
                             RXMqttMessageObserver.getInstance().emit(jsonObject);
                             break;
 

@@ -1,4 +1,4 @@
-package com.delivx.app.ReplaceItem;
+package com.delivx.app.replaceItem;
 
 import android.os.Bundle;
 

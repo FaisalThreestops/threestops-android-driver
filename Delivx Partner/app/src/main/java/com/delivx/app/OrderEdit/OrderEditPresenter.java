@@ -1,27 +1,20 @@
-package com.delivx.app.OrderEdit;
+package com.delivx.app.orderEdit;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 
-import com.delivx.app.MyApplication;
 import com.delivx.data.source.PreferenceHelperDataSource;
-import com.delivx.login.LoginActivity;
-import com.delivx.login.language.LanguagesList;
 import com.delivx.networking.DispatcherService;
 import com.delivx.networking.NetworkService;
 import com.delivx.pojo.AssignedAppointments;
 import com.delivx.pojo.AssignedTripData;
 import com.delivx.pojo.AssignedTripsPojo;
 import com.delivx.pojo.ShipmentDetails;
-import com.delivx.service.LocationUpdateService;
-import com.delivx.utility.AppConstants;
 import com.delivx.utility.Utility;
 import com.driver.delivx.R;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;

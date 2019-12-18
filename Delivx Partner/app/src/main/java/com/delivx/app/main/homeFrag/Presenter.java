@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.location.Location;
 
 
+import android.util.Log;
 import com.delivx.app.MyApplication;
 import com.delivx.app.bookingRequest.BookingPopUp;
 import com.delivx.login.LoginActivity;
@@ -363,14 +364,17 @@ public class Presenter implements HomeFragmentContract.Presenter {
 
         @Override
         public void onNext(JSONObject value) {
+            Log.d("cancel", "onNext: ");
             try {
                 if(value.getInt("action")==16 || value.getInt("action")==29){
                     assignManually=true;
                     getAssignedTRips();
                 }
-                else if(value.getInt("action")==10){
+                else if(value.getInt("action")==10 || value.getInt("action")==14){
+                    Log.d("cancel", "else if: ");
                     switch (value.getInt("action")){
                         case 10:
+                        case 14:
                             view.showError(value.getString("statusMsg"));
                             break;
                     }

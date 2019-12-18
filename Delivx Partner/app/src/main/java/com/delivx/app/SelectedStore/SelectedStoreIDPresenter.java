@@ -1,21 +1,14 @@
-package com.delivx.app.SelectedStore;
+package com.delivx.app.selectedStore;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 
-import com.delivx.app.MyApplication;
 import com.delivx.data.source.PreferenceHelperDataSource;
-import com.delivx.login.LoginActivity;
-import com.delivx.login.language.LanguagesList;
 import com.delivx.networking.DispatcherService;
 import com.delivx.networking.NetworkService;
 import com.delivx.pojo.AssignedAppointments;
-import com.delivx.pojo.ShipmentDetails;
-import com.delivx.service.LocationUpdateService;
 import com.delivx.utility.AppConstants;
 import com.delivx.utility.Utility;
-import com.driver.delivx.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -63,4 +63,7 @@ public class VariableConstant {
     public static boolean APPISBACKGROUND = false;
     public static boolean FORGROUND_LOCK = false;
     public static String MQTT_CHANEL = "";
+
+    //Ingredienta flow
+    public static final String DATA="data";
 }

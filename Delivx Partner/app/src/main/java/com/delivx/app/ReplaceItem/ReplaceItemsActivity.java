@@ -1,24 +1,17 @@
-package com.delivx.app.ReplaceItem;
+package com.delivx.app.replaceItem;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
-import android.text.Html;
-import android.text.SpannableString;
 import android.text.TextWatcher;
-import android.text.style.UnderlineSpan;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -26,7 +19,6 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -34,31 +26,26 @@ import android.widget.Toast;
 
 import com.delivx.adapter.SearchItemsRVA;
 import com.delivx.adapter.UnitItemsRVA;
-import com.delivx.app.OrderEdit.OrderEditActivity;
 import com.delivx.app.bookingRide.BookingRide;
 import com.delivx.app.invoice.InvoiceActivity;
 import com.delivx.data.source.PreferenceHelperDataSource;
-import com.delivx.mqttChat.ChattingActivity;
 import com.delivx.pojo.AssignedAppointments;
 import com.delivx.pojo.SearchPojo.Data;
 import com.delivx.pojo.SearchPojo.Units;
 import com.delivx.pojo.ShipmentDetails;
 import com.delivx.utility.AppConstants;
 import com.delivx.utility.FontUtils;
-import com.delivx.utility.Slider;
 import com.delivx.utility.Utility;
 import com.driver.delivx.R;
 
 import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import dagger.android.support.DaggerAppCompatActivity;
 
 public class ReplaceItemsActivity extends DaggerAppCompatActivity implements ReplaceItemsContract.ViewOperations, SearchItemsRVA.Messagepassing, UnitItemsRVA.CallQuantity  {

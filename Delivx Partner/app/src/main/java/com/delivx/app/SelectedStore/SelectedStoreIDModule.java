@@ -1,4 +1,4 @@
-package com.delivx.app.SelectedStore;
+package com.delivx.app.selectedStore;
 
 import android.app.Activity;
 

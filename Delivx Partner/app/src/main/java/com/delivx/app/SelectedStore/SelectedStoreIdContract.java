@@ -1,10 +1,9 @@
-package com.delivx.app.SelectedStore;
+package com.delivx.app.selectedStore;
 
 import android.os.Bundle;
 
 import com.delivx.BaseView;
 import com.delivx.pojo.AssignedAppointments;
-import com.delivx.pojo.ShipmentDetails;
 
 import java.util.ArrayList;
 

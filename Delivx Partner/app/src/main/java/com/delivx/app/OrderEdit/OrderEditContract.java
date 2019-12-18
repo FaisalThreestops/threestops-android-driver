@@ -1,4 +1,4 @@
-package com.delivx.app.OrderEdit;
+package com.delivx.app.orderEdit;
 
 import android.os.Bundle;
 

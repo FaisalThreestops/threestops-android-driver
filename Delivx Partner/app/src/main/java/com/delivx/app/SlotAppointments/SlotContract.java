@@ -1,10 +1,9 @@
-package com.delivx.app.SlotAppointments;
+package com.delivx.app.slotAppointments;
 
 import android.os.Bundle;
 
 import com.delivx.BaseView;
 import com.delivx.pojo.AssignedAppointments;
-import com.delivx.pojo.ShipmentDetails;
 
 import java.util.ArrayList;
 

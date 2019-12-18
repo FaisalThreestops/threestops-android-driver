@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.delivx.app.ReplaceItem.ReplaceItemsActivity;
+import com.delivx.app.replaceItem.ReplaceItemsActivity;
 import com.delivx.pojo.SearchPojo.Data;
 import com.delivx.pojo.SearchPojo.Units;
 import com.driver.delivx.R;
