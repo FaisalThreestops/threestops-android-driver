@@ -1,5 +1,7 @@
 package com.delivx.app.main;
 
+import android.content.Intent;
+
 /**
  * <h1>MainPresenter</h1>
  * <p>presenter for the MainActivity presenter class</p>
@@ -58,4 +60,6 @@ public interface MainPresenter {
      * @param langName : language name
      */
     void languageChanged(String langCode, String langName);
+
+    void getBundleData(Intent intent);
 }

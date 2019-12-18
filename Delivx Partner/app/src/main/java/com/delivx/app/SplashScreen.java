@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import android.util.Log;
 import com.crashlytics.android.Crashlytics;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.delivx.app.main.MainActivity;
@@ -22,6 +23,7 @@ public class SplashScreen extends DaggerAppCompatActivity {
     PreferenceHelperDataSource preferenceHelperDataSource;
     private Runnable runnable;
     private Handler handler;
+    String response;
 
 
 
@@ -30,8 +32,8 @@ public class SplashScreen extends DaggerAppCompatActivity {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_splash_screen);
-
         preferenceHelperDataSource.setFCMRegistrationId(FirebaseInstanceId.getInstance().getToken());
+        getBundleData(getIntent().getExtras());
         runnable=new Runnable() {
 
             /*
@@ -49,13 +51,15 @@ public class SplashScreen extends DaggerAppCompatActivity {
         handler=new Handler();
         handler.postDelayed(runnable, 2000);
 
-
-
-
-
-
         //initializeViews();
+    }
 
+    private void getBundleData(Bundle bundle) {
+        response = bundle.getString("booking_Data");
+        Log.d("response", "getBundleData: splashscreen "+response);
+       /* if(response!=null){
+            this.bundle=bundle;
+        }*/
     }
     /**
      * <h2>checkConfiguration</h2>
@@ -63,8 +67,9 @@ public class SplashScreen extends DaggerAppCompatActivity {
      * based on status it corresponding activity will open</p>
      */
     private void checkConfiguration() {
-        if (preferenceHelperDataSource.isLoggedIn()/*&&!preferenceHelperDataSource.getVehicleId().isEmpty()*/) {
+        if (preferenceHelperDataSource.isLoggedIn()/*&&!preferenceHelperDataSource.getVehicleId().isEmpty()*/ && response!=null) {
             Intent intent = new Intent(SplashScreen.this, MainActivity.class);
+            intent.putExtra("booking_Data",response);
             startActivity(intent);
             finish();
         } else {

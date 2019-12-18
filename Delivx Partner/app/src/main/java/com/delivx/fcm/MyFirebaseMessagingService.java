@@ -37,6 +37,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     JSONObject received;
     private String message,bid;
     private int action=-1;
+    JSONObject jsonObject;
 
     @Inject
     AcknowledgeHelper acknowledgeHelper;
@@ -85,13 +86,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             Log.d(TAG, "Message data orderID: " +data+" : "+acknowledgeHelper);
             if(action==11||action==10 ||  action==29|| action==14){
-                JSONObject jsonObject;
                 if(data.contains("bookingData")){
                     try {
                         jsonObject=new JSONObject(data);
                         jsonObject=jsonObject.getJSONObject("bookingData");
                         jsonObject.put("action",""+action);
-
+                        sendNotification(message, action);
                         RXMqttMessageObserver.getInstance().emit(jsonObject);
 
                         Log.d(TAG, "Message data : " +jsonObject.toString());
@@ -136,6 +136,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private void sendNotification(String messageBody, int action) {
         Intent intent;
         intent = new Intent(MyFirebaseMessagingService.this, SplashScreen.class);
+        intent.putExtra("booking_Data",jsonObject.toString());
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
             PendingIntent.FLAG_ONE_SHOT);

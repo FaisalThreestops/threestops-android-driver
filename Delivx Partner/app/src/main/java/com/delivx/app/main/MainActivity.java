@@ -35,6 +35,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.delivx.app.bookingRequest.BookingPopUp;
 import com.delivx.app.main.bank.BankListFrag;
 import com.delivx.login.language.LanguagesList;
 import com.delivx.networking.ConnectivityReceiver;
@@ -144,6 +145,7 @@ public class MainActivity extends DaggerAppCompatActivity
         initVar();
 
         presenter.getVersion();
+        presenter.getBundleData(getIntent());
     }
 
     @Override
@@ -687,5 +689,15 @@ public class MainActivity extends DaggerAppCompatActivity
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         Runtime.getRuntime().exit(0);
+    }
+
+    @Override
+    public void bookingPopUp(String response) {
+        if(response!=null) {
+            Intent intent = new Intent(this, BookingPopUp.class);
+            intent.putExtra("booking_Data", response);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
     }
 }

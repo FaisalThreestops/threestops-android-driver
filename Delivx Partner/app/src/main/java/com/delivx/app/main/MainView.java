@@ -70,4 +70,6 @@ public interface MainView extends BaseView
      * <p>restart the main activity</p>
      */
     void setLanguageSuccess();
+
+    void bookingPopUp(String response);
 }

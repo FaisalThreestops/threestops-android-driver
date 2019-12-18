@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
+import android.util.Log;
 import com.delivx.login.language.LanguagesList;
 import com.delivx.login.language.LanguagesPojo;
 import com.delivx.networking.LanguageApiService;
@@ -333,7 +334,14 @@ public class MainPresenterImpl implements MainPresenter {
         helperDataSource.setLanguage(langCode);
         helperDataSource.setLanguageSettings(new LanguagesList(langCode,langName));
         view.setLanguageSuccess();
+    }
 
+    @Override
+    public void getBundleData(Intent intent) {
+        String response = intent.getExtras().getString("booking_Data");
+        Log.d("response", "getBundleData: MainPresenter "+response);
+        if(response!=null)
+            view.bookingPopUp(response);
     }
 
 
