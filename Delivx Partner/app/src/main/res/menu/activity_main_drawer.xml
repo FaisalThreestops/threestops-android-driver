@@ -18,6 +18,11 @@
             android:visible="false"/>
 
         <item
+            android:id="@+id/nav_cards"
+            android:icon="@drawable/menu_payment_icon"
+            android:title="@string/cards" />
+
+        <item
             android:id="@+id/nav_payment"
             android:icon="@drawable/menu_payment_icon"
             android:title="@string/payments" />

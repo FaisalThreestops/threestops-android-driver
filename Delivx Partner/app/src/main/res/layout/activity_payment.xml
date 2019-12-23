@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/order_bkgrnd">
+        <include layout="@layout/abar_custom"/>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/addNewRl"
+        android:layout_below="@id/app_bar_layout"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:id="@+id/savedCardsLl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/whisper"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <RelativeLayout
+                android:id="@+id/rlToolbarDummy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/dpTen"
+                android:background="@color/white"
+                android:descendantFocusability="blocksDescendants"
+                android:paddingTop="@dimen/dpTen">
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dpFifteen"
+                    android:layout_marginStart="@dimen/dpFifteen"
+                    android:text="@string/tvPayment"
+                    android:textColor="@color/portGore"
+                    android:textSize="@dimen/dpTwentyFive" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/savedCardstxtTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/dpTen"
+                android:paddingEnd="0dp"
+                android:paddingLeft="@dimen/dpTwenty"
+                android:paddingRight="0dp"
+                android:paddingStart="@dimen/dpTwenty"
+                android:paddingTop="@dimen/dpTen"
+                android:text="@string/savedcards"
+                android:textColor="@color/colorDoveGray"
+                android:textSize="@dimen/dpFifteen" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/cardsListRv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:nestedScrollingEnabled="false" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <RelativeLayout
+        android:id="@+id/addNewRl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dpTen"
+        android:layout_marginEnd="@dimen/dpTwenty"
+        android:layout_marginLeft="@dimen/dpTwenty"
+        android:layout_marginRight="@dimen/dpTwenty"
+        android:layout_marginStart="@dimen/dpTwenty"
+        android:background="@drawable/btn_drop_shadow"
+        android:visibility="visible">
+
+        <Button
+            android:id="@+id/addCardBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:text="@string/addNewCard"
+            android:textAllCaps="true"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/emptyRl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/emptyCardIv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/empty_card" />
+
+        <TextView
+            android:id="@+id/noCardsTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/emptyCardIv"
+            android:layout_centerHorizontal="true"
+            android:text="@string/noCardsSaved"
+            android:textColor="@color/colorSilverChalice"
+            android:textSize="@dimen/spThirteen" />
+
+        <TextView
+            android:id="@+id/startShoppingTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/noCardsTv"
+            android:layout_marginEnd="@dimen/dpTwenty"
+            android:layout_marginLeft="@dimen/dpTwenty"
+            android:layout_marginRight="@dimen/dpTwenty"
+            android:layout_marginStart="@dimen/dpTwenty"
+            android:layout_marginTop="@dimen/dpTen"
+            android:background="@drawable/appcolor_rectangle"
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/dpTen"
+            android:paddingTop="@dimen/dpTen"
+            android:text="@string/startShopping"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/spThirteen"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+</RelativeLayout>

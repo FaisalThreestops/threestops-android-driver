@@ -40,7 +40,10 @@ import com.delivx.app.main.bank.BankListFrag;
 import com.delivx.login.language.LanguagesList;
 import com.delivx.networking.ConnectivityReceiver;
 import com.delivx.networking.NetworkErrorDialog;
+import com.delivx.payment.PaymentAct;
 import com.delivx.utility.DialogHelper;
+import com.delivx.wallet.WalletAct;
+import com.delivx.walletNew.WalletTransActivity;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -245,8 +248,12 @@ public class MainActivity extends DaggerAppCompatActivity
         });
 
         ///register the Network check Broadcast receiver
+      try {
         registerReceiver(new ConnectivityReceiver(),
-                new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+            new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+      }catch (Exception e){
+        e.printStackTrace();
+      }
 
         Typeface clanaproNarrMedium = fontUtils.titaliumSemiBold();
         ClanaproNarrNews = fontUtils.titaliumRegular();
@@ -418,9 +425,18 @@ public class MainActivity extends DaggerAppCompatActivity
             //event for Wallet Select
             case R.id.nav_payment:
                 try {
-                    Intent intent = new Intent(MainActivity.this, com.delivx.walletNew.WalletTransActivity.class);
+                    Intent intent = new Intent(MainActivity.this, WalletAct.class);
                     startActivity(intent);
                 } catch (Exception e) {
+                    Utility.printLog(TAG + " caught : " + e.getMessage());
+                }
+                break;
+
+            case R.id.nav_cards:
+                try{
+                    Intent intent=new Intent(MainActivity.this, PaymentAct.class);
+                    startActivity(intent);
+                }catch (Exception e) {
                     Utility.printLog(TAG + " caught : " + e.getMessage());
                 }
                 break;

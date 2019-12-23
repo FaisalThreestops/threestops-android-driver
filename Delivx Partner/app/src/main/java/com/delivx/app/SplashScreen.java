@@ -32,6 +32,7 @@ public class SplashScreen extends DaggerAppCompatActivity {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_splash_screen);
+
         preferenceHelperDataSource.setFCMRegistrationId(FirebaseInstanceId.getInstance().getToken());
         getBundleData(getIntent().getExtras());
         runnable=new Runnable() {

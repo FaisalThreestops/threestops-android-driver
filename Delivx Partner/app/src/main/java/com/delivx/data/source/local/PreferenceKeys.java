@@ -48,6 +48,7 @@ public class PreferenceKeys
         public static final String CITY_ID ="CITY_ID" ;
         public static final String DRIVER_TYPE ="DRIVER_TYPE" ;
         public static final String DRS = "driver_type";
+        static final String STRIPE_KEY = "stripe_key";
     }
 }
 

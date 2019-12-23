@@ -350,6 +350,7 @@ public class LoginPresenterImpl implements LoginPresenter
         preferenceHelperDataSource.setIsLogin(true);
         preferenceHelperDataSource.setPassword(password);
         preferenceHelperDataSource.setMyEmail(data.getEmail());
+        preferenceHelperDataSource.setStripeKey(data.getStripeKey());
 
 
         preferenceHelperDataSource.setCityId(data.getCityId());

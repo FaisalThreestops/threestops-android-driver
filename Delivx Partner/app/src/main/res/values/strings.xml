@@ -610,4 +610,49 @@
     <string name="message1">Message</string>
     <string name="customer_details">Customer DETAILS</string>
 
+    <string name="addMoney">Add Money</string>
+    <string name="balance">Current cash balance</string>
+    <string name="recentTransction">Recent Transactions</string>
+    <string name="content_descriptor">&#8230;&#8230;&#8230;</string>
+    <string name="addNewCard">Add New Card</string>
+
+    <string name="softLimitDesc">About to reach maximum cash credit limit</string>
+    <string name="hardLimitDesc">Maximum cash credit limit hit and no cash booking will be allowed till dues are paid</string>
+    <string name="flexyCoin">DelivX Wallet</string>
+
+    <string name="addMoneyConfirm">Are you sure you want to recharge your wallet with</string>
+    <string name="success">Success</string>
+    <string name="addMoneySuccess">You have successfully  recharged your wallet with</string>
+    <string name="pay">Pay</string>
+
+    <!--payment option-->
+    <string name="xxx">XXXX XXXX XXXX</string>
+
+    <string name="save_card">Save card detail</string>
+    <string name="Amount">Amount</string>
+    <string name="ideal">Ideal</string>
+    <string name="idealPayment">Ideal Payment</string>
+    <string name="creditAndDebitCard">Credit/Debit Cards</string>
+    <string name="payYourOrder">Now pay your order using Ticket Restaurants\nMeal Card.Add your card details</string>
+    <string name="payOnDel">Pay On Delivery</string>
+    <string name="paymentoptions">Payment Options</string>
+    <string name="networkslow">Network Not Available or too slow please check</string>
+    <string name="insufficientBal">You have in sufficient balance choose other payment method.</string>
+    <string name="have_vocher">Have a voucher code ?</string>
+    <string name="voucher_code">Voucher code</string>
+    <string name="redeem">Redeem</string>
+    <string name="somethingWentWrong">Oops ! Something went wrong.Please try again</string>
+    <string name="add_amount">Amount (₹)</string><string name="scanCard">Scan Card</string>
+    <string name="tvPayment">Payment</string>
+    <string name="savedcards">Saved cards</string>
+    <string name="noCardsSaved">No Cards Saved</string>
+    <string name="startShopping">Start Shopping</string>
+    <string name="cards">Cards</string>
+
+    <!--payments-->
+    <string name="validThru">Valid\nThru</string>
+    <string name="make_card_default">Make As Default</string>
+
+    <string name="sureFordelete">Are you sure you want to delete?</string>
+
 </resources>

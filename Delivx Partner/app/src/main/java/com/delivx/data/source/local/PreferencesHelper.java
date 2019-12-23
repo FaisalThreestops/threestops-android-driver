@@ -537,4 +537,15 @@ public class PreferencesHelper implements PreferenceHelperDataSource {
     public int getDriverScheduleType() {
         return sharedPreferences.getInt(PreferenceKeys.KeysEntry.DRS,0);
     }
+
+    @Override
+    public void setStripeKey(String stripeKey) {
+        editor.putString(PreferenceKeys.KeysEntry.STRIPE_KEY, stripeKey);
+        editor.commit();
+    }
+
+    @Override
+    public String getStripe() {
+        return sharedPreferences.getString(PreferenceKeys.KeysEntry.STRIPE_KEY, "");
+    }
 }

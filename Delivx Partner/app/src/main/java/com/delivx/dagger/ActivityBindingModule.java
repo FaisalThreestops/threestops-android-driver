@@ -52,12 +52,28 @@ import com.delivx.login.LoginDaggerModule;
 import com.delivx.mqttChat.ChattingActivity;
 import com.delivx.mqttChat.ChattingModule;
 import com.delivx.networking.NetworkCheckerService;
+import com.delivx.payment.PaymentAct;
+import com.delivx.payment.PaymentActModule;
+import com.delivx.payment.PaymentDaggerModule;
+import com.delivx.payment_add_card.AddCardAct;
+import com.delivx.payment_add_card.AddCardActModule;
+import com.delivx.payment_add_card.AddCardModule;
+import com.delivx.payment_card_detail.CardDetailAct;
+import com.delivx.payment_card_detail.CardDetailActModule;
+import com.delivx.payment_card_detail.CardDetailModule;
+import com.delivx.payment_choose_card.ChoosePaymentAct;
+import com.delivx.payment_choose_card.ChoosePaymentActModule;
+import com.delivx.payment_choose_card.ChoosePaymentDaggerModule;
 import com.delivx.service.LocationUpdateService;
 import com.delivx.signup.perosonal.SignUpPersonalModule;
 import com.delivx.signup.perosonal.SignupPersonal;
 import com.delivx.vehiclelist.AdapterModule;
 import com.delivx.vehiclelist.VehicleList;
 import com.delivx.vehiclelist.VehicleListModule;
+import com.delivx.wallet.WalletAct;
+import com.delivx.wallet.WalletActModule;
+import com.delivx.wallet.WalletDaggerModule;
+import com.delivx.wallet.voucher.VoucherModule;
 import com.delivx.walletNew.WalletTransActivity;
 import com.delivx.walletNew.WalletTransactionActivityDaggerModule;
 
@@ -180,4 +196,23 @@ public abstract class ActivityBindingModule {
     @ContributesAndroidInjector(modules = {WalletTransactionActivityDaggerModule.class})
     abstract WalletTransActivity walletTransactionsActivity();
 
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = {WalletDaggerModule.class, WalletActModule.class, VoucherModule.class})
+    abstract WalletAct mWalletAct();
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = {ChoosePaymentDaggerModule.class, ChoosePaymentActModule.class})
+    abstract ChoosePaymentAct mChoosePaymentAct();
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = {AddCardModule.class, AddCardActModule.class})
+    abstract AddCardAct paymentDetailActivity();
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = {PaymentDaggerModule.class, PaymentActModule.class})
+    abstract PaymentAct paymentAct();
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = {CardDetailModule.class, CardDetailActModule.class})
+    abstract CardDetailAct cardEditActivity();
 }

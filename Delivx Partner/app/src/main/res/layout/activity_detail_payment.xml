@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white_smoke">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/order_bkgrnd">
+        <include layout="@layout/abar_custom"/>
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/app_bar_layout"
+        android:layout_marginTop="@dimen/dpTen"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingEnd="@dimen/dpFifteen"
+                android:paddingLeft="@dimen/dpFifteen"
+                android:paddingRight="@dimen/dpFifteen"
+                android:paddingStart="@dimen/dpFifteen"
+                android:paddingTop="@dimen/dpFifteen">
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:stripe="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dpTen"
+                    android:orientation="horizontal">
+
+                    <com.stripe.android.view.CardMultilineWidget
+                        android:id="@+id/card_input_widget"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        stripe:cardTextErrorColor="@android:color/holo_red_light"
+                        stripe:cardTint="@android:color/darker_gray" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dpFifity"
+                    android:layout_marginTop="@dimen/dpFifity"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dpOne"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:background="@color/lightWhite" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:fontFamily="sans-serif"
+                        android:paddingBottom="@dimen/dpthree"
+                        android:text="@string/or"
+                        android:textColor="@color/lightWhite"
+                        android:textSize="@dimen/spSixteen" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dpOne"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:background="@color/lightWhite" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/scanCardTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/hundreddp"
+                    android:background="@drawable/appcolor_rectangle"
+                    android:gravity="center_horizontal"
+                    android:paddingBottom="@dimen/dpFifteen"
+                    android:paddingTop="@dimen/dpFifteen"
+                    android:text="@string/scanCard"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/spThirteen" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dpFive"
+            android:layout_marginEnd="@dimen/dpTwenty"
+            android:layout_marginLeft="@dimen/dpTwenty"
+            android:layout_marginRight="@dimen/dpTwenty"
+            android:layout_marginStart="@dimen/dpTwenty"
+            android:layout_marginTop="@dimen/dpFive"
+            android:background="@drawable/btn_drop_shadow">
+
+            <Button
+                android:id="@+id/saveCardBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:gravity="center"
+                android:text="@string/save_card"
+                android:textColor="@color/white"
+                android:textSize="@dimen/spFourteen" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dpFive"
+                android:layout_marginStart="@dimen/dpFive"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

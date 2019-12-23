@@ -50,6 +50,7 @@ import com.delivx.app.SplashScreen;
 import com.driver.delivx.R;
 
 
+import java.text.DecimalFormat;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -1133,6 +1134,11 @@ public class Utility {
         } catch (Exception e) {
             Utility.printLog("select_language inside Exception" + e.toString());
         }
+    }
+
+    public static String currencyFormat(String amount) {
+        DecimalFormat formatter = new DecimalFormat("#0.00");
+        return formatter.format(Double.parseDouble(amount));
     }
 
 }

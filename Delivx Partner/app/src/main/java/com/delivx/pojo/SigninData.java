@@ -20,6 +20,9 @@ public class SigninData {
     private String profilePic;
     private String pushTopic;
     private String email;
+    private String stripeKey;
+
+
 
     private String defaultBankAccount;
     private String country;
@@ -209,5 +212,13 @@ public class SigninData {
 
     public void setDriverScheduleType(int driverScheduleType) {
         this.driverScheduleType = driverScheduleType;
+    }
+
+    public String getStripeKey() {
+        return stripeKey;
+    }
+
+    public void setStripeKey(String stripeKey) {
+        this.stripeKey = stripeKey;
     }
 }

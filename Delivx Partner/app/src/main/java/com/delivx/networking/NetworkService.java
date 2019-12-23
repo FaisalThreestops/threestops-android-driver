@@ -8,9 +8,11 @@ import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.PATCH;
@@ -296,5 +298,46 @@ public interface NetworkService {
     @GET("driver/cancellationReasons")
     Observable<Response<ResponseBody>> cancelReason (@Header("language") String language,
                                                       @Header("authorization") String authorization);
+    @GET("driver/card")
+    Observable<Response<ResponseBody>> getCard(@Header("authorization") String authorization,
+        @Header("language") String language);
+
+    @GET("/driver/walletDetail")
+    Observable<Response<ResponseBody>> getWalletApi(@Header("authorization") String authorization,
+        @Header("language") String language);
+
+    @POST("driver/rechargeWallet")
+    @FormUrlEncoded
+    Observable<Response<ResponseBody>> addWalletApi(@Header("authorization") String authorization,
+        @Header("language") String language,
+        @Field("cardId") String cardId,
+        @Field("amount") double amount);
+
+    @PATCH("voucher")
+    @FormUrlEncoded
+    Observable<Response<ResponseBody>> voucher(@Header("authorization") String authorization,
+        @Header("language") String language,
+        @Field("voucherCode") String voucherCode);
+
+    @POST("driver/card")
+    @FormUrlEncoded
+    Observable<Response<ResponseBody>> addCard(@Header("authorization") String authorization,
+        @Header("language") String language,
+        @Field("email") String email,
+        @Field("cardToken") String cardToken);
+
+    @FormUrlEncoded
+    @HTTP(method = "DELETE", path = "driver/card", hasBody = true)
+    Observable<Response<ResponseBody>> deleteCard(@Header("authorization") String authorization,
+        @Header("language") String language,
+        @Field("cardId") String cardId);
+
+    @PATCH("driver/card")
+    @FormUrlEncoded
+    Observable<Response<ResponseBody>> makeDefaultCard(@Header("authorization") String authorization,
+        @Header("language") String language,
+        @Field("cardId") String cardId);
+
+
 }
 

@@ -38,4 +38,15 @@ public class FontUtils {
         return Typeface.createFromAsset(context.getAssets(), "fonts/TITILLIUMWEB-LIGHT.TTF");
     }
 
+    public Typeface getFont_muli_semi_bold() {
+        return Typeface.createFromAsset(context.getAssets(), "fonts/Muli_semi_bold.ttf");
+    }
+
+    public Typeface getFont_muli_regular() {
+        return Typeface.createFromAsset(context.getAssets(), "fonts/Muli_Regular.ttf");
+    }
+
+    public Typeface getFont_muli_bold(){
+         return    Typeface.createFromAsset(context.getAssets(),"fonts/Muli_Bold.ttf");
+    }
 }

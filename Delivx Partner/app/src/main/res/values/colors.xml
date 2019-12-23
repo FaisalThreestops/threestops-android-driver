@@ -94,4 +94,20 @@
     <color name="white_light">#F4F4F4</color>
     <color name="colorwildsand">#f5f5f5</color>
 
+    <color name="colorHeather">#BBC0CE</color>
+    <color name="colorSilver">#C2C2C2</color>
+    <color name="colorShark">#222224</color>
+    <color name="colorCornFlowerBlue">#4F86EB</color>
+    <color name="colorCinnabar">#E23E3E</color>
+    <color name="colorMirage">#1A192F</color>
+    <color name="waterloo">#7B8091</color>
+    <color name="colorOsloGray">#858B92</color>
+    <color name="colorPortGore">#1A1945</color>
+    <color name="lightWhite">#D8D8D8</color>
+    <color name="whisper">#EFF0F7</color>
+    <color name="portGore">#242A4B</color>
+    <color name="colorDoveGray">#6B6B6B</color>
+    <color name="colorSilverChalice">#ACACAC</color>
+
+
 </resources>

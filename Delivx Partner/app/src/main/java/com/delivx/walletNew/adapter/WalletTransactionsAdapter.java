@@ -83,7 +83,12 @@ public class WalletTransactionsAdapter extends RecyclerView.Adapter<WalletTransa
 
 
         walletViewHolder.tv_wallet_transaction_description.setText(walletDataDetailsItem.getTrigger().trim());
-        walletViewHolder.tv_wallet_transaction_date.setText(epochTimeConverter(walletDataDetailsItem.getTimestamp().trim()));
+        try {
+            walletViewHolder.tv_wallet_transaction_date.setText(
+                epochTimeConverter(walletDataDetailsItem.getTimestamp().trim()));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override

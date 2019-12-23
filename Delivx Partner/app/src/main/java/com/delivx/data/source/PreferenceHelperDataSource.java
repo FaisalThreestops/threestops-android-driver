@@ -404,4 +404,8 @@ public interface PreferenceHelperDataSource
     void setDriverScheduleType(int driverStatus);
 
     int getDriverScheduleType();
+
+    void setStripeKey(String stripeKey);
+
+    String getStripe();
 }

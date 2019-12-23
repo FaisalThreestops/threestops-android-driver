@@ -22,7 +22,7 @@ public class CreditDebitTransctions
 
     private String amount;
 
-    private String txnDate;
+    private String timestamp;
 
     private String paymentTxnId;
 
@@ -114,12 +114,12 @@ public class CreditDebitTransctions
 
     public String getTimestamp ()
     {
-        return txnDate;
+        return timestamp;
     }
 
     public void setTimestamp (String timestamp)
     {
-        this.txnDate = timestamp;
+        this.timestamp = timestamp;
     }
 
     public String getPaymentTxnId ()
@@ -169,10 +169,10 @@ public class CreditDebitTransctions
     }
 
     public String getTxnDate() {
-        return txnDate;
+        return timestamp;
     }
 
     public void setTxnDate(String txnDate) {
-        this.txnDate = txnDate;
+        this.timestamp = txnDate;
     }
 }

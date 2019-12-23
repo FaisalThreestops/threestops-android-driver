@@ -44,4 +44,13 @@ public enum AppConstants {
         String Done="15";
     }
 
+    public static final String WALLET_ACT = "act_wallet";
+    public static  boolean WALLET_AVAILABLE=false;
+    public static  String WALLET_AMOUNT="0.00";
+    public static final String CHOOSEPAYMENT_ACT = "act_choose_payment";
+    public static final int REQUEST_CODE_PERMISSION_MULTIPLE = 123;
+    public static final String ADDCARD_ACT = "act_addcard";
+    public static final String PAYMENT_ACT = "act_payment";
+    public static final String CARD_DETAIL_ACT = "act_carddetail";
+
 }
