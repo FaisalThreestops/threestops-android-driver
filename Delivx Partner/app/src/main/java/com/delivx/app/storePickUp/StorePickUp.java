@@ -400,12 +400,12 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
 
 
                 if(!appointments.getStoreType().equals("7")) {
-                    itemName.setOnClickListener(new View.OnClickListener() {
+                  /*  itemName.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             presenter.editOrder(appointments.getShipmentDetails().get(finalI));
                         }
-                    });
+                    });*/
                 }
 
 
