@@ -103,6 +103,11 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements
     @BindView(R.id.tv_subToatal) TextView tv_subToatal;
     @BindView(R.id.tv_subToatal_val) TextView tv_subToatal_val;
 
+    @BindView(R.id.ll_wallet) LinearLayout ll_wallet;
+    @BindView(R.id.ll_cash)LinearLayout ll_cash;
+    @BindView(R.id.tv_wallet_amount)TextView tv_wallet_amount;
+    @BindView(R.id.tv_cashAmt)TextView tv_cashAmt;
+
     private boolean tax_added = false;
     private Dialog dialog;
     private AlertDialog.Builder alertDialog;
@@ -273,6 +278,14 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements
         double appliedDiscount = Double.parseDouble(appointments.getShipmentDetails().get(0).getAppliedDiscount());
         tv_discount_val.setText(appointments.getCurrencySymbol()+" "+String.format("%.2f", appliedDiscount));
 
+
+        double cash=Double.parseDouble(appointments.getCashCollect());
+        double wallet=0;
+        ll_wallet.setVisibility(View.VISIBLE);
+        ll_cash.setVisibility(View.VISIBLE);
+        wallet=totalAmount-cash;
+        tv_wallet_amount.setText(appointments.getCurrencySymbol()+" "+ Utility.currencyFormat(wallet+""));
+        tv_cashAmt.setText(appointments.getCurrencySymbol()+" "+ Utility.currencyFormat(cash+""));
 
         addItems(appointments);
     }

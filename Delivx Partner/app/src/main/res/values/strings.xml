@@ -655,4 +655,7 @@
 
     <string name="sureFordelete">Are you sure you want to delete?</string>
 
+    <string name="wallet_amt">Wallet :</string>
+    <string name="cash_amt">Cash :</string>
+
 </resources>

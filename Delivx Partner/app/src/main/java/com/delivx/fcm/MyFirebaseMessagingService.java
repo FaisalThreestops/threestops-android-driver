@@ -136,7 +136,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private void sendNotification(String messageBody, int action) {
         Intent intent;
         intent = new Intent(MyFirebaseMessagingService.this, SplashScreen.class);
-        intent.putExtra("booking_Data",jsonObject.toString());
+        try {
+            intent.putExtra("booking_Data", jsonObject.toString());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
             PendingIntent.FLAG_ONE_SHOT);

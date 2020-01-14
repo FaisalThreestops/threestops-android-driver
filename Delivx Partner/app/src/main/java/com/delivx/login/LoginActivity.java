@@ -166,7 +166,6 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
             }
         });
 
-
         dialogHelper.getDialogCallbackHelper(new DialogHelper.DialogCallbackHelper() {
 
             @Override

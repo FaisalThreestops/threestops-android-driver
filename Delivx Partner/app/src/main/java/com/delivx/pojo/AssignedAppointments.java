@@ -85,6 +85,10 @@ public class AssignedAppointments implements Serializable, Comparator<AssignedAp
     private String extraNote;
 
 
+
+    private String cashCollect;
+
+
     private ArrayList<ExclusiveTaxes> exclusiveTaxes;
 
     private boolean isCominigFromStore;
@@ -472,6 +476,14 @@ public class AssignedAppointments implements Serializable, Comparator<AssignedAp
 
     public void setExtraNote(String extraNote) {
         this.extraNote = extraNote;
+    }
+
+    public String getCashCollect() {
+        return cashCollect;
+    }
+
+    public void setCashCollect(String cashCollect) {
+        this.cashCollect = cashCollect;
     }
 
 

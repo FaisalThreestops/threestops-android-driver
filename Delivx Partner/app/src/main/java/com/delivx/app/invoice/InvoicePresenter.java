@@ -77,8 +77,11 @@ public class InvoicePresenter implements InvoiceContract.PresenterOpetaions
         if(bundle!=null && bundle.containsKey("data")){
             appointments= (AssignedAppointments) bundle.getSerializable("data");
             newSignatureName = appointments.getBid() + ".jpg";
-            float bill= Float.parseFloat(appointments.getTotalAmount());
-            view.setViews(appointments.getCurrencySymbol()+" "+String.format(Locale.US,"%.2f",bill),appointments);
+
+            double bill= Double.parseDouble(appointments.getTotalAmount());
+            double cash=Double.parseDouble(appointments.getCashCollect());
+            double wallet=bill-cash;
+            view.setViews(appointments.getCurrencySymbol()+" "+String.format(Locale.US,"%.2f",bill),appointments,appointments.getCurrencySymbol()+" "+Utility.currencyFormat(cash+""),appointments.getCurrencySymbol()+" "+Utility.currencyFormat(wallet+""));
         }
     }
 

@@ -48,6 +48,94 @@
                     android:textColor="@color/lig_green2"
                     />
 
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/ll_wallet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_Wallet"
+                        android:textSize="14sp"
+                        android:text="@string/wallet_amt"
+                        android:textAllCaps="true"
+                        android:textColor="@color/lig_green2"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_wallet_amount"
+                        android:textSize="14sp"
+                        android:text="230"
+                        android:layout_marginLeft="5dp"
+                        android:textAllCaps="true"
+                        android:textColor="@color/color_sup_txt"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/ll_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_total"
+                        android:textSize="14sp"
+                        android:text="@string/grand_total"
+                        android:textAllCaps="true"
+                        android:textColor="@color/lig_green2"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_totalAmt"
+                        android:textSize="14sp"
+                        android:text="230"
+                        android:layout_marginLeft="5dp"
+                        android:textAllCaps="true"
+                        android:textColor="@color/color_sup_txt"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/ll_cash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginTop="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_cash"
+                        android:textSize="20sp"
+                        android:text="@string/collect_cash"
+                        android:singleLine="true"
+                        android:textAllCaps="true"
+                        android:textColor="@color/lig_green2"
+                        />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/tv_cashAmt"
+                                android:textSize="22sp"
+                                android:text="230"
+                                android:layout_marginLeft="5dp"
+                                android:textAllCaps="true"
+                                android:textColor="@color/color_sup_txt"
+                                />
+
+                        </LinearLayout>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

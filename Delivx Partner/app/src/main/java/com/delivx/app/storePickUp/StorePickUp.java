@@ -92,6 +92,11 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
     @BindView(R.id.tv_estimate_value) TextView tv_estimate_value;
     @BindView(R.id.tv_customer_value) TextView tv_customer_value;
 
+    @BindView(R.id.ll_wallet) LinearLayout ll_wallet;
+    @BindView(R.id.ll_cash)LinearLayout ll_cash;
+    @BindView(R.id.tv_wallet_amount)TextView tv_wallet_amount;
+    @BindView(R.id.tv_cashAmt)TextView tv_cashAmt;
+
     private AlertDialog.Builder alertDialog;
 
 
@@ -286,6 +291,15 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
         double appliedDiscount = Double.parseDouble(appointments.getShipmentDetails().get(0).getAppliedDiscount());
         tv_discount_val.setText(appointments.getCurrencySymbol()+" "+String.format("%.2f", appliedDiscount));
 
+
+        double totalAmount = Double.parseDouble(appointments.getTotalAmount());
+        double cash=Double.parseDouble(appointments.getCashCollect());
+        double wallet=0;
+        ll_wallet.setVisibility(View.VISIBLE);
+        ll_cash.setVisibility(View.VISIBLE);
+        wallet=totalAmount-cash;
+        tv_wallet_amount.setText(appointments.getCurrencySymbol()+" "+ Utility.currencyFormat(wallet+""));
+        tv_cashAmt.setText(appointments.getCurrencySymbol()+" "+ Utility.currencyFormat(cash+""));
 
         /*LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 0f);
         tvPriceTitle.setLayoutParams(params);
