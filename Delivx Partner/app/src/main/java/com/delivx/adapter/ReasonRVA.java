@@ -26,6 +26,7 @@ public class ReasonRVA extends RecyclerView.Adapter<ReasonRVA.ViewHolder> {
     Context context;
     CancelData data;
     int activity;
+    private int selectedPosition = -1;
 
     public ReasonRVA(Context context, CancelData data,int activity) {
         this.context = context;
@@ -47,6 +48,7 @@ public class ReasonRVA extends RecyclerView.Adapter<ReasonRVA.ViewHolder> {
         viewHolder.reasonTv.setText(data.getReasons().get(i).getReasons());
 
         if(data.getReasons().get(i).isSelected()){
+//        if(selectedPosition==i){
             viewHolder.radioBtn.setChecked(true);
             viewHolder.radioBtn.setBackgroundResource(R.drawable.ic_check_icon_on);
         }
@@ -72,6 +74,7 @@ public class ReasonRVA extends RecyclerView.Adapter<ReasonRVA.ViewHolder> {
     }
 
     public void onVehicleSelect(int index){
+//       selectedPosition = index;
         resetAll();
         data.getReasons().get(index).setSelected(true);
         ReasonRVA.this.notifyDataSetChanged();
