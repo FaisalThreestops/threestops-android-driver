@@ -1,13 +1,12 @@
 package com.delivx.app.main.history;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.TabLayout;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import com.google.android.material.tabs.TabLayout;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.delivx.adapter.HistoryTripsRVA;
-import com.delivx.login.LoginActivity;
 import com.driver.delivx.R;
 import com.delivx.pojo.TripsPojo.Appointments;
 import com.delivx.utility.FontUtils;

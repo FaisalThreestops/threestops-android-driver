@@ -8,7 +8,7 @@
         android:id="@+id/include_actionbar"
         layout="@layout/actionbar" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_vehiclelist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,7 +16,7 @@
         android:layout_below="@+id/include_actionbar"
         android:layout_marginTop="@dimen/dpFive">
 
-    </android.support.v7.widget.RecyclerView>
+    </androidx.recyclerview.widget.RecyclerView>
 
     <TextView
         android:id="@+id/tv_confirm"

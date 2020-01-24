@@ -4,13 +4,13 @@
     android:layout_height="wrap_content"
     android:background="@color/white_smoke">
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/order_bkgrnd">
         <include layout="@layout/abar_custom"/>
-    </android.support.design.widget.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
         android:layout_width="match_parent"

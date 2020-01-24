@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@color/background">
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/cvStoreId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -63,17 +63,17 @@
                     />
             </LinearLayout>
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvBookingId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
                 android:layout_marginTop="@dimen/spEighteen">
 
-            </android.support.v7.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
     <View
         android:id="@+id/brekerView"

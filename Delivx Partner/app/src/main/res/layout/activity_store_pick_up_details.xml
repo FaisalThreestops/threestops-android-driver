@@ -308,7 +308,7 @@
                     android:textAllCaps="true"
                     android:textSize="@dimen/spFourteen" />
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:visibility="gone"
                     android:id="@+id/rv_item_show"
                     android:layout_width="match_parent"

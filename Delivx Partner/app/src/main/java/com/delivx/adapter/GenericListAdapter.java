@@ -2,8 +2,8 @@ package com.delivx.adapter;
 
 import android.app.Activity;
 import android.graphics.Typeface;
-import android.support.v7.widget.AppCompatRadioButton;
-import android.support.v7.widget.RecyclerView;
+import androidx.appcompat.widget.AppCompatRadioButton;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;

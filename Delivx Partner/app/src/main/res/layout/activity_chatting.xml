@@ -7,13 +7,13 @@
     android:background="@color/backgroundcolor"
   ><!--E5DED4  EAE8DB  #E5DED4-->
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         android:background="@color/colorPrimary"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbarChatting"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -101,8 +101,8 @@
             </RelativeLayout>-->
 
 
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <ProgressBar
         android:id="@+id/chatProgress"
@@ -111,7 +111,7 @@
         android:layout_centerInParent="true"
         android:visibility="gone"/>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvChatMsg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -120,9 +120,9 @@
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:paddingStart="5dp">
-    </android.support.v7.widget.RecyclerView>
+    </androidx.recyclerview.widget.RecyclerView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/cardViewChat"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -175,6 +175,6 @@
                     />
             </LinearLayout>
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
 </RelativeLayout>

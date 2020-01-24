@@ -1,7 +1,7 @@
 package com.delivx.app;
 
 import android.content.Context;
-import android.support.multidex.MultiDex;
+import androidx.multidex.MultiDex;
 
 import com.delivx.login.language.LanguagesList;
 import com.delivx.networking.ConnectivityReceiver;

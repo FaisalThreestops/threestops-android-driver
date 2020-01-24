@@ -265,14 +265,14 @@
                 android:textColor="@color/waterloo"
                 android:textSize="@dimen/spFifteen" />
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/cardsListRv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
                 android:layout_marginTop="@dimen/dpFive"
                 android:layout_marginBottom="@dimen/dpFive">
-            </android.support.v7.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
 
             <RelativeLayout
                 android:layout_width="match_parent"

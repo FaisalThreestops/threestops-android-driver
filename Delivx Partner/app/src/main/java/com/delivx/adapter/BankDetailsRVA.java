@@ -2,9 +2,9 @@ package com.delivx.adapter;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.RecyclerView;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

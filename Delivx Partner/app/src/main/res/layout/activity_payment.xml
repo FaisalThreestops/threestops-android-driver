@@ -6,15 +6,15 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/order_bkgrnd">
         <include layout="@layout/abar_custom"/>
-    </android.support.design.widget.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -66,13 +66,13 @@
                 android:textColor="@color/colorDoveGray"
                 android:textSize="@dimen/dpFifteen" />
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/cardsListRv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:nestedScrollingEnabled="false" />
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <RelativeLayout
         android:id="@+id/addNewRl"

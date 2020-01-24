@@ -6,13 +6,13 @@
     android:layout_height="match_parent"
     android:background="@color/smokewhite">
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
@@ -40,9 +40,9 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:textColor="@color/white"/>
 
-        </android.support.v7.widget.Toolbar>
+        </androidx.appcompat.widget.Toolbar>
 
-    </android.support.design.widget.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
 
     <LinearLayout
@@ -52,7 +52,7 @@
         android:layout_below="@+id/app_bar_layout"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -70,10 +70,10 @@
                 android:textColorHint="@color/lightBlackText"
                 android:textSize="14sp" />
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilAccountNo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -90,9 +90,9 @@
                 android:textColorHint="@color/lightBlackText"
                 android:textSize="14sp" />
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilRoutingNo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -110,7 +110,7 @@
                 android:textColorHint="@color/lightBlackText"
                 android:textSize="14sp" />
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
 
     </LinearLayout>

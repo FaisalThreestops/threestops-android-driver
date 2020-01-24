@@ -4,7 +4,7 @@ import static com.stripe.android.model.Card.BRAND_RESOURCE_MAP;
 
 import android.app.Activity;
 import android.graphics.Typeface;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

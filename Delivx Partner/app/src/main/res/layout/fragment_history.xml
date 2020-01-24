@@ -9,13 +9,13 @@
 
 
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/light_white">
 
-        <android.support.design.widget.CollapsingToolbarLayout
+        <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/ctlMyBooking"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -33,7 +33,7 @@
                 android:visibility="gone"
                 />
 
-            <android.support.design.widget.TabLayout
+            <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
@@ -47,7 +47,7 @@
                 app:tabSelectedTextColor="@color/colorPrimary"
                 app:tabTextColor="@color/color2">
 
-            </android.support.design.widget.TabLayout>
+            </com.google.android.material.tabs.TabLayout>
 
             <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/mChart"
@@ -86,18 +86,18 @@
 
             </RelativeLayout>
 
-        </android.support.design.widget.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-    </android.support.design.widget.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_job_home"
         android:layout_below="@id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    </android.support.v7.widget.RecyclerView>
+    </androidx.recyclerview.widget.RecyclerView>
 
 
 

@@ -198,7 +198,7 @@
         android:layout_marginLeft="@dimen/dpFifteen"
         android:orientation="horizontal">
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:layout_marginTop="2dp"
             android:layout_marginLeft="2dp"
             android:id="@+id/cv_replace"
@@ -228,9 +228,9 @@
                     android:textColor="@color/light_black"
                     android:textSize="16dp"/>
             </RelativeLayout>
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
             android:layout_marginRight="2dp"
@@ -266,7 +266,7 @@
                     android:text="@string/cancel_item"
                     android:textSize="16dp" />
             </RelativeLayout>
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
     </RelativeLayout>
 
 
@@ -283,7 +283,7 @@
         android:visibility="gone"
         >
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:layout_marginTop="2dp"
             android:layout_marginLeft="2dp"
             android:id="@+id/return_partially_cv"
@@ -312,9 +312,9 @@
                     android:textColor="@color/light_black"
                     android:textSize="16dp"/>
             </RelativeLayout>
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
             android:layout_marginRight="2dp"
@@ -350,7 +350,7 @@
                     android:text="@string/return_completely"
                     android:textSize="15dp" />
             </RelativeLayout>
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
     </RelativeLayout>
 
     <ProgressBar

@@ -30,7 +30,7 @@ public class SplashScreen extends DaggerAppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
+//        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_splash_screen);
 
         preferenceHelperDataSource.setFCMRegistrationId(FirebaseInstanceId.getInstance().getToken());
@@ -56,11 +56,17 @@ public class SplashScreen extends DaggerAppCompatActivity {
     }
 
     private void getBundleData(Bundle bundle) {
-        response = bundle.getString("booking_Data");
-        Log.d("response", "getBundleData: splashscreen "+response);
+        try {
+            if (bundle != null) {
+                response = bundle.getString("booking_Data");
+                Log.d("response", "getBundleData: splashscreen " + response);
        /* if(response!=null){
             this.bundle=bundle;
         }*/
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
     /**
      * <h2>checkConfiguration</h2>

@@ -1,6 +1,6 @@
 package com.delivx.utility;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.Patterns;
 
 public class MyTextUtils {
