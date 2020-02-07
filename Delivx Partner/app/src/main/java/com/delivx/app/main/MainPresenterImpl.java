@@ -338,11 +338,15 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void getBundleData(Intent intent) {
-        String response = intent.getExtras().getString("booking_Data");
-        Log.d("response", "getBundleData: MainPresenter "+response);
-        if(response!=null)
-            view.bookingPopUp(response);
+        try {
+            if (intent != null) {
+                String response = intent.getExtras().getString("booking_Data");
+                Log.d("response", "getBundleData: MainPresenter " + response);
+                if (response != null)
+                    view.bookingPopUp(response);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
-
-
 }

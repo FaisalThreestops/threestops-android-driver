@@ -197,7 +197,7 @@
                 </LinearLayout>
 
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_log_mail_mob"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -213,7 +213,7 @@
                         android:textSize="14sp"
                         android:gravity="start" />
 
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <View
                     android:id="@+id/view_background"
@@ -229,7 +229,7 @@
 
         </LinearLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_log_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -251,7 +251,7 @@
                 android:textSize="14sp"
                 android:gravity="start" />
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/tv_log_login"
@@ -299,7 +299,7 @@
     </ScrollView>
 
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/cvBottom"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
@@ -312,7 +312,7 @@
             android:gravity="center"
             android:text="@string/login_signup_txt" />
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
     <View
         android:layout_width="match_parent"

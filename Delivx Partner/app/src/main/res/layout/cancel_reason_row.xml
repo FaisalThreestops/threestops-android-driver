@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -47,7 +47,7 @@
             android:layout_height="@dimen/dpOne"
             android:background="@color/colorwildsand" />
 
-        <android.support.v4.widget.NestedScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -59,14 +59,14 @@
 
 
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/bottomSheetReasonRv"
                     android:background="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="240dp"
                     android:layout_marginTop="@dimen/dpFive">
 
-                </android.support.v7.widget.RecyclerView>
+                </androidx.recyclerview.widget.RecyclerView>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -93,7 +93,7 @@
 
             </LinearLayout>
 
-        </android.support.v4.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
 
     </LinearLayout>
 
@@ -108,7 +108,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:visibility="gone"
         />
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
     <!--
     <LinearLayout

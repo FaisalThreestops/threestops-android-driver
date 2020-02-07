@@ -2,8 +2,8 @@ package com.delivx.app.main.history.orderDetails;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;

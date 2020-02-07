@@ -1,6 +1,6 @@
 package com.delivx.wallet.voucher;
 
-import static android.support.design.widget.BottomSheetBehavior.STATE_HIDDEN;
+import static com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_HIDDEN;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -8,11 +8,11 @@ import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.design.widget.CoordinatorLayout;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.style.StyleSpan;

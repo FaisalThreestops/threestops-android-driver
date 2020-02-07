@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +16,6 @@ import com.delivx.app.bookingRide.BookingRide;
 import com.delivx.app.invoice.InvoiceActivity;
 import com.delivx.app.storeDetails.StorePickUpDetails;
 import com.delivx.app.storePickUp.StorePickUp;
-import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.utility.AppConstants;
 import com.driver.delivx.R;
 import com.delivx.pojo.AssignedAppointments;
@@ -26,8 +25,6 @@ import com.delivx.utility.Utility;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

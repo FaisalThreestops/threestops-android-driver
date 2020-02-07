@@ -6,16 +6,16 @@
     android:background="@color/colorPrimary"
     android:orientation="vertical">
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/order_bkgrnd">
     <include layout="@layout/abar_custom"/>
-    </android.support.design.widget.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/payRl"
@@ -143,7 +143,7 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/spEighteen" />
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/cardsListRv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -220,7 +220,7 @@
                     >
 
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/amountTl"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -235,7 +235,7 @@
                             android:textColor="@color/colorShark"
                             android:hint="@string/add_amount"
                             android:paddingTop="@dimen/dpFive"/>
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
 
                     <View
@@ -341,7 +341,7 @@
 
 
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
     <RelativeLayout
