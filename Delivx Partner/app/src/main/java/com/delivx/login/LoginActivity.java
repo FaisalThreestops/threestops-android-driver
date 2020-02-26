@@ -15,7 +15,6 @@ import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -150,19 +149,16 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
         loginPresenter.getLoginCreds();
 
         //DelivX image will hide when we enter the  values of email or password
-        activityRoot.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                int heightDiff = activityRoot.getRootView().getHeight() - activityRoot.getHeight();
-                Utility.printLog("dptopx "+dpToPx(LoginActivity.this, 200));
-                if (heightDiff > dpToPx(LoginActivity.this, 200)) { // if more than 200 dp, it's probably a keyboard...
-                    llLogo.setVisibility(View.GONE);
-                    cvBottom.setVisibility(View.GONE);
+        activityRoot.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+            int heightDiff = activityRoot.getRootView().getHeight() - activityRoot.getHeight();
+            Utility.printLog("dptopx "+dpToPx(LoginActivity.this, 200));
+            if (heightDiff > dpToPx(LoginActivity.this, 200)) { // if more than 200 dp, it's probably a keyboard...
+                llLogo.setVisibility(View.GONE);
+                cvBottom.setVisibility(View.GONE);
 
-                }else {
-                    llLogo.setVisibility(View.VISIBLE);
-                    cvBottom.setVisibility(View.VISIBLE);
-                }
+            }else {
+                llLogo.setVisibility(View.VISIBLE);
+                cvBottom.setVisibility(View.VISIBLE);
             }
         });
 

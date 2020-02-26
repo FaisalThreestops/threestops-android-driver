@@ -5,7 +5,7 @@
                 android:id="@+id/activityRoot"
                 android:layout_height="match_parent">
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -128,7 +128,8 @@
                 android:layout_toRightOf="@+id/llPhoneSelector"
                 android:textColor="@color/color_sup_txt"
                 android:layout_centerInParent="true"
-                />
+                android:layout_toStartOf="@+id/llEmailSelector"
+                android:layout_toEndOf="@+id/llPhoneSelector" />
         </RelativeLayout>
 
         <LinearLayout
@@ -148,7 +149,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/phone_no"
                 android:textColor="@color/colorAccent"
-                android:textSize="11.5sp"
+                android:textSize="@dimen/eleven_fivesp"
                 android:layout_marginLeft="2dp"
                 android:layout_marginStart="2dp"
                 android:visibility="gone"

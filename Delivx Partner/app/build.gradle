@@ -1,9 +1,6 @@
 
 apply plugin: 'com.android.application'
 
-
-
-
 android {
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
@@ -11,8 +8,8 @@ android {
         applicationId "com.driver.delivx"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 13
-        versionName "1.1.2"
+        versionCode 12
+        versionName "1.1.1"
         multiDexEnabled true
 
         dexOptions {
@@ -20,13 +17,13 @@ android {
         }
 
         buildConfigField "int", "LIMIT", "100"
-      /*  buildConfigField "String", "BASEURL", "\"https://api.deliv-x.com/\""
+        buildConfigField "String", "BASEURL", "\"https://api.deliv-x.com/\""
         buildConfigField "String", "DISPATCHER_BASE", "\"https://api.deliv-x.com/\""
-        buildConfigField "String", "MESSAGE_BASE", "\"https://api.deliv-x.com/\""*/
+        buildConfigField "String", "MESSAGE_BASE", "\"https://api.deliv-x.com/\""
 
-        buildConfigField "String", "BASEURL", "\"https://apidev.deliv-x.com/\""
+       /* buildConfigField "String", "BASEURL", "\"https://apidev.deliv-x.com/\""
         buildConfigField "String", "DISPATCHER_BASE", "\"https://apidev.deliv-x.com/\""
-        buildConfigField "String", "MESSAGE_BASE", "\"https://apidev.deliv-x.com/\""
+        buildConfigField "String", "MESSAGE_BASE", "\"https://apidev.deliv-x.com/\""*/
 
        /* buildConfigField "String", "BASEURL", "\"https://api.ingredienta.app/\""
         buildConfigField "String", "DISPATCHER_BASE", "\"https://api.ingredienta.app/\""

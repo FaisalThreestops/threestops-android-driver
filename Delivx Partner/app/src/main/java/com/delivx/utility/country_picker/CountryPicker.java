@@ -98,11 +98,12 @@ public class CountryPicker extends DialogFragment implements
 
                 for (int i = 0; i < countrArray.length(); i++) {
                     JSONObject jsonObject = countrArray.getJSONObject(i);
-
                     Utility.printLog("Country Picker : "+jsonObject.toString());
                     String countryName = jsonObject.getString("name");
                     String countryDialCode = jsonObject.getString("dial_code");
                     String countryCode = jsonObject.getString("code");
+                    if(jsonObject.getString("code").equalsIgnoreCase("gy"))
+                        countryDialCode="+592";
                     /*int maxPhoneLength=jsonObject.getInt("max_digits");
                     int minPhoneLength=(!jsonObject.getString("min_digits").isEmpty())?jsonObject.getInt("min_digits"):5;
 */
