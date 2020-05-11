@@ -19,6 +19,8 @@ import com.delivx.RxObservers.RxNetworkObserver;
 import com.delivx.app.bookingRequest.BookingPopUp;
 import com.delivx.app.main.MainActivity;
 import com.delivx.data.source.PreferenceHelperDataSource;
+import com.delivx.networking.SocketFactory;
+import com.driver.delivx.BuildConfig;
 import com.driver.delivx.R;
 import com.delivx.managers.booking.BookingManager;
 import com.delivx.mqttChat.ChatDataObervable;
@@ -41,14 +43,18 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import static com.delivx.utility.VariableConstant.FORGROUND_LOCK;
 import static com.delivx.utility.VariableConstant.IS_POP_UP_OPEN;
-import static com.delivx.utility.VariableConstant.MQTT_PASSWORD;
-import static com.delivx.utility.VariableConstant.MQTT_USERNAME;
+
 
 /**
  * <h1>MQTTManager</h1>
@@ -179,7 +185,7 @@ public class MQTTManager
     public void createMQttConnection(String clientId)
     {
         Utility.printLog(TAG+" createMQtftConnection: "+clientId);
-        String serverUri = "tcp://" + VariableConstant.MQTT_HOST + ":" + VariableConstant.MQTT_PORT;
+        String serverUri = "ssl://" + BuildConfig.MQTT_HOST + ":" + BuildConfig.MQTT_PORT;
         mqttAndroidClient = new MqttAndroidClient(mContext, serverUri, clientId);
         mqttAndroidClient.setCallback(new MqttCallback() {
             @Override
@@ -351,8 +357,19 @@ public class MQTTManager
         mqttConnectOptions = new MqttConnectOptions();
         mqttConnectOptions.setCleanSession(false);
         mqttConnectOptions.setAutomaticReconnect(true);
-        mqttConnectOptions.setUserName(MQTT_USERNAME);
-        mqttConnectOptions.setPassword(MQTT_PASSWORD.toCharArray());
+        mqttConnectOptions.setUserName(BuildConfig.MQTT_USERNAME);
+        mqttConnectOptions.setPassword(BuildConfig.MQTT_PASSWORD.toCharArray());
+        SocketFactory.SocketFactoryOptions socketFactoryOptions = new SocketFactory.SocketFactoryOptions();
+        try {
+            //socketFactoryOptions.withCaInputStream(mContext.getResources().openRawResource(R.raw.ca));
+            socketFactoryOptions.withClientP12Password("3Embed");
+            socketFactoryOptions.withClientP12InputStream(mContext.getResources().openRawResource(R.raw.client));
+            mqttConnectOptions.setSocketFactory(new SocketFactory(socketFactoryOptions));
+        } catch (IOException | NoSuchAlgorithmException | KeyStoreException | KeyManagementException | UnrecoverableKeyException e) {
+            e.printStackTrace();
+        } catch (java.security.cert.CertificateException e) {
+            e.printStackTrace();
+        }
         connectMQTTClient(mContext);
     }
 

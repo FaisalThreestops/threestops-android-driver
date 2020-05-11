@@ -9,6 +9,12 @@ import com.delivx.ForgotPassword.ForgotPasswordMobNum;
 import com.delivx.ForgotPassword.ForgotPasswordVerify;
 import com.delivx.ForgotPassword.RetriveFromMobile.RetriveFromMobModule;
 import com.delivx.ForgotPassword.VerifyMobile.VerifyMobileModule;
+import com.delivx.app.main.help_center.zendeskHelpIndex.ZendeskAdapterModule;
+import com.delivx.app.main.help_center.zendeskHelpIndex.ZendeskHelpIndexAct;
+import com.delivx.app.main.help_center.zendeskHelpIndex.ZendeskModule;
+import com.delivx.app.main.help_center.zendeskTicketDetails.HelpIndexAdapterModule;
+import com.delivx.app.main.help_center.zendeskTicketDetails.HelpIndexTicketDetailsAct;
+import com.delivx.app.main.help_center.zendeskTicketDetails.HelpTicketDetailsModule;
 import com.delivx.app.orderEdit.OrderEditActivity;
 import com.delivx.app.orderEdit.OrderEditModule;
 import com.delivx.app.replaceItem.ReplaceItemsActivity;
@@ -215,4 +221,13 @@ public abstract class ActivityBindingModule {
     @ActivityScoped
     @ContributesAndroidInjector(modules = {CardDetailModule.class, CardDetailActModule.class})
     abstract CardDetailAct cardEditActivity();
+
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = {ZendeskModule.class, ZendeskAdapterModule.class})
+    abstract ZendeskHelpIndexAct provideZendeskHelp();
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = {HelpTicketDetailsModule.class, HelpIndexAdapterModule.class})
+    abstract HelpIndexTicketDetailsAct provideHelpIndexDetails();
 }

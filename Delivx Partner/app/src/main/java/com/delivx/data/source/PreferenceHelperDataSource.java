@@ -408,4 +408,7 @@ public interface PreferenceHelperDataSource
     void setStripeKey(String stripeKey);
 
     String getStripe();
+    void setRequesterId(String rId);
+
+    String getRequesterId();
 }

@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Delivx Partner.iml" filepath="$PROJECT_DIR$/Delivx Partner.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/simplecroplib/simplecroplib.iml" filepath="$PROJECT_DIR$/simplecroplib/simplecroplib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Delivx Partner.iml" filepath="$PROJECT_DIR$/Delivx Partner.iml" group="Delivx Partner" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="Delivx Partner/app" />
+      <module fileurl="file://$PROJECT_DIR$/simplecroplib/simplecroplib.iml" filepath="$PROJECT_DIR$/simplecroplib/simplecroplib.iml" group="Delivx Partner/simplecroplib" />
     </modules>
   </component>
 </project>

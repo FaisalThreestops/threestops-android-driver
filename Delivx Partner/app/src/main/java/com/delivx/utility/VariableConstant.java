@@ -26,11 +26,7 @@ public class VariableConstant {
     public static final int RC_LOCATION_STATE = 102;
 
 
-    //MQTT Connect details
-    public static final String MQTT_HOST = "159.203.182.173";
-    public static final String MQTT_PORT = "2052";
-    public static final String MQTT_USERNAME =  "DelivXVernemq";
-    public static final String MQTT_PASSWORD =  "dZuxnpHxXD86Sz8g";
+
 
     //AWS image Upload Details
     public static final String BUCKET_NAME = "delivx";

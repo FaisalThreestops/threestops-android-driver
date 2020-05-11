@@ -12,6 +12,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import androidx.annotation.NonNull;
+
+import com.delivx.app.main.help_center.zendeskHelpIndex.ZendeskHelpIndexAct;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.navigation.NavigationView;
 import androidx.fragment.app.Fragment;
@@ -383,7 +385,18 @@ public class MainActivity extends DaggerAppCompatActivity
 
             //event for Support Select
             case R.id.nav_support:
-                homeOpen = false;
+
+                try {
+                    Intent intent = new Intent(this, ZendeskHelpIndexAct.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    intent.putExtra("comingFrom", "profile");
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_in_right);
+                }catch (Exception e){
+                    Utility.printLog(" caught : " + e.getMessage());
+                }
+
+                /*homeOpen = false;
                 fragment = new SupportFrag();
                 fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
@@ -397,7 +410,7 @@ public class MainActivity extends DaggerAppCompatActivity
                 tvTitle2.setVisibility(View.GONE);
                 menu_layout.setVisibility(View.GONE);
                 abarMain.setVisibility(View.VISIBLE);
-                button_menu.setImageResource(R.drawable.selector_hamburger_white);
+                button_menu.setImageResource(R.drawable.selector_hamburger_white);*/
                 break;
 
             //event for Bank Details Select

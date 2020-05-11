@@ -338,6 +338,37 @@ public interface NetworkService {
         @Header("language") String language,
         @Field("cardId") String cardId);
 
+    @GET("zendesk/user/ticket/{emailId}")
+    Observable<Response<ResponseBody>> onToGetZendeskTicket(@Header("authorization") String authorization,
+                                                            @Header("language") String language,
+                                                            @Path("emailId") String emailId);
+
+    @PUT("zendesk/ticket/comments")
+    @FormUrlEncoded
+    Observable<Response<ResponseBody>> commentOnTicket(@Header("authorization") String authorization,
+                                                       @Header("language") String language,
+                                                       @Field("id") String id,
+                                                       @Field("body") String body,
+                                                       @Field("author_id") String author_id);
+
+    @POST("zendesk/ticket")
+    @FormUrlEncoded
+    Observable<Response<ResponseBody>> createTicket(@Header("createTicket") String authorization,
+                                                    @Header("language") String language,
+                                                    @Field("subject") String subject,
+                                                    @Field("body") String body,
+                                                    @Field("status") String status,
+                                                    @Field("priority") String priority,
+                                                    @Field("type") String type,
+                                                    @Field("requester_id") String requester_id);
+
+    @GET("zendesk/ticket/history/{id}")
+    Observable<Response<ResponseBody>> onToGetZendeskHistory(@Header("authorization") String authorization,
+                                                             @Header("language") String language,
+                                                             @Path("id") String id);
+
+
+
 
 }
 

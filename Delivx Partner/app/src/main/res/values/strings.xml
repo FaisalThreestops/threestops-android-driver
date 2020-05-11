@@ -659,4 +659,28 @@
     <string name="cash_amt">Cash :</string>
     <string name="indian_code">+91</string>
 
+
+    <string name="helpSubject">Subject</string>
+
+    <!--Help Center-->
+    <string name="helpcenter">Help Center</string>
+    <string name="priorityUrgent">Urgent</string>
+    <string name="priorityHigh">High</string>
+    <string name="priorityNormal">Normal</string>
+    <string name="priorityLow">Low</string>
+    <string name="newTicket">New Ticket</string>
+    <string name="ticket">Ticket</string>
+    <string name="Clear">Clear</string>
+    <string name="priority">Priority</string>
+    <string-array name="ticketPriority">
+        <item>urgent</item>
+        <item>high</item>
+        <item>normal</item>
+        <item>low</item>
+    </string-array>
+
+    <string name="type_msg">Type Message</string>
+    <string name="status">Status</string>
+
+
 </resources>

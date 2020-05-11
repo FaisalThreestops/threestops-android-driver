@@ -548,4 +548,15 @@ public class PreferencesHelper implements PreferenceHelperDataSource {
     public String getStripe() {
         return sharedPreferences.getString(PreferenceKeys.KeysEntry.STRIPE_KEY, "");
     }
+
+    @Override
+    public void setRequesterId(String rId) {
+        editor.putString(PreferenceKeys.KeysEntry.REQUESTER_ID, rId);
+        editor.commit();
+    }
+
+    @Override
+    public String getRequesterId() {
+        return sharedPreferences.getString(PreferenceKeys.KeysEntry.REQUESTER_ID, null);
+    }
 }

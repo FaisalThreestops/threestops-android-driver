@@ -293,6 +293,12 @@ public class LoginPresenterImpl implements LoginPresenter
                         SinginResponsePojo signInResponse=gson.fromJson(jsonObject.toString(),SinginResponsePojo.class);
                         preferenceHelperDataSource.setDriverType(signInResponse.getData().getDriverType());
                         preferenceHelperDataSource.setPushTopic(jsonObject.getJSONObject("data").getString("fcmTopics"));
+                        if (jsonObject.getJSONObject("data").has("requesterId") &&
+                                !jsonObject.getJSONObject("data").getString("requesterId").equals("")) {
+                            preferenceHelperDataSource.setRequesterId(jsonObject.getJSONObject("data").getString("requesterId"));
+                            Log.d("requesterId", "onNext: "+jsonObject.getJSONObject("data").getString("requesterId"));
+                            Log.d("requesterId", "onNext: "+preferenceHelperDataSource.getRequesterId());
+                        }
                         setSignInData(signInResponse.getData(),password);
                         Utility.printLog("LoginResponse : "+jsonObject.toString());
                     }else {

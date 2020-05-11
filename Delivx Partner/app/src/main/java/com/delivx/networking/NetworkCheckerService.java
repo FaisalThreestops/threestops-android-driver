@@ -88,7 +88,7 @@ public class NetworkCheckerService extends DaggerService
         try {
             URL url=new URL("http://www.google.co.in");
             HttpURLConnection urlConnection= (HttpURLConnection) url.openConnection();
-            urlConnection.setConnectTimeout(2000);
+            urlConnection.setConnectTimeout(7000);
             urlConnection.connect();
             holder.setConnected(true);
             getConnectionType();

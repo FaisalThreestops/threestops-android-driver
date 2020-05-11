@@ -83,6 +83,14 @@
             android:name="com.delivx.ForgotPassword.ForgotPasswordMobNum"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible" />
+
+        <activity
+            android:name="com.delivx.app.main.help_center.zendeskHelpIndex.ZendeskHelpIndexAct"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.delivx.app.main.help_center.zendeskTicketDetails.HelpIndexTicketDetailsAct"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.delivx.vehiclelist.VehicleList"
             android:screenOrientation="portrait" />

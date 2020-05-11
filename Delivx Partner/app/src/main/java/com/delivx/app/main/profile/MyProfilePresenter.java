@@ -109,6 +109,7 @@ public class MyProfilePresenter implements ProfileContract.PresenterOpetaions {
                             switch (value.code()){
                                 //success
                                 case 200:
+                                    String res=value.body().string();
                                     jsonObject=new JSONObject(value.body().string());
                                     Gson gson=new Gson();
                                     ProfilePojo profilePojo = gson.fromJson(jsonObject.toString(), ProfilePojo.class);

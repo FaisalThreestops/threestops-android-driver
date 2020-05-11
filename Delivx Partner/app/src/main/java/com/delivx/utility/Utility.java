@@ -31,6 +31,8 @@ import android.os.Build;
 import android.provider.Settings;
 import com.google.android.material.textfield.TextInputLayout;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import android.telephony.TelephonyManager;
 import android.text.format.DateFormat;
 import android.util.DisplayMetrics;
@@ -1138,6 +1140,46 @@ public class Utility {
     public static String currencyFormat(String amount) {
         DecimalFormat formatter = new DecimalFormat("#0.00");
         return formatter.format(Double.parseDouble(amount));
+    }
+
+    public static String getFormattedDate(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+//        cal.setTimeZone(getTimeZone(AppConstants.CURRENT_ZONE_LAT, AppConstants.CURRENT_ZONE_LONGI));
+        //2nd of march 2015
+        int day = cal.get(Calendar.DATE);
+
+
+        if (!((day > 10) && (day < 19)))
+            switch (day % 10) {
+                case 1:
+                    return simpleDateFormater("EEE d'st' MMM yyyy',' hh:mm a", date);
+                case 2:
+
+                    return simpleDateFormater("EEE d'nd' MMM yyyy',' hh:mm a", date);
+                case 3:
+                    return simpleDateFormater("EEE d'rd' MMM yyyy',' hh:mm a", date);
+                default:
+                    return simpleDateFormater("EEE d'th' MMM yyyy',' hh:mm a", date);
+            }
+        return simpleDateFormater("EEE d'th' MMM yyyy',' hh:mm a", date);
+    }
+
+    private static String simpleDateFormater(String format, Date date) {
+        SimpleDateFormat sfd = new SimpleDateFormat(format, Locale.ENGLISH);
+//        sfd.setTimeZone(getTimeZone(AppConstants.CURRENT_ZONE_LAT, AppConstants.CURRENT_ZONE_LONGI));
+        return sfd.format(date);
+    }
+
+
+    public static int getColor(Context mContext, int id) {
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return mContext.getColor(id);
+        } else {
+            return ContextCompat.getColor(mContext, id);
+        }
     }
 
 }
