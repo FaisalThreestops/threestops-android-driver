@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
 import com.delivx.app.MyApplication;
 import com.delivx.login.LoginActivity;
@@ -111,7 +112,11 @@ public class BookingRidePresenter implements BookingRideContract.PresenterOperat
 
     @Override
     public void callCustomer() {
-        Utility.MakePhoneCall(appointments.getCustomerPhone(), context);
+        Log.d("check", "callCustomer: "+appointments.getOrderStatus());
+        if(appointments.getOrderStatus().trim().equals("10")){
+            Utility.MakePhoneCall(appointments.getStorePhone(), context);
+        }else
+            Utility.MakePhoneCall(appointments.getCustomerPhone(), context);
     }
 
     @Override
@@ -356,13 +361,13 @@ public class BookingRidePresenter implements BookingRideContract.PresenterOperat
             JSONArray jsonArray=new JSONArray(preferenceHelperDataSource.getBookings());
             for (int i = 0; i < jsonArray.length(); i++) {
 
-                    JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-                    Utility.printLog("onDistance changed ...." + jsonObject.get("bid"));
-                    if (jsonObject.get("bid").equals(appointments.getBid())) {
-                        jsonObject.put("distance",0.0);
-                        jsonObject.put("time_paused",0);
-                        jsonObject.put("time_elapsed",0);
-                    }
+                JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                Utility.printLog("onDistance changed ...." + jsonObject.get("bid"));
+                if (jsonObject.get("bid").equals(appointments.getBid())) {
+                    jsonObject.put("distance",0.0);
+                    jsonObject.put("time_paused",0);
+                    jsonObject.put("time_elapsed",0);
+                }
             }
             preferenceHelperDataSource.setBookings(jsonArray.toString());
 

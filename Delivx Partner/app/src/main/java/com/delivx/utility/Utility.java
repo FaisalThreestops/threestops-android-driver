@@ -1182,4 +1182,10 @@ public class Utility {
         }
     }
 
+    public static String bookingDate(long time) {
+        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+        cal.setTimeInMillis(time * 1000);
+        String date = DateFormat.format("dd-MMM-yyyy HH:mm a", cal).toString();
+        return date;
+    }
 }

@@ -36,6 +36,7 @@ import com.delivx.pojo.AssignedAppointments;
 import com.delivx.utility.FontUtils;
 import com.delivx.utility.Slider;
 import com.delivx.utility.Utility;
+import com.squareup.picasso.Picasso;
 
 import java.util.Locale;
 
@@ -370,7 +371,7 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements
             case R.id.iv_call_customer:
                 presenter.callCustomer(true);
                 break;
-                //call to store
+            //call to store
             case R.id.iv_call_pickUp:
                 presenter.callCustomer(false);
                 break;
@@ -403,6 +404,13 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements
                 itemPrice.setTypeface(font);
                 TextView itemUnit= view.findViewById(R.id.tvQuantity);
                 itemPrice.setTypeface(font);
+
+                ImageView iv_item_img=view.findViewById(R.id.iv_item_img);
+                if(!appointments.getShipmentDetails().get(i).getItemImageURL().equals("") && !appointments.getShipmentDetails().get(i).getItemImageURL().isEmpty()) {
+                    Picasso.with(this).load(appointments.getShipmentDetails().get(i).getItemImageURL()).placeholder(R.drawable.login_logo).error(R.drawable.login_logo).into(iv_item_img);
+                }else {
+                    iv_item_img.setVisibility(View.GONE);
+                }
 
                 if(appointments.getStoreType().equals("7")){
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 2f);
@@ -529,7 +537,7 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements
         startActivity(intent);
     }
 
-     @Override
+    @Override
     public void openChatAct(AssignedAppointments appointments) {
 
         Intent intent=new Intent(this,ChattingActivity.class);

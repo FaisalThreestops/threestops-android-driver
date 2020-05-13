@@ -45,6 +45,7 @@ public class NewBookingMQTTResponse implements Serializable {
 
     private String storeTypeMsg;
     private String dueDatetimeTimeStamp;
+    private String orderDateTimeStamp;
 
     public String getCurrency() {
         return currency;
@@ -276,5 +277,14 @@ public class NewBookingMQTTResponse implements Serializable {
 
     public void setStoreType(String storeType) {
         this.storeType = storeType;
+    }
+
+
+    public String getOrderDateTimeStamp() {
+        return orderDateTimeStamp;
+    }
+
+    public void setOrderDateTimeStamp(String orderDateTimeStamp) {
+        this.orderDateTimeStamp = orderDateTimeStamp;
     }
 }

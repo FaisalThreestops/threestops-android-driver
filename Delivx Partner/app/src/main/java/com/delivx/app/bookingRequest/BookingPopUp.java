@@ -61,6 +61,8 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
 
     @BindView(R.id.tvordertypeHandelers) TextView tvordertypeHandelers;
     @BindView(R.id.tvordertype) TextView tvordertype;
+    @BindView(R.id.tv_date)TextView tv_date;
+    @BindView(R.id.tv_OrderTime)TextView tv_OrderTime;
 
     @Inject
     BookingPopUpMainMVP.PresenterOperations presenter;
@@ -128,6 +130,7 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
         mediaPlayer.setLooping(true);
 
         mDialog = new ProgressDialog(BookingPopUp.this);
+        tv_OrderTime.setText("DATE & TIME");
 
     }
 
@@ -147,6 +150,7 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
         tv_droptime.setText(Utility.getDate(Long.parseLong(newBookingMQTTResponse.getDeliveryDatetimeTimeStamp())));
 //        tv_droptime.setText(Utility.formatDateWeek(newBookingMQTTResponse.getDropDt()));
         tvordertype.setText(newBookingMQTTResponse.getStoreTypeMsg());
+        tv_date.setText(Utility.bookingDate(Long.parseLong(newBookingMQTTResponse.getOrderDateTimeStamp())));
 
         if(newBookingMQTTResponse.getPaymentType().equals("2"))
             tvPayment.setText(getResources().getString(R.string.cash));
@@ -154,7 +158,7 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
             tvPayment.setText(getResources().getString(R.string.card));
 
         tv_delivery_charge.setText(Utility.formatPrice(newBookingMQTTResponse.getDeliveryFee()));
-        tvBID.setText(getResources().getString(R.string.order_id)+ newBookingMQTTResponse.getBid());
+        tvBID.setText(getResources().getString(R.string.oid)+ newBookingMQTTResponse.getBid());
 
     }
 

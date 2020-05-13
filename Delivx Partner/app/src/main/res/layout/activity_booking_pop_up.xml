@@ -162,6 +162,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/home_pickup_icon" />
+            <ImageView
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="@dimen/dpFive"
+                android:layout_below="@+id/iv_pickup"
+                android:src="@drawable/history_details_full_arrow_icon"  />
 
             <LinearLayout
                 android:id="@+id/ll_pickup"
@@ -169,8 +177,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/iv_pickup"
                 android:layout_alignStart="@+id/iv_pickup"
-                android:layout_marginLeft="@dimen/dpTwenty"
-                android:layout_marginStart="@dimen/dpTwenty"
+                android:layout_marginLeft="@dimen/dpTwentyFive"
+                android:layout_marginStart="@dimen/dpTwentyFive"
                 android:layout_marginTop="5dp"
                 android:orientation="vertical">
 
@@ -220,6 +228,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rl_drop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dpThirty"
@@ -239,8 +248,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/iv_drop"
                 android:layout_alignStart="@+id/iv_drop"
-                android:layout_marginLeft="@dimen/dpTwenty"
-                android:layout_marginStart="@dimen/dpTwenty"
+                android:layout_marginLeft="@dimen/dpTwentyFive"
+                android:layout_marginStart="@dimen/dpTwentyFive"
                 android:layout_marginTop="5dp"
                 android:orientation="vertical">
 
@@ -343,42 +352,87 @@
 
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/tv_deliveryfee"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/Deliveryfee"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:textSize="@dimen/spNineteen" />
+            android:weightSum="2">
 
-        <RelativeLayout
+            <TextView
+                android:id="@+id/tv_deliveryfee"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dpFifteen"
+                android:text="@string/Deliveryfee"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/spNineteen" />
+
+            <TextView
+                android:id="@+id/tv_OrderTime"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dpFifteen"
+                android:text="@string/date_time"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/spNineteen"
+                android:gravity="center_horizontal" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:orientation="horizontal"
-            android:paddingTop="@dimen/dpFive">
+            android:weightSum="2">
 
-            <TextView
-                android:id="@+id/tv_popup_cur"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/currency"
-                android:textColor="@color/white"
-                android:textSize="38sp" />
+                android:layout_weight="0.8"
+                android:orientation="horizontal"
+                android:layout_marginLeft="@dimen/dpFifteen">
 
-            <TextView
-                android:id="@+id/tv_delivery_charge"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/tv_popup_cur"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/currency"
+                    android:textColor="@color/white"
+                    android:textSize="26sp" />
+
+                <TextView
+                    android:id="@+id/tv_delivery_charge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/tv_popup_cur"
+                    android:layout_toRightOf="@+id/tv_popup_cur"
+                    android:text="245.00"
+                    android:textColor="@color/white"
+                    android:textSize="26sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/tv_popup_cur"
-                android:layout_toRightOf="@+id/tv_popup_cur"
-                android:text="245.00"
-                android:textColor="@color/white"
-                android:textSize="38sp" />
+                android:layout_weight="1.2"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginLeft="@dimen/dpFifteen">
 
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="19sp" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -6,8 +6,8 @@
     android:background="@color/white">
 
     <include
-    android:id="@+id/include_actionbar"
-    layout="@layout/actionbar" />
+        android:id="@+id/include_actionbar"
+        layout="@layout/actionbar" />
 
     <ScrollView
         android:id="@+id/sv_signup"
@@ -473,7 +473,7 @@
                 <RelativeLayout
                     android:id="@+id/ll_add_licence"
                     android:layout_width="60dp"
-                    android:layout_height="50dp"
+                    android:layout_height="60dp"
                     android:layout_marginLeft="3dp"
                     android:layout_marginStart="3dp"
                     android:layout_marginTop="5dp"
@@ -488,7 +488,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="@string/take_photo"
+                        android:text="@string/take_front_photo"
                         android:textColor="@color/white"
                         android:layout_marginTop="5dp"
                         android:layout_centerHorizontal="true"
@@ -518,7 +518,7 @@
                     android:layout_toRightOf="@id/ll_add_licence"
                     android:layout_toEndOf="@id/ll_add_licence"
                     android:layout_width="60dp"
-                    android:layout_height="50dp"
+                    android:layout_height="60dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
@@ -533,7 +533,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="@string/take_photo"
+                        android:text="@string/take_Back_photo"
                         android:textColor="@color/white"
                         android:layout_marginTop="5dp"
                         android:layout_centerHorizontal="true"

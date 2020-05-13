@@ -46,6 +46,7 @@ import com.delivx.utility.AppConstants;
 import com.delivx.utility.FontUtils;
 import com.delivx.utility.Slider;
 import com.delivx.utility.Utility;
+import com.squareup.picasso.Picasso;
 
 import java.util.Locale;
 
@@ -332,13 +333,18 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
                 itemPrice.setTypeface(font);
                 TextView itemUnit= view.findViewById(R.id.tvQuantity);
                 itemPrice.setTypeface(font);
+                ImageView iv_item_img=view.findViewById(R.id.iv_item_img);
 
                 String item=appointments.getShipmentDetails().get(i).getItemName();
                 SpannableString spannableString=new SpannableString(item);
                 spannableString.setSpan(new UnderlineSpan(),0,spannableString.length(),0);
                 itemName.setText(spannableString);
 
-
+                if(!appointments.getShipmentDetails().get(i).getItemImageURL().equals("") && !appointments.getShipmentDetails().get(i).getItemImageURL().isEmpty()) {
+                    Picasso.with(this).load(appointments.getShipmentDetails().get(i).getItemImageURL()).placeholder(R.drawable.login_logo).error(R.drawable.login_logo).into(iv_item_img);
+                }else {
+                    iv_item_img.setVisibility(View.GONE);
+                }
 
                 if(appointments.getStoreType().equals("7")){
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 2f);
@@ -360,7 +366,7 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
                 int quantity= Integer.parseInt(appointments.getShipmentDetails().get(i).getQuantity());
 
                 if(!appointments.getStoreType().equals("7"))
-                itemUnit.setText(appointments.getShipmentDetails().get(i).getQuantity()+"("+appointments.getShipmentDetails().get(i).getUnitName()+")");
+                    itemUnit.setText(appointments.getShipmentDetails().get(i).getQuantity()+"("+appointments.getShipmentDetails().get(i).getUnitName()+")");
                 else
                     itemUnit.setText(appointments.getShipmentDetails().get(i).getQuantity());
 
