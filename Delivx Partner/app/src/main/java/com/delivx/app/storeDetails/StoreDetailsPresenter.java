@@ -101,7 +101,7 @@ public class StoreDetailsPresenter implements StoreDetailsContract.Presenter
         Utility.printLog("Appointment Status: "+AppConstants.BookingStatus.OnTheWay);
         Observable<Response<ResponseBody>> bookingStatusRide=dispatcherService.bookingStatusRide(
                 preferenceHelperDataSource.getLanguage(),
-                preferenceHelperDataSource.getToken(),
+                ((MyApplication) context.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),
                 appointments.getBid(),
                 AppConstants.BookingStatus.OnTheWay,
                 preferenceHelperDataSource.getDriverCurrentLat(),
@@ -227,7 +227,7 @@ public class StoreDetailsPresenter implements StoreDetailsContract.Presenter
             view.showProgress();
         }
         Observable<Response<ResponseBody>> assignedTrips=networkService.cancelReason(
-                preferenceHelperDataSource.getLanguage(),preferenceHelperDataSource.getToken());
+                preferenceHelperDataSource.getLanguage(), ((MyApplication) context.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()));
         assignedTrips.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Response<ResponseBody>>() {
@@ -306,7 +306,7 @@ public class StoreDetailsPresenter implements StoreDetailsContract.Presenter
             view.showProgress();
 
         Observable<Response<ResponseBody>> updateOrder=networkService.cancelOrder(
-                preferenceHelperDataSource.getToken(),
+                ((MyApplication) context.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),
                 preferenceHelperDataSource.getLanguage(),
                 "",
                 "emfke",

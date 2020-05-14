@@ -25,13 +25,7 @@ public class VariableConstant {
     public static final int RC_READ_PHONE_STATE = 101;
     public static final int RC_LOCATION_STATE = 102;
 
-
-
-
-    //AWS image Upload Details
-    public static final String BUCKET_NAME = "delivx";
-    public static final String AMAZON_BASE_URL = "https://delivx.s3.amazonaws.com/";
-    public static final String COGNITO_POOL_ID = "us-east-2:d4ab8048-939a-4bea-a78d-16dff1e519f8";
+    public static String TOKEN;
 
     //Image Upload URL Folder path in AWS
     public static final String PROFILE_PIC = "driver/ProfilePics/";

@@ -9,6 +9,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.RequiresApi;
+
+import com.delivx.app.MyApplication;
 import com.google.android.material.textfield.TextInputLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -210,6 +212,7 @@ public class WalletAct extends DaggerAppCompatActivity implements WalletView, Vi
 
             }
         });
+
     }
 
     @Override
@@ -420,4 +423,5 @@ public class WalletAct extends DaggerAppCompatActivity implements WalletView, Vi
         progressBar.setVisibility(View.GONE);
 
     }
+
 }

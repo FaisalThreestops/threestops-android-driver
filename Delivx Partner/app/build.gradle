@@ -8,8 +8,8 @@ android {
         applicationId "com.driver.delivx"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 16
-        versionName "1.1.5"
+        versionCode 17
+        versionName "1.1.6"
         multiDexEnabled true
 
         dexOptions {
@@ -33,6 +33,10 @@ android {
         buildConfigField "String", "BASEURL", "\"https://apidev.deliv-x.com/\""
         buildConfigField "String", "DISPATCHER_BASE", "\"https://apidev.deliv-x.com/\""
         buildConfigField "String", "MESSAGE_BASE", "\"https://apidev.deliv-x.com/\""
+
+        buildConfigField "String", "BUCKET_NAME", "\"delivx\""
+        buildConfigField "String", "AMAZON_BASE_URL", "\"https://delivx.s3.amazonaws.com/\""
+        buildConfigField "String", "COGNITO_POOL_ID", "\"us-east-2:d4ab8048-939a-4bea-a78d-16dff1e519f8\""
 
        /* buildConfigField "String", "BASEURL", "\"https://api.ingredienta.app/\""
         buildConfigField "String", "DISPATCHER_BASE", "\"https://api.ingredienta.app/\""

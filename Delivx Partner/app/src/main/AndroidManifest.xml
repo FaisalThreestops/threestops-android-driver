@@ -121,6 +121,17 @@
         </service>
 
 
+        <service android:name="com.delivx.account.AppAuthenticatorService">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator" />
+        </service>
+
+
         <!-- Mqtt Service -->
         <service android:name="org.eclipse.paho.android.service.MqttService"
             android:exported="false"

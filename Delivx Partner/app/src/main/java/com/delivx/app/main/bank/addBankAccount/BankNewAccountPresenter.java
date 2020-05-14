@@ -1,5 +1,8 @@
 package com.delivx.app.main.bank.addBankAccount;
 
+import android.app.Activity;
+
+import com.delivx.app.MyApplication;
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.networking.NetworkService;
 import com.delivx.utility.MyTextUtils;
@@ -33,6 +36,9 @@ public class BankNewAccountPresenter implements AddBankAccountContract.Presenter
     @Inject
     AddBankAccountContract.ViewOperation view;
 
+    @Inject
+    Activity activity;
+
     /**
      * <h1>createBankAccount</h1>
      * <p>API call for  create bank account</p>
@@ -44,7 +50,7 @@ public class BankNewAccountPresenter implements AddBankAccountContract.Presenter
 
         view.showProgress();
         final Observable<Response<ResponseBody>> externalAccount=networkService.externalAccount(preferenceHelperDataSource.getLanguage(),
-                preferenceHelperDataSource.getToken(),
+                ((MyApplication) activity.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),
                 preferenceHelperDataSource.getMyEmail(),
                 acc,
                 routing,

@@ -505,7 +505,8 @@ public class LocationUpdateService
 
             Observable<Response<ResponseBody>> location=dispatcherService.location(
                     /*preferenceHelperDataSource.getLanguage()*/"0",
-                    preferenceHelperDataSource.getToken(),
+            ((MyApplication) getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),
+                    /*preferenceHelperDataSource.getToken(),*/
                     latitude+"",
                     longitude+"",
                     null,
@@ -589,7 +590,7 @@ public class LocationUpdateService
         if(latLngBody.getLatLong().length>0) {
             Utility.printLog(TAG + "retriveDocument body:  "+latLngBody.getLatLong().length+"\n" +joLatLngBody.toString() );
             Observable<Response<ResponseBody>> locationLogs = networkService.locationLogs(
-                    preferenceHelperDataSource.getToken(),
+                    ((MyApplication) getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),
                     preferenceHelperDataSource.getLanguage(),
                     latLngBody);
             locationLogs.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Observer<Response<ResponseBody>>() {

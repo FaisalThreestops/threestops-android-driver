@@ -96,7 +96,7 @@ public class BankListFragPresenter implements BankDetailscontract.PresenterOpera
     private void getAccount() {
         view.showProgress();
         final Observable<Response<ResponseBody>> connectAccount=networkService.connectAccount(preferenceHelperDataSource.getLanguage(),
-                preferenceHelperDataSource.getToken());
+                ((MyApplication) context.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()));
         connectAccount.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Response<ResponseBody>>() {

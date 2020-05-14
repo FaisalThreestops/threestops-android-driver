@@ -120,7 +120,7 @@ public class Presenter implements HomeFragmentContract.Presenter {
         view.showProgress();
 
         Observable<Response<ResponseBody>> assignedTrips=networkService.assignedTrips(
-                preferenceHelperDataSource.getLanguage(),preferenceHelperDataSource.getToken());
+                preferenceHelperDataSource.getLanguage(),((MyApplication) context.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()));
         assignedTrips.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Response<ResponseBody>>() {
@@ -308,7 +308,7 @@ public class Presenter implements HomeFragmentContract.Presenter {
 
         view.showProgress();
         Observable<Response<ResponseBody>> status=dispatcherService.status(
-                /*preferenceHelperDataSource.getLanguage()*/"0",preferenceHelperDataSource.getToken(),masterStatus);
+                /*preferenceHelperDataSource.getLanguage()*/"0",((MyApplication) context.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),masterStatus);
         status.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Response<ResponseBody>>() {

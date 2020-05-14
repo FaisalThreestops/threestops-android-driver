@@ -5,6 +5,8 @@ import static com.delivx.utility.AppConstants.CARD_DETAIL_ACT;
 
 import android.app.Activity;
 import android.util.Log;
+
+import com.delivx.app.MyApplication;
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.networking.NetworkService;
 import com.delivx.networking.NetworkStateHolder;
@@ -65,7 +67,7 @@ public class CardDetailPresenterImpl implements CardDetailPresenter {
         if (mView != null) {
             mView.showProgress();
         }
-        Observable<Response<ResponseBody>> bad = service.deleteCard(manager.getToken(),manager.getLanguage(),cardId);
+        Observable<Response<ResponseBody>> bad = service.deleteCard( ((MyApplication) mActivity.getApplication()).getAuthToken(manager.getDriverID()),manager.getLanguage(),cardId);
         bad.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<ResponseBody>>() {
@@ -122,7 +124,7 @@ public class CardDetailPresenterImpl implements CardDetailPresenter {
         if (mView != null) {
             mView.showProgress();
         }
-        Observable<Response<ResponseBody>> bad = service.makeDefaultCard(manager.getToken(),manager.getLanguage(),cardId);
+        Observable<Response<ResponseBody>> bad = service.makeDefaultCard( ((MyApplication) mActivity.getApplication()).getAuthToken(manager.getDriverID()),manager.getLanguage(),cardId);
         bad.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<ResponseBody>>() {

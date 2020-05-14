@@ -20,6 +20,7 @@ import com.delivx.login.language.LanguagesPojo;
 import com.delivx.networking.LanguageApiService;
 import com.delivx.service.LocationUpdateService;
 import com.delivx.utility.AppConstants;
+import com.driver.delivx.BuildConfig;
 import com.google.gson.Gson;
 import com.delivx.app.main.profile.editProfile.ChangePasswordDialog;
 import com.delivx.data.source.PreferenceHelperDataSource;
@@ -91,7 +92,7 @@ public class MyProfilePresenter implements ProfileContract.PresenterOpetaions {
             view.setLanguage(preferenceHelperDataSource.getLanguageSettings().getLanguageName(),false);
 
         view.showProgress();
-        final Observable<Response<ResponseBody>> profile=networkService.profile(preferenceHelperDataSource.getLanguage(),preferenceHelperDataSource.getToken());
+        final Observable<Response<ResponseBody>> profile=networkService.profile(preferenceHelperDataSource.getLanguage(),((MyApplication) context.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()));
         profile.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Response<ResponseBody>>() {
@@ -291,7 +292,7 @@ public class MyProfilePresenter implements ProfileContract.PresenterOpetaions {
         String BUCKETSUBFOLDER = VariableConstant.PROFILE_PIC;
         Log.d(TAG, "amzonUpload: " + file);
 
-        amazonS3.Upload_data(VariableConstant.BUCKET_NAME, BUCKETSUBFOLDER + file.getName(), file, new Upload_file_AmazonS3.Upload_CallBack() {
+        amazonS3.Upload_data(BuildConfig.BUCKET_NAME, BUCKETSUBFOLDER + file.getName(), file, new Upload_file_AmazonS3.Upload_CallBack() {
             @Override
             public void sucess(String url) {
 
@@ -322,7 +323,7 @@ public class MyProfilePresenter implements ProfileContract.PresenterOpetaions {
         view.showProgress();
         final Observable<Response<ResponseBody>> profile=networkService.updateProfile(
                 preferenceHelperDataSource.getLanguage(),
-                preferenceHelperDataSource.getToken(),
+                ((MyApplication) context.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),
                 null,
                 null,
                 null,

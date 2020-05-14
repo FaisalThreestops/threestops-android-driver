@@ -3,6 +3,7 @@ package com.delivx.app.selectedStore;
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.delivx.app.MyApplication;
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.networking.DispatcherService;
 import com.delivx.networking.NetworkService;
@@ -97,7 +98,7 @@ public class SelectedStoreIDPresenter implements SelectedStoreIdContract.Present
         Utility.printLog("Appointment Status: "+AppConstants.BookingStatus.Arrived);
         Observable<Response<ResponseBody>> bookingStatusRide=dispatcherService.bookingStatusRide(
                 preferenceHelperDataSource.getLanguage(),
-                preferenceHelperDataSource.getToken(),
+                ((MyApplication) context.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),
                 appointments.get(0).getBid(),
                 AppConstants.BookingStatus.Arrived,
                 preferenceHelperDataSource.getDriverCurrentLat(),

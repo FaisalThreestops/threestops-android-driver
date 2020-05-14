@@ -8,6 +8,7 @@ import android.util.Base64;
 import android.util.Log;
 
 
+import com.delivx.app.MyApplication;
 import com.delivx.utility.country_picker.CountryPicker;
 import com.delivx.utility.country_picker.CountryPickerListener;
 import com.delivx.data.source.PreferenceHelperDataSource;
@@ -186,7 +187,7 @@ public class EditProfilePresenter implements EditProfileContract.PresenterOperat
 
         final Observable<Response<ResponseBody>> profile=networkService.updateProfile(
                 preferenceHelperDataSource.getLanguage(),
-                preferenceHelperDataSource.getToken(),
+                ((MyApplication) context.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),
                 password,
                 mobile,
                 cCode,

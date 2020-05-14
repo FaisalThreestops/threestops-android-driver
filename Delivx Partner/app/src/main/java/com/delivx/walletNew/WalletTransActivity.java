@@ -1,6 +1,7 @@
 package com.delivx.walletNew;
 
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -43,6 +44,7 @@ public class WalletTransActivity extends DaggerAppCompatActivity
 //    private Alerts alerts;
     private ProgressDialog pDialog;
 
+
     Toolbar toolBar;
     TextView tvAbarTitle;
     @BindView(R.id.pager) ViewPager viewPager;
@@ -50,6 +52,8 @@ public class WalletTransActivity extends DaggerAppCompatActivity
 
     @Inject FontUtils appTypeface;
     @Inject WalletTransactionContract.WalletTransactionPresenter walletTransPresenter;
+    /*@Inject
+    Activity activity;*/
 
     @BindString(R.string.recentTransactions) String recentTransactions;
     @BindString(R.string.all) String all;

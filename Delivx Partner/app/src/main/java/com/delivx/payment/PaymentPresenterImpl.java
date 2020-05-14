@@ -3,6 +3,8 @@ package com.delivx.payment;
 import static com.delivx.utility.AppConstants.PAYMENT_ACT;
 
 import android.app.Activity;
+
+import com.delivx.app.MyApplication;
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.networking.NetworkService;
 import com.delivx.networking.NetworkStateHolder;
@@ -82,7 +84,7 @@ public class PaymentPresenterImpl implements PaymentPresenter {
 
     private void mGetCard() {
         mView.showProgress();
-        String token = (manager.getToken());
+        String token = ( ((MyApplication) mActivity.getApplication()).getAuthToken(manager.getDriverID()));
         Observable<Response<ResponseBody>> observable = service.getCard(token, manager.getLanguage());
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

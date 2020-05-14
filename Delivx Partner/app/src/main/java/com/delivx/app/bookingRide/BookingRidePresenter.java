@@ -194,7 +194,7 @@ public class BookingRidePresenter implements BookingRideContract.PresenterOperat
         Utility.printLog("Appointment distance: "+distance);
         Observable<Response<ResponseBody>> bookingStatusRide=dispatcherService.bookingStatusRide(
                 preferenceHelperDataSource.getLanguage(),
-                preferenceHelperDataSource.getToken(),
+                ((MyApplication) context.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),
                 appointments.getBid(),
                 status,
                 preferenceHelperDataSource.getDriverCurrentLat(),

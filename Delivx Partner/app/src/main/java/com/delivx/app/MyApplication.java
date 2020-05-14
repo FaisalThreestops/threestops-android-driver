@@ -1,8 +1,11 @@
 package com.delivx.app;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.Context;
 import androidx.multidex.MultiDex;
 
+import com.delivx.account.AccountGeneral;
 import com.delivx.login.language.LanguagesList;
 import com.delivx.networking.ConnectivityReceiver;
 import com.delivx.utility.Utility;
@@ -14,6 +17,9 @@ import com.delivx.managers.mqtt.MQTTManager;
 import com.delivx.service.CouchDbHandler;
 
 import org.json.JSONObject;
+
+import java.util.Arrays;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -28,6 +34,7 @@ public class MyApplication extends DaggerApplication {
     @Inject    MQTTManager mqttManager;
     @Inject    PreferenceHelperDataSource preferenceHelperDataSource;
     private static MyApplication myApplication;
+    private AccountManager mAccountManager;
 
     @Override
     public void onLowMemory() {
@@ -56,6 +63,7 @@ public class MyApplication extends DaggerApplication {
 
 
         couchDBHandler = new CouchDbHandler(MyApplication.this);
+        mAccountManager = AccountManager.get(getApplicationContext());
 
     }
 
@@ -108,6 +116,37 @@ public class MyApplication extends DaggerApplication {
 
     public void setConnectivityListener(ConnectivityReceiver.ConnectivityReceiverListener listener) {
         ConnectivityReceiver.connectivityReceiverListener = listener;
+    }
+
+    /*
+    <h2>getAuthToken</h2>
+    This method is used to get the auth token from the created account
+    @return  auth token stored
+    */
+
+    public String getAuthToken(String emailID) {
+        Account[] account = mAccountManager.getAccountsByType(AccountGeneral.ACCOUNT_TYPE);
+        List<Account> accounts = Arrays.asList(account);
+        if (accounts.size() > 0) {
+            for (int i = 0; i < accounts.size(); i++) {
+                if (accounts.get(i).name.equals(emailID)) {
+                    return mAccountManager.peekAuthToken(accounts.get(i), AccountGeneral.AUTHTOKEN_TYPE_FULL_ACCESS);
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * <h2>addAccount</h2>
+     * This method is used to set the auth token by creating the account manager with the account
+     *
+     * @param emailID email ID to be added
+     */
+    public void setAuthToken(String emailID, String password, String authToken) {
+        Account account = new Account(emailID, AccountGeneral.ACCOUNT_TYPE);
+        mAccountManager.addAccountExplicitly(account, password, null);
+        mAccountManager.setAuthToken(account, AccountGeneral.AUTHTOKEN_TYPE_FULL_ACCESS, authToken);
     }
 }
 

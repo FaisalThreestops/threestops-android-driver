@@ -728,4 +728,5 @@ public class MainActivity extends DaggerAppCompatActivity
             startActivity(intent);
         }
     }
+
 }

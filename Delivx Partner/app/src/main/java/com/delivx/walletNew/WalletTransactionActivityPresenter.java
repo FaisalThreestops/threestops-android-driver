@@ -1,8 +1,11 @@
 package com.delivx.walletNew;
 
 
+import android.app.Activity;
 import android.content.Context;
 
+import com.delivx.app.MyApplication;
+import com.delivx.utility.VariableConstant;
 import com.driver.delivx.R;
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.networking.NetworkService;
@@ -35,6 +38,8 @@ public class WalletTransactionActivityPresenter implements WalletTransactionCont
     @Inject WalletTransactionContract.WalletTrasactionView trasactionView;
     @Inject NetworkService networkService;
     @Inject NetworkStateHolder networkStateHolder;
+//    @Inject Activity activity;
+
     Gson gson;
 
     @Inject
@@ -78,7 +83,7 @@ public class WalletTransactionActivityPresenter implements WalletTransactionCont
 
         trasactionView.showProgressDialog(mContext.getString(R.string.pleaseWait));
         Observable<Response<ResponseBody>> request = networkService.getWalletTransaction(
-                preferenceHelperDataSource.getToken(),
+                VariableConstant.TOKEN,
                 preferenceHelperDataSource.getLanguage(),"0");
 
         request.subscribeOn(Schedulers.newThread())
@@ -146,5 +151,4 @@ public class WalletTransactionActivityPresenter implements WalletTransactionCont
 
         }
     }
-
 }

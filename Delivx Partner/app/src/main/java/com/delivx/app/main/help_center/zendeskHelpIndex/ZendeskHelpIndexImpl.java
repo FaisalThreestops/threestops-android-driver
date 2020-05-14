@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.util.Log;
 
 
+import com.delivx.app.MyApplication;
 import com.delivx.app.main.help_center.zendeskpojo.AllTicket;
 import com.delivx.app.main.help_center.zendeskpojo.OpenClose;
 import com.delivx.app.main.help_center.zendeskpojo.TicketClose;
@@ -57,7 +58,7 @@ public class ZendeskHelpIndexImpl implements ZendeskHelpIndexContract.Presenter
     @Override
     public void onToGetZendeskTicket()
     {
-        String token = manager.getToken();
+        String token = ((MyApplication) mActivity.getApplication()).getAuthToken(manager.getDriverID());
 
         Observable<Response<ResponseBody>> observable = lspServices.onToGetZendeskTicket(token,
                 manager.getLanguage(),manager.getMyEmail());

@@ -86,7 +86,7 @@ public class HistoryPresenter implements HistoryContract.PresenterOperations {
 
         Observable<Response<ResponseBody>> order=networkService.order(
                 preferenceHelperDataSource.getLanguage(),
-                preferenceHelperDataSource.getToken(),
+                ((MyApplication) context.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),
                 0,startDate,endDate);
         order.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())

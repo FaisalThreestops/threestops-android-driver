@@ -104,7 +104,7 @@ public class Presenter implements BookingPopUpMainMVP.PresenterOperations {
             view.showProgressbar();
         }
         Observable<Response<ResponseBody>> bookingAck=dispatcherService.respondToRequest(
-                preferenceHelperDataSource.getLanguage(),preferenceHelperDataSource.getToken(),
+                preferenceHelperDataSource.getLanguage(),((MyApplication) context.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),
                 newBookingMQTTResponse.getBid(), String.valueOf(status));
         bookingAck.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())

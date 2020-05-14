@@ -13,6 +13,7 @@ import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.login.LoginActivity;
 import com.delivx.login.language.LanguagesList;
 import com.delivx.service.LocationUpdateService;
+import com.driver.delivx.BuildConfig;
 import com.driver.delivx.R;
 import com.delivx.networking.DispatcherService;
 import com.delivx.pojo.AssignedAppointments;
@@ -176,7 +177,7 @@ public class InvoicePresenter implements InvoiceContract.PresenterOpetaions
         view.showProgress();
         String BUCKETSUBFOLDER = VariableConstant.SIGNATURE_UPLOAD;
 
-        amazonS3.Upload_data(VariableConstant.BUCKET_NAME, BUCKETSUBFOLDER  + takenNewSignature.getName(), takenNewSignature, new Upload_file_AmazonS3.Upload_CallBack() {
+        amazonS3.Upload_data(BuildConfig.BUCKET_NAME, BUCKETSUBFOLDER  + takenNewSignature.getName(), takenNewSignature, new Upload_file_AmazonS3.Upload_CallBack() {
             @Override
             public void sucess(String url) {
                 view.hideProgress();
@@ -212,7 +213,7 @@ public class InvoicePresenter implements InvoiceContract.PresenterOpetaions
         }
         Observable<Response<ResponseBody>> bookingStatusRide=dispatcherService.bookingStatusRide(
                 preferenceHelperDataSource.getLanguage(),
-                preferenceHelperDataSource.getToken(),
+                ((MyApplication) context.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),
                 appointments.getBid(),
                 AppConstants.BookingStatus.Done,
                 preferenceHelperDataSource.getDriverCurrentLat(),

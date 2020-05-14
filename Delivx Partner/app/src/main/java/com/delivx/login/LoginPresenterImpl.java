@@ -299,6 +299,16 @@ public class LoginPresenterImpl implements LoginPresenter
                             Log.d("requesterId", "onNext: "+jsonObject.getJSONObject("data").getString("requesterId"));
                             Log.d("requesterId", "onNext: "+preferenceHelperDataSource.getRequesterId());
                         }
+                        if (jsonObject.getJSONObject("data").has("token")) {
+                            Utility.printLog("key token " + jsonObject.getJSONObject("data").getString("token"));
+
+                            Utility.printLog("bkey " + ((MyApplication) context.getApplication()).getAuthToken(signInResponse.getData().getMid()));
+
+                            // manager.setSessionToken(object.getJSONObject("data").getString("token"));
+                            ((MyApplication) context.getApplication()).setAuthToken(signInResponse.getData().getMid(), password, jsonObject.getJSONObject("data").getString("token"));
+
+                            Utility.printLog("qkey " + ((MyApplication) context.getApplication()).getAuthToken(signInResponse.getData().getMid()));
+                        }
                         setSignInData(signInResponse.getData(),password);
                         Utility.printLog("LoginResponse : "+jsonObject.toString());
                     }else {
@@ -349,7 +359,7 @@ public class LoginPresenterImpl implements LoginPresenter
         preferenceHelperDataSource.setDriverChannel_msg(driver_channel);
         VariableConstant.MQTT_CHANEL = data.getChn();
         preferenceHelperDataSource.setDriverID(data.getMid());
-        preferenceHelperDataSource.setToken(data.getToken());
+//        preferenceHelperDataSource.setToken(data.getToken());
         preferenceHelperDataSource.setPresenceChannel(data.getPresence_chn());
         preferenceHelperDataSource.setMyName(data.getName());
         preferenceHelperDataSource.setProfilePic(data.getProfilePic());

@@ -2,6 +2,7 @@ package com.delivx.vehiclelist;
 
 import android.app.Activity;
 
+import com.delivx.app.MyApplication;
 import com.google.gson.Gson;
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.driver.delivx.R;
@@ -103,7 +104,7 @@ public class VehicleListPresenter implements VehicleListPresenterContract {
         if(view!=null)
             view.showProgress();
 
-        Observable<Response<ResponseBody>> defaultVehicle=networkService.defaultVehicle(preferenceHelper.getLanguage(),preferenceHelper.getToken(),VariableConstant.VEHICLEID,VariableConstant.VEHICLE_TYPE_ID,"");
+        Observable<Response<ResponseBody>> defaultVehicle=networkService.defaultVehicle(preferenceHelper.getLanguage(),((MyApplication) context.getApplication()).getAuthToken(preferenceHelper.getDriverID()),VariableConstant.VEHICLEID,VariableConstant.VEHICLE_TYPE_ID,"");
         defaultVehicle.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Response<ResponseBody>>() {

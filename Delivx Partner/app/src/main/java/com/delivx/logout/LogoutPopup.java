@@ -28,6 +28,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -50,6 +52,7 @@ public class LogoutPopup extends Dialog {
 
 
     NetworkService networkService;
+    @Inject Activity activity;
 
 
 
@@ -104,7 +107,7 @@ public class LogoutPopup extends Dialog {
   public void logoutApi(){
 
       pDialog.show();
-      Observable<Response<ResponseBody>> logoutApi=networkService.logout(preferenceHelperDataSource.getLanguage(),preferenceHelperDataSource.getToken());
+      Observable<Response<ResponseBody>> logoutApi=networkService.logout(preferenceHelperDataSource.getLanguage(),((MyApplication) activity.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()));
 
       logoutApi.observeOn(AndroidSchedulers.mainThread())
               .subscribeOn(Schedulers.io())

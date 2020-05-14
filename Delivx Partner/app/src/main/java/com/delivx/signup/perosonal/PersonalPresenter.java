@@ -18,6 +18,7 @@ import android.widget.DatePicker;
 import com.delivx.pojo.Zone;
 import com.delivx.pojo.ZoneModel;
 import com.delivx.utility.TextUtil;
+import com.driver.delivx.BuildConfig;
 import com.google.gson.Gson;
 import com.delivx.utility.country_picker.CountryPicker;
 import com.delivx.utility.country_picker.CountryPickerListener;
@@ -774,11 +775,11 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
             licenseBackUrl="UPLOADING";
         }
 
-        final String imageUrl = VariableConstant.AMAZON_BASE_URL + VariableConstant.BUCKET_NAME + BUCKETSUBFOLDER + file.getName().trim();
+        final String imageUrl = BuildConfig.AMAZON_BASE_URL + BuildConfig.BUCKET_NAME + BUCKETSUBFOLDER + file.getName().trim();
         Log.d("", "amzonUpload: " + imageUrl);
         Log.d("", "amzonUpload: " + BUCKETSUBFOLDER + file.getName());
 
-        amazonS3.Upload_data(type,VariableConstant.BUCKET_NAME, BUCKETSUBFOLDER + file.getName().trim(), file, new Upload_file_AmazonS3.Upload_CallBack() {
+        amazonS3.Upload_data(type,BuildConfig.BUCKET_NAME, BUCKETSUBFOLDER + file.getName().trim(), file, new Upload_file_AmazonS3.Upload_CallBack() {
             @Override
             public void sucess(String url) {
                 if (type.equals("PROFILE")) {

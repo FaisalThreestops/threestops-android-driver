@@ -1,6 +1,8 @@
 package com.delivx.wallet.voucher;
 
 import android.app.Activity;
+
+import com.delivx.app.MyApplication;
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.networking.NetworkService;
 import com.delivx.utility.Utility;
@@ -60,7 +62,7 @@ public class VoucherPresenterImpl implements VoucherPresenter {
      private void addAmountApi(String amt) {
 
         mView.showProgress();
-        Observable<Response<ResponseBody>> observable = service.voucher(manager.getToken(), manager.getLanguage(),
+        Observable<Response<ResponseBody>> observable = service.voucher( ((MyApplication) mActivity.getApplication()).getAuthToken(manager.getDriverID()), manager.getLanguage(),
                 amt);
 
         observable.subscribeOn(Schedulers.io())

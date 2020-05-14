@@ -3,6 +3,7 @@ package com.delivx.app.orderEdit;
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.delivx.app.MyApplication;
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.networking.DispatcherService;
 import com.delivx.networking.NetworkService;
@@ -107,7 +108,7 @@ public class OrderEditPresenter implements OrderEditContract.PresenterOperations
 
         Observable<Response<ResponseBody>> updateOrder = networkService.updateQty(
                 preferenceHelperDataSource.getLanguage(),
-                preferenceHelperDataSource.getToken(),
+                ((MyApplication) context.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),
                 oldJsonArray,
                 null,
                 statusType,
@@ -240,7 +241,7 @@ public class OrderEditPresenter implements OrderEditContract.PresenterOperations
             view.showProgress();
 
         Observable<Response<ResponseBody>> updateOrder=networkService.cancelOrder(
-                preferenceHelperDataSource.getToken(),
+                ((MyApplication) context.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),
                 preferenceHelperDataSource.getLanguage(),
                 "",
                 "emfke",

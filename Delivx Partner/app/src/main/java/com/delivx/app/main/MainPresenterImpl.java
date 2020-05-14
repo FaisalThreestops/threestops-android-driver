@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 
 import android.util.Log;
+
+import com.delivx.app.MyApplication;
 import com.delivx.login.language.LanguagesList;
 import com.delivx.login.language.LanguagesPojo;
 import com.delivx.networking.LanguageApiService;
@@ -70,8 +72,12 @@ public class MainPresenterImpl implements MainPresenter {
     public void getAppConfig() {
         view.showProgress();
 
+        String token=((MyApplication) context.getApplication()).getAuthToken(helperDataSource.getDriverID());
+        VariableConstant.TOKEN=token;
+        Utility.printLog("qkey " + ((MyApplication) context.getApplication()).getAuthToken(helperDataSource.getDriverID()));
+
         Observable<Response<ResponseBody>> config = networkService.config(
-                helperDataSource.getLanguage(), helperDataSource.getToken());
+                helperDataSource.getLanguage(), ((MyApplication) context.getApplication()).getAuthToken(helperDataSource.getDriverID()));
         config.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Response<ResponseBody>>() {
@@ -102,7 +108,7 @@ public class MainPresenterImpl implements MainPresenter {
                                 view.setError(value.code(), jsonObject.getString("message"));
                             }
 
-                            Utility.printLog("config auth : " + helperDataSource.getToken());
+                            Utility.printLog("config auth : " + ((MyApplication) context.getApplication()).getAuthToken(helperDataSource.getDriverID()));
 
 
                         } catch (Exception e) {

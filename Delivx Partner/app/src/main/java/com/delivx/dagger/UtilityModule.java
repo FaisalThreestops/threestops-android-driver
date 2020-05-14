@@ -16,6 +16,7 @@ import com.delivx.utility.FontUtils;
 
 import com.delivx.utility.Upload_file_AmazonS3;
 import com.delivx.utility.VariableConstant;
+import com.driver.delivx.BuildConfig;
 import com.google.gson.Gson;
 
 import javax.inject.Singleton;
@@ -33,7 +34,7 @@ public class UtilityModule {
     @Provides
     @Singleton
     Upload_file_AmazonS3 getAmazonInstance(Context context){
-        return new Upload_file_AmazonS3(context,VariableConstant.COGNITO_POOL_ID);
+        return new Upload_file_AmazonS3(context, BuildConfig.COGNITO_POOL_ID);
     }
 
     @Provides

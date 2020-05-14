@@ -1,6 +1,7 @@
 package com.delivx.walletNew;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -42,7 +43,6 @@ public class WalletTransactionsFragment extends DaggerFragment
     @Inject
     public WalletTransactionsFragment()
     {
-
     }
 
 

@@ -1,7 +1,9 @@
 package com.delivx.mqttChat;
 
+import android.app.Activity;
 import android.content.Intent;
 
+import com.delivx.app.MyApplication;
 import com.google.gson.Gson;
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.networking.MessageService;
@@ -33,6 +35,9 @@ public class Presenter implements ChattingContract.PresenterOperations {
     @Inject MessageService messageService;
 
     @Inject ChattingContract.ViewOperations view;
+
+    @Inject
+    Activity activity;
 
     @Inject PreferenceHelperDataSource preferenceHelperDataSource;
 
@@ -68,7 +73,7 @@ public class Presenter implements ChattingContract.PresenterOperations {
 
         view.showProgress();
         final Observable<Response<ResponseBody>> chatHistory=messageService.chatHistory(preferenceHelperDataSource.getLanguage(),
-                preferenceHelperDataSource.getToken(),
+                ((MyApplication) activity.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),
                 bid,
                 pageNo);
         chatHistory.observeOn(AndroidSchedulers.mainThread())
@@ -208,7 +213,7 @@ public class Presenter implements ChattingContract.PresenterOperations {
 
         Observable<Response<ResponseBody>> message=messageService.message(
                 "1",
-                preferenceHelperDataSource.getToken(),
+                ((MyApplication) activity.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),
                 "1",
                 timeStamp+"",
                 content,

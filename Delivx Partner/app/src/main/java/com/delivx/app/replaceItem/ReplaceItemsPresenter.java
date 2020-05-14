@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.delivx.app.MyApplication;
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.networking.DispatcherService;
 import com.delivx.networking.NetworkService;
@@ -100,7 +101,7 @@ public class ReplaceItemsPresenter implements ReplaceItemsContract.PresenterOper
             view.showProgress();
         }
         final Observable<Response<ResponseBody>> request = networkService.getSearchItems(
-                preferenceHelperDataSource.getToken(),
+                ((MyApplication) context.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),
                 preferenceHelperDataSource.getLanguage(), storeId, "0", "20", searchItem);
 
         request.subscribeOn(Schedulers.newThread())
@@ -189,7 +190,7 @@ public class ReplaceItemsPresenter implements ReplaceItemsContract.PresenterOper
         Log.d("exe", "oldJsonArray" + oldJsonArray);
         Observable<Response<ResponseBody>> updateOrder = networkService.updateQty(
                 preferenceHelperDataSource.getLanguage(),
-                preferenceHelperDataSource.getToken(),
+                ((MyApplication) context.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),
                 oldJsonArray,
                 newJsonArray,
                 "2",

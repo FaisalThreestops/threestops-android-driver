@@ -17,7 +17,9 @@ import android.os.Environment;
 import android.util.Log;
 import android.widget.DatePicker;
 
+import com.delivx.app.MyApplication;
 import com.delivx.data.source.PreferenceHelperDataSource;
+import com.driver.delivx.BuildConfig;
 import com.driver.delivx.R;
 import com.delivx.networking.NetworkService;
 import com.delivx.utility.MyTextUtils;
@@ -183,7 +185,7 @@ public class BankNewStripePresenter implements StripeAccountContract.PresenterOp
     private void addBankDetails() {
         String[] dateOfBirth = dob.split("/");
 
-        Utility.printLog("bank sripe : "+ preferenceHelperDataSource.getToken()+"\n"+
+        Utility.printLog("bank sripe : "+ ((MyApplication) context.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID())+"\n"+
                 preferenceHelperDataSource.getMyEmail()+"\n"+
                 city+"\n"+
                 "US"+"\n"+
@@ -201,7 +203,7 @@ public class BankNewStripePresenter implements StripeAccountContract.PresenterOp
                 ip);
 
         final Observable<Response<ResponseBody>> profile=networkService.createStripeAccount(preferenceHelperDataSource.getLanguage(),
-                preferenceHelperDataSource.getToken(),
+                ((MyApplication) context.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),
                 preferenceHelperDataSource.getMyEmail(),
                 city,
                 preferenceHelperDataSource.getCountry(),
@@ -408,10 +410,10 @@ public class BankNewStripePresenter implements StripeAccountContract.PresenterOp
 
         view.showProgress();
         String BUCKETSUBFOLDER = VariableConstant.BANK_PROOF;
-        imageUrl = VariableConstant.AMAZON_BASE_URL + VariableConstant.BUCKET_NAME + "/" + BUCKETSUBFOLDER + "/" + mFileTemp.getName();
+        imageUrl = BuildConfig.AMAZON_BASE_URL + BuildConfig.BUCKET_NAME + "/" + BUCKETSUBFOLDER + "/" + mFileTemp.getName();
 
 
-        amazonS3.Upload_data(VariableConstant.BUCKET_NAME, BUCKETSUBFOLDER + "/" + mFileTemp.getName(), mFileTemp, new Upload_file_AmazonS3.Upload_CallBack() {
+        amazonS3.Upload_data(BuildConfig.BUCKET_NAME, BUCKETSUBFOLDER + "/" + mFileTemp.getName(), mFileTemp, new Upload_file_AmazonS3.Upload_CallBack() {
             @Override
             public void sucess(String url) {
                 imageUrl=url;

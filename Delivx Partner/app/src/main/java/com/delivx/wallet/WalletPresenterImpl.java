@@ -3,6 +3,8 @@ package com.delivx.wallet;
 import static com.delivx.utility.AppConstants.WALLET_ACT;
 
 import android.app.Activity;
+
+import com.delivx.app.MyApplication;
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.networking.NetworkService;
 import com.delivx.networking.NetworkStateHolder;
@@ -128,7 +130,7 @@ public class WalletPresenterImpl implements WalletPresenter {
     private void mGetCard()
     {
         mView.showProgress();
-        String token=preferenceHelperDataSource.getToken();
+        String token= ((MyApplication) mActivity.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID());
 
         Observable<Response<ResponseBody>> observable= service.getCard(token,preferenceHelperDataSource.getLanguage());
         observable.subscribeOn(Schedulers.io())
@@ -212,9 +214,10 @@ public class WalletPresenterImpl implements WalletPresenter {
 
     private void mGetWalletApi()
     {
+
         mView.showProgress();
 
-            Observable<Response<ResponseBody>> bad=service.getWalletApi(preferenceHelperDataSource.getToken(),preferenceHelperDataSource.getLanguage());
+            Observable<Response<ResponseBody>> bad=service.getWalletApi( ((MyApplication) mActivity.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),preferenceHelperDataSource.getLanguage());
 
             bad.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -347,7 +350,7 @@ public class WalletPresenterImpl implements WalletPresenter {
             mView.showProgress();
 
 
-            Observable<Response<ResponseBody>> bad=service.addWalletApi(preferenceHelperDataSource.getToken(),
+            Observable<Response<ResponseBody>> bad=service.addWalletApi( ((MyApplication) mActivity.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),
                     preferenceHelperDataSource.getLanguage(),cardId,walletAmt);
 
             bad.subscribeOn(Schedulers.io())

@@ -4,6 +4,8 @@ import static com.delivx.utility.AppConstants.ADDCARD_ACT;
 
 import android.app.Activity;
 import android.util.Log;
+
+import com.delivx.app.MyApplication;
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.networking.NetworkService;
 import com.delivx.networking.NetworkStateHolder;
@@ -97,7 +99,7 @@ public class AddCardPresenterImpl implements AddCardPresenter {
     private void addCardApi(String token) {
 
 
-        Observable<Response<ResponseBody>> observable = service.addCard(manager.getToken(), manager.getLanguage()
+        Observable<Response<ResponseBody>> observable = service.addCard( ((MyApplication) mActivity.getApplication()).getAuthToken(manager.getDriverID()), manager.getLanguage()
                 , manager.getMyEmail(), token);
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

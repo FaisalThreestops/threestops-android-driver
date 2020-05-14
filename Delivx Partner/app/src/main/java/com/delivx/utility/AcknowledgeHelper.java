@@ -1,5 +1,8 @@
 package com.delivx.utility;
 
+import android.app.Activity;
+
+import com.delivx.app.MyApplication;
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.networking.DispatcherService;
 
@@ -23,6 +26,9 @@ public class AcknowledgeHelper {
     DispatcherService dispatcherService;
 
     @Inject
+    Activity activity;
+
+    @Inject
     public AcknowledgeHelper(PreferenceHelperDataSource dataSource,DispatcherService dispatcherService) {
         preferenceHelperDataSource=dataSource;
         this.dispatcherService=dispatcherService;
@@ -30,7 +36,7 @@ public class AcknowledgeHelper {
 
 
     public void  bookingAckApi(String bid, final AcknowledgementCallback callback){
-        final Observable<Response<ResponseBody>> bookingAck=dispatcherService.bookingAck(preferenceHelperDataSource.getLanguage(),preferenceHelperDataSource.getToken(),bid);
+        final Observable<Response<ResponseBody>> bookingAck=dispatcherService.bookingAck(preferenceHelperDataSource.getLanguage(), ((MyApplication) activity.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),bid);
         bookingAck.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Response<ResponseBody>>() {

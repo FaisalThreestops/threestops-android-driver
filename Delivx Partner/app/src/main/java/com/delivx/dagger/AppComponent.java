@@ -6,6 +6,7 @@ import android.app.Application;
 import com.delivx.app.MyApplication;
 import com.delivx.networking.LanguageApiService;
 import com.delivx.networking.NetworkModule;
+import com.delivx.service.LocationUpdateService;
 
 import javax.inject.Singleton;
 

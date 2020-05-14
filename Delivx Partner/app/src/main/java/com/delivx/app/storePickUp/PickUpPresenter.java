@@ -89,7 +89,7 @@ public class PickUpPresenter implements PickUpContract.PresenterOperations {
         Utility.printLog("Appointment Status: "+status);
         Observable<Response<ResponseBody>> bookingStatusRide=dispatcherService.bookingStatusRide(
                 preferenceHelperDataSource.getLanguage(),
-                preferenceHelperDataSource.getToken(),
+                ((MyApplication) context.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),
                 appointments.getBid(),
                 status,
                 preferenceHelperDataSource.getDriverCurrentLat(),
@@ -213,7 +213,7 @@ public class PickUpPresenter implements PickUpContract.PresenterOperations {
             view.showProgress();
 
         Observable<Response<ResponseBody>> updateOrder=networkService.updateOrder(
-                preferenceHelperDataSource.getToken(),
+                ((MyApplication) context.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),
                 preferenceHelperDataSource.getLanguage(),
                 jsonArray.toString(),
                 null,
@@ -378,7 +378,7 @@ public class PickUpPresenter implements PickUpContract.PresenterOperations {
             view.showProgress();
         }
         Observable<Response<ResponseBody>> assignedTrips=networkService.cancelReason(
-                preferenceHelperDataSource.getLanguage(),preferenceHelperDataSource.getToken());
+                preferenceHelperDataSource.getLanguage(), ((MyApplication) context.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()));
         assignedTrips.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Response<ResponseBody>>() {
@@ -457,7 +457,7 @@ public class PickUpPresenter implements PickUpContract.PresenterOperations {
             view.showProgress();
 
         Observable<Response<ResponseBody>> updateOrder=networkService.cancelOrder(
-                preferenceHelperDataSource.getToken(),
+                ((MyApplication) context.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),
                 preferenceHelperDataSource.getLanguage(),
                 "",
                 "emfke",

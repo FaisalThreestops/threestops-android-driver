@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.ImageView;
 
 
+import com.delivx.app.MyApplication;
 import com.delivx.app.main.help_center.zendeskpojo.ZendeskHistory;
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.networking.NetworkService;
@@ -67,7 +68,7 @@ public class HelpIndexContractImpl implements HelpIndexContract.presenter {
 
     @Override
     public void callApiToCommentOnTicket(String trim, int zenId) {
-        String token = manager.getToken();
+        String token = ((MyApplication) mActivity.getApplication()).getAuthToken(manager.getDriverID());
         Observable<Response<ResponseBody>> observable = lspServices.commentOnTicket(token,
                 manager.getLanguage(), String.valueOf(zenId), trim, manager.getRequesterId());
 
@@ -105,7 +106,7 @@ public class HelpIndexContractImpl implements HelpIndexContract.presenter {
 
     @Override
     public void callApiToCreateTicket(final String trim, final String subject, final String priority) {
-        Log.d("check", "manager.getToken(): "+manager.getToken()+"\n"+
+        Log.d("check", "manager.getToken(): "+((MyApplication) mActivity.getApplication()).getAuthToken(manager.getDriverID())+"\n"+
                 manager.getLanguage()+"\n"+
                 subject+"\n"+
                 trim+"\n"+
@@ -113,7 +114,7 @@ public class HelpIndexContractImpl implements HelpIndexContract.presenter {
                 manager.getRequesterId()
         );
 
-        Observable<Response<ResponseBody>> observable = lspServices.createTicket(manager.getToken(),
+        Observable<Response<ResponseBody>> observable = lspServices.createTicket(((MyApplication) mActivity.getApplication()).getAuthToken(manager.getDriverID()),
                 manager.getLanguage(), subject, trim, "open", priority, "problem", manager.getRequesterId());
 
         observable.subscribeOn(Schedulers.newThread())
@@ -173,7 +174,7 @@ public class HelpIndexContractImpl implements HelpIndexContract.presenter {
 
     @Override
     public void callApiToGetTicketInfo(final int zenId) {
-        Observable<Response<ResponseBody>> observable = lspServices.onToGetZendeskHistory(manager.getToken(),
+        Observable<Response<ResponseBody>> observable = lspServices.onToGetZendeskHistory(((MyApplication) mActivity.getApplication()).getAuthToken(manager.getDriverID()),
                 manager.getLanguage(), String.valueOf(zenId));
 
         observable.subscribeOn(Schedulers.newThread())

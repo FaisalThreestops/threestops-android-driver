@@ -6,6 +6,7 @@ import static com.delivx.utility.AppConstants.CHOOSEPAYMENT_ACT;
 
 import android.app.Activity;
 
+import com.delivx.app.MyApplication;
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.networking.NetworkService;
 import com.delivx.networking.NetworkStateHolder;
@@ -125,7 +126,7 @@ public class ChoosePaymentPresenterImpl implements ChoosePaymentPresenter
     private void mGetCard()
     {
         mView.showProgress();
-        String token=mPreferenceHelperDataSource.getToken();
+        String token= ((MyApplication) mActivity.getApplication()).getAuthToken(mPreferenceHelperDataSource.getDriverID());
 
         Observable<Response<ResponseBody>> observable= service.getCard(token,mPreferenceHelperDataSource.getLanguage());
         observable.subscribeOn(Schedulers.io())
@@ -212,7 +213,7 @@ public class ChoosePaymentPresenterImpl implements ChoosePaymentPresenter
         if(isNetworkAvailable())
         {
 
-            Observable<Response<ResponseBody>> bad=service.getWalletApi(mPreferenceHelperDataSource.getToken(),mPreferenceHelperDataSource.getLanguage());
+            Observable<Response<ResponseBody>> bad=service.getWalletApi( ((MyApplication) mActivity.getApplication()).getAuthToken(mPreferenceHelperDataSource.getDriverID()),mPreferenceHelperDataSource.getLanguage());
 
             bad.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
