@@ -25,8 +25,6 @@ public class VariableConstant {
     public static final int RC_READ_PHONE_STATE = 101;
     public static final int RC_LOCATION_STATE = 102;
 
-    public static String TOKEN;
-
     //Image Upload URL Folder path in AWS
     public static final String PROFILE_PIC = "driver/ProfilePics/";
     public static final String LICENCE = "driver/DriverLincence/";

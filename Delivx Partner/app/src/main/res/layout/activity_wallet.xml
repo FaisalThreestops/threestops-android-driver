@@ -167,7 +167,7 @@
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/content_descriptor"
                     android:tint="@color/colorShark"
-                    app:srcCompat="@drawable/ic_credit_card" />
+                     />
 
                 <TextView
                     android:id="@+id/addNewCardTv"

@@ -17,7 +17,7 @@ public abstract class WalletTransactionActivityDaggerModule
 {
     @Binds
     @ActivityScoped
-    abstract Activity getActivity(MainActivity activity);
+    abstract Activity getActivity(WalletTransActivity activity);
 
     @Binds
     @ActivityScoped

@@ -73,7 +73,6 @@ public class MainPresenterImpl implements MainPresenter {
         view.showProgress();
 
         String token=((MyApplication) context.getApplication()).getAuthToken(helperDataSource.getDriverID());
-        VariableConstant.TOKEN=token;
         Utility.printLog("qkey " + ((MyApplication) context.getApplication()).getAuthToken(helperDataSource.getDriverID()));
 
         Observable<Response<ResponseBody>> config = networkService.config(

@@ -52,8 +52,8 @@ public class WalletTransActivity extends DaggerAppCompatActivity
 
     @Inject FontUtils appTypeface;
     @Inject WalletTransactionContract.WalletTransactionPresenter walletTransPresenter;
-    /*@Inject
-    Activity activity;*/
+    @Inject
+    Activity activity;
 
     @BindString(R.string.recentTransactions) String recentTransactions;
     @BindString(R.string.all) String all;
