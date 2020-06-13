@@ -52,7 +52,7 @@ public class LogoutPopup extends Dialog {
 
 
     NetworkService networkService;
-    @Inject Activity activity;
+   Activity activity;
 
 
 
@@ -60,6 +60,7 @@ public class LogoutPopup extends Dialog {
     public LogoutPopup(Context context,PreferenceHelperDataSource dataSource,NetworkService networkService) {
         super(context);
         this.context = context;
+        this.activity= (Activity) context;
         preferenceHelperDataSource=dataSource;
         this.networkService=networkService;
     }
@@ -106,64 +107,64 @@ public class LogoutPopup extends Dialog {
 
   public void logoutApi(){
 
-      pDialog.show();
-      Observable<Response<ResponseBody>> logoutApi=networkService.logout(preferenceHelperDataSource.getLanguage(),((MyApplication) activity.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()));
+        try {
+//      pDialog.show();
+            Observable<Response<ResponseBody>> logoutApi = networkService.logout(preferenceHelperDataSource.getLanguage(), ((MyApplication)activity.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()));
 
-      logoutApi.observeOn(AndroidSchedulers.mainThread())
-              .subscribeOn(Schedulers.io())
-              .subscribe(new Observer<Response<ResponseBody>>() {
-                  @Override
-                  public void onSubscribe(Disposable d) {
+            logoutApi.observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(new Observer<Response<ResponseBody>>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
 
-                  }
+                        }
 
-                  @Override
-                  public void onNext(Response<ResponseBody> value) {
+                        @Override
+                        public void onNext(Response<ResponseBody> value) {
 
-                      try {
-                          JSONObject jsonObject;
-                          if(value.code()==200){
-                              jsonObject=new JSONObject(value.body().string());
-                              Utility.printLog("pushTopics shared pref "+preferenceHelperDataSource.getPushTopic());
-                              Utility.subscribeOrUnsubscribeTopics(new JSONArray(preferenceHelperDataSource.getPushTopic()),false);
-                              LanguagesList languagesList = preferenceHelperDataSource.getLanguageSettings();
-                              preferenceHelperDataSource.clearSharedPredf();
-                              preferenceHelperDataSource.setLanguageSettings(languagesList);
-                              ((MyApplication)context.getApplicationContext()).disconnectMqtt();
-                              context.startActivity(new Intent(context, LoginActivity.class));
-                              if(Utility.isMyServiceRunning(LocationUpdateService.class,(Activity) context))
-                              {
-                                  Intent stopIntent = new Intent(context, LocationUpdateService.class);
-                                  stopIntent.setAction(AppConstants.ACTION.STOPFOREGROUND_ACTION);
-                                  context.startService(stopIntent);
-                              }
-                              dismiss();
-                              ((Activity) context).finish();
+                            try {
+                                JSONObject jsonObject;
+                                if (value.code() == 200) {
+                                    jsonObject = new JSONObject(value.body().string());
+                                    Utility.printLog("pushTopics shared pref " + preferenceHelperDataSource.getPushTopic());
+                                    Utility.subscribeOrUnsubscribeTopics(new JSONArray(preferenceHelperDataSource.getPushTopic()), false);
+                                    LanguagesList languagesList = preferenceHelperDataSource.getLanguageSettings();
+                                    preferenceHelperDataSource.clearSharedPredf();
+                                    preferenceHelperDataSource.setLanguageSettings(languagesList);
+                                    ((MyApplication) context.getApplicationContext()).disconnectMqtt();
+                                    context.startActivity(new Intent(context, LoginActivity.class));
+                                    if (Utility.isMyServiceRunning(LocationUpdateService.class, (Activity) context)) {
+                                        Intent stopIntent = new Intent(context, LocationUpdateService.class);
+                                        stopIntent.setAction(AppConstants.ACTION.STOPFOREGROUND_ACTION);
+                                        context.startService(stopIntent);
+                                    }
+                                    dismiss();
+                                    ((Activity) context).finish();
 
-                          }else {
-                              jsonObject=new JSONObject(value.errorBody().string());
-                              Utility.BlueToast(context, jsonObject.getString("message"));
-                          }
-                          Utility.printLog("logoutApi : "+jsonObject.toString());
+                                } else {
+                                    jsonObject = new JSONObject(value.errorBody().string());
+                                    Utility.BlueToast(context, jsonObject.getString("message"));
+                                }
+                                Utility.printLog("logoutApi : " + jsonObject.toString());
 
-                      }catch (JSONException e)
-                      {
-                          Utility.printLog("logoutApi : Catch :"+e.getMessage());
-                      } catch (IOException e) {
-                          e.printStackTrace();
-                      }
-                  }
+                            } catch (Exception e) {
+                                Utility.printLog("logoutApi : Catch :" + e.getMessage());
+                            }
+                        }
 
-                  @Override
-                  public void onError(Throwable e) {
-                      pDialog.dismiss();
-                  }
+                        @Override
+                        public void onError(Throwable e) {
+                            pDialog.dismiss();
+                        }
 
-                  @Override
-                  public void onComplete() {
-                      pDialog.dismiss();
-                  }
-              });
+                        @Override
+                        public void onComplete() {
+                            pDialog.dismiss();
+                        }
+                    });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
   }
 

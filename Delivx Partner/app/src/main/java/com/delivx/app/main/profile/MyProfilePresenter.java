@@ -17,6 +17,7 @@ import com.delivx.app.MyApplication;
 import com.delivx.login.LoginActivity;
 import com.delivx.login.language.LanguagesList;
 import com.delivx.login.language.LanguagesPojo;
+import com.delivx.logout.LogoutPopup;
 import com.delivx.networking.LanguageApiService;
 import com.delivx.service.LocationUpdateService;
 import com.delivx.utility.AppConstants;
@@ -25,7 +26,6 @@ import com.google.gson.Gson;
 import com.delivx.app.main.profile.editProfile.ChangePasswordDialog;
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.driver.delivx.R;
-import com.delivx.logout.LogoutPopup;
 import com.delivx.networking.NetworkService;
 import com.delivx.pojo.ProfilePojo;
 import com.delivx.utility.ImageEditUpload;
@@ -111,7 +111,7 @@ public class MyProfilePresenter implements ProfileContract.PresenterOpetaions {
                                 //success
                                 case 200:
                                     String res=value.body().string();
-                                    jsonObject=new JSONObject(value.body().string());
+                                    jsonObject=new JSONObject(res);
                                     Gson gson=new Gson();
                                     ProfilePojo profilePojo = gson.fromJson(jsonObject.toString(), ProfilePojo.class);
                                     preferenceHelperDataSource.setMyName(profilePojo.getData().getName());

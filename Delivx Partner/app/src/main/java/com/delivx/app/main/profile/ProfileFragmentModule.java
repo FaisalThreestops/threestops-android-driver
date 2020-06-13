@@ -20,4 +20,5 @@ public abstract class ProfileFragmentModule {
     @ActivityScoped
     @Binds
     abstract ProfileContract.PresenterOpetaions presenter(MyProfilePresenter presenter);
+
 }
