@@ -4,6 +4,8 @@ import com.delivx.service.LatLngBody;
 
 import org.json.JSONObject;
 
+import java.io.File;
+
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
@@ -367,7 +369,11 @@ public interface NetworkService {
                                                              @Header("language") String language,
                                                              @Path("id") String id);
 
-
+    @POST("utility/uploadImage")
+    @FormUrlEncoded
+    Observable<Response<ResponseBody>> uploadImage(@Field("image") File image,
+                                                             @Field("type") String type,
+                                                             @Field("res") String res);
 
 
 }

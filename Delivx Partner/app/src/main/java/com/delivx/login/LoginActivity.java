@@ -3,6 +3,7 @@ package com.delivx.login;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -35,6 +36,9 @@ import com.delivx.utility.FontUtils;
 import com.delivx.utility.Utility;
 import com.delivx.utility.VariableConstant;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.leo.simplearcloader.ArcConfiguration;
+import com.leo.simplearcloader.SimpleArcDialog;
+import com.leo.simplearcloader.SimpleArcLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,6 +94,8 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
     @Inject PreferenceHelperDataSource preferenceHelperDataSource;
     @Inject LoginPresenter loginPresenter;
     @Inject FontUtils fontUtils;
+    SimpleArcDialog mDialog;
+    ArcConfiguration configuration;
 
 
     @Override
@@ -130,6 +136,13 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
      * <p>this is the method, for initialize the views</p>
      */
     private void initializeViews() {
+         /*int mColors[] = {Color.parseColor("#F4793E"),Color.parseColor("#F4793E")};
+        mDialog=new SimpleArcDialog(this);
+        configuration=new ArcConfiguration(this);
+        configuration.setColors(mColors);
+        configuration.setLoaderStyle(SimpleArcLoader.STYLE.SIMPLE_ARC);
+        configuration.setText("Loading");
+        mDialog.setConfiguration(configuration);*/
         ClanaproNarrMedium = fontUtils.titaliumSemiBold();
         ClanaproNarrNews = fontUtils.titaliumRegular();
         tv_splash_msg.setTypeface(ClanaproNarrMedium);
@@ -271,11 +284,13 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
     @Override
     public void showProgress() {
         progressBar.setVisibility(View.VISIBLE);
+//        mDialog.show();
     }
 
     @Override
     public void hideProgress() {
         progressBar.setVisibility(View.GONE);
+      //  mDialog.dismiss();
     }
 
     @Override

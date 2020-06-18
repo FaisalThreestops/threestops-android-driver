@@ -14,6 +14,7 @@ import com.delivx.utility.AcknowledgeHelper;
 import com.delivx.utility.DialogHelper;
 import com.delivx.utility.FontUtils;
 
+import com.delivx.utility.ImageUploadAPI;
 import com.delivx.utility.Upload_file_AmazonS3;
 import com.delivx.utility.VariableConstant;
 import com.driver.delivx.BuildConfig;
@@ -35,6 +36,12 @@ public class UtilityModule {
     @Singleton
     Upload_file_AmazonS3 getAmazonInstance(Context context){
         return new Upload_file_AmazonS3(context, BuildConfig.COGNITO_POOL_ID);
+    }
+
+    @Provides
+    @Singleton
+    ImageUploadAPI imageUploadAPI(){
+        return new ImageUploadAPI();
     }
 
     @Provides

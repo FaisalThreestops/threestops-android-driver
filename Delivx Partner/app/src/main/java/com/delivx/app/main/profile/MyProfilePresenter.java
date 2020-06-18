@@ -21,6 +21,7 @@ import com.delivx.logout.LogoutPopup;
 import com.delivx.networking.LanguageApiService;
 import com.delivx.service.LocationUpdateService;
 import com.delivx.utility.AppConstants;
+import com.delivx.utility.ImageUploadAPI;
 import com.driver.delivx.BuildConfig;
 import com.google.gson.Gson;
 import com.delivx.app.main.profile.editProfile.ChangePasswordDialog;
@@ -65,6 +66,8 @@ public class MyProfilePresenter implements ProfileContract.PresenterOpetaions {
     @Inject Activity context;
     @Inject PreferenceHelperDataSource preferenceHelperDataSource;
     @Inject Upload_file_AmazonS3 amazonS3;
+    @Inject
+    ImageUploadAPI imageUploadAPI;
 
     private ChangePasswordDialog changePasswordDialog;
     private String  TAG=MyProfilePresenter.class.getSimpleName();

@@ -8,8 +8,8 @@ android {
         applicationId "com.driver.delivx"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 19
-        versionName "1.1.8"
+        versionCode 14
+        versionName "1.1.3"
         multiDexEnabled true
 
         dexOptions {
@@ -45,8 +45,8 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //minifyEnabled fasle
+           // proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         packagingOptions {
             exclude 'META-INF/ASL2.0'
@@ -133,6 +133,8 @@ dependencies {
 
     // Add the Firebase SDK for Crashlytics.
     implementation 'com.google.firebase:firebase-crashlytics:17.0.0-beta01'
+
+    implementation 'com.leo.simplearcloader:simplearcloader:1.0.+'
 }
 apply plugin: 'com.google.gms.google-services'
 // Apply the Crashlytics Gradle plugin
