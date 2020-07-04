@@ -185,7 +185,8 @@ public class MQTTManager
     public void createMQttConnection(String clientId)
     {
         Utility.printLog(TAG+" createMQtftConnection: "+clientId);
-        String serverUri = "ssl://" + BuildConfig.MQTT_HOST + ":" + BuildConfig.MQTT_PORT;
+        String serverUri = "tcp://" + BuildConfig.MQTT_HOST + ":" + BuildConfig.MQTT_PORT;
+//        String serverUri = "ssl://" + BuildConfig.MQTT_HOST + ":" + BuildConfig.MQTT_PORT;
         mqttAndroidClient = new MqttAndroidClient(mContext, serverUri, clientId);
         mqttAndroidClient.setCallback(new MqttCallback() {
             @Override
@@ -234,7 +235,7 @@ public class MQTTManager
                         case "11":
                             try{
                                 if(helperDataSource.getDriverChannel().equals(jsonObject.getJSONObject("bookingData").getString("chn"))){
-                                    acknowledgeHelper.bookingAckApi(jsonObject.getJSONObject("bookingData").getString("orderId"), new AcknowledgementCallback() {
+                                    acknowledgeHelper.bookingAckApi(jsonObject.getJSONObject("bookingData").getString("orderId"),mContext, new AcknowledgementCallback() {
                                         @Override
                                         public void callback(String bid) {
                                             if(!IS_POP_UP_OPEN){
@@ -303,7 +304,7 @@ public class MQTTManager
                         case 11:
                             try{
                                 if(helperDataSource.getDriverChannel().equals(jsonObject.getString("chn"))){
-                                    acknowledgeHelper.bookingAckApi(jsonObject.getString("orderId"), new AcknowledgementCallback() {
+                                    acknowledgeHelper.bookingAckApi(jsonObject.getString("orderId"),mContext, new AcknowledgementCallback() {
                                         @Override
                                         public void callback(String bid) {
                                             if(!IS_POP_UP_OPEN){
@@ -359,6 +360,8 @@ public class MQTTManager
         mqttConnectOptions.setAutomaticReconnect(true);
         mqttConnectOptions.setUserName(BuildConfig.MQTT_USERNAME);
         mqttConnectOptions.setPassword(BuildConfig.MQTT_PASSWORD.toCharArray());
+       /* mqttConnectOptions.setUserName(BuildConfig.MQTT_USERNAME);
+        mqttConnectOptions.setPassword(BuildConfig.MQTT_PASSWORD.toCharArray());
         SocketFactory.SocketFactoryOptions socketFactoryOptions = new SocketFactory.SocketFactoryOptions();
         try {
             //socketFactoryOptions.withCaInputStream(mContext.getResources().openRawResource(R.raw.ca));
@@ -369,7 +372,7 @@ public class MQTTManager
             e.printStackTrace();
         } catch (java.security.cert.CertificateException e) {
             e.printStackTrace();
-        }
+        }*/
         connectMQTTClient(mContext);
     }
 

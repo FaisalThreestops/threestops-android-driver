@@ -385,83 +385,85 @@ public class LocationUpdateService
     /********************************************************************************************/
 
     private void startPublishingWithTimer() {
-        if (myTimer_publish != null) {
-            Log.d(TAG, "Timer already started");
-            return;
-        }
-        myTimer_publish = new Timer();
+        try {
 
-        myTimerTask_publish = new TimerTask() {
-            @Override
-            public void run() {
-                if (Utility.isNetworkAvailable(getApplicationContext())) {
+            if (myTimer_publish != null) {
+                Log.d(TAG, "Timer already started");
+                return;
+            }
+            myTimer_publish = new Timer();
 
-                    updateLocationLogs();
+            myTimerTask_publish = new TimerTask() {
+                @Override
+                public void run() {
+                    if (Utility.isNetworkAvailable(getApplicationContext())) {
 
-                    Utility.printLog("mqtt connection iss : "+((MyApplication)getApplication()).isMQTTConnected());
-                    if(!((MyApplication)getApplication()).isMQTTConnected())
-                        mqttCount++;
-                    else
-                        mqttCount=0;
+                        updateLocationLogs();
 
-                    if(!((MyApplication)getApplication()).isMQTTConnected() && mqttCount>6)
-                    {
-                        mqttCount=0;
-                        if(preferenceHelperDataSource.getDriverID()!=null){
-                            ((MyApplication)getApplication()).unSubscribeMqtt(preferenceHelperDataSource.getDriverID());
-                            Utility.printLog("testing unsubScribed Mqtt Topic :   "+preferenceHelperDataSource.getDriverID());
-                        }
+                        Utility.printLog("mqtt connection iss : " + ((MyApplication) getApplication()).isMQTTConnected());
+                        if (!((MyApplication) getApplication()).isMQTTConnected())
+                            mqttCount++;
+                        else
+                            mqttCount = 0;
 
-
-                        if(preferenceHelperDataSource.getServiceZoneList().getServiceZones().size()>0)
-                            for(int i=0;i<preferenceHelperDataSource.getServiceZoneList().getServiceZones().size();i++){
-                                String topic = "onlineDrivers/".concat(preferenceHelperDataSource.getCityId().concat("/").concat(preferenceHelperDataSource.getServiceZoneList().getServiceZones().get(i)));
-                                Utility.printLog("subscribed Mqtt Zone topic :  "+topic);
-                                ((MyApplication)getApplication()).unSubscribeMqtt(topic);
-
+                        if (!((MyApplication) getApplication()).isMQTTConnected() && mqttCount > 6) {
+                            mqttCount = 0;
+                            if (preferenceHelperDataSource.getDriverID() != null) {
+                                ((MyApplication) getApplication()).unSubscribeMqtt(preferenceHelperDataSource.getDriverID());
+                                Utility.printLog("testing unsubScribed Mqtt Topic :   " + preferenceHelperDataSource.getDriverID());
                             }
 
-                        MyApplication.getInstance().connectMQTT();
-                    }
 
-                    if(prevLatTimer==0.0 || prevLongTimer==0.0)
-                    {
-                        prevLatTimer=preferenceHelperDataSource.getDriverCurrentLat();
-                        prevLongTimer=preferenceHelperDataSource.getDriverCurrentLongi();
-                    }
+                            if (preferenceHelperDataSource.getServiceZoneList().getServiceZones().size() > 0)
+                                for (int i = 0; i < preferenceHelperDataSource.getServiceZoneList().getServiceZones().size(); i++) {
+                                    String topic = "onlineDrivers/".concat(preferenceHelperDataSource.getCityId().concat("/").concat(preferenceHelperDataSource.getServiceZoneList().getServiceZones().get(i)));
+                                    Utility.printLog("subscribed Mqtt Zone topic :  " + topic);
+                                    ((MyApplication) getApplication()).unSubscribeMqtt(topic);
 
+                                }
 
-                    if(counter>=preferenceHelperDataSource.getMinDistForRouteArray()){
-                        counter=0;
-                        if(distance(prevLatTimer,prevLongTimer,preferenceHelperDataSource.getDriverCurrentLat(),
-                                preferenceHelperDataSource.getDriverCurrentLongi(),METER)>=preferenceHelperDataSource.getMinDistForRouteArray())
-                        {
-                            prevLatTimer=preferenceHelperDataSource.getDriverCurrentLat();
-                            prevLongTimer=preferenceHelperDataSource.getDriverCurrentLongi();
-                            publishLocation(preferenceHelperDataSource.getDriverCurrentLat(), preferenceHelperDataSource.getDriverCurrentLongi(),1);
-                            updateLocationMQTT(preferenceHelperDataSource.getDriverCurrentLat(), preferenceHelperDataSource.getDriverCurrentLongi(),1);
-
-                        }else {
-                            updateLocationMQTT(preferenceHelperDataSource.getDriverCurrentLat(), preferenceHelperDataSource.getDriverCurrentLongi(),0);
-                            publishLocation(preferenceHelperDataSource.getDriverCurrentLat(),preferenceHelperDataSource.getDriverCurrentLongi(),0);
+                            MyApplication.getInstance().connectMQTT();
                         }
 
-                    }else {
-                        counter++;
+                        if (prevLatTimer == 0.0 || prevLongTimer == 0.0) {
+                            prevLatTimer = preferenceHelperDataSource.getDriverCurrentLat();
+                            prevLongTimer = preferenceHelperDataSource.getDriverCurrentLongi();
+                        }
+
+
+                        if (counter >= preferenceHelperDataSource.getMinDistForRouteArray()) {
+                            counter = 0;
+                            if (distance(prevLatTimer, prevLongTimer, preferenceHelperDataSource.getDriverCurrentLat(),
+                                    preferenceHelperDataSource.getDriverCurrentLongi(), METER) >= preferenceHelperDataSource.getMinDistForRouteArray()) {
+                                prevLatTimer = preferenceHelperDataSource.getDriverCurrentLat();
+                                prevLongTimer = preferenceHelperDataSource.getDriverCurrentLongi();
+                                publishLocation(preferenceHelperDataSource.getDriverCurrentLat(), preferenceHelperDataSource.getDriverCurrentLongi(), 1);
+                                updateLocationMQTT(preferenceHelperDataSource.getDriverCurrentLat(), preferenceHelperDataSource.getDriverCurrentLongi(), 1);
+
+                            } else {
+                                updateLocationMQTT(preferenceHelperDataSource.getDriverCurrentLat(), preferenceHelperDataSource.getDriverCurrentLongi(), 0);
+                                publishLocation(preferenceHelperDataSource.getDriverCurrentLat(), preferenceHelperDataSource.getDriverCurrentLongi(), 0);
+                            }
+
+                        } else {
+                            counter++;
+                        }
+
+                    } else if (!preferenceHelperDataSource.getBookings().isEmpty()) {
+                        couchDBHandle.updateDocument(preferenceHelperDataSource.getDriverCurrentLat(),
+                                preferenceHelperDataSource.getDriverCurrentLongi());
+
+
                     }
-
-                }else if(!preferenceHelperDataSource.getBookings().isEmpty()){
-                couchDBHandle.updateDocument(preferenceHelperDataSource.getDriverCurrentLat(),
-                        preferenceHelperDataSource.getDriverCurrentLongi());
-
 
                 }
 
-            }
-
-        };
-        Log.d(TAG, "myTimer_publish interval " + preferenceHelperDataSource.getTripStartedInterval());
-        myTimer_publish.schedule(myTimerTask_publish, 0,1000/**(long) preferenceHelperDataSource.getTripStartedInterval()*/);
+            };
+            Log.d(TAG, "myTimer_publish interval " + preferenceHelperDataSource.getTripStartedInterval());
+            myTimer_publish.schedule(myTimerTask_publish, 0, 1000/**(long) preferenceHelperDataSource.getTripStartedInterval()*/);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
     /**********************************************************************************************/
     public void publishLocation(double latitude, double longitude, final int transit) {

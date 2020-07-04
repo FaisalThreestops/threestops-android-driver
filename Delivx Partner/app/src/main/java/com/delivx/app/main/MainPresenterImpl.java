@@ -210,7 +210,7 @@ public class MainPresenterImpl implements MainPresenter {
     private void getBookingDetails(final JSONObject jsonObject) {
         try{
             if(helperDataSource.getDriverChannel().equals(jsonObject.getString("chn"))){
-                acknowledgeHelper.bookingAckApi(jsonObject.getString("orderId"), new AcknowledgementCallback() {
+                acknowledgeHelper.bookingAckApi(jsonObject.getString("orderId"),context, new AcknowledgementCallback() {
                     @Override
                     public void callback(String bid) {
                         if(!VariableConstant.IS_POP_UP_OPEN){
