@@ -21,18 +21,20 @@ android {
         buildConfigField "String", "DISPATCHER_BASE", "\"https://api.deliv-x.com/\""
         buildConfigField "String", "MESSAGE_BASE", "\"https://api.deliv-x.com/\""*/
 
-        buildConfigField "String", "MQTT_HOST", "\"159.203.182.173\""
+        buildConfigField "String", "MQTT_HOST", "\"13.127.126.95\""
         buildConfigField "String", "MQTT_PORT", "\"2052\""
-        buildConfigField "String", "MQTT_USERNAME", "\"DelivXVernemq\""
-        buildConfigField "String", "MQTT_PASSWORD", "\"dZuxnpHxXD86Sz8g\""
+        buildConfigField "String", "MQTT_USERNAME", "\"threestopAppVerneMq\""
+        buildConfigField "String", "MQTT_PASSWORD", "\"T9LPDYgQcuWVm8PC\""
 
         buildConfigField "String", "BUCKET_NAME", "\"delivx\""
         buildConfigField "String", "AMAZON_BASE_URL", "\"https://delivx.s3.amazonaws.com/\""
         buildConfigField "String", "COGNITO_POOL_ID", "\"us-east-2:d4ab8048-939a-4bea-a78d-16dff1e519f8\""
 
-        buildConfigField "String", "BASEURL", "\"https://api.delivxyz.com/\""
-        buildConfigField "String", "DISPATCHER_BASE", "\"https://api.delivxyz.com/\""
-        buildConfigField "String", "MESSAGE_BASE", "\"https://api.delivxyz.com/\""
+        buildConfigField "String", "BASEURL", "\"https://api.threestops.com/\""
+        buildConfigField "String", "DISPATCHER_BASE", "\"https://api.threestops.com/\""
+        buildConfigField "String", "MESSAGE_BASE", "\"https://api.threestops.com/\""
+
+
 
 
        /* buildConfigField "String", "BASEURL", "\"https://api.ingredienta.app/\""
