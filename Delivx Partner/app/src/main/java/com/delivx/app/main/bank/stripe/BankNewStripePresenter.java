@@ -19,8 +19,8 @@ import android.widget.DatePicker;
 
 import com.delivx.app.MyApplication;
 import com.delivx.data.source.PreferenceHelperDataSource;
-import com.driver.delivx.BuildConfig;
-import com.driver.delivx.R;
+ import com.driver.Threestops.BuildConfig;
+import com.driver.Threestops.R;
 import com.delivx.networking.NetworkService;
 import com.delivx.utility.MyTextUtils;
 import com.delivx.utility.Upload_file_AmazonS3;

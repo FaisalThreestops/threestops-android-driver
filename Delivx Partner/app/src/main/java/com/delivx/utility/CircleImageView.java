@@ -22,7 +22,7 @@ import androidx.annotation.DrawableRes;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 
 
 /**

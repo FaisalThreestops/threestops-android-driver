@@ -30,7 +30,7 @@ import com.delivx.adapter.ReasonRVA;
 import com.delivx.app.bookingRide.BookingRide;
 import com.delivx.app.main.MainActivity;
 import com.delivx.pojo.Cancel.CancelData;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.mqttChat.ChattingActivity;
 import com.delivx.pojo.AssignedAppointments;
 import com.delivx.utility.FontUtils;

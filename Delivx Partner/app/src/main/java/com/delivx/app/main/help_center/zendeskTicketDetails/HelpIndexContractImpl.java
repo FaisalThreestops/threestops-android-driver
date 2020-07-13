@@ -11,7 +11,7 @@ import com.delivx.app.main.help_center.zendeskpojo.ZendeskHistory;
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.networking.NetworkService;
 import com.delivx.utility.Utility;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.google.gson.Gson;
 
 import org.json.JSONException;

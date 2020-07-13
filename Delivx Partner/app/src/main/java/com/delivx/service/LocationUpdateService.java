@@ -31,7 +31,7 @@ import com.delivx.app.main.MainActivity;
 import com.delivx.app.MyApplication;
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.utility.TextUtil;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.networking.DispatcherService;
 import com.delivx.networking.NetworkService;
 import com.delivx.utility.AppConstants;
@@ -460,7 +460,7 @@ public class LocationUpdateService
 
             };
             Log.d(TAG, "myTimer_publish interval " + preferenceHelperDataSource.getTripStartedInterval());
-            myTimer_publish.schedule(myTimerTask_publish, 0, 1000/**(long) preferenceHelperDataSource.getTripStartedInterval()*/);
+            myTimer_publish.schedule(myTimerTask_publish, 0, Long.parseLong(preferenceHelperDataSource.getPresenceInterval())*1000/**(long) preferenceHelperDataSource.getTripStartedInterval()*/);
         }catch (Exception e){
             e.printStackTrace();
         }

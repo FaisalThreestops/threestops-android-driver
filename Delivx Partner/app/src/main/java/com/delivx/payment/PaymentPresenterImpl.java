@@ -9,7 +9,7 @@ import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.networking.NetworkService;
 import com.delivx.networking.NetworkStateHolder;
 import com.delivx.utility.Utility;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.google.gson.Gson;
 import io.reactivex.Observable;
 import io.reactivex.Observer;

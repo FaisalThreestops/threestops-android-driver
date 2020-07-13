@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.delivx.adapter.GenericListAdapter;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 
 import java.util.ArrayList;
 

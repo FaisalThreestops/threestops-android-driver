@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.delivx.adapter.BankDetailsRVA;
 import com.delivx.app.main.bank.addBankAccount.BankNewAccountActivity;
 import com.delivx.app.main.bank.stripe.BankNewStripeActivity;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.pojo.bank.BankList;
 import com.delivx.pojo.bank.LegalEntity;
 import com.delivx.utility.FontUtils;

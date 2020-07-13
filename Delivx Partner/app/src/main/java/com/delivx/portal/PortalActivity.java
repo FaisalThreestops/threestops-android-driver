@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.utility.SessionManager;
 import com.delivx.utility.Utility;
 

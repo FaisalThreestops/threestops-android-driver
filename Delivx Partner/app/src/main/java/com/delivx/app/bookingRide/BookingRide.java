@@ -42,7 +42,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 import com.delivx.app.storeDetails.StorePickUpDetails;
 import com.delivx.app.storePickUp.StorePickUp;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.mqttChat.ChattingActivity;
 import com.delivx.pojo.AssignedAppointments;
 import com.delivx.utility.AppConstants;

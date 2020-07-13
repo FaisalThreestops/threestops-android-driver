@@ -5,7 +5,7 @@ import android.app.Activity;
 import com.delivx.app.MyApplication;
 import com.google.gson.Gson;
 import com.delivx.data.source.PreferenceHelperDataSource;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.networking.NetworkService;
 import com.delivx.pojo.SigninDriverVehicle;
 import com.delivx.utility.Utility;

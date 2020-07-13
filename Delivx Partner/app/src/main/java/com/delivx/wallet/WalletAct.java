@@ -39,7 +39,7 @@ import com.delivx.payment_choose_card.ChoosePaymentAdapter;
 import com.delivx.utility.FontUtils;
 import com.delivx.utility.Utility;
 import com.delivx.walletNew.WalletTransActivity;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import dagger.android.support.DaggerAppCompatActivity;
 import java.util.ArrayList;
 import javax.inject.Inject;

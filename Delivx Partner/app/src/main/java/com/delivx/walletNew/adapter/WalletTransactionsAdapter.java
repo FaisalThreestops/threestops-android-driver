@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.utility.Utility;
 import com.delivx.walletNew.model.CreditDebitTransctions;
 

@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.delivx.app.main.MainActivity;
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.logout.LogoutPopup;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.networking.NetworkService;
 import com.delivx.pojo.SigninDriverVehicle;
 import com.delivx.utility.Utility;

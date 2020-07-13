@@ -12,7 +12,7 @@ import android.os.Build;
 import android.provider.Settings;
 import androidx.core.content.ContextCompat;
 
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 
 import java.util.ArrayList;
 

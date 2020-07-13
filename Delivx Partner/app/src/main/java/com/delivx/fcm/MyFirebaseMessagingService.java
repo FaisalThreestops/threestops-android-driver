@@ -17,7 +17,7 @@ import android.util.Log;
 
 import com.delivx.RxObservers.RXMqttMessageObserver;
 import com.delivx.app.SplashScreen;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.service.LocationUpdateService;
 import com.delivx.utility.AcknowledgeHelper;
 import com.delivx.utility.AppConstants;

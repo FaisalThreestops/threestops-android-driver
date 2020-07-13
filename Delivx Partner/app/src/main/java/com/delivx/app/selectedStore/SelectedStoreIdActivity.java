@@ -29,7 +29,7 @@ import com.delivx.utility.AppConstants;
 import com.delivx.utility.FontUtils;
 import com.delivx.utility.Slider;
 import com.delivx.utility.Utility;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 
 import java.util.ArrayList;
 

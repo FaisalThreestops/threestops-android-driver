@@ -54,7 +54,7 @@ import com.delivx.app.main.homeFrag.HomeFragment;
 import com.delivx.app.main.support.SupportFrag;
 import com.delivx.app.main.bank.addBankAccount.BankNewAccountActivity;
 import com.delivx.data.source.PreferenceHelperDataSource;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.login.LoginActivity;
 import com.delivx.networking.NetworkService;
 import com.delivx.service.LocationUpdateService;

@@ -28,7 +28,7 @@ import butterknife.OnClick;
 import com.delivx.payment_add_card.AddCardAct;
 import com.delivx.payment_card_detail.CardDetailAct;
 import com.delivx.utility.FontUtils;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import dagger.android.support.DaggerAppCompatActivity;
 import java.util.ArrayList;
 import javax.inject.Inject;

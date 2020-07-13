@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.delivx.app.storeDetails.StorePickUpDetails;
 import com.delivx.app.storeDetails.bottomItemView.LaundryBottomSheetFragment;
 import com.delivx.pojo.ShipmentDetails;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 
 import java.util.ArrayList;
 

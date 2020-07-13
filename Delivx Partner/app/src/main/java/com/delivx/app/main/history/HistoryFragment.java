@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.delivx.adapter.HistoryTripsRVA;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.pojo.TripsPojo.Appointments;
 import com.delivx.utility.FontUtils;
 import com.github.mikephil.charting.charts.BarChart;

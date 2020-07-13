@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.delivx.app.storeDetails.StorePickUpDetails;
 import com.delivx.app.storePickUp.StorePickUp;
 import com.delivx.pojo.Cancel.CancelData;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

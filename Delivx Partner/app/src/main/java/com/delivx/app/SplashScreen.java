@@ -6,11 +6,12 @@ import android.os.Handler;
 
 import android.util.Log;
 import com.crashlytics.android.Crashlytics;
+import com.driver.Threestops.R;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.delivx.app.main.MainActivity;
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.login.LoginActivity;
-import com.driver.delivx.R;
+
 
 import javax.inject.Inject;
 

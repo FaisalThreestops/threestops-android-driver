@@ -17,7 +17,7 @@ import com.delivx.app.MyApplication;
 import com.delivx.utility.country_picker.CountryPicker;
 import com.delivx.utility.country_picker.CountryPickerListener;
 import com.delivx.data.source.PreferenceHelperDataSource;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.networking.NetworkService;
 import com.delivx.pojo.SigninData;
 import com.delivx.pojo.SinginResponsePojo;

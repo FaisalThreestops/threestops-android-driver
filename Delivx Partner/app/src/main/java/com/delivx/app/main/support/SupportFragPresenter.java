@@ -10,7 +10,7 @@ import com.delivx.service.LocationUpdateService;
 import com.delivx.utility.AppConstants;
 import com.google.gson.Gson;
 import com.delivx.data.source.PreferenceHelperDataSource;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.networking.NetworkService;
 import com.delivx.pojo.SupportData;
 import com.delivx.pojo.SupportPojo;

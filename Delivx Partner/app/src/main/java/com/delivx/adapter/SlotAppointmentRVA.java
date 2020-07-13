@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.delivx.app.slotAppointments.SlotAppointmentActivity;
 import com.delivx.pojo.AssignedAppointments;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 
 import java.util.ArrayList;
 

@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.pojo.SigninDriverVehicle;
 import com.delivx.utility.SessionManager;
 import com.delivx.utility.VariableConstant;

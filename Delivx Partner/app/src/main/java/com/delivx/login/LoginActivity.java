@@ -29,7 +29,7 @@ import com.delivx.app.main.MainActivity;
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.login.language.LanguagesList;
 import com.delivx.utility.DialogHelper;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.signup.perosonal.SignupPersonal;
 import com.delivx.utility.DisableError;
 import com.delivx.utility.FontUtils;

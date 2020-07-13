@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.delivx.app.replaceItem.ReplaceItemsActivity;
 import com.delivx.pojo.SearchPojo.Data;
 import com.delivx.pojo.SearchPojo.Units;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

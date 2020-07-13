@@ -3,7 +3,7 @@ package com.delivx.networking;
 
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import com.driver.delivx.BuildConfig;
+ import com.driver.Threestops.BuildConfig;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -13,7 +13,7 @@ import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.driver.delivx.BuildConfig.LANGUAGE_URL;
+import static com.driver.Threestops.BuildConfig.LANGUAGE_URL;
 
 
 @Module

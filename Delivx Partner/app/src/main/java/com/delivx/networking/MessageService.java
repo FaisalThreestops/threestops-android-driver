@@ -27,9 +27,10 @@ public interface MessageService {
                                                       );
 
 
-    @GET("chatHistory/{bid}/{page}")
+    @GET("chatHistory/{bookingId}/{pageNo}/{type}")
     Observable<Response<ResponseBody>> chatHistory (@Header("language") String language,
-                                                @Header("authorization") String authorization,
-                                                @Path("bid") String bid,
-                                                @Path("page") String page);
+                                                    @Header("authorization") String authorization,
+                                                    @Path("type") double type,
+                                                    @Path("bookingId") String bookingId,
+                                                   @Path("pageNo") String pageNo);
 }

@@ -16,7 +16,7 @@ import com.delivx.pojo.SearchPojo.SearchPojoItems;
 import com.delivx.pojo.SearchPojo.Units;
 import com.delivx.pojo.ShipmentDetails;
 import com.delivx.utility.Utility;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;

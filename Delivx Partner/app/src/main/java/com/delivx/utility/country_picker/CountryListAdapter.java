@@ -9,8 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.driver.delivx.R;
-import com.driver.delivx.R.drawable;
+import com.driver.Threestops.R;
+import com.driver.Threestops.R.drawable;
 
 import java.lang.reflect.Field;
 import java.util.List;

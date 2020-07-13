@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.delivx.app.main.bank.bankAccountDetails.BankBottomSheetFragment;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.pojo.bank.BankList;
 
 import java.io.Serializable;

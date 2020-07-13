@@ -11,7 +11,7 @@ import android.graphics.BitmapFactory;
 import androidx.core.app.NotificationCompat;
 
 import com.delivx.app.main.MainActivity;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 
 
 public class NetworkChangeReceiver extends BroadcastReceiver {

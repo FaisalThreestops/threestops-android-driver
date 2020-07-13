@@ -22,7 +22,7 @@ import android.widget.TextView;
 import com.delivx.ForgotPassword.RetriveFromMobile.ForgotPassMobNumView;
 import com.delivx.ForgotPassword.RetriveFromMobile.ForgotPassPresenterContract;
 
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.login.LoginActivity;
 import com.delivx.utility.FontUtils;
 import com.delivx.utility.Utility;

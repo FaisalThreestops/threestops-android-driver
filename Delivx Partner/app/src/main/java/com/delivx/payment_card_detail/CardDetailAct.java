@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import com.delivx.utility.FontUtils;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import dagger.android.support.DaggerAppCompatActivity;
 import javax.inject.Inject;
 

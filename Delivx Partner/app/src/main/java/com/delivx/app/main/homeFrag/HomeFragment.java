@@ -44,7 +44,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.delivx.adapter.CurrentUpcomingJobRVA;
 import com.delivx.dagger.ActivityScoped;
 import com.delivx.data.source.PreferenceHelperDataSource;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.pojo.AssignedAppointments;
 import com.delivx.utility.AppConstants;
 import com.delivx.utility.FontUtils;

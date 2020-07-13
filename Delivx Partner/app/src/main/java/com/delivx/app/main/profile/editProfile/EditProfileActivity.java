@@ -14,7 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.delivx.ForgotPassword.ForgotPasswordVerify;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.utility.FontUtils;
 import com.delivx.utility.Utility;
 

@@ -13,7 +13,7 @@ import com.delivx.networking.NetworkService;
 import com.delivx.pojo.Cancel.CancelDataPojo;
 import com.delivx.pojo.CancelPojo;
 import com.delivx.service.LocationUpdateService;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.networking.DispatcherService;
 import com.delivx.pojo.AssignedAppointments;
 import com.delivx.utility.AppConstants;

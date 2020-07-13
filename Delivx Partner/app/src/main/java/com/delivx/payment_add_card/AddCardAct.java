@@ -33,7 +33,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.delivx.utility.FontUtils;
 import com.delivx.utility.Utility;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.stripe.android.model.Card;
 import com.stripe.android.view.CardMultilineWidget;
 import dagger.android.support.DaggerAppCompatActivity;

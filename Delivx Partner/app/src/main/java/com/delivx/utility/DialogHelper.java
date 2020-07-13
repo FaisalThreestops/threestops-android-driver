@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.login.language.LanguagesList;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 
 import java.util.ArrayList;
 import javax.inject.Inject;

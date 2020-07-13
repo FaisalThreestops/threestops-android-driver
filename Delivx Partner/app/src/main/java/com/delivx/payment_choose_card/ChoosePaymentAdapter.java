@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.delivx.payment.Cards;
 import com.delivx.wallet.WalletAct;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import java.util.ArrayList;
 
 

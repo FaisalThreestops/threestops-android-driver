@@ -12,7 +12,7 @@ public class AccountGeneral {
     /**
      * Account type id
      */
-    public static final String ACCOUNT_TYPE = "com.driver.delivx";
+    public static final String ACCOUNT_TYPE = "com.driver.Threestops";
 
     /**
      * Auth token types

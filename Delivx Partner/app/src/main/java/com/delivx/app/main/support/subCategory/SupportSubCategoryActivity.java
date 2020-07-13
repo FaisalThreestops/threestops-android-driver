@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.delivx.adapter.SupportRVA;
 import com.delivx.utility.Utility;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.pojo.SupportData;
 import com.delivx.utility.FontUtils;
 

@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.delivx.pojo.ShipmentDetails;
 import com.delivx.utility.Utility;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.squareup.picasso.Picasso;
 
 public class LaundryBottomSheetFragment extends BottomSheetDialogFragment  {

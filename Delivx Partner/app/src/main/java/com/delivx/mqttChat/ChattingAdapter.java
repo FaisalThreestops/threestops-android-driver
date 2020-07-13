@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 
 import com.squareup.picasso.Picasso;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.utility.Scaler;
 
 import java.util.ArrayList;

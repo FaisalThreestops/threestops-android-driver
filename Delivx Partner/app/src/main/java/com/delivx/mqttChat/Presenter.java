@@ -73,7 +73,7 @@ public class Presenter implements ChattingContract.PresenterOperations {
 
         view.showProgress();
         final Observable<Response<ResponseBody>> chatHistory=messageService.chatHistory(preferenceHelperDataSource.getLanguage(),
-                ((MyApplication) activity.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),
+                ((MyApplication) activity.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),1,
                 bid,
                 pageNo);
         chatHistory.observeOn(AndroidSchedulers.mainThread())

@@ -17,7 +17,7 @@ import com.delivx.utility.FontUtils;
 import com.delivx.utility.ImageUploadAPI;
 import com.delivx.utility.Upload_file_AmazonS3;
 import com.delivx.utility.VariableConstant;
-import com.driver.delivx.BuildConfig;
+ import com.driver.Threestops.BuildConfig;
 import com.google.gson.Gson;
 
 import javax.inject.Singleton;

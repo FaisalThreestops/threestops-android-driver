@@ -18,7 +18,7 @@ import com.delivx.app.storeDetails.StorePickUpDetails;
 import com.delivx.pojo.AssignedAppointments;
 import com.delivx.utility.AppConstants;
 import com.delivx.utility.Utility;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 
 import java.util.ArrayList;
 

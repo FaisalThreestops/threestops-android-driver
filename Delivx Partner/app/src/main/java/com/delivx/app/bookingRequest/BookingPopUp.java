@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.delivx.app.main.MainActivity;
 import com.delivx.data.source.PreferenceHelperDataSource;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.pojo.NewBookingMQTTResponse;
 import com.delivx.utility.AppConstants;
 import com.delivx.utility.FontUtils;

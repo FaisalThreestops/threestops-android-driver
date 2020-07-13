@@ -7,7 +7,7 @@ import android.util.Log;
 
 import com.delivx.app.MyApplication;
 import com.delivx.utility.VariableConstant;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.networking.NetworkService;
 import com.delivx.networking.NetworkStateHolder;

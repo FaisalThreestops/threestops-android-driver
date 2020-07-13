@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 
 import com.delivx.adapter.BankDetailsRVA;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.pojo.bank.BankList;
 import com.delivx.utility.SessionManager;
 import com.delivx.utility.Utility;

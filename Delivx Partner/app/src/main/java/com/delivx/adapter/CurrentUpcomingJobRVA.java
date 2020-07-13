@@ -17,7 +17,7 @@ import com.delivx.app.invoice.InvoiceActivity;
 import com.delivx.app.storeDetails.StorePickUpDetails;
 import com.delivx.app.storePickUp.StorePickUp;
 import com.delivx.utility.AppConstants;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.pojo.AssignedAppointments;
 import com.delivx.utility.FontUtils;
 import com.delivx.utility.Utility;

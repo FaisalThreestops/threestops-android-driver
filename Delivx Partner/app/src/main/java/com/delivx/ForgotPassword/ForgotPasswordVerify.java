@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.delivx.ForgotPassword.VerifyMobile.ForgotPasswordVerifyView;
 import com.delivx.ForgotPassword.VerifyMobile.VerifyMobilePresenterContract;
 import com.delivx.app.main.profile.editProfile.EditProfileActivity;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.login.LoginActivity;
 import com.delivx.utility.AutoReadSms;
 import com.delivx.utility.FontUtils;

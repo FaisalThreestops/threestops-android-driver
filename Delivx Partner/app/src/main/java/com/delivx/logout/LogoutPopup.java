@@ -14,7 +14,7 @@ import android.os.Bundle;
 import com.delivx.app.MyApplication;
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.login.language.LanguagesList;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.login.LoginActivity;
 import com.delivx.networking.NetworkService;
 import com.delivx.service.LocationUpdateService;

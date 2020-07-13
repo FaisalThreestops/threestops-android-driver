@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.delivx.app.slotAppointments.SlotAppointmentActivity;
 import com.delivx.pojo.AssignedAppointments;
 import com.delivx.utility.Utility;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;

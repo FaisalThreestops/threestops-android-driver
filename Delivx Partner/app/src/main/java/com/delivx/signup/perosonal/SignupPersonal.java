@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 import com.delivx.ForgotPassword.ForgotPasswordVerify;
 import com.delivx.data.source.PreferenceHelperDataSource;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.pojo.Cities;
 import com.delivx.pojo.Zone;
 import com.delivx.signup.GenericListActivity;

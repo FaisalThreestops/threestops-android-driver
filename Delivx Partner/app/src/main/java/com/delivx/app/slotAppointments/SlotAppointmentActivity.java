@@ -21,7 +21,7 @@ import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.pojo.AssignedAppointments;
 import com.delivx.utility.FontUtils;
 import com.delivx.utility.Utility;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 
 import java.util.ArrayList;
 
@@ -31,7 +31,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.DaggerAppCompatActivity;
 
-public class SlotAppointmentActivity extends DaggerAppCompatActivity implements SlotContract.ViewOperations, SlotAppointmentRVA.PickupLoc {
+public class SlotAppointmentActivity extends DaggerAppCompatActivity implements com.delivx.app.slotAppointments.SlotContract.ViewOperations, SlotAppointmentRVA.PickupLoc {
 
 
     @BindView(R.id.toolbar) Toolbar toolbar;
@@ -46,7 +46,7 @@ public class SlotAppointmentActivity extends DaggerAppCompatActivity implements 
 
     private Typeface font,fontBold;
 
-    @Inject SlotContract.PresenterOperations presenter;
+    @Inject com.delivx.app.slotAppointments.SlotContract.PresenterOperations presenter;
     @Inject FontUtils fontUtils;
     @Inject PreferenceHelperDataSource preferenceHelperDataSource;
     private Dialog dialog;

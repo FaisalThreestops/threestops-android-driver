@@ -3,7 +3,7 @@ package com.delivx.utility;
 import android.net.Uri;
 import android.os.Build;
 
-import com.driver.delivx.BuildConfig;
+ import com.driver.Threestops.BuildConfig;
 
 import java.io.File;
 

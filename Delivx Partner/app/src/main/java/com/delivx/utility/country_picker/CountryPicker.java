@@ -15,7 +15,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.utility.Utility;
 
 import org.json.JSONArray;

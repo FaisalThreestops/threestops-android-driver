@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.dagger.ActivityScoped;
 import com.delivx.walletNew.adapter.WalletTransactionsAdapter;
 import com.delivx.walletNew.model.CreditDebitTransctions;

@@ -38,7 +38,7 @@ import com.delivx.app.invoice.InvoiceActivity;
 import com.delivx.app.main.MainActivity;
 import com.delivx.data.source.PreferenceHelperDataSource;
 import com.delivx.pojo.Cancel.CancelData;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.mqttChat.ChattingActivity;
 import com.delivx.pojo.AssignedAppointments;
 import com.delivx.pojo.ShipmentDetails;

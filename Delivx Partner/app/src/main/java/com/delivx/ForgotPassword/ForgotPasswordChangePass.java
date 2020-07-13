@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.delivx.ForgotPassword.Changepassword.ChangePassView;
 import com.delivx.ForgotPassword.Changepassword.PresenterChangePass;
 import com.delivx.login.LoginActivity;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.utility.FontUtils;
 import com.delivx.utility.Utility;
 

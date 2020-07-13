@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.driver.delivx">
+    package="com.driver.Threestops">
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -24,7 +24,7 @@
         android:required="false" />
 
     <permission
-        android:name="com.driver.delivx.permission.C2D_MESSAGE"
+        android:name="com.driver.Threestops.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
     <uses-permission android:name="com.dayrunnerdriver.main.permission.C2D_MESSAGE" />

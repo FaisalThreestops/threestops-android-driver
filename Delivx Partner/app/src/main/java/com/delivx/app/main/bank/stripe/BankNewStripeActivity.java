@@ -27,8 +27,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.driver.delivx.BuildConfig;
-import com.driver.delivx.R;
+ import com.driver.Threestops.BuildConfig;
+import com.driver.Threestops.R;
 import com.delivx.utility.FontUtils;
 
 import com.delivx.utility.Utility;

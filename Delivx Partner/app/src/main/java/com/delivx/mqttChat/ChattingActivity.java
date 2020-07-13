@@ -14,7 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.utility.FontUtils;
 
 import java.util.ArrayList;

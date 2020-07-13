@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.pojo.SupportData;
 import com.delivx.app.main.support.subCategory.SupportSubCategoryActivity;
 import com.delivx.app.main.support.webView.WebViewActivity;

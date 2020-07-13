@@ -23,7 +23,7 @@ import com.delivx.service.LocationUpdateService;
 import com.delivx.utility.AppConstants;
 import com.delivx.utility.DialogHelper;
 import com.delivx.utility.TextUtil;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.pojo.ProfileData;
 import com.delivx.utility.CircleImageView;
 import com.delivx.utility.FontUtils;

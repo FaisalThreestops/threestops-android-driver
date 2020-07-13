@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.pojo.Cities;
 import com.delivx.pojo.VehMakeData;
 import com.delivx.pojo.VehTypeData;

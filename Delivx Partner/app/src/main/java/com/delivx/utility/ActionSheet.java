@@ -24,7 +24,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 
 public class ActionSheet extends Fragment implements OnClickListener {
     private static final String ARG_CANCEL_BUTTON_TITLE = "cancel_button_title";

@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.delivx.pojo.AssignedAppointments;
 import com.delivx.utility.AppConstants;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 
 import java.util.ArrayList;
 

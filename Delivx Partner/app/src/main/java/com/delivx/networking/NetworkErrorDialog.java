@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import android.view.Window;
 import android.widget.TextView;
 
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

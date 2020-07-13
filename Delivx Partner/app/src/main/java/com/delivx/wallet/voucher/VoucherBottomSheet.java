@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.delivx.utility.LockableBottomSheetBehavior;
 import com.delivx.wallet.WalletAct;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import java.util.Objects;
 import javax.inject.Inject;
 

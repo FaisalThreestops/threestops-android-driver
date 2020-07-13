@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.delivx.app.main.MainActivity;
 import com.github.gcacace.signaturepad.views.SignaturePad;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.delivx.pojo.AssignedAppointments;
 import com.delivx.utility.FontUtils;
 import com.delivx.utility.Utility;

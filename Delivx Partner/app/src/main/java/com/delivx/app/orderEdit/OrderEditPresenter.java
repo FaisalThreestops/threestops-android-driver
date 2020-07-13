@@ -12,7 +12,7 @@ import com.delivx.pojo.AssignedTripData;
 import com.delivx.pojo.AssignedTripsPojo;
 import com.delivx.pojo.ShipmentDetails;
 import com.delivx.utility.Utility;
-import com.driver.delivx.R;
+import com.driver.Threestops.R;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
