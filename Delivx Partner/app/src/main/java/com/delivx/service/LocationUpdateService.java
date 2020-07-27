@@ -460,7 +460,7 @@ public class LocationUpdateService
 
             };
             Log.d(TAG, "myTimer_publish interval " + preferenceHelperDataSource.getTripStartedInterval());
-            myTimer_publish.schedule(myTimerTask_publish, 0, Long.parseLong(preferenceHelperDataSource.getPresenceInterval())*1000/**(long) preferenceHelperDataSource.getTripStartedInterval()*/);
+            myTimer_publish.schedule(myTimerTask_publish, 0, /*Long.parseLong(preferenceHelperDataSource.getPresenceInterval())**/1000/**(long) preferenceHelperDataSource.getTripStartedInterval()*/);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -560,12 +560,12 @@ public class LocationUpdateService
 
                         @Override
                         public void onError(Throwable e) {
-
+                            e.printStackTrace();
                         }
 
                         @Override
                         public void onComplete() {
-
+                            Log.d(TAG, "onComplete: ");
                         }
                     });
 
@@ -622,12 +622,12 @@ public class LocationUpdateService
 
                 @Override
                 public void onError(Throwable e) {
-
+                    e.printStackTrace();
                 }
 
                 @Override
                 public void onComplete() {
-
+                    Log.d(TAG, "onComplete: ");
                 }
             });
         }
