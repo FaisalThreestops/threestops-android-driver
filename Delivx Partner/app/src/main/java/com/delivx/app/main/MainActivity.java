@@ -8,14 +8,17 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+
 import androidx.annotation.NonNull;
 
 import com.delivx.app.main.help_center.zendeskHelpIndex.ZendeskHelpIndexAct;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.navigation.NavigationView;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.core.content.ContextCompat;
@@ -23,6 +26,8 @@ import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -78,43 +83,63 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 
 public class MainActivity extends DaggerAppCompatActivity
-        implements MainView,NavigationView.OnNavigationItemSelectedListener,
+        implements MainView, NavigationView.OnNavigationItemSelectedListener,
         View.OnClickListener, EasyPermissions.PermissionCallbacks,
-        ConnectivityReceiver.ConnectivityReceiverListener{
+        ConnectivityReceiver.ConnectivityReceiverListener {
 
     private static final String TAG = MainActivity.class.getName();
     private boolean homeOpen = true;
 
-    private boolean doubleBackToExitPressedOnce=false;
+    private boolean doubleBackToExitPressedOnce = false;
     private Typeface ClanaproNarrNews;
 
-    @BindView(R.id.progressBar) ProgressBar progressBar;
-    @BindView(R.id.drawer_layout) DrawerLayout drawer;
-    @BindView(R.id.abarMain) AppBarLayout abarMain;
-    @BindView(R.id.button_menu) ImageView button_menu;
-    @BindView(R.id.toolbarMenu) ImageView toolbarMenu;
-    @BindView(R.id.menu_layout) RelativeLayout menu_layout;
-    @BindView(R.id.nav_view) NavigationView navigationView;
-    @BindView(R.id.tvVersion) TextView tvVersion;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawer;
+    @BindView(R.id.abarMain)
+    AppBarLayout abarMain;
+    @BindView(R.id.button_menu)
+    ImageView button_menu;
+    @BindView(R.id.toolbarMenu)
+    ImageView toolbarMenu;
+    @BindView(R.id.menu_layout)
+    RelativeLayout menu_layout;
+    @BindView(R.id.nav_view)
+    NavigationView navigationView;
+    @BindView(R.id.tvVersion)
+    TextView tvVersion;
     RelativeLayout rl_profile_view;
     TextView tv_viewpof;
     TextView tv_prof_name;
     CircleImageView iv_profile;
-    @BindView(R.id.tv_on_off_statas) TextView tv_on_off_statas;
-    @BindView(R.id.tv_prof_edit) TextView tv_prof_edit;
-    @BindView(R.id.tvTitle) TextView tvTitle;
-    @BindView(R.id.tvTitle2) TextView  tvTitle2;
+    @BindView(R.id.tv_on_off_statas)
+    TextView tv_on_off_statas;
+    @BindView(R.id.tv_prof_edit)
+    TextView tv_prof_edit;
+    @BindView(R.id.tvTitle)
+    TextView tvTitle;
+    @BindView(R.id.tvTitle2)
+    TextView tvTitle2;
 
-    @Inject   MainPresenter presenter;
-    @Inject   PreferenceHelperDataSource preferenceHelperDataSource;
-    @Inject   NetworkService networkService;
-    @Inject   HomeFragment homeFragment;
-    @Inject   HistoryFragment historyFragment;
-    @Inject   FontUtils fontUtils;
-    @Inject   MyProfileFrag myProfileFrag;
+    @Inject
+    MainPresenter presenter;
+    @Inject
+    PreferenceHelperDataSource preferenceHelperDataSource;
+    @Inject
+    NetworkService networkService;
+    @Inject
+    HomeFragment homeFragment;
+    @Inject
+    HistoryFragment historyFragment;
+    @Inject
+    FontUtils fontUtils;
+    @Inject
+    MyProfileFrag myProfileFrag;
     NetworkErrorDialog networkErrorDialog;
     ArrayList<LanguagesList> languagesLists = new ArrayList<>();
-    @Inject   DialogHelper dialogHelper;
+    @Inject
+    DialogHelper dialogHelper;
 
     public static boolean mainActivity_opened = false;
 
@@ -126,7 +151,7 @@ public class MainActivity extends DaggerAppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Check the language code for RTL UI Check
-        Utility.RtlConversion(this,presenter.getlanguageCode());
+        Utility.RtlConversion(this, presenter.getlanguageCode());
         setContentView(R.layout.activity_main);
 
 
@@ -158,6 +183,7 @@ public class MainActivity extends DaggerAppCompatActivity
         MyApplication.getInstance().setConnectivityListener(this);
         presenter.subscribeNetworkObserver();
         presenter.getAppConfig();
+        getOverlayPermission();
     }
 
     @Override
@@ -170,6 +196,22 @@ public class MainActivity extends DaggerAppCompatActivity
     protected void onStart() {
         super.onStart();
         checkAndRequestPermissions();
+    }
+
+    /**
+     * This method is ask overlay permission on above android Q device
+     * so, driver can see booking popup even app is in background or killed.
+     */
+    private void getOverlayPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            if (!Settings.canDrawOverlays(this)) {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                        Uri.parse("package:" + getPackageName()));
+                startActivityForResult(intent, 1);
+//                startActivity(intent);
+            }
+        }
+
     }
 
 
@@ -238,36 +280,36 @@ public class MainActivity extends DaggerAppCompatActivity
             public void changeLanguage(String langCode, String langName, int dir) {
 
                 //Location update service stop  if running
-                if(Utility.isMyServiceRunning(LocationUpdateService.class,getApplicationContext())){
+                if (Utility.isMyServiceRunning(LocationUpdateService.class, getApplicationContext())) {
                     Intent stopIntent = new Intent(MainActivity.this, LocationUpdateService.class);
                     stopIntent.setAction(AppConstants.ACTION.STOPFOREGROUND_ACTION);
                     startService(stopIntent);
                 }
-                presenter.languageChanged(langCode,langName);
+                presenter.languageChanged(langCode, langName);
             }
         });
 
         ///register the Network check Broadcast receiver
-      try {
-        registerReceiver(new ConnectivityReceiver(),
-            new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-      }catch (Exception e){
-        e.printStackTrace();
-      }
+        try {
+            registerReceiver(new ConnectivityReceiver(),
+                    new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         Typeface clanaproNarrMedium = fontUtils.titaliumSemiBold();
         ClanaproNarrNews = fontUtils.titaliumRegular();
 
-        networkErrorDialog = new NetworkErrorDialog(this,ClanaproNarrNews);
+        networkErrorDialog = new NetworkErrorDialog(this, ClanaproNarrNews);
 
         assert navigationView != null;
         navigationView.setNavigationItemSelectedListener(this);
 
         View header = navigationView.getHeaderView(0);
-        rl_profile_view=header.findViewById(R.id.rl_profile_view);
-        tv_viewpof=header.findViewById(R.id.tv_viewpof);
-        tv_prof_name=header.findViewById(R.id.tv_prof_name);
-        iv_profile=header.findViewById(R.id.iv_profile);
+        rl_profile_view = header.findViewById(R.id.rl_profile_view);
+        tv_viewpof = header.findViewById(R.id.tv_viewpof);
+        tv_prof_name = header.findViewById(R.id.tv_prof_name);
+        iv_profile = header.findViewById(R.id.iv_profile);
 
         tv_viewpof.setTypeface(ClanaproNarrNews);
         tv_prof_name.setTypeface(ClanaproNarrNews);
@@ -275,16 +317,15 @@ public class MainActivity extends DaggerAppCompatActivity
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
             @Override
-            public void onDrawerOpened(View drawerView)
-            {
+            public void onDrawerOpened(View drawerView) {
                 presenter.onDrawerOpen();
 
 
                 Menu menu = navigationView.getMenu();
-                MenuItem menuItemBank= menu.getItem(2);
-                if(preferenceHelperDataSource.getEnableBankAccount().matches("1")){
+                MenuItem menuItemBank = menu.getItem(2);
+                if (preferenceHelperDataSource.getEnableBankAccount().matches("1")) {
                     menuItemBank.setVisible(true);
-                }else {
+                } else {
                     menuItemBank.setVisible(false);
                 }
 
@@ -301,7 +342,7 @@ public class MainActivity extends DaggerAppCompatActivity
         drawer.addDrawerListener(toggle);
 
         //assign the home fragment as default
-        fragment=homeFragment;
+        fragment = homeFragment;
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.frame_container, homeFragment)
@@ -334,7 +375,7 @@ public class MainActivity extends DaggerAppCompatActivity
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    doubleBackToExitPressedOnce=false;
+                    doubleBackToExitPressedOnce = false;
                 }
             }, 2000);
         }
@@ -392,7 +433,7 @@ public class MainActivity extends DaggerAppCompatActivity
                     intent.putExtra("comingFrom", "profile");
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in_left, R.anim.slide_in_right);
-                }catch (Exception e){
+                } catch (Exception e) {
                     Utility.printLog(" caught : " + e.getMessage());
                 }
 
@@ -445,10 +486,10 @@ public class MainActivity extends DaggerAppCompatActivity
                 break;
 
             case R.id.nav_cards:
-                try{
-                    Intent intent=new Intent(MainActivity.this, PaymentAct.class);
+                try {
+                    Intent intent = new Intent(MainActivity.this, PaymentAct.class);
                     startActivity(intent);
-                }catch (Exception e) {
+                } catch (Exception e) {
                     Utility.printLog(TAG + " caught : " + e.getMessage());
                 }
                 break;
@@ -464,7 +505,7 @@ public class MainActivity extends DaggerAppCompatActivity
     }
 
 
-    @OnClick({R.id.button_menu,R.id.toolbarMenu,R.id.tv_prof_edit})
+    @OnClick({R.id.button_menu, R.id.toolbarMenu, R.id.tv_prof_edit})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -493,7 +534,7 @@ public class MainActivity extends DaggerAppCompatActivity
             //open the profile Fragment
             case R.id.rl_profile_view:
                 homeOpen = false;
-                fragment = myProfileFrag ;
+                fragment = myProfileFrag;
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
                         .replace(R.id.frame_container, fragment)
@@ -518,7 +559,7 @@ public class MainActivity extends DaggerAppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(fragment!=null)
+        if (fragment != null)
             fragment.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -546,13 +587,13 @@ public class MainActivity extends DaggerAppCompatActivity
 
     @Override
     public void networkError(String message) {
-        Utility.printLog(TAG+ "networkError called..1");
+        Utility.printLog(TAG + "networkError called..1");
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(dialog!=null && !dialog.isShowing()) {
+                if (dialog != null && !dialog.isShowing()) {
                     showNoInternetMessage();
-                }else if(dialog==null){
+                } else if (dialog == null) {
                     showNoInternetMessage();
                 }
             }
@@ -576,14 +617,14 @@ public class MainActivity extends DaggerAppCompatActivity
 
     @Override
     public void setError(final int code, String msg) {
-        if(code==498 || code==440){
+        if (code == 498 || code == 440) {
             logout();
             return;
         }
         Utility.mShowMessage(getResources().getString(R.string.message), msg, this, new Utility.AlertDialogCallBack() {
             @Override
             public void onOkPressed() {
-                if(code==498 || code==440){
+                if (code == 498 || code == 440) {
                     logout();
                 }
             }
@@ -616,7 +657,7 @@ public class MainActivity extends DaggerAppCompatActivity
 
     @Override
     public void dismissDialog() {
-        if(dialog!=null && dialog.isShowing()){
+        if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
         }
     }
@@ -629,19 +670,18 @@ public class MainActivity extends DaggerAppCompatActivity
 
         //unsubscribe the fcm topics
         FirebaseMessaging.getInstance().unsubscribeFromTopic("/topics/" + preferenceHelperDataSource.getPushTopic());
-        ((MyApplication)getApplicationContext()).disconnectMqtt();
+        ((MyApplication) getApplicationContext()).disconnectMqtt();
 
         //stop the update location service if running
-        if(Utility.isMyServiceRunning(LocationUpdateService.class,MainActivity.this))
-        {
+        if (Utility.isMyServiceRunning(LocationUpdateService.class, MainActivity.this)) {
             Intent stopIntent = new Intent(MainActivity.this, LocationUpdateService.class);
             stopIntent.setAction(AppConstants.ACTION.STOPFOREGROUND_ACTION);
             MainActivity.this.startService(stopIntent);
         }
 
         //Redirect to  the  Login activity  withe close  all existing Activities
-        Intent intent=new Intent(MainActivity.this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
     }
@@ -651,7 +691,7 @@ public class MainActivity extends DaggerAppCompatActivity
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(networkErrorDialog!=null && networkErrorDialog.isShowing()) {
+                if (networkErrorDialog != null && networkErrorDialog.isShowing()) {
                     networkErrorDialog.dismiss();
                 }
             }
@@ -663,7 +703,7 @@ public class MainActivity extends DaggerAppCompatActivity
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(mainActivity_opened && networkErrorDialog!=null && !networkErrorDialog.isShowing())
+                if (mainActivity_opened && networkErrorDialog != null && !networkErrorDialog.isShowing())
                     networkErrorDialog.show();
             }
         });
@@ -681,16 +721,16 @@ public class MainActivity extends DaggerAppCompatActivity
      * <p>Dialog initialize and show for internet not available</p>
      */
     public void showNoInternetMessage() {
-        dialog=new Dialog(MainActivity.this);
+        dialog = new Dialog(MainActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.no_internet_dialog);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT);
 
-        TextView tvTryAgain= dialog.findViewById(R.id.tvTryAgain);
+        TextView tvTryAgain = dialog.findViewById(R.id.tvTryAgain);
         tvTryAgain.setTypeface(fontUtils.titaliumRegular());
-        TextView tvErrorMessage= dialog.findViewById(R.id.tvErrorMessage);
+        TextView tvErrorMessage = dialog.findViewById(R.id.tvErrorMessage);
         tvErrorMessage.setTypeface(fontUtils.titaliumSemiBold());
         tvTryAgain.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -699,9 +739,9 @@ public class MainActivity extends DaggerAppCompatActivity
             }
         });
 
-        try{
+        try {
             dialog.show();
-        }catch (Exception e){
+        } catch (Exception e) {
         }
     }
 
@@ -722,7 +762,7 @@ public class MainActivity extends DaggerAppCompatActivity
 
     @Override
     public void bookingPopUp(String response) {
-        if(response!=null) {
+        if (response != null) {
             Intent intent = new Intent(this, BookingPopUp.class);
             intent.putExtra("booking_Data", response);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -16,6 +16,8 @@
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.ACTION_MANAGE_OVERLAY_PERMISSION" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -23,11 +25,11 @@
         android:name="android.hardware.camera.front"
         android:required="false" />
 
-    <permission
-        android:name="com.driver.Threestops.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
+<!--    <permission-->
+<!--        android:name="com.driver.Threestops.permission.C2D_MESSAGE"-->
+<!--        android:protectionLevel="signature" />-->
 
-    <uses-permission android:name="com.dayrunnerdriver.main.permission.C2D_MESSAGE" />
+<!--    <uses-permission android:name="com.dayrunnerdriver.main.permission.C2D_MESSAGE" />-->
 
     <application
         android:name="com.delivx.app.MyApplication"
