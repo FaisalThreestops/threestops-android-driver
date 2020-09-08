@@ -216,6 +216,11 @@ public class MQTTManager
                 }else if(jsonObject.has("bookingData")) {
 
                     switch (jsonObject.getJSONObject("bookingData").getString("action")){
+                        //Handle the booking request cancel
+                        case "41":
+                            Intent orderUpdateIntent = new Intent(VariableConstant.BOOKING_DISPATCH_CANCEL);
+                            mContext.sendBroadcast(orderUpdateIntent);
+                            break;
                         //Handle the Assign Booking from dispatcher
                         case "29":
                             if(isApplicationSentToBackground() || FORGROUND_LOCK) {

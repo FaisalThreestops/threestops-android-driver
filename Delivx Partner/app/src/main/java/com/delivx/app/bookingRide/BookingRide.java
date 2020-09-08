@@ -246,7 +246,7 @@ public class BookingRide extends DaggerAppCompatActivity implements OnMapReadyCa
     public void setmarkers(LatLng current,LatLng customer ) {
         try {
             marker = new PicassoMarker(map.addMarker(new MarkerOptions().position(current).title("First Point")));
-            Picasso.with(this).load(R.drawable.car_one).resize(50, 50).into(marker);
+            Picasso.get().load(R.drawable.car_one).resize(50, 50).into(marker);
             customer_marker = map.addMarker(new MarkerOptions().position(customer));
             customer_marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.store_pickup_location_icon));
 

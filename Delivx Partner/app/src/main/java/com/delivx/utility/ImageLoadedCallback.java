@@ -27,7 +27,7 @@ public class ImageLoadedCallback implements Callback {
     }
 
     @Override
-    public void onError() {
+    public void onError(Exception e) {
 
     }
 }

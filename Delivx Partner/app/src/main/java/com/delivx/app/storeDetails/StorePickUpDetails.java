@@ -407,7 +407,7 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements
 
                 ImageView iv_item_img=view.findViewById(R.id.iv_item_img);
                 if(!appointments.getShipmentDetails().get(i).getItemImageURL().equals("") && !appointments.getShipmentDetails().get(i).getItemImageURL().isEmpty()) {
-                    Picasso.with(this).load(appointments.getShipmentDetails().get(i).getItemImageURL()).placeholder(R.drawable.login_logo).error(R.drawable.login_logo).into(iv_item_img);
+                    Picasso.get().load(appointments.getShipmentDetails().get(i).getItemImageURL()).placeholder(R.drawable.login_logo).error(R.drawable.login_logo).into(iv_item_img);
                 }else {
                     iv_item_img.setVisibility(View.GONE);
                 }

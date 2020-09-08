@@ -598,7 +598,7 @@ public class MainActivity extends DaggerAppCompatActivity
     @Override
     public void setProfileDetails() {
         tv_prof_name.setText(preferenceHelperDataSource.getMyName());
-        Picasso.with(MainActivity.this)
+        Picasso.get()
                 .load(preferenceHelperDataSource.getProfilePic())
                 .resize(200, 200)
                 .into(iv_profile, new Callback() {
@@ -606,8 +606,9 @@ public class MainActivity extends DaggerAppCompatActivity
                     public void onSuccess() {
                         Log.d("success", "onDrawerOpened: ");
                     }
+
                     @Override
-                    public void onError() {
+                    public void onError(Exception e) {
                         Log.d("error", "onDrawerOpened: ");
                     }
                 });

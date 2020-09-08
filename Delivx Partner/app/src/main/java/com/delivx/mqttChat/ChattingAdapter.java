@@ -56,7 +56,7 @@ public class ChattingAdapter extends RecyclerView.Adapter
                 String url = chatData.get(position).getContent();
                 if(!url.equals(""))
                 {
-                    Picasso.with(mContext)
+                    Picasso.get()
                             .load(url)
                             .resize((int)hldr.width,(int)hldr.height)
                             .into(hldr.ivCustSendPic);
@@ -79,7 +79,7 @@ public class ChattingAdapter extends RecyclerView.Adapter
                 String url = chatData.get(position).getContent();
                 if(!url.equals(""))
                 {
-                    Picasso.with(mContext)
+                    Picasso.get()
                             .load(url)
                             .resize((int)hldr.width,(int)hldr.height)
                             .into(hldr.ivProReceivedPic);

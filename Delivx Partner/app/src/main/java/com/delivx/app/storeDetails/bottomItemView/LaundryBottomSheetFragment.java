@@ -92,7 +92,7 @@ public class LaundryBottomSheetFragment extends BottomSheetDialogFragment  {
             tv_item_name.setText(shipmentDetails.getItemName());
             tv_quantity.setText(getResources().getString(R.string.quantity_cap)+shipmentDetails.getQuantity());
 
-            Picasso.with(getContext()).load(shipmentDetails.getItemImageURL())
+            Picasso.get().load(shipmentDetails.getItemImageURL())
                     .into(iv_item_img);
         }
         else

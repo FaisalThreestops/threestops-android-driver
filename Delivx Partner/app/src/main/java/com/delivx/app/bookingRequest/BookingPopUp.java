@@ -2,7 +2,10 @@ package com.delivx.app.bookingRequest;
 
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Build;
@@ -18,6 +21,7 @@ import android.widget.Toast;
 
 import com.delivx.app.main.MainActivity;
 import com.delivx.data.source.PreferenceHelperDataSource;
+import com.delivx.utility.VariableConstant;
 import com.driver.Threestops.R;
 import com.delivx.pojo.NewBookingMQTTResponse;
 import com.delivx.utility.AppConstants;
@@ -190,6 +194,7 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
         super.onPause();
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationManager.cancelAll();
+        unregisterReceiver(mOrderUpdateReceiver);
     }
 
     @Override
@@ -199,7 +204,17 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
     @Override
     protected void onResume() {
         super.onResume();
+        registerReceiver(mOrderUpdateReceiver, new IntentFilter(VariableConstant.BOOKING_DISPATCH_CANCEL));
     }
+
+    private BroadcastReceiver mOrderUpdateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Intent mainIntent = new Intent(BookingPopUp.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(mainIntent);
+        }
+    };
 
     @Override
     public void onSuccess(String msg) {

@@ -195,7 +195,7 @@ public class MyProfileFrag extends DaggerFragment implements View.OnClickListene
                 url = url.replace(" ", "%20");
             }
             iv_profpic_prog.setVisibility(View.VISIBLE);
-            Picasso.with(getContext())
+            Picasso.get()
                     .load(url)
                     .resize(200, 200)
                     .into(iv_prof_img, new Callback() {
@@ -206,7 +206,7 @@ public class MyProfileFrag extends DaggerFragment implements View.OnClickListene
                         }
 
                         @Override
-                        public void onError() {
+                        public void onError(Exception e) {
                             Utility.printLog(TAG+"  onError  ");
                             iv_profpic_prog.setVisibility(View.GONE);
                         }

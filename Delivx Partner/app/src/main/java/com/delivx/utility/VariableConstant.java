@@ -51,6 +51,7 @@ public class VariableConstant {
     public static boolean APPISBACKGROUND = false;
     public static boolean FORGROUND_LOCK = false;
     public static String MQTT_CHANEL = "";
+    public static String BOOKING_DISPATCH_CANCEL = "booking_dispatch_cancel";
 
     //Ingredienta flow
     public static final String DATA="data";
