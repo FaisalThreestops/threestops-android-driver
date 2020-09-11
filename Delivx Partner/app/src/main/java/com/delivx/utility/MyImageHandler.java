@@ -51,7 +51,7 @@ public class MyImageHandler {
         String state = Environment.getExternalStorageState();
 
         if (Environment.MEDIA_MOUNTED.equals(state)) {
-            newDir = new File(Environment.getExternalStorageDirectory() + "/" + folderNameAndPath);
+            newDir = mContext.getExternalFilesDir(folderNameAndPath);
         } else {
             newDir = new File(mContext.getFilesDir() + "/" + folderNameAndPath);
         }

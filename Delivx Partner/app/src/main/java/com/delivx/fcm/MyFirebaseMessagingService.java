@@ -137,8 +137,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Intent intent;
         intent = new Intent(MyFirebaseMessagingService.this, SplashScreen.class);
         try {
-            intent.putExtra("booking_Data", jsonObject.toString());
-        }catch (Exception e){
+            if (action == 11)
+                intent.putExtra("booking_Data", jsonObject.toString());
+        } catch (Exception e) {
             e.printStackTrace();
         }
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
