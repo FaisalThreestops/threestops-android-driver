@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundcolor"
-    tools:context="com.delivx.app.main.history.orderDetails.HistoryOrderDetails">
+    tools:context="com.driver.threestops.app.main.history.orderDetails.HistoryOrderDetails">
 
     <include
         android:id="@+id/include_actionbar"

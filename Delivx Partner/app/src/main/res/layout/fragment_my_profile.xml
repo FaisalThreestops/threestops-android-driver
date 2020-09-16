@@ -50,7 +50,7 @@
         android:layout_marginTop="-80dp"
         android:gravity="center">
 
-        <com.delivx.utility.CircleImageView
+        <com.driver.threestops.utility.CircleImageView
             android:id="@+id/iv_prof_img"
             android:layout_width="100dp"
             android:layout_height="100dp"

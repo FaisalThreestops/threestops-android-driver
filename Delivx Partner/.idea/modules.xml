@@ -13,6 +13,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/simplecroplib/delivx_android_partner_threestops-Delivx Partner-simplecroplib.iml" filepath="$PROJECT_DIR$/.idea/modules/simplecroplib/delivx_android_partner_threestops-Delivx Partner-simplecroplib.iml" group="Delivx Partner/simplecroplib" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/delivx_base_android_partnerversion2-Delivx Partner-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/delivx_base_android_partnerversion2-Delivx Partner-app.iml" group="Delivx Partner/app" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/simplecroplib/delivx_base_android_partnerversion2-Delivx Partner-simplecroplib.iml" filepath="$PROJECT_DIR$/.idea/modules/simplecroplib/delivx_base_android_partnerversion2-Delivx Partner-simplecroplib.iml" group="Delivx Partner/simplecroplib" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/signature-pad/signature-pad.iml" filepath="$PROJECT_DIR$/.idea/modules/signature-pad/signature-pad.iml" group="Delivx Partner/signature-pad" />
       <module fileurl="file://$PROJECT_DIR$/simplecroplib/simplecroplib.iml" filepath="$PROJECT_DIR$/simplecroplib/simplecroplib.iml" group="Delivx Partner/simplecroplib" />
     </modules>
   </component>

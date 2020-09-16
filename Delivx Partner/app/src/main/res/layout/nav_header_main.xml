@@ -22,7 +22,7 @@
             android:layout_centerInParent="true"
             android:background="@drawable/image_background_white" />
 
-        <com.delivx.utility.CircleImageView
+        <com.driver.threestops.utility.CircleImageView
             android:id="@+id/iv_profile"
             android:layout_width="100dp"
             android:layout_height="100dp"

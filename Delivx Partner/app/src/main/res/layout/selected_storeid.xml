@@ -39,7 +39,7 @@
         android:orientation="horizontal"
         android:layout_alignParentBottom="true">
 
-        <com.delivx.utility.Slider
+        <com.driver.threestops.utility.Slider
             android:id="@+id/myseek"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

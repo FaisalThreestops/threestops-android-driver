@@ -1,1 +1,1 @@
-include ':app', ':simplecroplib'
+include ':app', ':simplecroplib', ':signature-pad'

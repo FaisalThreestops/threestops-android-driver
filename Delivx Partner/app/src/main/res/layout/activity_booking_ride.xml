@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context="com.delivx.app.bookingRide.BookingRide">
+    tools:context="com.driver.threestops.app.bookingRide.BookingRide">
 
 
     <include
@@ -218,7 +218,7 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <com.delivx.utility.Slider
+                <com.driver.threestops.utility.Slider
                     android:id="@+id/myseek"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context="com.delivx.app.storeDetails.StorePickUpDetails">
+    tools:context="com.driver.threestops.app.storeDetails.StorePickUpDetails">
 
     <include
         android:id="@+id/include_actionbar"
@@ -640,7 +640,7 @@
         android:orientation="horizontal"
         android:layout_alignParentBottom="true">
 
-        <com.delivx.utility.Slider
+        <com.driver.threestops.utility.Slider
             android:id="@+id/myseek"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

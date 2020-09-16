@@ -33,7 +33,7 @@
 <!--    <uses-permission android:name="com.dayrunnerdriver.main.permission.C2D_MESSAGE" />-->
 
     <application
-        android:name="com.delivx.app.MyApplication"
+        android:name="com.driver.threestops.app.MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -59,7 +59,7 @@
 
         <!-- splash activity -->
         <activity
-            android:name="com.delivx.app.SplashScreen"
+            android:name="com.driver.threestops.app.SplashScreen"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -68,65 +68,65 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.delivx.app.main.MainActivity"
+            android:name="com.driver.threestops.app.main.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.delivx.login.LoginActivity"
+            android:name="com.driver.threestops.login.LoginActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden"/>
 
         <activity
-            android:name="com.delivx.signup.perosonal.SignupPersonal"
+            android:name="com.driver.threestops.signup.perosonal.SignupPersonal"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustNothing" />
         <activity
-            android:name="com.delivx.app.main.history.orderDetails.HistoryOrderDetailsNew"
+            android:name="com.driver.threestops.app.main.history.orderDetails.HistoryOrderDetailsNew"
             android:screenOrientation="portrait"
              />
         <activity
-            android:name="com.delivx.ForgotPassword.ForgotPasswordMobNum"
+            android:name="com.driver.threestops.ForgotPassword.ForgotPasswordMobNum"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible" />
 
         <activity
-            android:name="com.delivx.app.main.help_center.zendeskHelpIndex.ZendeskHelpIndexAct"
+            android:name="com.driver.threestops.app.main.help_center.zendeskHelpIndex.ZendeskHelpIndexAct"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.delivx.app.main.help_center.zendeskTicketDetails.HelpIndexTicketDetailsAct"
+            android:name="com.driver.threestops.app.main.help_center.zendeskTicketDetails.HelpIndexTicketDetailsAct"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.delivx.vehiclelist.VehicleList"
+            android:name="com.driver.threestops.vehiclelist.VehicleList"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.delivx.ForgotPassword.ForgotPasswordVerify"
+            android:name="com.driver.threestops.ForgotPassword.ForgotPasswordVerify"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity
-            android:name="com.delivx.ForgotPassword.ForgotPasswordChangePass"
+            android:name="com.driver.threestops.ForgotPassword.ForgotPasswordChangePass"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible" />
 
         <activity
-            android:name="com.delivx.app.bookingRequest.BookingPopUp"
+            android:name="com.driver.threestops.app.bookingRequest.BookingPopUp"
             android:screenOrientation="portrait" />
         <activity
             android:name="eu.janmuller.android.simplecropimage.CropImage"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.delivx.app.main.profile.editProfile.EditProfileActivity"
+            android:name="com.driver.threestops.app.main.profile.editProfile.EditProfileActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustResize" />
 
-        <service android:name="com.delivx.fcm.MyFirebaseMessagingService">
+        <service android:name="com.driver.threestops.fcm.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
 
-        <service android:name="com.delivx.account.AppAuthenticatorService">
+        <service android:name="com.driver.threestops.account.AppAuthenticatorService">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
@@ -143,7 +143,7 @@
             android:enabled="true"
             android:stopWithTask="true"/>
 
-        <service android:name="com.delivx.service.LocationUpdateService" />
+        <service android:name="com.driver.threestops.service.LocationUpdateService" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -164,7 +164,7 @@
             android:value="@string/map_api_key" />
 
         <activity
-            android:name="com.delivx.signup.GenericListActivity"
+            android:name="com.driver.threestops.signup.GenericListActivity"
             android:screenOrientation="portrait" />
 
         <service
@@ -179,80 +179,80 @@
             android:name="com.livechatinc.inappchat.ChatWindowActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name="com.delivx.app.main.support.webView.WebViewActivity"
+            android:name="com.driver.threestops.app.main.support.webView.WebViewActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.delivx.app.main.bank.stripe.BankNewStripeActivity"
+        <activity android:name="com.driver.threestops.app.main.bank.stripe.BankNewStripeActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"
             />
-        <activity android:name="com.delivx.app.main.support.subCategory.SupportSubCategoryActivity" />
-        <activity android:name="com.delivx.app.main.bank.addBankAccount.BankNewAccountActivity" />
+        <activity android:name="com.driver.threestops.app.main.support.subCategory.SupportSubCategoryActivity" />
+        <activity android:name="com.driver.threestops.app.main.bank.addBankAccount.BankNewAccountActivity" />
 
 
-        <activity android:name="com.delivx.walletNew.WalletTransActivity" />
-        <activity android:name="com.delivx.portal.PortalActivity" />
+        <activity android:name="com.driver.threestops.walletNew.WalletTransActivity" />
+        <activity android:name="com.driver.threestops.portal.PortalActivity" />
         <activity
-            android:name="com.delivx.app.storeDetails.StorePickUpDetails"
+            android:name="com.driver.threestops.app.storeDetails.StorePickUpDetails"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name="com.delivx.app.slotAppointments.SlotAppointmentActivity"
+            android:name="com.driver.threestops.app.slotAppointments.SlotAppointmentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name="com.delivx.app.selectedStore.SelectedStoreIdActivity"
+            android:name="com.driver.threestops.app.selectedStore.SelectedStoreIdActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name="com.delivx.app.orderEdit.OrderEditActivity"
+            android:name="com.driver.threestops.app.orderEdit.OrderEditActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name="com.delivx.app.replaceItem.ReplaceItemsActivity"
+            android:name="com.driver.threestops.app.replaceItem.ReplaceItemsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name="com.delivx.app.bookingRide.BookingRide"
+            android:name="com.driver.threestops.app.bookingRide.BookingRide"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.delivx.app.storePickUp.StorePickUp"
+            android:name="com.driver.threestops.app.storePickUp.StorePickUp"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
 
-        <activity android:name="com.delivx.app.invoice.InvoiceActivity"
+        <activity android:name="com.driver.threestops.app.invoice.InvoiceActivity"
             android:screenOrientation="portrait"
             />
 
 
-        <activity android:name="com.delivx.mqttChat.ChattingActivity"
+        <activity android:name="com.driver.threestops.mqttChat.ChattingActivity"
             android:screenOrientation="portrait"
             />
 
         <activity
-            android:name="com.delivx.payment_add_card.AddCardAct"
+            android:name="com.driver.threestops.payment_add_card.AddCardAct"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name="com.delivx.payment.PaymentAct"
+            android:name="com.driver.threestops.payment.PaymentAct"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.delivx.payment_card_detail.CardDetailAct"
+            android:name="com.driver.threestops.payment_card_detail.CardDetailAct"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.delivx.wallet.WalletAct"
+            android:name="com.driver.threestops.wallet.WalletAct"
             android:screenOrientation="portrait" />
 
         <receiver
-            android:name="com.delivx.utility.NetworkChangeReceiver"
+            android:name="com.driver.threestops.utility.NetworkChangeReceiver"
             android:label="NetworkChangeReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>

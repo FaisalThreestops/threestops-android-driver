@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:mActivity="com.delivx.signup.GenericListActivity">
+    tools:mActivity="com.driver.threestops.signup.GenericListActivity">
 
     <include
         android:id="@+id/include_actionbar"
