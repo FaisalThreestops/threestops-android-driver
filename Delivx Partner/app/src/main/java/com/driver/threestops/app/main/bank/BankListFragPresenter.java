@@ -3,25 +3,23 @@ package com.driver.threestops.app.main.bank;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
+import android.util.Log;
 
 import com.driver.threestops.app.MyApplication;
+import com.driver.threestops.app.main.bank.stripe.GetBankData;
+import com.driver.threestops.app.main.bank.stripe.GetBankDetailsPojo;
+import com.driver.threestops.data.source.PreferenceHelperDataSource;
 import com.driver.threestops.login.LoginActivity;
 import com.driver.threestops.login.language.LanguagesList;
+import com.driver.threestops.networking.NetworkService;
 import com.driver.threestops.service.LocationUpdateService;
 import com.driver.threestops.utility.AppConstants;
-import com.google.gson.Gson;
-import com.driver.threestops.data.source.PreferenceHelperDataSource;
-import com.driver.threestops.networking.NetworkService;
-
-import com.driver.threestops.pojo.bank.StripeDetailsPojo;
-import com.driver.threestops.pojo.bank.StripeResponse;
 import com.driver.threestops.utility.Utility;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 
 import java.io.IOException;
 
@@ -35,7 +33,7 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
-public class BankListFragPresenter implements BankDetailscontract.PresenterOperations  {
+public class BankListFragPresenter implements BankDetailscontract.PresenterOperations {
 
     @Inject
     BankListFragPresenter() {
@@ -50,8 +48,8 @@ public class BankListFragPresenter implements BankDetailscontract.PresenterOpera
     @Inject
     PreferenceHelperDataSource preferenceHelperDataSource;
 
-    private StripeDetailsPojo stripeDetailsPojo;
-    private StripeResponse stripeResponse;
+    private GetBankData stripeDetailsPojo;
+    private GetBankDetailsPojo stripeResponse;
 
     BankDetailscontract.ViewOperations view;
 
@@ -62,7 +60,7 @@ public class BankListFragPresenter implements BankDetailscontract.PresenterOpera
 
     @Override
     public void attachView(BankDetailscontract.ViewOperations bankListFrag) {
-        this.view=bankListFrag;
+        this.view = bankListFrag;
     }
 
     @Override
@@ -72,7 +70,7 @@ public class BankListFragPresenter implements BankDetailscontract.PresenterOpera
 
     @Override
     public void addNewStripeAccount() {
-        Bundle bundleBankDetails=new Bundle();
+        /*Bundle bundleBankDetails=new Bundle();
         if(stripeDetailsPojo!=null){
             bundleBankDetails.putString("fname", stripeDetailsPojo.getLegal_entity().getFirstName());
             bundleBankDetails.putString("lname", stripeDetailsPojo.getLegal_entity().getLastName());
@@ -86,7 +84,7 @@ public class BankListFragPresenter implements BankDetailscontract.PresenterOpera
             bundleBankDetails.putString("year", stripeDetailsPojo.getLegal_entity().getDob().getYear());
         }
 
-        view.moveToNewStripeActivity(bundleBankDetails);
+        view.moveToNewStripeActivity(bundleBankDetails);*/
     }
 
     /**
@@ -95,8 +93,9 @@ public class BankListFragPresenter implements BankDetailscontract.PresenterOpera
      */
     private void getAccount() {
         view.showProgress();
-        final Observable<Response<ResponseBody>> connectAccount=networkService.connectAccount(preferenceHelperDataSource.getLanguage(),
-                ((MyApplication) context.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()));
+        Log.d("check", "getAccount: " + preferenceHelperDataSource.getToken());
+        final Observable<Response<ResponseBody>> connectAccount = networkService.getBankDetails(
+                preferenceHelperDataSource.getToken(), preferenceHelperDataSource.getLanguage());
         connectAccount.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Response<ResponseBody>>() {
@@ -104,39 +103,41 @@ public class BankListFragPresenter implements BankDetailscontract.PresenterOpera
                     public void onSubscribe(Disposable d) {
 
                     }
+
                     @Override
                     public void onNext(Response<ResponseBody> value) {
-                        if(view!=null)
+                        if (view != null)
                             view.hideProgress();
 
                         try {
                             JSONObject jsonObject = null;
+                            String res = "";
                             switch (value.code()) {
                                 //success
-                                case 200:jsonObject=new JSONObject(value.body().string());
-                                    stripeResponse = new Gson().fromJson(jsonObject.toString(), StripeResponse.class);
-                                    stripeDetailsPojo=stripeResponse.getData();
-                                    Utility.printLog("connectAccount : "+jsonObject.toString());
-
-                                    view.onSuccess(stripeDetailsPojo.getLegal_entity(), stripeDetailsPojo.getExternal_accounts().getData());
+                                case 200:
+                                    res = value.body().string();
+//                                    jsonObject=new JSONObject(value.body().string());
+                                    stripeResponse = new Gson().fromJson(res, GetBankDetailsPojo.class);
+                                    stripeDetailsPojo = stripeResponse.getData();
+                                    view.onSuccessData(stripeDetailsPojo);
+                                    //  view.onSuccess(stripeDetailsPojo.getLegal_entity(), stripeDetailsPojo.getExternal_accounts().getData());
                                     break;
 
                                 case 400:
-                                    jsonObject=new JSONObject(value.errorBody().string());
+                                    jsonObject = new JSONObject(value.errorBody().string());
                                     view.showAddStipe();
                                     break;
 
                                 case 440:
                                 case 498:
-                                    Utility.printLog("pushTopics shared pref "+preferenceHelperDataSource.getPushTopic());
-                                    Utility.subscribeOrUnsubscribeTopics(new JSONArray(preferenceHelperDataSource.getPushTopic()),false);
+                                    Utility.printLog("pushTopics shared pref " + preferenceHelperDataSource.getPushTopic());
+                                    Utility.subscribeOrUnsubscribeTopics(new JSONArray(preferenceHelperDataSource.getPushTopic()), false);
                                     LanguagesList languagesList = preferenceHelperDataSource.getLanguageSettings();
                                     preferenceHelperDataSource.clearSharedPredf();
                                     preferenceHelperDataSource.setLanguageSettings(languagesList);
-                                    ((MyApplication)context.getApplicationContext()).disconnectMqtt();
+                                    ((MyApplication) context.getApplicationContext()).disconnectMqtt();
                                     context.startActivity(new Intent(context, LoginActivity.class));
-                                    if(Utility.isMyServiceRunning(LocationUpdateService.class, context))
-                                    {
+                                    if (Utility.isMyServiceRunning(LocationUpdateService.class, context)) {
                                         Intent stopIntent = new Intent(context, LocationUpdateService.class);
                                         stopIntent.setAction(AppConstants.ACTION.STOPFOREGROUND_ACTION);
                                         context.startService(stopIntent);
@@ -144,15 +145,14 @@ public class BankListFragPresenter implements BankDetailscontract.PresenterOpera
 
                                     break;
                                 default:
-                                    jsonObject=new JSONObject(value.errorBody().string());
+                                    jsonObject = new JSONObject(value.errorBody().string());
                                     break;
                             }
 
-                            Utility.printLog("connectAccount : "+jsonObject.toString());
+//                            Utility.printLog("connectAccount : "+jsonObject.toString());
 
-                        }catch (JSONException e)
-                        {
-                            Utility.printLog("connectAccount : Catch :"+e.getMessage());
+                        } catch (JSONException e) {
+                            Utility.printLog("connectAccount : Catch :" + e.getMessage());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -160,15 +160,74 @@ public class BankListFragPresenter implements BankDetailscontract.PresenterOpera
 
                     @Override
                     public void onError(Throwable e) {
-                        if(view!=null)
+                        if (view != null)
                             view.hideProgress();
                         view.onFailure();
                     }
 
                     @Override
                     public void onComplete() {
-                        if(view!=null)
+                        if (view != null)
                             view.hideProgress();
+                    }
+                });
+    }
+
+    @Override
+    public void deleteBankAccount(String beneId) {
+//        Utility.printLog(""+preferenceHelperDataSource.getSessionToken());
+        view.showProgress();
+        io.reactivex.Observable<Response<ResponseBody>> getConnectAccount = networkService.deleteBankAccount(
+                preferenceHelperDataSource.getToken(), preferenceHelperDataSource.getLanguage(), beneId);
+
+        getConnectAccount.observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Response<ResponseBody>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+//                        compositeDisposable.add(d);
+                    }
+
+                    @Override
+                    public void onNext(Response<ResponseBody> value) {
+                        try {
+                            JSONObject jsonObject;
+
+                            switch (value.code()) {
+                                case 200:
+                                    jsonObject = new JSONObject(value.body().string());
+                                    Utility.printLog("deleteBankAccount : " + jsonObject.toString());
+//                                jsonObject = new JSONObject(jsonObject.getString("data"));
+                                    view.showAddBankAccount();
+                                    break;
+
+                           /* case RESPONSE_CODE_NO_STRIPE_ACCOUNT_FOUND:
+                                jsonObject=new JSONObject(value.errorBody().string());
+                                Utility.printLog("deleteBankAccount No Stripe Added: "+value.toString());
+//                                    bankDetailsFragView.showAddStipe(jsonObject.getString("message"));
+//                                bankDetailsFragView.showAddBankAccount(jsonObject.getString("message"));
+                                break;*/
+
+                                default:
+//                                    bankDetailsFragView.onFailure(DataParser.fetchErrorMessage(value));
+                                    break;
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Utility.printLog("deleteBankAccount : Catch :" + e.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Utility.printLog("the api error is : " + e.getMessage());
+                        view.hideProgress();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        view.hideProgress();
                     }
                 });
     }

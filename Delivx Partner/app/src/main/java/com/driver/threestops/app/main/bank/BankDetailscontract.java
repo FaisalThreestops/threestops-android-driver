@@ -3,6 +3,7 @@ package com.driver.threestops.app.main.bank;
 import android.os.Bundle;
 
 import com.driver.threestops.BaseView;
+import com.driver.threestops.app.main.bank.stripe.GetBankData;
 import com.driver.threestops.pojo.bank.BankList;
 import com.driver.threestops.pojo.bank.LegalEntity;
 
@@ -40,6 +41,8 @@ public interface BankDetailscontract {
          */
         void showAddStipe();
 
+        void onSuccessData(GetBankData getBankData);
+
         /**
          * <h2>moveToAddAccountActivity</h2>
          * <p>moving to next (BankNewAccountActivity) adding new bank account</p>
@@ -52,6 +55,8 @@ public interface BankDetailscontract {
          * @param bundleBankDetails : stripeDetailsPojo details
          */
         void moveToNewStripeActivity(Bundle bundleBankDetails);
+
+        void showAddBankAccount();
     }
 
     interface PresenterOperations{
@@ -80,5 +85,7 @@ public interface BankDetailscontract {
          * <p>getting the bank details</p>
          */
         void getBankDetails();
+
+        void deleteBankAccount(String beneId);
     }
 }

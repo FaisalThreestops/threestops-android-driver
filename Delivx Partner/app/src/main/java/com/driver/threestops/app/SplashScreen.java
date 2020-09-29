@@ -6,11 +6,17 @@ import android.os.Handler;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.driver.Threestops.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.driver.threestops.app.main.MainActivity;
 import com.driver.threestops.data.source.PreferenceHelperDataSource;
 import com.driver.threestops.login.LoginActivity;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 
 import javax.inject.Inject;
@@ -26,30 +32,34 @@ public class SplashScreen extends DaggerAppCompatActivity {
     String response;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_splash_screen);
-
         preferenceHelperDataSource.setFCMRegistrationId(FirebaseInstanceId.getInstance().getToken());
+        /*FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+                        preferenceHelperDataSource.setFCMRegistrationId(token);
+
+                    }
+                });
+*/
         getBundleData(getIntent().getExtras());
-        runnable=new Runnable() {
-
-            /*
-             * Showing splash screen with a timer. For showing app logo
-             */
-
-            @Override
-            public void run() {
-                // This method will be executed once the timer is over
-                // Start app
-                checkConfiguration();
-
-            }
-        };
-        handler=new Handler();
+        /*
+         * Showing splash screen with a timer. For showing app logo
+         */
+        // This method will be executed once the timer is over
+        // Start app
+        runnable = this::checkConfiguration;
+        handler = new Handler();
         handler.postDelayed(runnable, 2000);
 
         //initializeViews();
@@ -64,19 +74,20 @@ public class SplashScreen extends DaggerAppCompatActivity {
             this.bundle=bundle;
         }*/
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     /**
      * <h2>checkConfiguration</h2>
      * <p>check user is logged in or not and
      * based on status it corresponding activity will open</p>
      */
     private void checkConfiguration() {
-        if (preferenceHelperDataSource.isLoggedIn()/*&&!preferenceHelperDataSource.getVehicleId().isEmpty()*/ ) {
+        if (preferenceHelperDataSource.isLoggedIn()/*&&!preferenceHelperDataSource.getVehicleId().isEmpty()*/) {
             Intent intent = new Intent(SplashScreen.this, MainActivity.class);
-            intent.putExtra("booking_Data",response);
+            intent.putExtra("booking_Data", response);
             startActivity(intent);
             finish();
         } else {

@@ -9,6 +9,7 @@ import com.driver.threestops.ForgotPassword.ForgotPasswordMobNum;
 import com.driver.threestops.ForgotPassword.ForgotPasswordVerify;
 import com.driver.threestops.ForgotPassword.RetriveFromMobile.RetriveFromMobModule;
 import com.driver.threestops.ForgotPassword.VerifyMobile.VerifyMobileModule;
+import com.driver.threestops.app.main.bank.addBankAccount.BankNewAccountModule;
 import com.driver.threestops.app.main.help_center.zendeskHelpIndex.ZendeskAdapterModule;
 import com.driver.threestops.app.main.help_center.zendeskHelpIndex.ZendeskHelpIndexAct;
 import com.driver.threestops.app.main.help_center.zendeskHelpIndex.ZendeskModule;
@@ -33,7 +34,6 @@ import com.driver.threestops.app.invoice.InvoiceModule;
 import com.driver.threestops.app.main.MainActivity;
 import com.driver.threestops.app.main.MainActivityModule;
 import com.driver.threestops.app.main.bank.BankDetailsModule;
-import com.driver.threestops.app.main.bank.addBankAccount.AddBankAccountModule;
 import com.driver.threestops.app.main.bank.addBankAccount.BankNewAccountActivity;
 import com.driver.threestops.app.main.bank.stripe.BankNewStripeActivity;
 import com.driver.threestops.app.main.bank.stripe.StripeAccountModule;
@@ -191,7 +191,7 @@ public abstract class ActivityBindingModule {
     abstract BankNewStripeActivity  bankNewStripeActivity();
 
     @ActivityScoped
-    @ContributesAndroidInjector(modules ={AddBankAccountModule.class})
+    @ContributesAndroidInjector(modules ={BankNewAccountModule.class})
     abstract BankNewAccountActivity  bankNewAccountActivity();
 
     @ActivityScoped

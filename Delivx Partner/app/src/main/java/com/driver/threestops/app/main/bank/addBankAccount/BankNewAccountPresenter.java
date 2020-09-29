@@ -1,18 +1,18 @@
 package com.driver.threestops.app.main.bank.addBankAccount;
 
 import android.app.Activity;
+import android.content.Context;
 
-import com.driver.threestops.app.MyApplication;
 import com.driver.threestops.data.source.PreferenceHelperDataSource;
 import com.driver.threestops.networking.NetworkService;
-import com.driver.threestops.utility.MyTextUtils;
+import com.driver.threestops.utility.TextUtil;
 import com.driver.threestops.utility.Utility;
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -20,108 +20,115 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
+import static com.driver.threestops.utility.VariableConstant.RESPONSE_CODE_SUCCESS;
 
-public class BankNewAccountPresenter implements AddBankAccountContract.PresenterOperations {
+
+public class BankNewAccountPresenter implements BankNewAccountContract.BankNewAccountPresenter {
+
+    @Inject
+    BankNewAccountContract.BankNewAccountView view;
+    @Inject
+    Context context;
+    @Inject
+    PreferenceHelperDataSource preferenceHelperDataSource;
+    @Inject
+    NetworkService networkService;
+    @Inject
+    Activity activity;
 
     @Inject
     public BankNewAccountPresenter() {
     }
 
-    @Inject
-    NetworkService networkService;
+    @Override
+    public void setActionBar() {
+        view.initActionBar();
+    }
 
-    @Inject
-    PreferenceHelperDataSource preferenceHelperDataSource;
+    @Override
+    public void setActionBarTitle() {
+        view.setTitle();
+    }
 
-    @Inject
-    AddBankAccountContract.ViewOperation view;
+    @Override
+    public void validateData(String name, String phone, String AccountNo,
+                             String RoutingNo, String address, String city, String state, String pinCode) {
+        if (TextUtil.isEmpty(name)) {
+            view.editTextErr("Name");
+        } else if (TextUtil.isEmpty(phone)) {
+            view.editTextErr("Phone");
+        } else if (TextUtil.isEmpty(AccountNo)) {
+            view.editTextErr("AccountNo");
+        } else if (TextUtil.isEmpty(RoutingNo)) {
+            view.editTextErr("RoutingNo");
+        } else if (TextUtil.isEmpty(address)) {
+            view.editTextErr("Address");
+        } else if (TextUtil.isEmpty(city)) {
+            view.editTextErr("City");
+        } else if (TextUtil.isEmpty(state)) {
+            view.editTextErr("State");
+        } else if (TextUtil.isEmpty(pinCode)) {
+            view.editTextErr("PinCode");
+        } else {
+            view.editTextErr("default");
+        }
+    }
 
-    @Inject
-    Activity activity;
-
-    /**
-     * <h1>createBankAccount</h1>
-     * <p>API call for  create bank account</p>
-     * @param name name of the bank holder
-     * @param acc account number
-     * @param routing routing number
-     */
-    private void createBankAccount(String name, String acc, String routing){
-
+    @Override
+    public void externalAccountAPI(String name, String Phone, String AccountNo,
+                                   String RoutingNo, String address, String city, String state, String pinCode) {
         view.showProgress();
-        final Observable<Response<ResponseBody>> externalAccount=networkService.externalAccount(preferenceHelperDataSource.getLanguage(),
-                ((MyApplication) activity.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),
-                preferenceHelperDataSource.getMyEmail(),
-                acc,
-                routing,
-                name,
-                preferenceHelperDataSource.getCountry()
+        io.reactivex.Observable<Response<ResponseBody>> postExternalAccount = networkService.bankDetailValidation(
+                preferenceHelperDataSource.getToken(),
+                "en",
+                name, Phone, AccountNo, RoutingNo);
 
-        );
-        externalAccount.observeOn(AndroidSchedulers.mainThread())
+        postExternalAccount.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Response<ResponseBody>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
+
                     @Override
                     public void onNext(Response<ResponseBody> value) {
-                        if(view!=null)
-                            view.hideProgress();
-
                         try {
                             JSONObject jsonObject;
-                            if(value.code()==200)
-                            {
-                                jsonObject=new JSONObject(value.body().string());
-                            }else
-                            {
-                                jsonObject=new JSONObject(value.errorBody().string());
+
+                            switch (value.code()) {
+                                case RESPONSE_CODE_SUCCESS:
+                                    jsonObject = new JSONObject(value.body().string());
+                                    Utility.printLog("postExternalAccount : " + new Gson().toJson(jsonObject));
+
+
+                                    addBankAccount(name, Phone, AccountNo, RoutingNo, address, city, state, pinCode);
+//                                    bankNewAccountView.externalAccountAPISuccess(jsonObject.getString("message"));
+                                    break;
+
+                                default:
+                                    Utility.printLog("postExternalAccount : " + value.errorBody().string());
+                                    Utility.BlueToast(context, value.errorBody().string());
+                                    break;
                             }
 
-                            Utility.printLog("externalAccount : "+jsonObject.toString());
-
-                        }catch (Exception e)
-                        {
-                            Utility.printLog("externalAccount : Catch :"+e.getMessage());
+                        } catch (Exception e) {
+                            Utility.printLog("postExternalAccount : Catch :" + e.getMessage());
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        if(view!=null)
-                            view.hideProgress();
-
+                        Utility.printLog("the api error is : " + e.getMessage());
+                        view.hideProgress();
                     }
 
                     @Override
                     public void onComplete() {
-                        if(view!=null)
-                            view.hideProgress();
+                        view.hideProgress();
                     }
                 });
-    }
 
-    @Override
-    public void validateFields(String name, String acc, String routing) {
-
-        if(MyTextUtils.isEmpty(name)){
-            view.setNameError();
-            return;
-        }
-        else if(MyTextUtils.isEmpty(acc)){
-            view.setAccError();
-            return;
-        }
-        else if(MyTextUtils.isEmpty(routing)){
-            view.setRoutingError();
-            return;
-        }
-        else {
-            view.disableError();
-            createBankAccount(name,acc,routing);
-        }
     }
 
     @Override
@@ -129,8 +136,63 @@ public class BankNewAccountPresenter implements AddBankAccountContract.Presenter
         return preferenceHelperDataSource.getLanguageSettings().getLanguageCode();
     }
 
-    @Override
-    public String getAccountNoHint() {
-        return preferenceHelperDataSource.getDefaultBankAccount().concat("*");
+    private void addBankAccount(String name, String phone, String accountNo, String routingNo,
+                                String address, String city, String state,
+                                String pinCode) {
+        view.showProgress();
+        io.reactivex.Observable<Response<ResponseBody>> postExternalAccount = networkService.addBankDetails(
+                preferenceHelperDataSource.getToken(),
+                preferenceHelperDataSource.getLanguage(),
+                accountNo, routingNo, address, city, state, pinCode);
+
+        postExternalAccount.observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Response<ResponseBody>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Response<ResponseBody> value) {
+                        try {
+                            JSONObject jsonObject;
+
+                            switch (value.code()) {
+                                case RESPONSE_CODE_SUCCESS:
+                                    jsonObject = new JSONObject(value.body().string());
+                                    Utility.printLog("postExternalAccount RESPONSE_CODE_SUCCESS addBankDetails: " + new Gson().toJson(jsonObject));
+
+                                    view.externalAccountAPISuccess(jsonObject.getString("message"));
+                                    break;
+                                case 500:
+                                    jsonObject = new JSONObject(value.errorBody().string());
+                                    Utility.printLog("postExternalAccount RESPONSE_CODE_INTERNAL_SERVER_ERROR addBankDetails: " + new Gson().toJson(jsonObject));
+
+                                    view.externalAccountAPISuccess(jsonObject.getString("message"));
+                                    break;
+
+                                default:
+                                    Utility.printLog("postExternalAccount default addBankDetails: " + value.errorBody().string());
+                                    Utility.BlueToast(context, value.errorBody().string());
+                                    break;
+                            }
+
+                        } catch (Exception e) {
+                            Utility.printLog("postExternalAccount addBankDetails : Catch :" + e.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Utility.printLog("the api error is : " + e.getMessage());
+                        view.hideProgress();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        view.hideProgress();
+                    }
+                });
     }
 }

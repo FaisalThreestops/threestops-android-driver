@@ -14,5 +14,6 @@ public interface WalletPresenter {
     void addCard();
     void start();
     String getCurrency();
+    void chooseCard(String amount);
 
 }

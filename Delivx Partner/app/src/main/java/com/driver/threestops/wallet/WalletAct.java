@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.RequiresApi;
 
+import com.gocashfree.cashfreesdk.CFPaymentService;
 import com.google.android.material.textfield.TextInputLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -41,7 +42,18 @@ import com.driver.threestops.walletNew.WalletTransActivity;
 import com.driver.Threestops.R;
 import dagger.android.support.DaggerAppCompatActivity;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
+
+import static com.gocashfree.cashfreesdk.CFPaymentService.PARAM_APP_ID;
+import static com.gocashfree.cashfreesdk.CFPaymentService.PARAM_CUSTOMER_EMAIL;
+import static com.gocashfree.cashfreesdk.CFPaymentService.PARAM_CUSTOMER_NAME;
+import static com.gocashfree.cashfreesdk.CFPaymentService.PARAM_CUSTOMER_PHONE;
+import static com.gocashfree.cashfreesdk.CFPaymentService.PARAM_ORDER_AMOUNT;
+import static com.gocashfree.cashfreesdk.CFPaymentService.PARAM_ORDER_ID;
+import static com.gocashfree.cashfreesdk.CFPaymentService.PARAM_ORDER_NOTE;
 
 public class WalletAct extends DaggerAppCompatActivity implements WalletView, View.OnClickListener {
     private Typeface fontMedium, fontRegular;
@@ -91,6 +103,7 @@ public class WalletAct extends DaggerAppCompatActivity implements WalletView, Vi
 
     Toolbar toolBar;
     TextView tvAbarTitle;
+    private CFPaymentService cfPaymentService;
 
     @Inject
     PreferenceHelperDataSource preferenceHelperDataSource;
@@ -289,8 +302,7 @@ public class WalletAct extends DaggerAppCompatActivity implements WalletView, Vi
         alertDialog.setPositiveButton(R.string.ok,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        mPresenter.chooseCard(addAmountEt.getText().toString(), cardId);
-
+                        mPresenter.chooseCard(addAmountEt.getText().toString());
                     }
                 });
         alertDialog.show();
@@ -400,9 +412,15 @@ public class WalletAct extends DaggerAppCompatActivity implements WalletView, Vi
                 case 1111:
                     mPresenter.callApi();
                     break;
-
                 default:
-                    break;
+                    if (data != null) {
+                        Bundle bundle = data.getExtras();
+                        if (bundle != null)
+                            this.cardId = bundle.getString("orderId");
+                        if (this.cardId != null && !this.cardId.equals("")) {
+                            mPresenter.chooseCard(addAmountEt.getText().toString(), cardId);
+                        }
+                    }
             }
         }
     }
@@ -421,6 +439,24 @@ public class WalletAct extends DaggerAppCompatActivity implements WalletView, Vi
     public void hideProgress() {
         progressBar.setVisibility(View.GONE);
 
+    }
+
+    @Override
+    public void callCashFree(String orderId, String orderNote, String stage, String appId, String token, String finalTotal, String name, String phone, String email) {
+        cfPaymentService = CFPaymentService.getCFPaymentServiceInstance();
+        cfPaymentService.setOrientation(0);
+
+        Map<String, String> params = new HashMap<>();
+
+        params.put(PARAM_APP_ID, appId);
+        params.put(PARAM_ORDER_ID, orderId);
+        params.put(PARAM_ORDER_AMOUNT, finalTotal);
+        params.put(PARAM_ORDER_NOTE, orderNote);
+        params.put(PARAM_CUSTOMER_NAME, name);
+        params.put(PARAM_CUSTOMER_PHONE, phone);
+        params.put(PARAM_CUSTOMER_EMAIL, email);
+
+        cfPaymentService.doPayment(this, params, token, stage, "#000850", "#FFFFFF", false);
     }
 
 }

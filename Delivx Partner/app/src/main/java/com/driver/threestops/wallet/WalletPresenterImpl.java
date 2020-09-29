@@ -13,18 +13,25 @@ import com.driver.threestops.utility.AppConstants;
 import com.driver.threestops.utility.Utility;
 import com.driver.Threestops.R;
 import com.google.gson.Gson;
+
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+
 import java.io.IOException;
+import java.text.DecimalFormat;
+
 import javax.inject.Inject;
 import javax.inject.Named;
+
 import okhttp3.ResponseBody;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import retrofit2.Response;
 
 /**
@@ -54,7 +61,7 @@ public class WalletPresenterImpl implements WalletPresenter {
 
     private String currency;
 
-    private double walletAmt=0.0;
+    private double walletAmt = 0.0;
 
     @Inject
     public WalletPresenterImpl(Activity activity) {
@@ -82,12 +89,70 @@ public class WalletPresenterImpl implements WalletPresenter {
     }
 
     @Override
-    public void chooseCard(String amt,String cardId) {
+    public void chooseCard(String amt, String cardId) {
+        walletAmt = Double.parseDouble(amt);
+        mAddMoneyApi(cardId);
+    }
 
-        if(amt!=null && !amt.equals(""))
-        {
-             walletAmt=Double.parseDouble(amt);
-             mAddMoneyApi(cardId);
+    @Override
+    public void chooseCard(String amt) {
+
+        if (amt != null && !amt.equals("")) {
+            DecimalFormat df2 = new DecimalFormat("#.##");
+            String total = df2.format(Double.parseDouble(amt));
+            if (isNetworkAvailable()) {
+                Observable<Response<ResponseBody>> bad = service.getCashFreeToken(preferenceHelperDataSource.getToken(),
+                        preferenceHelperDataSource.getLanguage(),
+                        total);
+                bad.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Observer<Response<ResponseBody>>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
+                                mView.showProgress();
+                            }
+
+                            @Override
+                            public void onNext(Response<ResponseBody> responseBodyResponse) {
+                                switch (responseBodyResponse.code()) {
+                                    case 200:
+                                        JSONObject object = null;
+                                        try {
+                                            String result = responseBodyResponse.body().string();
+                                            object = new JSONObject(result);
+
+                                            mView.callCashFree(
+                                                    object.getJSONObject("data").getString("orderId"),
+                                                    object.getJSONObject("data").getString("orderNote"),
+                                                    object.getJSONObject("data").getString("Stage"),
+                                                    object.getJSONObject("data").getString("appId"),
+                                                    object.getJSONObject("data").getString("token"),
+                                                    total,
+                                                    preferenceHelperDataSource.getMyName(),
+                                                    preferenceHelperDataSource.getCountry() + "" + "9123456789",
+                                                    preferenceHelperDataSource.getMyEmail()
+                                            );
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                mView.hideProgress();
+                                e.printStackTrace();
+                            }
+
+                            @Override
+                            public void onComplete() {
+                                mView.hideProgress();
+                            }
+                        });
+            }
         }
     }
 
@@ -97,8 +162,7 @@ public class WalletPresenterImpl implements WalletPresenter {
     }
 
     @Override
-    public void addCard()
-    {
+    public void addCard() {
         mView.startAddCardAct();
     }
 
@@ -108,12 +172,11 @@ public class WalletPresenterImpl implements WalletPresenter {
     }
 
     @Override
-    public void start()
-    {
-        currency=preferenceHelperDataSource.getCurrencySymbol();
+    public void start() {
+        currency = preferenceHelperDataSource.getCurrencySymbol();
 
-        String amt=mActivity.getString(R.string.Amount)+" ("+currency+")";
-        mView.setFixedAmount(amt,"","");
+        String amt = mActivity.getString(R.string.Amount) + " (" + currency + ")";
+        mView.setFixedAmount(amt, "", "");
 
     }
 
@@ -127,12 +190,11 @@ public class WalletPresenterImpl implements WalletPresenter {
     }
 
 
-    private void mGetCard()
-    {
+    private void mGetCard() {
         mView.showProgress();
-        String token= ((MyApplication) mActivity.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID());
+        String token = ((MyApplication) mActivity.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID());
 
-        Observable<Response<ResponseBody>> observable= service.getCard(token,preferenceHelperDataSource.getLanguage());
+        Observable<Response<ResponseBody>> observable = service.getCard(token, preferenceHelperDataSource.getLanguage());
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<ResponseBody>>() {
@@ -146,35 +208,29 @@ public class WalletPresenterImpl implements WalletPresenter {
                     public void onNext(Response<ResponseBody> responseBodyResponse) {
 
                         mView.hideProgress();
-                        Utility.printLog("get card "+responseBodyResponse.code());
-                        String message="";
-                        try
-                        {
-                            JSONObject object=new JSONObject(responseBodyResponse.errorBody().string());
-                            if(object.has("message"))
-                            {
-                                message=object.getString("message");
+                        Utility.printLog("get card " + responseBodyResponse.code());
+                        String message = "";
+                        try {
+                            JSONObject object = new JSONObject(responseBodyResponse.errorBody().string());
+                            if (object.has("message")) {
+                                message = object.getString("message");
                             }
 
-                        }catch (JSONException|NullPointerException|IOException e)
-                        {}
-                        switch (responseBodyResponse.code())
-                        {
+                        } catch (JSONException | NullPointerException | IOException e) {
+                        }
+                        switch (responseBodyResponse.code()) {
                             case 200:
-                                try
-                                {
-                                    String result=responseBodyResponse.body().string();
-                                    JSONObject object=new JSONObject(result);
+                                try {
+                                    String result = responseBodyResponse.body().string();
+                                    JSONObject object = new JSONObject(result);
 
-                                    if(object.has("data") && object.get("data")!=null)
-                                    {
+                                    if (object.has("data") && object.get("data") != null) {
                                         Gson gson = new Gson();
                                         PaymentResponse paymentResponse = gson.fromJson(result, PaymentResponse.class);
                                         mView.setPaymentCardsList(paymentResponse.getData().getCards());
                                     }
 
-                                }catch (JSONException |NullPointerException|IOException e)
-                                {
+                                } catch (JSONException | NullPointerException | IOException e) {
                                     e.printStackTrace();
                                 }
 
@@ -212,146 +268,133 @@ public class WalletPresenterImpl implements WalletPresenter {
     }
 
 
-    private void mGetWalletApi()
-    {
+    private void mGetWalletApi() {
 
         mView.showProgress();
 
-            Observable<Response<ResponseBody>> bad=service.getWalletApi( ((MyApplication) mActivity.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),preferenceHelperDataSource.getLanguage());
+        Observable<Response<ResponseBody>> bad = service.getWalletApi(((MyApplication) mActivity.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()), preferenceHelperDataSource.getLanguage());
 
-            bad.subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<Response<ResponseBody>>() {
-                        @Override
-                        public void onSubscribe(Disposable d) {
-                            compositeDisposable.add(d);
-                        }
-                        @Override
-                        public void onNext(Response<ResponseBody> value)
-                        {
-                            mView.hideProgress();
+        bad.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<ResponseBody>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        compositeDisposable.add(d);
+                    }
 
-                            String message="";
-                            try
-                            {
-                                JSONObject object=new JSONObject(value.errorBody().string());
-                                if(object.has("message"))
-                                {
-                                    message=object.getString("message");
-                                }
+                    @Override
+                    public void onNext(Response<ResponseBody> value) {
+                        mView.hideProgress();
 
-                            }catch (JSONException |NullPointerException|IOException e)
-                            {}
-                            switch (value.code())
-                            {
-                                case 200:
-                                    JSONObject object = null;
-                                    try
-                                    {
-                                        String result=value.body().string();
-                                        object=new JSONObject(result);
-                                        if(object.has("data")&& object.getJSONObject("data")!=null)
-                                        {
-                                            AppConstants.WALLET_AVAILABLE=true;
-
-                                            currency=object.getJSONObject("data").getString("currencySymbol");
-                                            double walletBalance= Double.parseDouble( object.getJSONObject("data").opt("walletBalance").toString());
-                                            AppConstants.WALLET_AMOUNT=Utility.currencyFormat(walletBalance+"");
-                                            mView.setTotalBalance(currency+" "+AppConstants.WALLET_AMOUNT);
-
-                                            double softLimit= Double.parseDouble( object.getJSONObject("data").opt("walletSoftLimit").toString());
-                                            double hardLimit= Double.parseDouble( object.getJSONObject("data").opt("walletHardLimit").toString());
-
-                                            mView.setLimitAmount(currency+" "+Utility.currencyFormat(softLimit+""),currency+" "+Utility.currencyFormat(hardLimit+""));
-
-                                        }
-
-                                    } catch (ClassCastException e)
-                                    {
-                                        try {
-                                            if(object!= null && object.has("data")&& object.getJSONObject("data")!=null)
-                                            {
-                                                AppConstants.WALLET_AVAILABLE=true;
-
-                                                double walletBalance=  Double.parseDouble(object.getJSONObject("data").opt("walletBalance").toString());
-
-                                                AppConstants.WALLET_AMOUNT=Utility.currencyFormat(walletBalance+"");
-                                                mView.setTotalBalance(currency+" "+AppConstants.WALLET_AMOUNT);
-
-                                                try {
-                                                    double softLimit= Double.parseDouble( object.getJSONObject("data").opt("walletSoftLimit").toString());
-                                                    double hardLimit= Double.parseDouble( object.getJSONObject("data").opt("walletHardLimit").toString());
-                                                    mView.setLimitAmount(currency+" "+Utility.currencyFormat(softLimit+""),currency+" "+Utility.currencyFormat(hardLimit+""));
-                                                }catch (ClassCastException e1){
-                                                    int softLimit= Integer.parseInt( object.getJSONObject("data").opt("walletSoftLimit").toString());
-                                                    int hardLimit= Integer.parseInt( object.getJSONObject("data").opt("walletHardLimit").toString());
-                                                    mView.setLimitAmount(currency+" "+Utility.currencyFormat(softLimit+""),currency+" "+Utility.currencyFormat(hardLimit+""));
-                                                }
-
-                                            }
-                                        } catch (JSONException e1) {
-                                            e1.printStackTrace();
-                                        }
-                                    }
-                                    catch (Exception  e)
-                                    {
-                                        AppConstants.WALLET_AMOUNT="0.00";
-
-                                        mView.setTotalBalance( currency+" "+AppConstants.WALLET_AMOUNT);
-
-                                        e.printStackTrace();
-                                    }
-
-                                    break;
-
-                                case 404:
-                                    AppConstants.WALLET_AVAILABLE=true;
-                                    AppConstants.WALLET_AMOUNT="0.00";
-
-                                    mView.setTotalBalance(currency+" "+AppConstants.WALLET_AMOUNT);
-                                    break;
-
-
-
-                                case 498:
-
-                                    break;
-
-                                case 440:
-
-                                    break;
-
-
-                                default:
-                                    break;
+                        String message = "";
+                        try {
+                            JSONObject object = new JSONObject(value.errorBody().string());
+                            if (object.has("message")) {
+                                message = object.getString("message");
                             }
 
+                        } catch (JSONException | NullPointerException | IOException e) {
                         }
-                        @Override
-                        public void onError(Throwable e)
-                        {
-                            mView.hideProgress();
+                        switch (value.code()) {
+                            case 200:
+                                JSONObject object = null;
+                                try {
+                                    String result = value.body().string();
+                                    object = new JSONObject(result);
+                                    if (object.has("data") && object.getJSONObject("data") != null) {
+                                        AppConstants.WALLET_AVAILABLE = true;
 
-                            e.printStackTrace();
+                                        currency = object.getJSONObject("data").getString("currencySymbol");
+                                        double walletBalance = Double.parseDouble(object.getJSONObject("data").opt("walletBalance").toString());
+                                        AppConstants.WALLET_AMOUNT = Utility.currencyFormat(walletBalance + "");
+                                        mView.setTotalBalance(currency + " " + AppConstants.WALLET_AMOUNT);
+
+                                        double softLimit = Double.parseDouble(object.getJSONObject("data").opt("walletSoftLimit").toString());
+                                        double hardLimit = Double.parseDouble(object.getJSONObject("data").opt("walletHardLimit").toString());
+
+                                        mView.setLimitAmount(currency + " " + Utility.currencyFormat(softLimit + ""), currency + " " + Utility.currencyFormat(hardLimit + ""));
+
+                                    }
+
+                                } catch (ClassCastException e) {
+                                    try {
+                                        if (object != null && object.has("data") && object.getJSONObject("data") != null) {
+                                            AppConstants.WALLET_AVAILABLE = true;
+
+                                            double walletBalance = Double.parseDouble(object.getJSONObject("data").opt("walletBalance").toString());
+
+                                            AppConstants.WALLET_AMOUNT = Utility.currencyFormat(walletBalance + "");
+                                            mView.setTotalBalance(currency + " " + AppConstants.WALLET_AMOUNT);
+
+                                            try {
+                                                double softLimit = Double.parseDouble(object.getJSONObject("data").opt("walletSoftLimit").toString());
+                                                double hardLimit = Double.parseDouble(object.getJSONObject("data").opt("walletHardLimit").toString());
+                                                mView.setLimitAmount(currency + " " + Utility.currencyFormat(softLimit + ""), currency + " " + Utility.currencyFormat(hardLimit + ""));
+                                            } catch (ClassCastException e1) {
+                                                int softLimit = Integer.parseInt(object.getJSONObject("data").opt("walletSoftLimit").toString());
+                                                int hardLimit = Integer.parseInt(object.getJSONObject("data").opt("walletHardLimit").toString());
+                                                mView.setLimitAmount(currency + " " + Utility.currencyFormat(softLimit + ""), currency + " " + Utility.currencyFormat(hardLimit + ""));
+                                            }
+
+                                        }
+                                    } catch (JSONException e1) {
+                                        e1.printStackTrace();
+                                    }
+                                } catch (Exception e) {
+                                    AppConstants.WALLET_AMOUNT = "0.00";
+
+                                    mView.setTotalBalance(currency + " " + AppConstants.WALLET_AMOUNT);
+
+                                    e.printStackTrace();
+                                }
+
+                                break;
+
+                            case 404:
+                                AppConstants.WALLET_AVAILABLE = true;
+                                AppConstants.WALLET_AMOUNT = "0.00";
+
+                                mView.setTotalBalance(currency + " " + AppConstants.WALLET_AMOUNT);
+                                break;
+
+
+                            case 498:
+
+                                break;
+
+                            case 440:
+
+                                break;
+
+
+                            default:
+                                break;
                         }
-                        @Override
-                        public void onComplete() {
 
-                        }
-                    });
-        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.hideProgress();
+
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
 
 
-
-    private void mAddMoneyApi(String cardId)
-    {
-        if(isNetworkAvailable())
-        {
+    private void mAddMoneyApi(String orderID) {
+        if (isNetworkAvailable()) {
             mView.showProgress();
 
 
-            Observable<Response<ResponseBody>> bad=service.addWalletApi( ((MyApplication) mActivity.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),
-                    preferenceHelperDataSource.getLanguage(),cardId,walletAmt);
+            Observable<Response<ResponseBody>> bad = service.addWalletApi(((MyApplication) mActivity.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),
+                    preferenceHelperDataSource.getLanguage(),orderID,walletAmt);
 
             bad.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -360,39 +403,34 @@ public class WalletPresenterImpl implements WalletPresenter {
                         public void onSubscribe(Disposable d) {
                             compositeDisposable.add(d);
                         }
+
                         @Override
-                        public void onNext(Response<ResponseBody> value)
-                        {
+                        public void onNext(Response<ResponseBody> value) {
                             mView.hideProgress();
 
-                            String message="";
-                            try
-                            {
-                                JSONObject object=new JSONObject(value.errorBody().string());
-                                if(object.has("message"))
-                                {
+                            String message = "";
+                            try {
+                                JSONObject object = new JSONObject(value.errorBody().string());
+                                if (object.has("message")) {
 
-                                    message=object.getString("message");
-                                    Utility.printLog("amt message err "+message.toString());
+                                    message = object.getString("message");
+                                    Utility.printLog("amt message err " + message.toString());
 
                                 }
 
-                            }catch (JSONException |NullPointerException|IOException e)
-                            {}
-                            switch (value.code())
-                            {
+                            } catch (JSONException | NullPointerException | IOException e) {
+                            }
+                            switch (value.code()) {
                                 case 200:
-                                    try
-                                    {
-                                        String result=value.body().string();
-                                        JSONObject object=new JSONObject(result);
-                                        Utility.printLog("amt added "+object.toString());
+                                    try {
+                                        String result = value.body().string();
+                                        JSONObject object = new JSONObject(result);
+                                        Utility.printLog("amt added " + object.toString());
                                         callApi();
                                         mView.showSuccessAlert();
 
 
-                                    } catch (Exception  e)
-                                    {
+                                    } catch (Exception e) {
                                         e.printStackTrace();
                                     }
 
@@ -413,13 +451,14 @@ public class WalletPresenterImpl implements WalletPresenter {
                             }
 
                         }
+
                         @Override
-                        public void onError(Throwable e)
-                        {
+                        public void onError(Throwable e) {
                             mView.hideProgress();
 
                             e.printStackTrace();
                         }
+
                         @Override
                         public void onComplete() {
 

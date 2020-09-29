@@ -23,4 +23,5 @@ public interface WalletView  extends BaseView
     void onError(String msg);
     void startAddCardAct();
     void showSuccessAlert();
+    void callCashFree(String orderId, String orderNote, String stage, String appId, String token, String finalTotal, String name, String phone, String email);
 }

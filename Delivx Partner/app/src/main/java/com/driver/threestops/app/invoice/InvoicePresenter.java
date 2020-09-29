@@ -13,7 +13,7 @@ import com.driver.threestops.data.source.PreferenceHelperDataSource;
 import com.driver.threestops.login.LoginActivity;
 import com.driver.threestops.login.language.LanguagesList;
 import com.driver.threestops.service.LocationUpdateService;
- import com.driver.Threestops.BuildConfig;
+import com.driver.Threestops.BuildConfig;
 import com.driver.Threestops.R;
 import com.driver.threestops.networking.DispatcherService;
 import com.driver.threestops.pojo.AssignedAppointments;
@@ -42,24 +42,27 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
-public class InvoicePresenter implements InvoiceContract.PresenterOpetaions
-{
+public class InvoicePresenter implements InvoiceContract.PresenterOpetaions {
 
-    @Inject InvoiceContract.ViewOpetaions view;
-    @Inject Activity context;
-    @Inject Upload_file_AmazonS3 amazonS3;
-    @Inject PreferenceHelperDataSource preferenceHelperDataSource;
-    @Inject DispatcherService dispatcherService;
+    @Inject
+    InvoiceContract.ViewOpetaions view;
+    @Inject
+    Activity context;
+    @Inject
+    Upload_file_AmazonS3 amazonS3;
+    @Inject
+    PreferenceHelperDataSource preferenceHelperDataSource;
+    @Inject
+    DispatcherService dispatcherService;
 
     private AssignedAppointments appointments;
     private Bitmap signBitmap;
     private File takenNewSignature;
     private String newSignatureName;
-    private String signatureUrl="";
+    private String signatureUrl = "";
 
     @Inject
-    InvoicePresenter()
-    {
+    InvoicePresenter() {
     }
 
 
@@ -70,19 +73,19 @@ public class InvoicePresenter implements InvoiceContract.PresenterOpetaions
 
     @Override
     public void setActionBarTitle() {
-        view.setTitle(context.getResources().getString(R.string.delivery_completed),appointments.getBid());
+        view.setTitle(context.getResources().getString(R.string.delivery_completed), appointments.getBid());
     }
 
     @Override
     public void getBundleData(Bundle bundle) {
-        if(bundle!=null && bundle.containsKey("data")){
-            appointments= (AssignedAppointments) bundle.getSerializable("data");
+        if (bundle != null && bundle.containsKey("data")) {
+            appointments = (AssignedAppointments) bundle.getSerializable("data");
             newSignatureName = appointments.getBid() + ".jpg";
 
-            double bill= Double.parseDouble(appointments.getTotalAmount());
-            double cash=Double.parseDouble(appointments.getCashCollect());
-            double wallet=bill-cash;
-            view.setViews(appointments.getCurrencySymbol()+" "+String.format(Locale.US,"%.2f",bill),appointments,appointments.getCurrencySymbol()+" "+Utility.currencyFormat(cash+""),appointments.getCurrencySymbol()+" "+Utility.currencyFormat(wallet+""));
+            double bill = Double.parseDouble(appointments.getTotalAmount());
+            double cash = Double.parseDouble(appointments.getCashCollect());
+            double wallet = bill - cash;
+            view.setViews(appointments.getCurrencySymbol() + " " + String.format(Locale.US, "%.2f", bill), appointments, appointments.getCurrencySymbol() + " " + Utility.currencyFormat(cash + ""), appointments.getCurrencySymbol() + " " + Utility.currencyFormat(wallet + ""));
         }
     }
 
@@ -98,13 +101,13 @@ public class InvoicePresenter implements InvoiceContract.PresenterOpetaions
 
     @Override
     public void onSigned(Bitmap signBitmap) {
-        this.signBitmap=signBitmap;
-        signatureUrl="";
+        this.signBitmap = signBitmap;
+        signatureUrl = "";
     }
 
     @Override
     public void onSignatureApprove() {
-        if(signBitmap!=null){
+        if (signBitmap != null) {
             createFile();
             uploadToAmazon();
         }
@@ -119,8 +122,8 @@ public class InvoicePresenter implements InvoiceContract.PresenterOpetaions
     @Override
     public void completeBooking(float rating) {
 
-        Utility.printLog("rating is : "+rating);
-        if(!signatureUrl.isEmpty())
+        Utility.printLog("rating is : " + rating);
+        if (!signatureUrl.isEmpty())
             updateBookingStatus(rating);
         else
             view.onError(context.getResources().getString(R.string.please_signature));
@@ -155,8 +158,9 @@ public class InvoicePresenter implements InvoiceContract.PresenterOpetaions
     /**
      * <h2>saveBitmapToJPG</h2>
      * <p>signature image saving in JPG format</p>
+     *
      * @param bitmap : signature image resource
-     * @param photo : image
+     * @param photo  : image
      * @throws IOException : handling exception
      */
     public void saveBitmapToJPG(Bitmap bitmap, File photo) throws IOException {
@@ -173,16 +177,16 @@ public class InvoicePresenter implements InvoiceContract.PresenterOpetaions
      * <h2>uploadToAmazon</h2>
      * <p>uploading the image to amazon site </p>
      */
-    public void uploadToAmazon(){
+    public void uploadToAmazon() {
         view.showProgress();
         String BUCKETSUBFOLDER = VariableConstant.SIGNATURE_UPLOAD;
 
-        amazonS3.Upload_data(BuildConfig.BUCKET_NAME, BUCKETSUBFOLDER  + takenNewSignature.getName(), takenNewSignature, new Upload_file_AmazonS3.Upload_CallBack() {
+        amazonS3.Upload_data(BuildConfig.BUCKET_NAME, BUCKETSUBFOLDER + takenNewSignature.getName(), takenNewSignature, new Upload_file_AmazonS3.Upload_CallBack() {
             @Override
             public void sucess(String url) {
                 view.hideProgress();
                 Log.d("UploadUrl", url);
-                signatureUrl=url;
+                signatureUrl = url;
                 view.onSignatureApprove(signBitmap);
 
             }
@@ -190,7 +194,7 @@ public class InvoicePresenter implements InvoiceContract.PresenterOpetaions
             @Override
             public void sucess(String url, String type) {
                 view.hideProgress();
-                signatureUrl=url;
+                signatureUrl = url;
                 view.onSignatureApprove(signBitmap);
             }
 
@@ -205,20 +209,21 @@ public class InvoicePresenter implements InvoiceContract.PresenterOpetaions
     /**
      * <h2>updateBookingStatus</h2>
      * <p>API call for updating the Booking status</p>
+     *
      * @param rating : rating (number of stars)
      */
     private void updateBookingStatus(float rating) {
-        if(view!=null){
+        if (view != null) {
             view.showProgress();
         }
-        Observable<Response<ResponseBody>> bookingStatusRide=dispatcherService.bookingStatusRide(
+        Observable<Response<ResponseBody>> bookingStatusRide = dispatcherService.bookingStatusRide(
                 preferenceHelperDataSource.getLanguage(),
                 ((MyApplication) context.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),
                 appointments.getBid(),
                 AppConstants.BookingStatus.Done,
                 preferenceHelperDataSource.getDriverCurrentLat(),
                 preferenceHelperDataSource.getDriverCurrentLongi(),
-                "1000",signatureUrl, String.valueOf(rating),null,null,null,"","a");
+                "1000", signatureUrl, String.valueOf(rating), null, null, null, "", "a");
 
 
         bookingStatusRide.observeOn(AndroidSchedulers.mainThread())
@@ -232,7 +237,7 @@ public class InvoicePresenter implements InvoiceContract.PresenterOpetaions
                     @Override
                     public void onNext(Response<ResponseBody> value) {
 
-                        if(view!=null){
+                        if (view != null) {
                             view.hideProgress();
                         }
                         try {
@@ -240,20 +245,19 @@ public class InvoicePresenter implements InvoiceContract.PresenterOpetaions
                             switch (value.code()) {
                                 //success
                                 case 200:
-                                    jsonObject=new JSONObject(value.body().string());
+                                    jsonObject = new JSONObject(value.body().string());
                                     view.onSuccess(appointments);
                                     break;
                                 case 440:
                                 case 498:
-                                    Utility.printLog("pushTopics shared pref "+preferenceHelperDataSource.getPushTopic());
-                                    Utility.subscribeOrUnsubscribeTopics(new JSONArray(preferenceHelperDataSource.getPushTopic()),false);
+                                    Utility.printLog("pushTopics shared pref " + preferenceHelperDataSource.getPushTopic());
+                                    Utility.subscribeOrUnsubscribeTopics(new JSONArray(preferenceHelperDataSource.getPushTopic()), false);
                                     LanguagesList languagesList = preferenceHelperDataSource.getLanguageSettings();
                                     preferenceHelperDataSource.clearSharedPredf();
                                     preferenceHelperDataSource.setLanguageSettings(languagesList);
-                                    ((MyApplication)context.getApplicationContext()).disconnectMqtt();
+                                    ((MyApplication) context.getApplicationContext()).disconnectMqtt();
                                     context.startActivity(new Intent(context, LoginActivity.class));
-                                    if(Utility.isMyServiceRunning(LocationUpdateService.class, context))
-                                    {
+                                    if (Utility.isMyServiceRunning(LocationUpdateService.class, context)) {
                                         Intent stopIntent = new Intent(context, LocationUpdateService.class);
                                         stopIntent.setAction(AppConstants.ACTION.STOPFOREGROUND_ACTION);
                                         context.startService(stopIntent);
@@ -261,20 +265,19 @@ public class InvoicePresenter implements InvoiceContract.PresenterOpetaions
 
                                     break;
                                 default:
-                                    jsonObject=new JSONObject(value.errorBody().string());
+                                    jsonObject = new JSONObject(value.errorBody().string());
                                     break;
                             }
-                            Utility.printLog("bookingStatusRide : "+jsonObject.toString());
+                            Utility.printLog("bookingStatusRide : " + jsonObject.toString());
 
-                        }catch (Exception e)
-                        {
-                            Utility.printLog("bookingStatusRide : Catch :"+e.getMessage());
+                        } catch (Exception e) {
+                            Utility.printLog("bookingStatusRide : Catch :" + e.getMessage());
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        if(view!=null){
+                        if (view != null) {
                             view.hideProgress();
                         }
 
@@ -282,7 +285,7 @@ public class InvoicePresenter implements InvoiceContract.PresenterOpetaions
 
                     @Override
                     public void onComplete() {
-                        if(view!=null){
+                        if (view != null) {
                             view.hideProgress();
                         }
                     }

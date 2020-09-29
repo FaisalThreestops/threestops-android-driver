@@ -311,7 +311,7 @@ public interface NetworkService {
     @FormUrlEncoded
     Observable<Response<ResponseBody>> addWalletApi(@Header("authorization") String authorization,
         @Header("language") String language,
-        @Field("cardId") String cardId,
+        @Field("orderId") String orderId,
         @Field("amount") double amount);
 
     @PATCH("voucher")
@@ -338,6 +338,46 @@ public interface NetworkService {
     Observable<Response<ResponseBody>> makeDefaultCard(@Header("authorization") String authorization,
         @Header("language") String language,
         @Field("cardId") String cardId);
+
+    // CASHFREE
+
+    @POST("/customer/getCashFreeToken")
+    @FormUrlEncoded
+    Observable<Response<ResponseBody>> getCashFreeToken(
+            @Header("authorization") String authorization,
+            @Header("language") String language,
+            @Field("amount") String amount
+    );
+
+    @GET("driver/getBankDetails")
+    Observable<Response<ResponseBody>> getBankDetails (@Header("authorization")String authorization,
+                                                       @Header("language")String language);
+
+    @POST("driver/bankDetailValidation")
+    @FormUrlEncoded
+    Observable<Response<ResponseBody>> bankDetailValidation (@Header("authorization")String authorization,
+                                                             @Header("language")String language,
+                                                             @Field("name")String name,
+                                                             @Field("phone")String phone,
+                                                             @Field("bankAccount")String bankAccount,
+                                                             @Field("ifsc")String ifsc);
+
+    @POST("driver/addBankDetails")
+    @FormUrlEncoded
+    Observable<Response<ResponseBody>> addBankDetails (@Header("authorization")String authorization,
+                                                       @Header("language")String language,
+                                                       @Field("bankAccount")String bankAccount,
+                                                       @Field("ifsc")String ifsc,
+                                                       @Field("address")String address,
+                                                       @Field("city")String city,
+                                                       @Field("state")String state,
+                                                       @Field("pincode")String pincode);
+
+    @HTTP(method = "DELETE", path = "driver/deleteBankDetails", hasBody = true)
+    @FormUrlEncoded
+    Observable<Response<ResponseBody>> deleteBankAccount(@Header("authorization") String authToken,
+                                                         @Header("language") String language,
+                                                         @Field("beneId") String beneId);
 
     @GET("zendesk/user/ticket/{emailId}")
     Observable<Response<ResponseBody>> onToGetZendeskTicket(@Header("authorization") String authorization,
@@ -373,7 +413,6 @@ public interface NetworkService {
     Observable<Response<ResponseBody>> uploadImage(@Field("image") File image,
                                                              @Field("type") String type,
                                                              @Field("res") String res);
-
 
 }
 

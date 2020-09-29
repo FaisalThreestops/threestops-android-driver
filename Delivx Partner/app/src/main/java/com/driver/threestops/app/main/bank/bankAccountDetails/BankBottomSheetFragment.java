@@ -7,6 +7,8 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.driver.threestops.app.main.bank.stripe.GetBankData;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -29,7 +31,7 @@ public class BankBottomSheetFragment extends BottomSheetDialogFragment implement
 
     private static final String PARAM1 = "param1";
     private static final String PARAM2 = "param2";
-    BankList bankData;
+    GetBankData bankData;
     BankDetailsRVA.RefreshBankDetails refreshBankDetails;
     private Typeface fontRegular, fontLight;
     private ProgressDialog pDialog;
@@ -44,7 +46,7 @@ public class BankBottomSheetFragment extends BottomSheetDialogFragment implement
 
     }
 
-    public static BankBottomSheetFragment newInstance(BankList bankData, BankDetailsRVA.RefreshBankDetails refreshBankDetails) {
+    public static BankBottomSheetFragment newInstance(GetBankData bankData, BankDetailsRVA.RefreshBankDetails refreshBankDetails) {
         BankBottomSheetFragment fragment = new BankBottomSheetFragment();
         Bundle args = new Bundle();
         args.putSerializable(PARAM1, bankData);
@@ -58,7 +60,7 @@ public class BankBottomSheetFragment extends BottomSheetDialogFragment implement
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            bankData = (BankList) getArguments().getSerializable(PARAM1);
+            bankData = (GetBankData) getArguments().getSerializable(PARAM1);
             refreshBankDetails = (BankDetailsRVA.RefreshBankDetails) getArguments().getSerializable(PARAM2);
         }
 
@@ -132,12 +134,12 @@ public class BankBottomSheetFragment extends BottomSheetDialogFragment implement
 
         if(bankData!=null)
         {
-            tvAccountHolder.setText(bankData.getAccount_holder_name());
-            tvAccountNo.setText("xxxxxxxx"+bankData.getLast4());
-            tvRoutinNo.setText(bankData.getRouting_number());
-            tvBankName.setText(bankData.getBank_name());
-            tvCurrency.setText(bankData.getCurrency());
-            tvCountry.setText(bankData.getCountry());
+            String subStr = bankData.getBankAccount();
+            tvAccountHolder.setText(bankData.getName());
+            tvAccountNo.setText("xxxxxxxx"+subStr.substring(10, subStr.length()));
+            tvRoutinNo.setText(bankData.getStatus());
+            tvBankName.setText(bankData.getEmail());
+            tvCountry.setText(bankData.getPhone());
 
         }
         else
@@ -150,7 +152,7 @@ public class BankBottomSheetFragment extends BottomSheetDialogFragment implement
             public void onClick(View v) {
                 try {
                     JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("id",bankData.getId());
+//                    jsonObject.put("id",bankData.getId());
 
                     bankBottomSheetPresenter.makeDefault(sessionManager.getSessionToken(),jsonObject);
                 }
@@ -166,7 +168,7 @@ public class BankBottomSheetFragment extends BottomSheetDialogFragment implement
             public void onClick(View v) {
                 try {
                     JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("id",bankData.getId());
+//                    jsonObject.put("id",bankData.getId());
                     bankBottomSheetPresenter.deleteAccount(sessionManager.getSessionToken(),jsonObject);
                 }
                 catch (Exception e)

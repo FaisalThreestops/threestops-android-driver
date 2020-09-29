@@ -345,6 +345,11 @@
     <string name="enterAccountNo">Enter Account No</string>
     <string name="enterRoutinNo">Routing number should be 9 digits</string>
     <string name="enterAccountHoldername">Enter Account Holder Name</string>
+    <string name="enterAccountHolderPhoneNumber">Enter Account Holder Phone Number</string>
+    <string name="enterAddressBank">Enter Address</string>
+    <string name="enterCityBank">Enter City</string>
+    <string name="enterStateBank">Enter state</string>
+    <string name="enterPincodeBank">Enter Pincode</string>
     <string name="enterDob">Enter Dob</string>
     <string name="enterPersonalid">Enter SSN</string>
     <string name="enterState">Enter State</string>
@@ -434,7 +439,10 @@
     <string name="version">Version</string>
     <string name="live_chat">Live chat</string>
     <string name="OK">OK</string>
-    <string name="payUsingCard">Pay Using Card</string>
+    <string name="payUsing">Pay Using</string>
+    <string name="cashfree">Cashfree</string>
+    <string name="pincode">Pincode*</string>
+    <string name="ifsc_code">IFSC CODE*</string>
     <string name="confirmAndPay">Confirm &#38; Pay</string>
     <string name="current_credit">CURRENT CREDIT</string>
     <string name="softLimit">Soft Limit &#58; </string>
@@ -687,5 +695,6 @@
     <string name="take_Back_photo">Take Back Photo</string>
     <string name="take_front_photo">Take Front Photo</string>
 
+    <string name="phone_num_lower">Phone Number</string>
 
 </resources>

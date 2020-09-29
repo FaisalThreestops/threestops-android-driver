@@ -80,10 +80,10 @@ public class BankDetailsRVA extends RecyclerView.Adapter<BankDetailsRVA.ViewHold
 
         switch (v.getId())
         {
-            case R.id.llBankDetails:
-                BottomSheetDialogFragment bottomSheetDialogFragment = BankBottomSheetFragment.newInstance(bankLists.get(position),refreshBankDetails);
-                bottomSheetDialogFragment.show(fragmentManager, bottomSheetDialogFragment.getTag());
-                break;
+//            case R.id.llBankDetails:
+//                BottomSheetDialogFragment bottomSheetDialogFragment = BankBottomSheetFragment.newInstance(bankLists.get(position),refreshBankDetails);
+//                bottomSheetDialogFragment.show(fragmentManager, bottomSheetDialogFragment.getTag());
+//                break;
         }
     }
 
