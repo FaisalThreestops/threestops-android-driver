@@ -213,13 +213,11 @@ public class WalletAct extends DaggerAppCompatActivity implements WalletView, Vi
             @Override
             public void afterTextChanged(Editable editable) {
 
-                if (cardId != null && cardList.size() > 0) {
-                    payRl.setSelected(true);
-                }
                 if(addAmountEt.getText().toString().equals(""))
                 {
                     payRl.setSelected(false);
-
+                } else {
+                    payRl.setSelected(true);
                 }
 
             }

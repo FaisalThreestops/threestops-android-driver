@@ -3,6 +3,7 @@ package com.driver.threestops.app.main.bank.addBankAccount;
 import android.app.Activity;
 import android.content.Context;
 
+import com.driver.threestops.app.MyApplication;
 import com.driver.threestops.data.source.PreferenceHelperDataSource;
 import com.driver.threestops.networking.NetworkService;
 import com.driver.threestops.utility.TextUtil;
@@ -79,7 +80,7 @@ public class BankNewAccountPresenter implements BankNewAccountContract.BankNewAc
                                    String RoutingNo, String address, String city, String state, String pinCode) {
         view.showProgress();
         io.reactivex.Observable<Response<ResponseBody>> postExternalAccount = networkService.bankDetailValidation(
-                preferenceHelperDataSource.getToken(),
+                ((MyApplication) context.getApplicationContext()).getAuthToken(preferenceHelperDataSource.getDriverID()),
                 "en",
                 name, Phone, AccountNo, RoutingNo);
 
@@ -141,7 +142,7 @@ public class BankNewAccountPresenter implements BankNewAccountContract.BankNewAc
                                 String pinCode) {
         view.showProgress();
         io.reactivex.Observable<Response<ResponseBody>> postExternalAccount = networkService.addBankDetails(
-                preferenceHelperDataSource.getToken(),
+                ((MyApplication) context.getApplicationContext()).getAuthToken(preferenceHelperDataSource.getDriverID()),
                 preferenceHelperDataSource.getLanguage(),
                 accountNo, routingNo, address, city, state, pinCode);
 

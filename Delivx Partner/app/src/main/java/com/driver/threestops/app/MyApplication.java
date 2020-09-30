@@ -54,7 +54,6 @@ public class MyApplication extends DaggerApplication {
         super.onCreate();
         FacebookSdk.sdkInitialize(this);
         myApplication=this;
-        FirebaseApp.initializeApp(this);
         Utility.printLog(" preferenceHelperDataSource.getLanguageSettings() "+
                 preferenceHelperDataSource.getLanguageSettings());
         if (preferenceHelperDataSource.getLanguageSettings() == null)

@@ -376,6 +376,7 @@ public class LoginPresenterImpl implements LoginPresenter
 
         preferenceHelperDataSource.setDefaultBankAccount(data.getDefaultBankAccount());
         preferenceHelperDataSource.setCountry(data.getCountry());
+        preferenceHelperDataSource.setCountryCode(data.getCountryCode());
         preferenceHelperDataSource.setCurrency(data.getCurrency());
         preferenceHelperDataSource.setEnableBankAccount(data.getEnableBankAccount());
 

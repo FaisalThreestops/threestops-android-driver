@@ -3,6 +3,7 @@ package com.driver.threestops.wallet;
 import static com.driver.threestops.utility.AppConstants.WALLET_ACT;
 
 import android.app.Activity;
+import android.util.Log;
 
 import com.driver.threestops.app.MyApplication;
 import com.driver.threestops.data.source.PreferenceHelperDataSource;
@@ -101,7 +102,7 @@ public class WalletPresenterImpl implements WalletPresenter {
             DecimalFormat df2 = new DecimalFormat("#.##");
             String total = df2.format(Double.parseDouble(amt));
             if (isNetworkAvailable()) {
-                Observable<Response<ResponseBody>> bad = service.getCashFreeToken(preferenceHelperDataSource.getToken(),
+                Observable<Response<ResponseBody>> bad = service.getCashFreeToken(((MyApplication) mActivity.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),
                         preferenceHelperDataSource.getLanguage(),
                         total);
                 bad.subscribeOn(Schedulers.io())
@@ -128,8 +129,7 @@ public class WalletPresenterImpl implements WalletPresenter {
                                                     object.getJSONObject("data").getString("appId"),
                                                     object.getJSONObject("data").getString("token"),
                                                     total,
-                                                    preferenceHelperDataSource.getMyName(),
-                                                    preferenceHelperDataSource.getCountry() + "" + "9123456789",
+                                                    preferenceHelperDataSource.getMyName(),"9123456789",
                                                     preferenceHelperDataSource.getMyEmail()
                                             );
                                         } catch (Exception e) {

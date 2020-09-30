@@ -26,6 +26,7 @@ public class SigninData {
 
     private String defaultBankAccount;
     private String country;
+    private String countryCode;
     private String currency;
     private String cityId;
     private String enableBankAccount;
@@ -164,6 +165,14 @@ public class SigninData {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
     }
 
     public String getCurrency() {

@@ -341,7 +341,7 @@ public interface NetworkService {
 
     // CASHFREE
 
-    @POST("/customer/getCashFreeToken")
+    @POST("customer/getCashFreeToken")
     @FormUrlEncoded
     Observable<Response<ResponseBody>> getCashFreeToken(
             @Header("authorization") String authorization,

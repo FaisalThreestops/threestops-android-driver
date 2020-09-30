@@ -460,7 +460,18 @@ public class PreferencesHelper implements PreferenceHelperDataSource {
 
     @Override
     public String getCountry() {
-        return sharedPreferences.getString(PreferenceKeys.KeysEntry.COUNTRY,"IN");
+        return sharedPreferences.getString(PreferenceKeys.KeysEntry.COUNTRY_CODE,"IN");
+    }
+
+    @Override
+    public void setCountryCode(String countryCode) {
+        editor.putString(PreferenceKeys.KeysEntry.COUNTRY_CODE,countryCode);
+        editor.commit();
+    }
+
+    @Override
+    public String getCountryCode() {
+        return sharedPreferences.getString(PreferenceKeys.KeysEntry.COUNTRY,"+91");
     }
 
     @Override

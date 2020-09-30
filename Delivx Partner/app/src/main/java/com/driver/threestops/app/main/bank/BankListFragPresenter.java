@@ -93,9 +93,8 @@ public class BankListFragPresenter implements BankDetailscontract.PresenterOpera
      */
     private void getAccount() {
         view.showProgress();
-        Log.d("check", "getAccount: " + preferenceHelperDataSource.getToken());
         final Observable<Response<ResponseBody>> connectAccount = networkService.getBankDetails(
-                preferenceHelperDataSource.getToken(), preferenceHelperDataSource.getLanguage());
+                ((MyApplication) context.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()), preferenceHelperDataSource.getLanguage());
         connectAccount.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Response<ResponseBody>>() {
@@ -178,7 +177,7 @@ public class BankListFragPresenter implements BankDetailscontract.PresenterOpera
 //        Utility.printLog(""+preferenceHelperDataSource.getSessionToken());
         view.showProgress();
         io.reactivex.Observable<Response<ResponseBody>> getConnectAccount = networkService.deleteBankAccount(
-                preferenceHelperDataSource.getToken(), preferenceHelperDataSource.getLanguage(), beneId);
+                ((MyApplication) context.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()), preferenceHelperDataSource.getLanguage(), beneId);
 
         getConnectAccount.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())

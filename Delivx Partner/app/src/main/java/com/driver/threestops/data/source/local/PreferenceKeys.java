@@ -43,6 +43,7 @@ public class PreferenceKeys
         public static final String EMAIL="email";
         public static final String BANK_ACCOUT = "BANK_ACCOUT";
         public static final String COUNTRY = "COUNTRY";
+        public static final String COUNTRY_CODE = "COUNTRY_CODE";
         public static final String CURRENCY = "CURRENCY";
         public static final String ENABLE_BANK_ACCCOUNT = "enableBankAccount";
         public static final String CITY_ID ="CITY_ID" ;
