@@ -341,17 +341,5 @@ public class MainPresenterImpl implements MainPresenter {
         view.setLanguageSuccess();
     }
 
-    @Override
-    public void getBundleData(Intent intent) {
-        try {
-            if (intent != null) {
-                String response = intent.getExtras().getString("booking_Data");
-                Log.d("response", "getBundleData: MainPresenter " + response);
-                if (response != null)
-                    view.bookingPopUp(response);
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
+
 }

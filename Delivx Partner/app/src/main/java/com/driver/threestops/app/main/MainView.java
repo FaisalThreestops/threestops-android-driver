@@ -71,5 +71,5 @@ public interface MainView extends BaseView
      */
     void setLanguageSuccess();
 
-    void bookingPopUp(String response);
+
 }

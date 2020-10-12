@@ -52,7 +52,7 @@ public class SplashScreen extends DaggerAppCompatActivity {
                     }
                 });
 */
-        getBundleData(getIntent().getExtras());
+     //  getBundleData(getIntent().getExtras());
         /*
          * Showing splash screen with a timer. For showing app logo
          */
@@ -65,19 +65,7 @@ public class SplashScreen extends DaggerAppCompatActivity {
         //initializeViews();
     }
 
-    private void getBundleData(Bundle bundle) {
-        try {
-            if (bundle != null) {
-                response = bundle.getString("booking_Data");
-                Log.d("response", "getBundleData: splashscreen " + response);
-       /* if(response!=null){
-            this.bundle=bundle;
-        }*/
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 
     /**
      * <h2>checkConfiguration</h2>

@@ -61,5 +61,5 @@ public interface MainPresenter {
      */
     void languageChanged(String langCode, String langName);
 
-    void getBundleData(Intent intent);
+
 }
