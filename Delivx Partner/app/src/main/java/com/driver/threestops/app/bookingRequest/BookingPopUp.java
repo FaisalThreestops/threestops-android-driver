@@ -19,6 +19,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.app.NotificationManagerCompat;
+
 import com.driver.threestops.app.main.MainActivity;
 import com.driver.threestops.data.source.PreferenceHelperDataSource;
 import com.driver.threestops.utility.VariableConstant;
@@ -192,8 +194,7 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
     @Override
     protected void onPause() {
         super.onPause();
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.cancelAll();
+        NotificationManagerCompat.from(this).cancelAll();
         unregisterReceiver(mOrderUpdateReceiver);
     }
 
@@ -218,7 +219,7 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
 
     @Override
     public void onSuccess(String msg) {
-
+        NotificationManagerCompat.from(this).cancelAll();
     }
 
     @Override
@@ -255,6 +256,7 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
         if(mediaPlayer!=null && mediaPlayer.isPlaying()){
             mediaPlayer.stop();
         }
+        NotificationManagerCompat.from(this).cancelAll();
         IS_POP_UP_OPEN=false;
         Intent intent=new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);

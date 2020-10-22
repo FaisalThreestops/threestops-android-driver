@@ -2,9 +2,6 @@ package com.driver.threestops.adapter;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +9,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.driver.threestops.app.main.bank.bankAccountDetails.BankBottomSheetFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.driver.Threestops.R;
 import com.driver.threestops.pojo.bank.BankList;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
 
 
 public class BankDetailsRVA extends RecyclerView.Adapter<BankDetailsRVA.ViewHolder> implements View.OnClickListener {
@@ -29,8 +27,7 @@ public class BankDetailsRVA extends RecyclerView.Adapter<BankDetailsRVA.ViewHold
     private RefreshBankDetails refreshBankDetails;
     private FragmentManager fragmentManager;
 
-    public BankDetailsRVA(Context context, ArrayList<BankList> bankLists, FragmentManager fragmentManager, RefreshBankDetails refreshBankDetails)
-    {
+    public BankDetailsRVA(Context context, ArrayList<BankList> bankLists, FragmentManager fragmentManager, RefreshBankDetails refreshBankDetails) {
         this.bankLists = bankLists;
         fontRegular = Typeface.createFromAsset(context.getAssets(), "fonts/ClanPro-NarrMedium.otf");
         fontLight = Typeface.createFromAsset(context.getAssets(), "fonts/ClanPro-NarrNews.otf");
@@ -45,20 +42,16 @@ public class BankDetailsRVA extends RecyclerView.Adapter<BankDetailsRVA.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position)
-    {
-        holder.tvAccountNo.setText("xxxxxxxx"+ bankLists.get(position).getLast4());
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.tvAccountNo.setText("xxxxxxxx" + bankLists.get(position).getLast4());
         holder.tvAccountHolder.setText(bankLists.get(position).getAccount_holder_name());
 
         /*
         change to default account when we get the proper responce
         * */
-        if(position==0)
-        {
+        if (position == 0) {
 //            holder.ivCheck.setVisibility(View.VISIBLE);
-        }
-        else
-        {
+        } else {
 //            holder.ivCheck.setVisibility(View.INVISIBLE);
         }
 
@@ -73,13 +66,11 @@ public class BankDetailsRVA extends RecyclerView.Adapter<BankDetailsRVA.ViewHold
     }
 
     @Override
-    public void onClick(View v)
-    {
+    public void onClick(View v) {
         ViewHolder viewHolder = (ViewHolder) v.getTag();
         int position = viewHolder.getAdapterPosition();
 
-        switch (v.getId())
-        {
+        switch (v.getId()) {
 //            case R.id.llBankDetails:
 //                BottomSheetDialogFragment bottomSheetDialogFragment = BankBottomSheetFragment.newInstance(bankLists.get(position),refreshBankDetails);
 //                bottomSheetDialogFragment.show(fragmentManager, bottomSheetDialogFragment.getTag());
@@ -91,14 +82,12 @@ public class BankDetailsRVA extends RecyclerView.Adapter<BankDetailsRVA.ViewHold
         void onRefresh();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder
-    {
+    class ViewHolder extends RecyclerView.ViewHolder {
         ImageView ivCheck;
         TextView tvAccountNoLabel, tvAccountNo, tvAccountHolderLabel, tvAccountHolder;
         LinearLayout llBankDetails;
 
-        public ViewHolder(View itemView)
-        {
+        public ViewHolder(View itemView) {
             super(itemView);
 
             ivCheck = (ImageView) itemView.findViewById(R.id.ivCheck);

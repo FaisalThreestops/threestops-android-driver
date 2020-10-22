@@ -2,12 +2,6 @@ package com.driver.threestops.app.main.bank;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.core.content.ContextCompat;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +11,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.driver.Threestops.R;
 import com.driver.threestops.adapter.BankDetailsRVA;
 import com.driver.threestops.app.main.bank.addBankAccount.BankNewAccountActivity;
 import com.driver.threestops.app.main.bank.bankAccountDetails.BankBottomSheetFragment;
 import com.driver.threestops.app.main.bank.stripe.BankNewStripeActivity;
-import com.driver.Threestops.R;
 import com.driver.threestops.app.main.bank.stripe.GetBankData;
 import com.driver.threestops.pojo.bank.BankList;
 import com.driver.threestops.pojo.bank.LegalEntity;
@@ -198,16 +197,15 @@ public class BankListFrag extends DaggerFragment implements BankDetailscontract.
 
     @Override
     public void onSuccessData(GetBankData getBankData) {
-        if (getBankData.getBankAccount()!= null) {
-            this.getBankData=getBankData;
+        if (getBankData.getBankAccount() != null) {
+            this.getBankData = getBankData;
             BeneId = getBankData.getBeneId();
             cvBankDetails.setVisibility(View.VISIBLE);
             cvLinkBankAcc.setVisibility(View.GONE);
             tvAccountHolder.setText(getBankData.getName());
             String subStr = getBankData.getBankAccount();
             tvAccountNo.setText("xxxxxxxx" + subStr.substring(10, subStr.length()));
-        }
-        else {
+        } else {
             cvBankDetails.setVisibility(View.GONE);
             cvLinkBankAcc.setVisibility(View.VISIBLE);
         }
@@ -260,7 +258,7 @@ public class BankListFrag extends DaggerFragment implements BankDetailscontract.
                 break;
 
             case R.id.cvBankDetails:
-                BottomSheetDialogFragment bottomSheetDialogFragment = BankBottomSheetFragment.newInstance(getBankData,this);
+                BottomSheetDialogFragment bottomSheetDialogFragment = BankBottomSheetFragment.newInstance(getBankData, this);
                 bottomSheetDialogFragment.show(getFragmentManager(), bottomSheetDialogFragment.getTag());
                 break;
         }

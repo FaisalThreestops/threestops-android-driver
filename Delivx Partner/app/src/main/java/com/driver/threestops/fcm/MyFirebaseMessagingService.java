@@ -18,6 +18,7 @@ import android.util.Log;
 import com.driver.threestops.RxObservers.RXMqttMessageObserver;
 import com.driver.threestops.app.SplashScreen;
 import com.driver.Threestops.R;
+import com.driver.threestops.app.bookingRequest.BookingPopUp;
 import com.driver.threestops.service.LocationUpdateService;
 import com.driver.threestops.utility.AcknowledgeHelper;
 import com.driver.threestops.utility.AppConstants;
@@ -135,8 +136,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      */
     private void sendNotification(String messageBody, int action) {
         Intent intent;
-        intent = new Intent(MyFirebaseMessagingService.this, SplashScreen.class);
-
+        if (action == 11) {
+            intent = new Intent(MyFirebaseMessagingService.this, BookingPopUp.class);
+            intent.putExtra("booking_Data", jsonObject.toString());
+        } else {
+            intent = new Intent(MyFirebaseMessagingService.this, SplashScreen.class);
+        }
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
             PendingIntent.FLAG_ONE_SHOT);

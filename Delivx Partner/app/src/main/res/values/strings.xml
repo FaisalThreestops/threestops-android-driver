@@ -650,7 +650,8 @@
     <string name="voucher_code">Voucher code</string>
     <string name="redeem">Redeem</string>
     <string name="somethingWentWrong">Oops ! Something went wrong.Please try again</string>
-    <string name="add_amount">Amount (₹)</string><string name="scanCard">Scan Card</string>
+    <string name="add_amount">Amount (₹)</string>
+    <string name="scanCard">Scan Card</string>
     <string name="tvPayment">Payment</string>
     <string name="savedcards">Saved cards</string>
     <string name="noCardsSaved">No Cards Saved</string>

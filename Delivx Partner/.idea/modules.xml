@@ -2,22 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Delivx Partner.iml" filepath="$PROJECT_DIR$/Delivx Partner.iml" group="Delivx Partner" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Delivx Partner-Delivx_Partner.iml" filepath="$PROJECT_DIR$/.idea/modules/Delivx Partner-Delivx_Partner.iml" group="Delivx_Partner" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Delivx Partner-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Delivx Partner-app.iml" group="Delivx Partner/app" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/signature-pad/Delivx Partner-signature-pad.iml" filepath="$PROJECT_DIR$/.idea/modules/signature-pad/Delivx Partner-signature-pad.iml" group="Delivx Partner/signature-pad" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/simplecroplib/Delivx Partner-simplecroplib.iml" filepath="$PROJECT_DIR$/.idea/modules/simplecroplib/Delivx Partner-simplecroplib.iml" group="Delivx Partner/simplecroplib" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Delivx_Partner.iml" filepath="$PROJECT_DIR$/.idea/modules/Delivx_Partner.iml" group="Delivx_Partner" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Workspace-delivx_android_partner_threestops-Delivx Partner-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Workspace-delivx_android_partner_threestops-Delivx Partner-app.iml" group="Delivx Partner/app" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/simplecroplib/Workspace-delivx_android_partner_threestops-Delivx Partner-simplecroplib.iml" filepath="$PROJECT_DIR$/.idea/modules/simplecroplib/Workspace-delivx_android_partner_threestops-Delivx Partner-simplecroplib.iml" group="Delivx Partner/simplecroplib" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="Delivx Partner/app" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/delivx_android_partner_threestops-Delivx Partner-Delivx_Partner.iml" filepath="$PROJECT_DIR$/.idea/modules/delivx_android_partner_threestops-Delivx Partner-Delivx_Partner.iml" group="Delivx_Partner" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/delivx_android_partner_threestops-Delivx Partner-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/delivx_android_partner_threestops-Delivx Partner-app.iml" group="Delivx Partner/app" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/simplecroplib/delivx_android_partner_threestops-Delivx Partner-simplecroplib.iml" filepath="$PROJECT_DIR$/.idea/modules/simplecroplib/delivx_android_partner_threestops-Delivx Partner-simplecroplib.iml" group="Delivx Partner/simplecroplib" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/delivx_base_android_partnerversion2-Delivx Partner-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/delivx_base_android_partnerversion2-Delivx Partner-app.iml" group="Delivx Partner/app" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/simplecroplib/delivx_base_android_partnerversion2-Delivx Partner-simplecroplib.iml" filepath="$PROJECT_DIR$/.idea/modules/simplecroplib/delivx_base_android_partnerversion2-Delivx Partner-simplecroplib.iml" group="Delivx Partner/simplecroplib" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/signature-pad/signature-pad.iml" filepath="$PROJECT_DIR$/.idea/modules/signature-pad/signature-pad.iml" group="Delivx Partner/signature-pad" />
-      <module fileurl="file://$PROJECT_DIR$/simplecroplib/simplecroplib.iml" filepath="$PROJECT_DIR$/simplecroplib/simplecroplib.iml" group="Delivx Partner/simplecroplib" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Delivx_Partner.iml" filepath="$PROJECT_DIR$/.idea/modules/Delivx_Partner.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Delivx_Partner.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Delivx_Partner.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/signature-pad/Delivx_Partner.signature-pad.iml" filepath="$PROJECT_DIR$/.idea/modules/signature-pad/Delivx_Partner.signature-pad.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/simplecroplib/Delivx_Partner.simplecroplib.iml" filepath="$PROJECT_DIR$/.idea/modules/simplecroplib/Delivx_Partner.simplecroplib.iml" />
     </modules>
   </component>
 </project>
