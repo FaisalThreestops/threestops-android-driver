@@ -11,6 +11,7 @@ public class NewBookingMQTTResponse implements Serializable {
     private String customerEmail;
     private String customerMobile;
     private String deliveryFee;
+    private String driverTip;
     private String estimatedTime;
     private String amount;
     private String currency;
@@ -109,6 +110,22 @@ public class NewBookingMQTTResponse implements Serializable {
 
     public void setDeliveryFee(String deliveryFee) {
         this.deliveryFee = deliveryFee;
+    }
+
+    public String getDriverTip() {
+        return driverTip;
+    }
+
+    public void setDriverTip(String driverTip) {
+        this.driverTip = driverTip;
+    }
+
+    public String getDueDatetimeTimeStamp() {
+        return dueDatetimeTimeStamp;
+    }
+
+    public void setDueDatetimeTimeStamp(String dueDatetimeTimeStamp) {
+        this.dueDatetimeTimeStamp = dueDatetimeTimeStamp;
     }
 
     public String getEstimatedTime() {

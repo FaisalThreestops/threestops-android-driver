@@ -23,6 +23,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.driver.threestops.app.main.MainActivity;
 import com.driver.threestops.data.source.PreferenceHelperDataSource;
+import com.driver.threestops.utility.TextUtil;
 import com.driver.threestops.utility.VariableConstant;
 import com.driver.Threestops.R;
 import com.driver.threestops.pojo.NewBookingMQTTResponse;
@@ -63,6 +64,7 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
     @BindView(R.id.tv_droptime) TextView tv_droptime;
     @BindView(R.id.tv_timer) TextView tv_timer;
     @BindView(R.id.tv_delivery_charge) TextView tv_delivery_charge;
+    @BindView(R.id.tvTips) TextView tvTips;
     @BindView(R.id.ll_booking_popup) LinearLayout ll_booking_popup;
 
     @BindView(R.id.tvordertypeHandelers) TextView tvordertypeHandelers;
@@ -131,6 +133,7 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
         tv_droptime.setTypeface(ClanaproNarrNews);
         tv_timer.setTypeface(ClanaproNarrMedium);
         tv_delivery_charge.setTypeface(ClanaproNarrMedium);
+        tvTips.setTypeface(ClanaproNarrMedium);
 
         mediaPlayer = MediaPlayer.create(this, R.raw.ring);
         mediaPlayer.setLooping(true);
@@ -164,7 +167,8 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
             tvPayment.setText(getResources().getString(R.string.card));
 
         tv_delivery_charge.setText(Utility.formatPrice(newBookingMQTTResponse.getDeliveryFee()));
-        tvBID.setText(getResources().getString(R.string.oid)+ newBookingMQTTResponse.getBid());
+        tvTips.setText(newBookingMQTTResponse.getCurrencySymbol().concat(Utility.formatPrice(TextUtil.isEmpty(newBookingMQTTResponse.getDriverTip()) ? "0" : newBookingMQTTResponse.getDriverTip())));
+        tvBID.setText(getResources().getString(R.string.oid).concat(newBookingMQTTResponse.getBid()));
 
     }
 

@@ -366,20 +366,35 @@
                     android:text="@string/Deliveryfee"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/spNineteen" />
+                    android:textSize="@dimen/spFourteen"
+                    android:layout_marginStart="@dimen/dpFifteen" />
+
+                <TextView
+                    android:id="@+id/lblTips"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dpFifteen"
+                    android:layout_marginStart="@dimen/dpFifteen"
+                    android:text="@string/tips"
+                    android:layout_marginTop="@dimen/dpFour"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/spEighteen" />
 
                 <TextView
                     android:id="@+id/tv_OrderTime"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dpFifteen"
+                    android:layout_marginRight="@dimen/dpFifteen"
+                    android:layout_marginEnd="@dimen/dpFifteen"
                     android:layout_weight="1"
-                    android:gravity="center_horizontal"
+                    android:gravity="end"
                     android:text="@string/date_time"
-                    android:textAlignment="center"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/spNineteen" />
+                    android:textSize="@dimen/spFourteen"
+                    android:layout_marginStart="@dimen/dpFifteen" />
             </LinearLayout>
 
             <LinearLayout
@@ -392,8 +407,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dpFifteen"
-                    android:layout_weight="0.8"
-                    android:orientation="horizontal">
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="@dimen/dpFifteen">
 
                     <TextView
                         android:id="@+id/tv_popup_cur"
@@ -409,18 +425,34 @@
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/tv_popup_cur"
                         android:layout_toRightOf="@+id/tv_popup_cur"
-                        android:text="245.00"
+                        tools:text="245.00"
                         android:textColor="@color/white"
                         android:textSize="26sp" />
+
                 </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tvTips"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dpFifteen"
+                    android:layout_marginStart="@dimen/dpFifteen"
+                    android:textAllCaps="true"
+                    tools:text="$200"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/spEighteen" />
+
 
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dpFifteen"
-                    android:layout_weight="1.2"
+                    android:layout_marginRight="@dimen/dpFifteen"
+                    android:layout_marginEnd="@dimen/dpFifteen"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginStart="@dimen/dpFifteen">
 
                     <TextView
                         android:id="@+id/tv_date"
