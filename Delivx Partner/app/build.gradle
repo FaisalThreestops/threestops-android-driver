@@ -8,8 +8,8 @@ android {
         applicationId "com.driver.Threestops"
         minSdkVersion 16
         targetSdkVersion 30
-        versionCode 9
-        versionName "1.0.10"
+        versionCode 10
+        versionName "1.0.11"
         multiDexEnabled true
 
         dexOptions {

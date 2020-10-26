@@ -437,7 +437,7 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements
                     itemUnit.setText(appointments.getShipmentDetails().get(i).getQuantity());
 
 
-                String unitPriceStr=appointments.getShipmentDetails().get(i).getUnitPrice();
+                String unitPriceStr=appointments.getShipmentDetails().get(i).getFinalPrice();
                 float unitPrice=0;
                 if(!"".equals(unitPriceStr) && unitPriceStr!=null)
                     unitPrice= Float.parseFloat(unitPriceStr);
