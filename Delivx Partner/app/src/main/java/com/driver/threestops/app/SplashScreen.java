@@ -65,7 +65,11 @@ public class SplashScreen extends DaggerAppCompatActivity {
         //initializeViews();
     }
 
-
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.clear();
+    }
 
     /**
      * <h2>checkConfiguration</h2>

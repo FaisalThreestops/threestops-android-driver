@@ -86,6 +86,8 @@ public class AssignedAppointments implements Serializable, Comparator<AssignedAp
 
     private String cashCollect;
 
+    private String driverTip;
+
 
     private ArrayList<ExclusiveTaxes> exclusiveTaxes;
 
@@ -484,6 +486,13 @@ public class AssignedAppointments implements Serializable, Comparator<AssignedAp
         this.cashCollect = cashCollect;
     }
 
+    public String getDriverTip() {
+        return driverTip;
+    }
+
+    public void setDriverTip(String driverTip) {
+        this.driverTip = driverTip;
+    }
 
     @Override
     public int compare(AssignedAppointments o1, AssignedAppointments o2) {

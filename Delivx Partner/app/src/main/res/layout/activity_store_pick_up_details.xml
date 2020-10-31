@@ -485,6 +485,37 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_tip"
+                android:weightSum="2"
+                android:layout_marginTop="@dimen/dpTen"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_tip"
+                    android:layout_weight="1"
+                    android:layout_gravity="start"
+                    android:text="@string/tips"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_sup_txt"
+                    android:textSize="14sp"
+                    />
+                <TextView
+                    android:id="@+id/tv_tip_val"
+                    android:gravity="end"
+                    android:layout_weight="1"
+                    android:layout_gravity="end"
+                    tools:text="$ 0.00"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_sup_txt"
+                    android:textSize="14sp"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/ll_tax"
                 android:layout_marginTop="@dimen/dpTen"
                 android:orientation="vertical"

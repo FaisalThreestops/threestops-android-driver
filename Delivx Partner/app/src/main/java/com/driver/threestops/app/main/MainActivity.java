@@ -176,6 +176,13 @@ public class MainActivity extends DaggerAppCompatActivity
     }
 
     @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.clear();
+    }
+
+
+    @Override
     protected void onResume() {
         super.onResume();
         mainActivity_opened = true;

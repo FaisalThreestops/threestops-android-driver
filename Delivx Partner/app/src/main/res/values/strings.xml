@@ -698,5 +698,6 @@
     <string name="take_front_photo">Take Front Photo</string>
 
     <string name="phone_num_lower">Phone Number</string>
+    <string name="lblDiscount">Discount</string>
 
 </resources>

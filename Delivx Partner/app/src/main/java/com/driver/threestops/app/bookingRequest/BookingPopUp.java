@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.driver.threestops.app.main.MainActivity;
@@ -103,6 +104,12 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
         presenter.getBundleData(getIntent());
         presenter.startTimer();
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.clear();
     }
 
 

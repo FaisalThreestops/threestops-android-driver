@@ -35,6 +35,7 @@ import com.driver.threestops.mqttChat.ChattingActivity;
 import com.driver.threestops.pojo.AssignedAppointments;
 import com.driver.threestops.utility.FontUtils;
 import com.driver.threestops.utility.Slider;
+import com.driver.threestops.utility.TextUtil;
 import com.driver.threestops.utility.Utility;
 import com.squareup.picasso.Picasso;
 
@@ -99,6 +100,9 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements
     @BindView(R.id.ll_discount) LinearLayout ll_discount;
     @BindView(R.id.tv_subToatal) TextView tv_subToatal;
     @BindView(R.id.tv_subToatal_val) TextView tv_subToatal_val;
+    @BindView(R.id.ll_tip) LinearLayout ll_tip;
+    @BindView(R.id.tv_tip) TextView tv_tip;
+    @BindView(R.id.tv_tip_val) TextView tv_tip_val;
 
     @BindView(R.id.ll_wallet) LinearLayout ll_wallet;
     @BindView(R.id.ll_cash)LinearLayout ll_cash;
@@ -161,6 +165,8 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements
         tv_delCharge_val.setTypeface(font);
         tv_discount.setTypeface(font);
         tv_discount_val.setTypeface(font);
+        tv_tip.setTypeface(font);
+        tv_tip_val.setTypeface(font);
         tv_tax.setTypeface(font);
         tv_subToatal.setTypeface(fontBold);
         tv_subToatal_val.setTypeface(fontBold);
@@ -275,6 +281,12 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements
         double appliedDiscount = Double.parseDouble(appointments.getShipmentDetails().get(0).getAppliedDiscount());
         tv_discount_val.setText(appointments.getCurrencySymbol()+" "+String.format("%.2f", appliedDiscount));
 
+        if (!TextUtil.isEmpty(appointments.getDriverTip())) {
+            double driverTip = Double.parseDouble(appointments.getDriverTip());
+            tv_tip_val.setText(new StringBuilder().append(appointments.getCurrencySymbol()).append(" ").append(String.format(Locale.getDefault(), "%.2f", driverTip)));
+        } else {
+            ll_tip.setVisibility(View.GONE);
+        }
 
         double cash=Double.parseDouble(appointments.getCashCollect());
         double wallet=0;
