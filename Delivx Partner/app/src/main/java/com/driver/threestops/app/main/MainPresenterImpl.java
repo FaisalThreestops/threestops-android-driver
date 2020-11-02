@@ -216,7 +216,7 @@ public class MainPresenterImpl implements MainPresenter {
                         if(!VariableConstant.IS_POP_UP_OPEN){
                             Intent intent = new Intent(context, BookingPopUp.class);
                             intent.putExtra("booking_Data", jsonObject.toString());
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
                             context.startActivity(intent);
                         }
                     }
