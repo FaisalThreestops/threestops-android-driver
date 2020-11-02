@@ -1,7 +1,5 @@
 package com.driver.threestops.payment_add_card;
 
-import static com.driver.threestops.utility.AppConstants.ADDCARD_ACT;
-
 import android.app.Activity;
 import android.util.Log;
 
@@ -10,23 +8,30 @@ import com.driver.threestops.data.source.PreferenceHelperDataSource;
 import com.driver.threestops.networking.NetworkService;
 import com.driver.threestops.networking.NetworkStateHolder;
 import com.driver.threestops.utility.Utility;
+import com.stripe.android.ApiResultCallback;
 import com.stripe.android.Stripe;
-import com.stripe.android.TokenCallback;
-import com.stripe.android.model.Card;
+import com.stripe.android.model.CardParams;
 import com.stripe.android.model.Token;
+
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import java.io.IOException;
-import javax.inject.Inject;
-import javax.inject.Named;
 import okhttp3.ResponseBody;
-import org.json.JSONException;
-import org.json.JSONObject;
 import retrofit2.Response;
+
+import static com.driver.threestops.utility.AppConstants.ADDCARD_ACT;
 
 
 public class AddCardPresenterImpl implements AddCardPresenter {
@@ -58,7 +63,7 @@ public class AddCardPresenterImpl implements AddCardPresenter {
     }
 
     @Override
-    public void addCard(Card card) {
+    public void addCard(CardParams card) {
         if (card != null) {
             mView.showProgress();
             addCardToStripe(card);
@@ -67,24 +72,22 @@ public class AddCardPresenterImpl implements AddCardPresenter {
     }
 
 
+    private void addCardToStripe(CardParams card) {
 
-
-    private void addCardToStripe(Card card) {
-
-      Log.d("manager.getStripe()", "addCardToStripe: "+manager.getStripe());
+        Log.d("manager.getStripe()", "addCardToStripe: " + manager.getStripe());
         //pk_test_IBYk0hnidox7CDA3doY6KQGi
         if (card != null && !manager.getStripe().equals("")) {
             Stripe stripe = new Stripe(mActivity, manager.getStripe());
-            stripe.createToken(card,
-                    new TokenCallback() {
-                        public void onSuccess(Token token) {
+            stripe.createCardToken(card,
+                    new ApiResultCallback<Token>() {
+                        public void onSuccess(@NotNull Token token) {
                             //Send token to your server
                             String card_token = token.getId();
                             Log.e("Card_details", "Card token :  " + card_token);
                             addCardApi(card_token);
                         }
 
-                        public void onError(Exception error) {
+                        public void onError(@NotNull Exception error) {
                             mView.setErrorMsg("Cant add card");
 
                         }
@@ -99,7 +102,7 @@ public class AddCardPresenterImpl implements AddCardPresenter {
     private void addCardApi(String token) {
 
 
-        Observable<Response<ResponseBody>> observable = service.addCard( ((MyApplication) mActivity.getApplication()).getAuthToken(manager.getDriverID()), manager.getLanguage()
+        Observable<Response<ResponseBody>> observable = service.addCard(((MyApplication) mActivity.getApplication()).getAuthToken(manager.getDriverID()), manager.getLanguage()
                 , manager.getMyEmail(), token);
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

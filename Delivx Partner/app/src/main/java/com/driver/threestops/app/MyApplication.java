@@ -15,7 +15,6 @@ import com.driver.threestops.dagger.DaggerAppComponent;
 import com.driver.threestops.data.source.PreferenceHelperDataSource;
 import com.driver.threestops.managers.mqtt.MQTTManager;
 import com.driver.threestops.service.CouchDbHandler;
-import com.google.firebase.FirebaseApp;
 
 import org.json.JSONObject;
 

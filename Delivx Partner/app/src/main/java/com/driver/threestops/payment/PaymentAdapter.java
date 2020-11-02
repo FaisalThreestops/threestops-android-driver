@@ -1,7 +1,5 @@
 package com.driver.threestops.payment;
 
-import static com.stripe.android.model.Card.BRAND_RESOURCE_MAP;
-
 import android.app.Activity;
 import android.graphics.Typeface;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.driver.Threestops.R;
+import com.stripe.android.model.CardBrand;
+
 import java.util.ArrayList;
 
 /**
@@ -72,16 +72,13 @@ class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHolder>
 
         final Cards cardsList = arrayList.get(position);
         holder.cardNumberTv.setText(mActivity.getString(R.string.xxx)+" "+cardsList.getLast4());
-        holder.cardImgIv.setImageResource(BRAND_RESOURCE_MAP.get(cardsList.getBrand()));
-        holder.mainContent_Ll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(mActivity instanceof PaymentAct)
-                {
-                    ((PaymentAct)mActivity).getCardDetail(cardsList.getBrand(),cardsList.getId(),cardsList.getLast4(),cardsList.getExpMonth(),cardsList.getExpYear(),cardsList.getIsDefault());
-                }
-
+        holder.cardImgIv.setImageResource(CardBrand.valueOf(cardsList.getBrand()).getIcon());
+        holder.mainContent_Ll.setOnClickListener(view -> {
+            if(mActivity instanceof PaymentAct)
+            {
+                ((PaymentAct)mActivity).getCardDetail(cardsList.getBrand(),cardsList.getId(),cardsList.getLast4(),cardsList.getExpMonth(),cardsList.getExpYear(),cardsList.getIsDefault());
             }
+
         });
         if(cardsList.getIsDefault())
         {

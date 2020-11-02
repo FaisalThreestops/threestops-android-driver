@@ -241,7 +241,7 @@ public class MQTTManager
                                                 try {
                                                     Intent intent = new Intent(mContext, BookingPopUp.class);
                                                     intent.putExtra("booking_Data", jsonObject.getString("bookingData"));
-                                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
                                                     mContext.startActivity(intent);
                                                 } catch (JSONException e) {
                                                     e.printStackTrace();

@@ -26,7 +26,7 @@ public class AcknowledgeHelper {
     PreferenceHelperDataSource preferenceHelperDataSource;
     DispatcherService dispatcherService;
 
-    Activity activity;
+    Context activity;
 
     @Inject
     public AcknowledgeHelper(PreferenceHelperDataSource dataSource,DispatcherService dispatcherService) {
@@ -36,8 +36,8 @@ public class AcknowledgeHelper {
 
 
     public void  bookingAckApi(String bid, Context context, final AcknowledgementCallback callback){
-        activity=(Activity)context;
-        final Observable<Response<ResponseBody>> bookingAck=dispatcherService.bookingAck(preferenceHelperDataSource.getLanguage(), ((MyApplication) activity.getApplication()).getAuthToken(preferenceHelperDataSource.getDriverID()),bid);
+        activity = context;
+        final Observable<Response<ResponseBody>> bookingAck=dispatcherService.bookingAck(preferenceHelperDataSource.getLanguage(), MyApplication.getInstance().getAuthToken(preferenceHelperDataSource.getDriverID()),bid);
         bookingAck.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Response<ResponseBody>>() {

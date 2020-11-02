@@ -1,7 +1,5 @@
 package com.driver.threestops.payment_choose_card;
 
-import static com.stripe.android.model.Card.BRAND_RESOURCE_MAP;
-
 import android.app.Activity;
 import android.graphics.Typeface;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +12,8 @@ import android.widget.TextView;
 import com.driver.threestops.payment.Cards;
 import com.driver.threestops.wallet.WalletAct;
 import com.driver.Threestops.R;
+import com.stripe.android.model.CardBrand;
+
 import java.util.ArrayList;
 
 
@@ -59,7 +59,7 @@ public class ChoosePaymentAdapter extends RecyclerView.Adapter<ChoosePaymentAdap
     {
         final Cards cardsList = arrayList.get(position);
         holder.cardNumberTv.setText(mActivity.getString(R.string.xxx)+" "+cardsList.getLast4());
-        holder.cardImgIv.setImageResource(BRAND_RESOURCE_MAP.get(cardsList.getBrand()));
+        holder.cardImgIv.setImageResource(CardBrand.valueOf(cardsList.getBrand()).getIcon());
 
 
 

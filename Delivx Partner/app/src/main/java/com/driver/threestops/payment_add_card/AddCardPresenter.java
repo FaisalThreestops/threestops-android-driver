@@ -1,6 +1,6 @@
 package com.driver.threestops.payment_add_card;
 
-import com.stripe.android.model.Card;
+import com.stripe.android.model.CardParams;
 
 /**
  * @author Pramod
@@ -9,5 +9,5 @@ import com.stripe.android.model.Card;
 
 public interface AddCardPresenter {
 
-    void addCard(Card card);
+    void addCard(CardParams card);
 }

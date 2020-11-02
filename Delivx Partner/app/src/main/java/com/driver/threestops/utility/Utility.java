@@ -997,17 +997,19 @@ public class Utility {
     @SuppressLint("PrivateResource")
     public static int checkCardType(String type) {
         if (type.equalsIgnoreCase("visa")) {
-            return R.drawable.ic_visa;
+            return R.drawable.stripe_ic_visa;
         } else if (type.equalsIgnoreCase("MasterCard")) {
-            return R.drawable.ic_mastercard;
+            return R.drawable.stripe_ic_mastercard;
         } else if (type.equalsIgnoreCase("American Express")) {
-            return R.drawable.ic_amex;
+            return R.drawable.stripe_ic_amex;
         } else if (type.equalsIgnoreCase("Discover")) {
-            return R.drawable.ic_discover;
+            return R.drawable.stripe_ic_discover;
         } else if (type.equalsIgnoreCase("Diners Club")) {
-            return R.drawable.ic_diners;
+            return R.drawable.stripe_ic_diners;
         } else if (type.equalsIgnoreCase("JCB")) {
-            return R.drawable.ic_jcb;
+            return R.drawable.stripe_ic_jcb;
+        } else if (type.equalsIgnoreCase("UnionPay")) {
+            return R.drawable.stripe_ic_unionpay;
         }
         return 0;
     }

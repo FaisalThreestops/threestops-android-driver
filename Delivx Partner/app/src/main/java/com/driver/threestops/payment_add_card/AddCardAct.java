@@ -1,8 +1,5 @@
 package com.driver.threestops.payment_add_card;
 
-import static android.Manifest.permission.CAMERA;
-import static com.driver.threestops.utility.AppConstants.REQUEST_CODE_PERMISSION_MULTIPLE;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,10 +11,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.core.app.ActivityCompat;
-import androidx.appcompat.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -27,23 +20,33 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+
+import com.driver.Threestops.R;
+import com.driver.threestops.utility.FontUtils;
+import com.driver.threestops.utility.Utility;
+import com.stripe.android.model.CardParams;
+import com.stripe.android.view.CardMultilineWidget;
+
+import javax.inject.Inject;
+
 import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.driver.threestops.utility.FontUtils;
-import com.driver.threestops.utility.Utility;
-import com.driver.Threestops.R;
-import com.stripe.android.model.Card;
-import com.stripe.android.view.CardMultilineWidget;
 import dagger.android.support.DaggerAppCompatActivity;
 import io.card.payment.CardIOActivity;
 import io.card.payment.CreditCard;
-import javax.inject.Inject;
+
+import static android.Manifest.permission.CAMERA;
+import static com.driver.threestops.utility.AppConstants.REQUEST_CODE_PERMISSION_MULTIPLE;
 
 
-public class AddCardAct extends DaggerAppCompatActivity implements AddCardView
-{
+public class AddCardAct extends DaggerAppCompatActivity implements AddCardView {
 
     @Inject
     AddCardPresenter addCardPresenter;
@@ -65,6 +68,7 @@ public class AddCardAct extends DaggerAppCompatActivity implements AddCardView
     @Inject
     FontUtils appTypeface;
     private CreditCard scanResult;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,13 +80,12 @@ public class AddCardAct extends DaggerAppCompatActivity implements AddCardView
     }
 
     @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
-    private void initToolBar()
-    {
-        toolBar=findViewById(R.id.toolbar);
-        tvAbarTitle=findViewById(R.id.tvAbarTitle);
+    private void initToolBar() {
+        toolBar = findViewById(R.id.toolbar);
+        tvAbarTitle = findViewById(R.id.tvAbarTitle);
         final RelativeLayout rlABarBackBtn = findViewById(R.id.rlABarBackBtn);
         setSupportActionBar(toolBar);
-        if(getSupportActionBar()!=null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeAsUpIndicator(back_white_btn);
@@ -99,8 +102,7 @@ public class AddCardAct extends DaggerAppCompatActivity implements AddCardView
     }
 
 
-    private void initialize()
-    {
+    private void initialize() {
 
         ButterKnife.bind(this);
         Typeface fontMedium = appTypeface.getFont_muli_semi_bold();
@@ -112,16 +114,15 @@ public class AddCardAct extends DaggerAppCompatActivity implements AddCardView
 
     }
 
-    @OnClick({R.id.saveCardBtn,R.id.scanCardTv})
+    @OnClick({R.id.saveCardBtn, R.id.scanCardTv})
     void setTvDone(View view) {
         Utility.hideSoftKeyboard(cardInputWidget);
-        if(progressBar.getVisibility()==View.VISIBLE)
+        if (progressBar.getVisibility() == View.VISIBLE)
             return;
-        switch (view.getId())
-        {
+        switch (view.getId()) {
             case R.id.saveCardBtn:
                 // Remember that the card object will be null if the user inputs invalid data.
-                Card card = cardInputWidget.getCard();
+                CardParams card = cardInputWidget.getCardParams();
                 addCardPresenter.addCard(card);
                 break;
             case R.id.scanCardTv:
@@ -132,23 +133,20 @@ public class AddCardAct extends DaggerAppCompatActivity implements AddCardView
         }
 
 
-
     }
 
     @Override
     public void setErrorMsg(String errorMsg) {
         saveCardBtn.setEnabled(true);
-        Toast.makeText(this,""+errorMsg,Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "" + errorMsg, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void startScanCard() {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ((checkSelfPermission(CAMERA) != PackageManager.PERMISSION_GRANTED)))
-        {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ((checkSelfPermission(CAMERA) != PackageManager.PERMISSION_GRANTED))) {
             requestPermissions(new String[]{CAMERA}, REQUEST_CODE_PERMISSION_MULTIPLE);
-        } else
-        {
+        } else {
             Intent scanIntent = new Intent(this, CardIOActivity.class);
             scanIntent.putExtra(CardIOActivity.EXTRA_REQUIRE_EXPIRY, true); // default: true
             scanIntent.putExtra(CardIOActivity.EXTRA_REQUIRE_CVV, true); // default: false
@@ -172,23 +170,18 @@ public class AddCardAct extends DaggerAppCompatActivity implements AddCardView
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case REQUEST_CODE_PERMISSION_MULTIPLE:
-                boolean isDeninedRTPs=false,showRationaleRTPs=false;
-                if (grantResults.length > 0)
-                {
+                boolean isDeninedRTPs = false, showRationaleRTPs = false;
+                if (grantResults.length > 0) {
 
-                    for (int i = 0; i < permissions.length; i++)
-                    {
+                    for (int i = 0; i < permissions.length; i++) {
                         isDeninedRTPs = grantResults[i] == PackageManager.PERMISSION_DENIED;
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                        {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             showRationaleRTPs = shouldShowRequestPermissionRationale(permissions[i]);
                         }
 
                     }
-                    if (isDeninedRTPs)
-                    {
-                        if (!showRationaleRTPs)
-                        {
+                    if (isDeninedRTPs) {
+                        if (!showRationaleRTPs) {
                             //goToSettings();
                             showMessageOKCancel("You need to allow access permissions,Otherwise you can't" + " continue.",
                                     new DialogInterface.OnClickListener() {
@@ -204,8 +197,7 @@ public class AddCardAct extends DaggerAppCompatActivity implements AddCardView
                                         }
                                     });
 
-                        } else
-                        {
+                        } else {
 
                             isDeninedRTPs = false;
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -215,10 +207,7 @@ public class AddCardAct extends DaggerAppCompatActivity implements AddCardView
                         }
 
 
-
-
-                    } else
-                    {
+                    } else {
                         startScanCard();
                     }
                 }
@@ -227,9 +216,8 @@ public class AddCardAct extends DaggerAppCompatActivity implements AddCardView
             default:
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
                 break;
-        }    }
-
-
+        }
+    }
 
 
     @Override
@@ -246,10 +234,10 @@ public class AddCardAct extends DaggerAppCompatActivity implements AddCardView
 
     private void scanCardResult() {
         if (scanResult != null) {
-            try{
+            try {
                 EditText etcard = cardInputWidget.findViewById(com.stripe.android.R.id.et_card_number);
-                EditText etExpiryDate = cardInputWidget.findViewById(com.stripe.android.R.id.et_expiry_date);
-                EditText etcardcvv = cardInputWidget.findViewById(com.stripe.android.R.id.et_cvc_number);
+                EditText etExpiryDate = cardInputWidget.findViewById(com.stripe.android.R.id.et_expiry);
+                EditText etcardcvv = cardInputWidget.findViewById(com.stripe.android.R.id.et_cvc);
                 etcard.setText(scanResult.cardNumber);
                 String expiryyear = String.valueOf(scanResult.expiryYear);
                 String scancardmonth = String.valueOf(scanResult.expiryMonth);
@@ -263,8 +251,7 @@ public class AddCardAct extends DaggerAppCompatActivity implements AddCardView
                 }
                 etcardcvv.setText(scanResult.cvv);
                 etcard.requestFocus();
-            }catch (Exception e)
-            {
+            } catch (Exception e) {
 
             }
 
@@ -290,7 +277,8 @@ public class AddCardAct extends DaggerAppCompatActivity implements AddCardView
     /**
      * <h>showMessageOKCancel</h>
      * showMessage if permission not granted and to open settings of device
-     * @param message input the message string to show body for dialog
+     *
+     * @param message    input the message string to show body for dialog
      * @param okListener input for dialog
      */
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
