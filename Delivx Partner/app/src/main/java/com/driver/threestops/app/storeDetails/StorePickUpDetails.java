@@ -270,16 +270,16 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements
 
 
         double sub_total_amount = Double.parseDouble(appointments.getSubTotalAmount());
-        tv_subTotal_val.setText(appointments.getCurrencySymbol()+" "+String.format("%.2f", sub_total_amount));
+        tv_subTotal_val.setText(String.format(Locale.getDefault(),"%s %s", appointments.getCurrencySymbol(), String.format(Locale.getDefault(), "%.2f", sub_total_amount)));
 
         double deliveryCharge = Double.parseDouble(appointments.getDeliveryCharge());
-        tv_delCharge_val.setText(appointments.getCurrencySymbol()+" "+String.format("%.2f", deliveryCharge));
+        tv_delCharge_val.setText(String.format("%s %s", appointments.getCurrencySymbol(), String.format(Locale.getDefault(),"%.2f", deliveryCharge)));
 
         double totalAmount = Double.parseDouble(appointments.getTotalAmount());
-        tv_subToatal_val.setText(appointments.getCurrencySymbol()+" "+String.format("%.2f", totalAmount));
+        tv_subToatal_val.setText(String.format("%s %s", appointments.getCurrencySymbol(), String.format(Locale.getDefault(),"%.2f", totalAmount)));
 
-        double appliedDiscount = Double.parseDouble(appointments.getShipmentDetails().get(0).getAppliedDiscount());
-        tv_discount_val.setText(appointments.getCurrencySymbol()+" "+String.format("%.2f", appliedDiscount));
+        double appliedDiscount = Double.parseDouble(appointments.getDiscount());
+        tv_discount_val.setText(String.format("%s %s", appointments.getCurrencySymbol(), String.format(Locale.getDefault(),"%.2f", appliedDiscount)));
 
         if (!TextUtil.isEmpty(appointments.getDriverTip())) {
             double driverTip = Double.parseDouble(appointments.getDriverTip());

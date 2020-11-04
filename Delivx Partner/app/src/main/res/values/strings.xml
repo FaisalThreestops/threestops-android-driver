@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Threestops Partner</string>
-    <string name="app_name_withoutSpace">Delivx_Partner</string>
+    <string name="app_name_withoutSpace">Threestops_Partner</string>
     <string name="facebook_app_id">1111066805703978</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -626,7 +626,7 @@
 
     <string name="softLimitDesc">About to reach maximum cash credit limit</string>
     <string name="hardLimitDesc">Maximum cash credit limit hit and no cash booking will be allowed till dues are paid</string>
-    <string name="flexyCoin">DelivX Wallet</string>
+    <string name="flexyCoin">Threestops Wallet</string>
 
     <string name="addMoneyConfirm">Are you sure you want to recharge your wallet with</string>
     <string name="success">Success</string>

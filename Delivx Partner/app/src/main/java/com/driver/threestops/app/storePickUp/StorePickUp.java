@@ -290,13 +290,13 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
 
 
         double sub_total_amount = Double.parseDouble(appointments.getSubTotalAmount());
-        tv_subTotal_val.setText(appointments.getCurrencySymbol()+" "+String.format("%.2f", sub_total_amount));
+        tv_subTotal_val.setText(String.format(Locale.getDefault(), "%s %s", appointments.getCurrencySymbol(), String.format(Locale.getDefault(), "%.2f", sub_total_amount)));
 
         double deliveryCharge = Double.parseDouble(appointments.getDeliveryCharge());
-        tv_delCharge_val.setText(appointments.getCurrencySymbol()+" "+String.format("%.2f", deliveryCharge));
+        tv_delCharge_val.setText(String.format(Locale.getDefault(), "%s %s", appointments.getCurrencySymbol(), String.format("%.2f", deliveryCharge)));
 
-        double appliedDiscount = Double.parseDouble(appointments.getShipmentDetails().get(0).getAppliedDiscount());
-        tv_discount_val.setText(appointments.getCurrencySymbol()+" "+String.format("%.2f", appliedDiscount));
+        double appliedDiscount = Double.parseDouble(appointments.getDiscount());
+        tv_discount_val.setText(String.format(Locale.getDefault(), "%s %s", appointments.getCurrencySymbol(), String.format("%.2f", appliedDiscount)));
 
         if (!TextUtil.isEmpty(appointments.getDriverTip())) {
             double driverTip = Double.parseDouble(appointments.getDriverTip());
@@ -308,7 +308,7 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
 
         if (!TextUtil.isEmpty(appointments.getDriverTip())) {
             double driverTip = Double.parseDouble(appointments.getDriverTip());
-            tv_tip_val.setText(appointments.getCurrencySymbol()+" "+String.format("%.2f", driverTip));
+            tv_tip_val.setText(new StringBuilder().append(appointments.getCurrencySymbol()).append(" ").append(String.format(Locale.getDefault(), "%.2f", driverTip)));
         } else {
             ll_tip.setVisibility(View.GONE);
         }
@@ -320,8 +320,8 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
         ll_wallet.setVisibility(View.VISIBLE);
         ll_cash.setVisibility(View.VISIBLE);
         wallet=totalAmount-cash;
-        tv_wallet_amount.setText(appointments.getCurrencySymbol()+" "+ Utility.currencyFormat(wallet+""));
-        tv_cashAmt.setText(appointments.getCurrencySymbol()+" "+ Utility.currencyFormat(cash+""));
+        tv_wallet_amount.setText(String.format("%s %s", appointments.getCurrencySymbol(), Utility.currencyFormat(wallet + "")));
+        tv_cashAmt.setText(String.format("%s %s", appointments.getCurrencySymbol(), Utility.currencyFormat(cash + "")));
 
         /*LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 0f);
         tvPriceTitle.setLayoutParams(params);
