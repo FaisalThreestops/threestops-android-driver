@@ -71,15 +71,10 @@ public class InvoiceActivity extends DaggerAppCompatActivity implements
     private AssignedAppointments appointments;
     private int index;
 
-    @BindView(R.id.ll_wallet) LinearLayout ll_wallet;
     @BindView(R.id.ll_cash) LinearLayout ll_cash;
-    @BindView(R.id.ll_total) LinearLayout ll_total;
-    @BindView(R.id.tv_wallet_amount) TextView tv_wallet_amount;
     @BindView(R.id.tv_cashAmt) TextView tv_cashAmt;
     @BindView(R.id.tv_totalAmt) TextView tv_totalAmt;
-    @BindView(R.id.tv_Wallet) TextView tv_Wallet;
     @BindView(R.id.tv_cash) TextView tv_cash;
-    @BindView(R.id.tv_total) TextView tv_total;
 
     @Inject InvoiceContract.PresenterOpetaions presenter;
     @Inject FontUtils fontUtils;
@@ -117,9 +112,7 @@ public class InvoiceActivity extends DaggerAppCompatActivity implements
         tvSignHere1.setTypeface(fontSemiBold);
         tvSignHere.setTypeface(fontSemiBold);
 
-        tv_Wallet.setTypeface(fontSemiBold);
         tv_cash.setTypeface(fontSemiBold);
-        tv_total.setTypeface(fontSemiBold);
 
         signature_pad.setOnSignedListener(this);
         ratingbar.setSelected(true);
@@ -255,15 +248,12 @@ public class InvoiceActivity extends DaggerAppCompatActivity implements
     }
 
     @Override
-    public void setViews(String amount,AssignedAppointments appointments,String cash,String wallet){
+    public void setViews(String amount,AssignedAppointments appointments,String cash){
         this.appointments=appointments;
         tvBill.setText(amount);
 
         tvBill.setVisibility(View.GONE);
-        ll_wallet.setVisibility(View.VISIBLE);
         ll_cash.setVisibility(View.VISIBLE);
-        ll_total.setVisibility(View.VISIBLE);
-        tv_wallet_amount.setText(wallet);
         tv_cashAmt.setText(cash);
         tv_totalAmt.setText(amount);
     }

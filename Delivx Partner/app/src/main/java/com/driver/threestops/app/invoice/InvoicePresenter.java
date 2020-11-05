@@ -84,8 +84,7 @@ public class InvoicePresenter implements InvoiceContract.PresenterOpetaions {
 
             double bill = Double.parseDouble(appointments.getTotalAmount());
             double cash = Double.parseDouble(appointments.getCashCollect());
-            double wallet = bill - cash;
-            view.setViews(appointments.getCurrencySymbol() + " " + String.format(Locale.US, "%.2f", bill), appointments, appointments.getCurrencySymbol() + " " + Utility.currencyFormat(cash + ""), appointments.getCurrencySymbol() + " " + Utility.currencyFormat(wallet + ""));
+            view.setViews(appointments.getCurrencySymbol() + " " + String.format(Locale.US, "%.2f", bill), appointments, appointments.getCurrencySymbol() + " " + Utility.currencyFormat(cash + ""));
         }
     }
 
