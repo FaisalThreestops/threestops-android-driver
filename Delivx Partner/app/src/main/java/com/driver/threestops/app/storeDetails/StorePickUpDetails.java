@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -25,10 +26,13 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.driver.threestops.adapter.AddOnsAdapter;
 import com.driver.threestops.adapter.LaunderListRVA;
 import com.driver.threestops.adapter.ReasonRVA;
 import com.driver.threestops.app.bookingRide.BookingRide;
 import com.driver.threestops.app.main.MainActivity;
+import com.driver.threestops.pojo.AddOnGroup;
+import com.driver.threestops.pojo.AddOns;
 import com.driver.threestops.pojo.Cancel.CancelData;
 import com.driver.Threestops.R;
 import com.driver.threestops.mqttChat.ChattingActivity;
@@ -39,6 +43,7 @@ import com.driver.threestops.utility.TextUtil;
 import com.driver.threestops.utility.Utility;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -424,6 +429,29 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements
                     iv_item_img.setVisibility(View.GONE);
                 }
 
+                ArrayList<AddOnGroup> addOnGroupArrayList = new ArrayList<>();
+
+                RecyclerView rvAddOnsList = view.findViewById(R.id.rvAddOnsList);
+                rvAddOnsList.setNestedScrollingEnabled(false);
+                rvAddOnsList.setLayoutManager(new LinearLayoutManager(this));
+                rvAddOnsList.setHasFixedSize(true);
+                int quantity = (!TextUtil.isEmpty(appointments.getShipmentDetails().get(i).getQuantity()) && TextUtils.isDigitsOnly(appointments.getShipmentDetails().get(i).getQuantity()) ? Integer.parseInt(appointments.getShipmentDetails().get(i).getQuantity()) : 0);
+                AddOnsAdapter addOnsAdapter = new AddOnsAdapter(addOnGroupArrayList, appointments.getCurrencySymbol(), quantity);
+                rvAddOnsList.setAdapter(addOnsAdapter);
+                addOnGroupArrayList.clear();
+
+                if (appointments.getShipmentDetails().get(i).getAddOns() != null && appointments.getShipmentDetails().get(i).getAddOns().size() > 0) {
+                    for (AddOns addOns : appointments.getShipmentDetails().get(i).getAddOns()) {
+                        if (addOns.getAddOnGroup() != null && addOns.getAddOnGroup().size() > 0)
+                            addOnGroupArrayList.addAll(addOns.getAddOnGroup());
+                    }
+                }
+
+                if (addOnGroupArrayList.size() > 0) {
+                    rvAddOnsList.setVisibility(View.VISIBLE);
+                    addOnsAdapter.notifyDataSetChanged();
+                }
+
                 if(appointments.getStoreType().equals("7")){
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 2f);
                     itemName.setLayoutParams(params);
@@ -442,20 +470,13 @@ public class StorePickUpDetails extends DaggerAppCompatActivity implements
                 }
 
                 itemName.setText(appointments.getShipmentDetails().get(i).getItemName());
-                int quantity= Integer.parseInt(appointments.getShipmentDetails().get(i).getQuantity());
-                if(!appointments.getStoreType().equals("7"))
-                    itemUnit.setText(appointments.getShipmentDetails().get(i).getQuantity()+"("+appointments.getShipmentDetails().get(i).getUnitName()+")");
-                else
-                    itemUnit.setText(appointments.getShipmentDetails().get(i).getQuantity());
-
-
                 String unitPriceStr=appointments.getShipmentDetails().get(i).getFinalPrice();
                 float unitPrice=0;
                 if(!"".equals(unitPriceStr) && unitPriceStr!=null)
                     unitPrice= Float.parseFloat(unitPriceStr);
                 float subTotal=quantity*unitPrice;
-                itemPrice.setText(appointments.getCurrencySymbol()+" "+
-                        String.format(Locale.US,"%.2f",subTotal));
+                itemUnit.setText(appointments.getShipmentDetails().get(i).getQuantity()+" ("+appointments.getCurrencySymbol().concat(" ").concat(String.format(Locale.US,"%.2f",unitPrice))+")");
+                itemPrice.setText(appointments.getCurrencySymbol().concat(" ").concat(String.format(Locale.US,"%.2f",subTotal)));
 
 
                 total+=subTotal;

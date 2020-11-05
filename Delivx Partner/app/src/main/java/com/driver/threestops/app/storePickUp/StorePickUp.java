@@ -11,12 +11,15 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+
 import android.text.Html;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.Gravity;
@@ -31,12 +34,15 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.driver.threestops.adapter.AddOnsAdapter;
 import com.driver.threestops.adapter.ReasonRVA;
 import com.driver.threestops.app.orderEdit.OrderEditActivity;
 import com.driver.threestops.app.bookingRide.BookingRide;
 import com.driver.threestops.app.invoice.InvoiceActivity;
 import com.driver.threestops.app.main.MainActivity;
 import com.driver.threestops.data.source.PreferenceHelperDataSource;
+import com.driver.threestops.pojo.AddOnGroup;
+import com.driver.threestops.pojo.AddOns;
 import com.driver.threestops.pojo.Cancel.CancelData;
 import com.driver.Threestops.R;
 import com.driver.threestops.mqttChat.ChattingActivity;
@@ -49,6 +55,7 @@ import com.driver.threestops.utility.TextUtil;
 import com.driver.threestops.utility.Utility;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -61,72 +68,123 @@ import dagger.android.support.DaggerAppCompatActivity;
 public class StorePickUp extends DaggerAppCompatActivity implements PickUpContract.ViewOperations {
 
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.tv_title) TextView tv_title;
-    @BindView(R.id.tv_cust_name_title) TextView tv_cust_name_title;
-    @BindView(R.id.tv_cust_name) TextView tv_cust_name;
-    @BindView(R.id.tvTitleStore) TextView tvTitleStore;
-    @BindView(R.id.tvProductHint) TextView tvProductHint;
-    @BindView(R.id.tvStore) TextView tvStore;
-    @BindView(R.id.iv_call_customer) ImageView iv_call_customer;
-    @BindView(R.id.iv_search) ImageView iv_search;
-    @BindView(R.id.tv_drop_up_title) TextView tv_drop_up_title;
-    @BindView(R.id.tv_dropup) TextView tv_dropup;
-    @BindView(R.id.tv_payment_title) TextView tv_payment_title;
-    @BindView(R.id.tv_payment_type) TextView tv_payment_type;
-    @BindView(R.id.tvProductsTitle) TextView tvProductsTitle;
-    @BindView(R.id.tvPriceTitle) TextView tvPriceTitle;
-    @BindView(R.id.tvItems) TextView tvItems;
-    @BindView(R.id.tvGrandTotal) TextView tvGrandTotal;
-    @BindView(R.id.tvGrandTotalTitle) TextView tvGrandTotalTitle;
-    @BindView(R.id.tv_status_text) TextView tv_status_text;
-    @BindView(R.id.tvAddItem) TextView tvAddItem;
-    @BindView(R.id.ll_item_container) LinearLayout ll_item_container;
-    @BindView(R.id.myseek) Slider seekbar;
-    @BindView(R.id.progressBar) ProgressBar progressBar;
-    @BindView(R.id.ll_estimate_value) LinearLayout ll_estimate_value;
-    @BindView(R.id.view_estimate) View view_estimate;
-    @BindView(R.id.view_customer) View view_customer;
-    @BindView(R.id.ll_customer_note) LinearLayout ll_customer_note;
-    @BindView(R.id.tv_qty)TextView tv_qty;
-    @BindView(R.id.ll_subTotal) LinearLayout ll_subTotal;
-    @BindView(R.id.tv_cancel) TextView tv_cancel;
-    @BindView(R.id.tv_estimate_value) TextView tv_estimate_value;
-    @BindView(R.id.tv_customer_value) TextView tv_customer_value;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.tv_title)
+    TextView tv_title;
+    @BindView(R.id.tv_cust_name_title)
+    TextView tv_cust_name_title;
+    @BindView(R.id.tv_cust_name)
+    TextView tv_cust_name;
+    @BindView(R.id.tvTitleStore)
+    TextView tvTitleStore;
+    @BindView(R.id.tvProductHint)
+    TextView tvProductHint;
+    @BindView(R.id.tvStore)
+    TextView tvStore;
+    @BindView(R.id.iv_call_customer)
+    ImageView iv_call_customer;
+    @BindView(R.id.iv_search)
+    ImageView iv_search;
+    @BindView(R.id.tv_drop_up_title)
+    TextView tv_drop_up_title;
+    @BindView(R.id.tv_dropup)
+    TextView tv_dropup;
+    @BindView(R.id.tv_payment_title)
+    TextView tv_payment_title;
+    @BindView(R.id.tv_payment_type)
+    TextView tv_payment_type;
+    @BindView(R.id.tvProductsTitle)
+    TextView tvProductsTitle;
+    @BindView(R.id.tvPriceTitle)
+    TextView tvPriceTitle;
+    @BindView(R.id.tvItems)
+    TextView tvItems;
+    @BindView(R.id.tvGrandTotal)
+    TextView tvGrandTotal;
+    @BindView(R.id.tvGrandTotalTitle)
+    TextView tvGrandTotalTitle;
+    @BindView(R.id.tv_status_text)
+    TextView tv_status_text;
+    @BindView(R.id.tvAddItem)
+    TextView tvAddItem;
+    @BindView(R.id.ll_item_container)
+    LinearLayout ll_item_container;
+    @BindView(R.id.myseek)
+    Slider seekbar;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
+    @BindView(R.id.ll_estimate_value)
+    LinearLayout ll_estimate_value;
+    @BindView(R.id.view_estimate)
+    View view_estimate;
+    @BindView(R.id.view_customer)
+    View view_customer;
+    @BindView(R.id.ll_customer_note)
+    LinearLayout ll_customer_note;
+    @BindView(R.id.tv_qty)
+    TextView tv_qty;
+    @BindView(R.id.ll_subTotal)
+    LinearLayout ll_subTotal;
+    @BindView(R.id.tv_cancel)
+    TextView tv_cancel;
+    @BindView(R.id.tv_estimate_value)
+    TextView tv_estimate_value;
+    @BindView(R.id.tv_customer_value)
+    TextView tv_customer_value;
 
-    @BindView(R.id.ll_wallet) LinearLayout ll_wallet;
-    @BindView(R.id.ll_cash)LinearLayout ll_cash;
-    @BindView(R.id.tv_wallet_amount)TextView tv_wallet_amount;
-    @BindView(R.id.tv_cashAmt)TextView tv_cashAmt;
+    @BindView(R.id.ll_wallet)
+    LinearLayout ll_wallet;
+    @BindView(R.id.ll_cash)
+    LinearLayout ll_cash;
+    @BindView(R.id.tv_wallet_amount)
+    TextView tv_wallet_amount;
+    @BindView(R.id.tv_cashAmt)
+    TextView tv_cashAmt;
 
     private AlertDialog.Builder alertDialog;
 
 
+    @BindView(R.id.tv_paymentbreskdown)
+    TextView tv_paymentbreskdown;
+    @BindView(R.id.tv_subTotal)
+    TextView tv_subTotal;
+    @BindView(R.id.tv_subTotal_val)
+    TextView tv_subTotal_val;
+    @BindView(R.id.tv_delCharge)
+    TextView tv_delCharge;
+    @BindView(R.id.tv_delCharge_val)
+    TextView tv_delCharge_val;
+    @BindView(R.id.tv_discount)
+    TextView tv_discount;
+    @BindView(R.id.tv_discount_val)
+    TextView tv_discount_val;
+    @BindView(R.id.ll_discount)
+    LinearLayout ll_discount;
+    @BindView(R.id.ll_tip)
+    LinearLayout ll_tip;
+    @BindView(R.id.tv_tip)
+    TextView tv_tip;
+    @BindView(R.id.tv_tip_val)
+    TextView tv_tip_val;
 
-
-    @BindView(R.id.tv_paymentbreskdown) TextView tv_paymentbreskdown;
-    @BindView(R.id.tv_subTotal) TextView tv_subTotal;
-    @BindView(R.id.tv_subTotal_val) TextView tv_subTotal_val;
-    @BindView(R.id.tv_delCharge) TextView tv_delCharge;
-    @BindView(R.id.tv_delCharge_val) TextView tv_delCharge_val;
-    @BindView(R.id.tv_discount) TextView tv_discount;
-    @BindView(R.id.tv_discount_val) TextView tv_discount_val;
-    @BindView(R.id.ll_discount) LinearLayout ll_discount;
-    @BindView(R.id.ll_tip) LinearLayout ll_tip;
-    @BindView(R.id.tv_tip) TextView tv_tip;
-    @BindView(R.id.tv_tip_val) TextView tv_tip_val;
-
-    @BindView(R.id.ll_tax) LinearLayout ll_tax;
-    @BindView(R.id.ll_tax_item_container) LinearLayout ll_tax_item_container;
-    @BindView(R.id.tv_tax) TextView tv_tax;
+    @BindView(R.id.ll_tax)
+    LinearLayout ll_tax;
+    @BindView(R.id.ll_tax_item_container)
+    LinearLayout ll_tax_item_container;
+    @BindView(R.id.tv_tax)
+    TextView tv_tax;
 
     private boolean tax_added = false;
 
-    private Typeface font,fontBold;
+    private Typeface font, fontBold;
 
-    @Inject PickUpContract.PresenterOperations presenter;
-    @Inject FontUtils fontUtils;
-    @Inject PreferenceHelperDataSource preferenceHelperDataSource;
+    @Inject
+    PickUpContract.PresenterOperations presenter;
+    @Inject
+    FontUtils fontUtils;
+    @Inject
+    PreferenceHelperDataSource preferenceHelperDataSource;
 
     private Dialog dialog;
     private int index;
@@ -135,7 +193,7 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Utility.RtlConversion(this,presenter.getlanguageCode());
+        Utility.RtlConversion(this, presenter.getlanguageCode());
         setContentView(R.layout.activity_store_pick_up);
         ButterKnife.bind(this);
         initViews();
@@ -150,8 +208,8 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
      * <p>initializing the views(fonts and style)</p>
      */
     private void initViews() {
-        font= fontUtils.titaliumRegular();
-        fontBold=fontUtils.titaliumSemiBold();
+        font = fontUtils.titaliumRegular();
+        fontBold = fontUtils.titaliumSemiBold();
         tv_status_text.setTypeface(fontBold);
         tvAddItem.setTypeface(fontBold);
         tv_title.setTypeface(fontBold);
@@ -228,10 +286,10 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
 
     @Override
     public void setViews(AssignedAppointments appointments) {
-        updAppointments=appointments;
+        updAppointments = appointments;
         tv_cust_name.setText(appointments.getCustomerName());
         //if reached destination
-        if(appointments.getOrderStatus().equals(AppConstants.BookingStatus.ReachedAtLocation)){
+        if (appointments.getOrderStatus().equals(AppConstants.BookingStatus.ReachedAtLocation)) {
             tv_dropup.setVisibility(View.GONE);
             tvAddItem.setVisibility(View.GONE);
             tv_drop_up_title.setVisibility(View.GONE);
@@ -241,12 +299,12 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
         //journey started
         else {
             tv_dropup.setText(appointments.getDropAddress());
-            String text = "<b>" + appointments.getStoreName() + "</b> "+" : "+appointments.getPickUpAddress() ;
+            String text = "<b>" + appointments.getStoreName() + "</b> " + " : " + appointments.getPickUpAddress();
             tvStore.setText(Html.fromHtml(text));
             tv_status_text.setText(getResources().getString(R.string.picked_and_start));
         }
 
-        if(appointments.getStoreType().equals("7")) {
+        if (appointments.getStoreType().equals("7")) {
             ll_estimate_value.setVisibility(View.VISIBLE);
             view_estimate.setVisibility(View.VISIBLE);
             ll_customer_note.setVisibility(View.VISIBLE);
@@ -257,10 +315,9 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
             tvPriceTitle.setGravity(Gravity.RIGHT);
             ll_subTotal.setVisibility(View.GONE);
             tvProductHint.setVisibility(View.GONE);
-            if(appointments.getOrderStatus().equals(AppConstants.BookingStatus.ReachedAtLocation)){
+            if (appointments.getOrderStatus().equals(AppConstants.BookingStatus.ReachedAtLocation)) {
                 tv_cancel.setVisibility(View.GONE);
-            }
-            else {
+            } else {
                 tv_cancel.setVisibility(View.VISIBLE);
                 tv_cancel.setPaintFlags(tv_cancel.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
             }
@@ -274,16 +331,16 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
             tv_cancel.setVisibility(View.GONE);
         }
 
-        tv_estimate_value.setText(appointments.getCurrencySymbol()+""+appointments.getEstimatedPackageValue());
+        tv_estimate_value.setText(appointments.getCurrencySymbol() + "" + appointments.getEstimatedPackageValue());
         tv_customer_value.setText(appointments.getExtraNote());
 
-        if(appointments.getStoreType().equals("7") &&  appointments.getExtraNote().equals("")){
+        if (appointments.getStoreType().equals("7") && appointments.getExtraNote().equals("")) {
             ll_customer_note.setVisibility(View.GONE);
             view_customer.setVisibility(View.GONE);
         }
 
 
-        if(appointments.getPaymentType().equals("2"))
+        if (appointments.getPaymentType().equals("2"))
             tv_payment_type.setText(getResources().getString(R.string.cash));
         else
             tv_payment_type.setText(getResources().getString(R.string.card));
@@ -315,11 +372,11 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
 
 
         double totalAmount = Double.parseDouble(appointments.getTotalAmount());
-        double cash=Double.parseDouble(appointments.getCashCollect());
-        double wallet=0;
+        double cash = Double.parseDouble(appointments.getCashCollect());
+        double wallet = 0;
         ll_wallet.setVisibility(View.VISIBLE);
         ll_cash.setVisibility(View.VISIBLE);
-        wallet=totalAmount-cash;
+        wallet = totalAmount - cash;
         tv_wallet_amount.setText(String.format("%s %s", appointments.getCurrencySymbol(), Utility.currencyFormat(wallet + "")));
         tv_cashAmt.setText(String.format("%s %s", appointments.getCurrencySymbol(), Utility.currencyFormat(cash + "")));
 
@@ -339,35 +396,58 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
     }
 
     @SuppressLint("SetTextI18n")
-    public void addItems(final AssignedAppointments appointments){
+    public void addItems(final AssignedAppointments appointments) {
         ll_item_container.removeAllViews();
-        int size=appointments.getShipmentDetails().size();
-        float total=0.0f;
-        if(size>0){
-            for(int i=0;i<size;i++){
+        int size = appointments.getShipmentDetails().size();
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
                 LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                 View view = inflater.inflate(R.layout.history_item_show_single2, null);
 
-                TextView itemName= view.findViewById(R.id.tvItemName);
+                TextView itemName = view.findViewById(R.id.tvItemName);
                 itemName.setTypeface(font);
-                TextView itemPrice= view.findViewById(R.id.tvItemPrice);
+                TextView itemPrice = view.findViewById(R.id.tvItemPrice);
                 itemPrice.setTypeface(font);
-                TextView itemUnit= view.findViewById(R.id.tvQuantity);
+                TextView itemUnit = view.findViewById(R.id.tvQuantity);
                 itemPrice.setTypeface(font);
-                ImageView iv_item_img=view.findViewById(R.id.iv_item_img);
+                ImageView iv_item_img = view.findViewById(R.id.iv_item_img);
 
-                String item=appointments.getShipmentDetails().get(i).getItemName();
-                SpannableString spannableString=new SpannableString(item);
-                spannableString.setSpan(new UnderlineSpan(),0,spannableString.length(),0);
+                String item = appointments.getShipmentDetails().get(i).getItemName();
+                SpannableString spannableString = new SpannableString(item);
+                spannableString.setSpan(new UnderlineSpan(), 0, spannableString.length(), 0);
                 itemName.setText(spannableString);
 
-                if(!appointments.getShipmentDetails().get(i).getItemImageURL().equals("") && !appointments.getShipmentDetails().get(i).getItemImageURL().isEmpty()) {
+                if (!appointments.getShipmentDetails().get(i).getItemImageURL().equals("") && !appointments.getShipmentDetails().get(i).getItemImageURL().isEmpty()) {
                     Picasso.get().load(appointments.getShipmentDetails().get(i).getItemImageURL()).placeholder(R.drawable.login_logo).error(R.drawable.login_logo).into(iv_item_img);
-                }else {
+                } else {
                     iv_item_img.setVisibility(View.GONE);
                 }
 
-                if(appointments.getStoreType().equals("7")){
+                ArrayList<AddOnGroup> addOnGroupArrayList = new ArrayList<>();
+
+                RecyclerView rvAddOnsList = view.findViewById(R.id.rvAddOnsList);
+
+                rvAddOnsList.setNestedScrollingEnabled(false);
+                rvAddOnsList.setLayoutManager(new LinearLayoutManager(this));
+                rvAddOnsList.setHasFixedSize(true);
+                int quantity = (!TextUtil.isEmpty(appointments.getShipmentDetails().get(i).getQuantity()) && TextUtils.isDigitsOnly(appointments.getShipmentDetails().get(i).getQuantity()) ? Integer.parseInt(appointments.getShipmentDetails().get(i).getQuantity()) : 0);
+                AddOnsAdapter addOnsAdapter = new AddOnsAdapter(addOnGroupArrayList, appointments.getCurrencySymbol(), quantity);
+                rvAddOnsList.setAdapter(addOnsAdapter);
+                addOnGroupArrayList.clear();
+
+                if (appointments.getShipmentDetails().get(i).getAddOns() != null && appointments.getShipmentDetails().get(i).getAddOns().size() > 0) {
+                    for (AddOns addOns : appointments.getShipmentDetails().get(i).getAddOns()) {
+                        if (addOns.getAddOnGroup() != null && addOns.getAddOnGroup().size() > 0)
+                            addOnGroupArrayList.addAll(addOns.getAddOnGroup());
+                    }
+                }
+
+                if (addOnGroupArrayList.size() > 0) {
+                    rvAddOnsList.setVisibility(View.VISIBLE);
+                    addOnsAdapter.notifyDataSetChanged();
+                }
+
+                if (appointments.getStoreType().equals("7")) {
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 2f);
                     itemName.setLayoutParams(params);
                     itemName.setGravity(Gravity.START);
@@ -380,53 +460,33 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
                     itemPrice.setLayoutParams(params2);
                     itemPrice.setGravity(Gravity.END);
                     itemPrice.setVisibility(View.GONE);
-                }else {
+                } else {
                     itemPrice.setVisibility(View.VISIBLE);
                 }
 
-                int quantity= Integer.parseInt(appointments.getShipmentDetails().get(i).getQuantity());
-
-                if(!appointments.getStoreType().equals("7"))
-                    itemUnit.setText(appointments.getShipmentDetails().get(i).getQuantity()+"("+appointments.getShipmentDetails().get(i).getUnitName()+")");
-                else
-                    itemUnit.setText(appointments.getShipmentDetails().get(i).getQuantity());
-
-
-                float unitPrice= Float.parseFloat(appointments.getShipmentDetails().get(i).getFinalPrice());
-
-
-
+                String unitPriceStr=appointments.getShipmentDetails().get(i).getFinalPrice();
+                float unitPrice=0;
+                if(!"".equals(unitPriceStr) && unitPriceStr!=null)
+                    unitPrice= Float.parseFloat(unitPriceStr);
                 float subTotal=quantity*unitPrice;
-                total+=subTotal;
-
-                itemPrice.setText(appointments.getCurrencySymbol()+" "+
-                        String.format(Locale.US,"%.2f",subTotal));
-                String addOns="";/*+appointments.getShipmentDetails().get(i).getAddOns().toString();*/
-                addOns=appointments.getShipmentDetails().get(i).getAddOns().size()>0?
-                        "Addons: "+appointments.getShipmentDetails().get(i).getAddOns().toString():"";
+                itemUnit.setText(appointments.getShipmentDetails().get(i).getQuantity()+" ("+appointments.getCurrencySymbol().concat(" ").concat(String.format(Locale.US,"%.2f",unitPrice))+")");
+                itemPrice.setText(appointments.getCurrencySymbol().concat(" ").concat(String.format(Locale.US,"%.2f",subTotal)));
 
 
-               /* itemUnit.setText(getResources().getString(R.string.qty)
-                        +" "+quantity+"\n"+
-                        getResources().getString(R.string.unit)+": "+appointments.getShipmentDetails().get(i).getUnitName()
-                +"\n"+addOns);
-                itemName.setTextColor(getResources().getColor(R.color.sky_blue));*/
-
-
-                if(appointments.getExcTax()!=null ){
+                if (appointments.getExcTax() != null) {
                     float exc_tax = Float.parseFloat(appointments.getExcTax());
-                    if(exc_tax>0 /*&& !tax_added*/){
+                    if (exc_tax > 0 /*&& !tax_added*/) {
                         addTaxItems(appointments);
-                    }else {
+                    } else {
                         ll_tax.setVisibility(View.GONE);
                     }
-                }else
+                } else
                     ll_tax.setVisibility(View.GONE);
 
                 final int finalI = i;
 
 
-                if(!appointments.getStoreType().equals("7")) {
+                if (!appointments.getStoreType().equals("7")) {
                   /*  itemName.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -439,40 +499,41 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
                 ll_item_container.addView(view);
             }
         }
-        tvGrandTotal.setText(appointments.getCurrencySymbol()+" "+String.format(Locale.US,"%.2f",Float.parseFloat(appointments.getTotalAmount())));
+        tvGrandTotal.setText(appointments.getCurrencySymbol() + " " + String.format(Locale.US, "%.2f", Float.parseFloat(appointments.getTotalAmount())));
     }
 
     /**
      * addTaxItems
      * <p>calculating abs adding the taxView layout</p>
+     *
      * @param appointments : appointmentsPojo details
      */
-    public void addTaxItems(AssignedAppointments appointments){
+    public void addTaxItems(AssignedAppointments appointments) {
         tax_added = true;
 
         ll_tax_item_container.removeAllViews();
-        int size=appointments.getExclusiveTaxes().size();
-        if(size>0){
-            for(int i=0;i<size;i++){
+        int size = appointments.getExclusiveTaxes().size();
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
                 LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                 View view = inflater.inflate(R.layout.history_item_show_single_raw, null);
 
-                TextView itemName= view.findViewById(R.id.tvItemName);
-                itemName.setTypeface(font,Typeface.ITALIC);
+                TextView itemName = view.findViewById(R.id.tvItemName);
+                itemName.setTypeface(font, Typeface.ITALIC);
                 itemName.setTextColor(getResources().getColor(R.color.divider2));
-                TextView itemPrice= view.findViewById(R.id.tvItemPrice);
+                TextView itemPrice = view.findViewById(R.id.tvItemPrice);
                 itemPrice.setTypeface(font);
                 itemPrice.setTextColor(getResources().getColor(R.color.divider2));
-                TextView itemUnit= view.findViewById(R.id.tvQuantity);
+                TextView itemUnit = view.findViewById(R.id.tvQuantity);
                 itemPrice.setTypeface(font, Typeface.ITALIC);
                 itemUnit.setVisibility(View.INVISIBLE);
 
-                String tax_name = "("+appointments.getExclusiveTaxes().get(i).getTaxCode()+"%"+")";
+                String tax_name = "(" + appointments.getExclusiveTaxes().get(i).getTaxCode() + "%" + ")";
                 itemName.setText(tax_name);
 
-                float tax_price=Float.parseFloat(appointments.getExclusiveTaxes().get(i).getPrice());
-                itemPrice.setText(appointments.getCurrencySymbol()+" "+
-                        String.format(Locale.US,"%.2f",tax_price));
+                float tax_price = Float.parseFloat(appointments.getExclusiveTaxes().get(i).getPrice());
+                itemPrice.setText(appointments.getCurrencySymbol() + " " +
+                        String.format(Locale.US, "%.2f", tax_price));
 
                 ll_tax_item_container.addView(view);
 
@@ -508,16 +569,15 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
             Bundle bundle = new Bundle();
             bundle.putSerializable("data", appointments);
             bundle.putInt("updIndex", index);
-            if (appointments != null && appointments.getOrderStatus()==AppConstants.BookingStatus.JourneyStarted) {
+            if (appointments != null && appointments.getOrderStatus() == AppConstants.BookingStatus.JourneyStarted) {
                 Intent intent = new Intent();
                 intent.putExtras(bundle);
                 setResult(Activity.RESULT_OK, intent);
                 finish();
-            }
-            else{
+            } else {
                 Intent intent = new Intent(StorePickUp.this, InvoiceActivity.class);
                 intent.putExtras(bundle);
-                startActivityForResult(intent,123);
+                startActivityForResult(intent, 123);
             }
         }
     }
@@ -525,12 +585,12 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
     @Override
     public void onError(String message) {
         seekbar.setProgress(0);
-        Utility.mShowMessage(getResources().getString(R.string.message),message,this);
+        Utility.mShowMessage(getResources().getString(R.string.message), message, this);
     }
 
     @Override
     public void openOrderEditDialog(final ShipmentDetails shipmentDetails, AssignedAppointments appointments) {
-        if(preferenceHelperDataSource.getDriverScheduleType()==1) {
+        if (preferenceHelperDataSource.getDriverScheduleType() == 1) {
             Bundle bundle = new Bundle();
             bundle.putSerializable("data", appointments);
             bundle.putSerializable("shipment", shipmentDetails);
@@ -540,8 +600,7 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
             Intent intent = new Intent(StorePickUp.this, OrderEditActivity.class);
             intent.putExtras(bundle);
             startActivityForResult(intent, 123);
-        }
-        else {
+        } else {
             dialog = new Dialog(StorePickUp.this);
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.setContentView(R.layout.order_edit_dailog);
@@ -597,20 +656,21 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
             dialog.show();
         }
     }
+
     //call customer
     @OnClick(R.id.iv_call_customer)
-    public void onClick(View view){
+    public void onClick(View view) {
         presenter.callCustomer();
     }
 
     //chat option
     @OnClick(R.id.iv_search)
-    public void openChatOnclick(View view){
+    public void openChatOnclick(View view) {
         presenter.openChat();
     }
 
     @OnClick(R.id.tv_cancel)
-    public void cancelOrder(){
+    public void cancelOrder() {
         presenter.cancelReason();
     }
 
@@ -625,10 +685,10 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
     @Override
     public void openChatAct(AssignedAppointments appointments) {
 
-        Intent intent=new Intent(this,ChattingActivity.class);
-        intent.putExtra("BID",appointments.getBid());
-        intent.putExtra("CUST_ID",appointments.getCustomerId());
-        intent.putExtra("CUST_NAME",appointments.getCustomerName());
+        Intent intent = new Intent(this, ChattingActivity.class);
+        intent.putExtra("BID", appointments.getBid());
+        intent.putExtra("CUST_ID", appointments.getCustomerId());
+        intent.putExtra("CUST_NAME", appointments.getCustomerName());
         startActivity(intent);
     }
 
@@ -645,9 +705,7 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
                         Bundle bundle = data.getExtras();
                         AssignedAppointments appointments = (AssignedAppointments) bundle.getSerializable("data");
                         presenter.getResultBundle(appointments);
-                    }
-                    else if(resultCode==Activity.RESULT_CANCELED)
-                    {
+                    } else if (resultCode == Activity.RESULT_CANCELED) {
                         setResult(Activity.RESULT_CANCELED, data);
                         finish();
                     }
@@ -680,10 +738,10 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.cancel_reason_row);
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        ReasonRVA reasonRVA = new ReasonRVA(this, cancelData,2);
+        ReasonRVA reasonRVA = new ReasonRVA(this, cancelData, 2);
         RecyclerView rv_reasons = dialog.findViewById(R.id.bottomSheetReasonRv);
 //        Button confirm=dialog.findViewById(R.id.createNewListTv);
-        ImageView cancelDialog=dialog.findViewById(R.id.iv_jobdetails);
+        ImageView cancelDialog = dialog.findViewById(R.id.iv_jobdetails);
         rv_reasons.setLayoutManager(new LinearLayoutManager(this));
         rv_reasons.setAdapter(reasonRVA);
         reasonRVA.notifyDataSetChanged();
@@ -702,7 +760,7 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
         dialog.show();
     }
 
-    public void showDialog(){
+    public void showDialog() {
         alertDialog = new AlertDialog.Builder(this);
         alertDialog.setTitle(getApplicationContext().getResources().getString(R.string.message));
         alertDialog.setMessage(getApplicationContext().getResources().getString(R.string.want_to_cancel_item));
@@ -724,7 +782,7 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
 
     @Override
     public void moveHomeActivity() {
-        Intent intent=new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

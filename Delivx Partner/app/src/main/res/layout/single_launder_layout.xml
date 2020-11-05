@@ -11,7 +11,6 @@
         android:id="@+id/tv_laundry_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:textColor="@color/color_sup_txt"
         android:textSize="@dimen/spSixteen"
         android:layout_alignParentStart="true" />
@@ -29,7 +28,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Saree"
-        android:layout_alignParentRight="true"
         android:textColor="@color/color_sup_txt"
         android:layout_alignParentEnd="true"
         android:src="@drawable/info_icon"/>

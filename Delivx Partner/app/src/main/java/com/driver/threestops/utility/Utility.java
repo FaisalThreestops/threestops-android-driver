@@ -579,9 +579,13 @@ public class Utility {
 
     /**********************************************************************************************/
     public static void hideSoftKeyboard(Activity activity) {
+        if (activity == null)
+            return;
+
         InputMethodManager inputMethodManager =
                 (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+        if (activity.getCurrentFocus() != null)
+            inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
     }
 
     public static void hideSoftKeyboard(View view) {
@@ -1189,5 +1193,25 @@ public class Utility {
         cal.setTimeInMillis(time * 1000);
         String date = DateFormat.format("dd-MMM-yyyy HH:mm a", cal).toString();
         return date;
+    }
+
+    public static String roundOfDoubleValue(String number) {
+        String returnNumber = number;
+        if (!returnNumber.equals("") && !returnNumber.equals("null")) {
+            if (number.contains(",")) {
+                number = number.replace(',', '.');
+            }
+
+            try {
+                double decimalNumber = Double.parseDouble(number);
+                DecimalFormat twoDForm = new DecimalFormat("#.##");
+                returnNumber = String.format(Locale.getDefault(), "%.2f", Double.valueOf(twoDForm.format(decimalNumber)));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return returnNumber;
+
     }
 }

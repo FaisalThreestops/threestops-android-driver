@@ -55,7 +55,9 @@
     <dimen name="dimen_20dp">20dp</dimen>
     <dimen name="hundreddp">100dp</dimen>
     <dimen name="eleven_fivesp">11.5sp</dimen>
-
+    <dimen name="tenDp">10dp</dimen>
+    <dimen name="twelveSp">12sp</dimen>
+    <dimen name="fiveDp">5dp</dimen>
 
 
 </resources>
