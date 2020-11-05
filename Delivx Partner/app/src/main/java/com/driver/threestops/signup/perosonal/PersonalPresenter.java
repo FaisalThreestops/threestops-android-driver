@@ -276,12 +276,17 @@ public class PersonalPresenter implements PersonalPresenterContract,DatePickerDi
                         state = Environment.getExternalStorageState();
                         takenNewImage = context.getResources().getString(R.string.app_name).replace(" ","") + String.valueOf(System.nanoTime()) + ".png";
 
+                        File imgFolder;
                         if (Environment.MEDIA_MOUNTED.equals(state)) {
-
-                            VariableConstant.newFile = new File(Environment.getExternalStorageDirectory(), takenNewImage);
+                            imgFolder = new File(context.getExternalFilesDir(null) + "/" + VariableConstant.PARENT_FOLDER);
                         } else {
-                            VariableConstant.newFile = new File(context.getFilesDir(), takenNewImage);
+                            imgFolder = new File(context.getFilesDir() + "/" + VariableConstant.PARENT_FOLDER);
                         }
+
+                        if (!imgFolder.exists())
+                            imgFolder.mkdirs();
+
+                        VariableConstant.newFile = new File(imgFolder, takenNewImage);
 
                         InputStream inputStream = context.getContentResolver().openInputStream(
                                 data.getData());

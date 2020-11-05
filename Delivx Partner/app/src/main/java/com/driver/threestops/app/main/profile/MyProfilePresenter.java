@@ -211,7 +211,6 @@ public class MyProfilePresenter implements ProfileContract.PresenterOpetaions {
 
         Utility.printLog(TAG+" onActivtyResult "+requestCode);
         if (resultCode != RESULT_OK) {
-            return;
         } else if (requestCode != -1) {
             switch (requestCode) {
                 case CAMERA_PIC:
@@ -225,11 +224,17 @@ public class MyProfilePresenter implements ProfileContract.PresenterOpetaions {
                         state = Environment.getExternalStorageState();
                         takenNewImage = VariableConstant.PARENT_FOLDER + String.valueOf(System.nanoTime()) + ".png";
 
+                        File imgFolder;
                         if (Environment.MEDIA_MOUNTED.equals(state)) {
-                            VariableConstant.newFile = new File(Environment.getExternalStorageDirectory() + "/" + VariableConstant.PARENT_FOLDER /*+ "/Media/Images/CropImages/"*/, takenNewImage);
+                            imgFolder = new File(context.getExternalFilesDir(null) + "/" + VariableConstant.PARENT_FOLDER /*+ "/Media/Images/CropImages/"*/);
                         } else {
-                            VariableConstant.newFile = new File(context.getFilesDir() + "/" + VariableConstant.PARENT_FOLDER /*+ "/Media/Images/CropImages/"*/, takenNewImage);
+                            imgFolder = new File(context.getFilesDir() + "/" + VariableConstant.PARENT_FOLDER /*+ "/Media/Images/CropImages/"*/);
                         }
+
+                        if (!imgFolder.exists())
+                            imgFolder.mkdirs();
+
+                        VariableConstant.newFile = new File(imgFolder, takenNewImage);
 
                         InputStream inputStream = context.getContentResolver().openInputStream(data.getData());
                         FileOutputStream fileOutputStream = new FileOutputStream(VariableConstant.newFile);
@@ -253,7 +258,6 @@ public class MyProfilePresenter implements ProfileContract.PresenterOpetaions {
                     String path = data.getStringExtra(CropImage.IMAGE_PATH);
                     if (path == null) {
                         Utility.printLog("RegistrationAct CROP_IMAGE file path is null: " + VariableConstant.newFile.getPath());
-
                         return;
                     } else {
 

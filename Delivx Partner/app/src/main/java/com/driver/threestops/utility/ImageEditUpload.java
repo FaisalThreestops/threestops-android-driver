@@ -186,7 +186,7 @@ public class ImageEditUpload implements ActionSheet.ActionSheetListener {
 
     private void openGallery() {
 
-        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
         photoPickerIntent.setType("image/*");
         context.startActivityForResult(photoPickerIntent, ImageEditUpload.GALLERY_PIC);
     }
@@ -264,7 +264,7 @@ public class ImageEditUpload implements ActionSheet.ActionSheetListener {
 
             if (Environment.MEDIA_MOUNTED.equals(state)) {
 
-                newFile = new File(Environment.getExternalStorageDirectory() /*+ "/" + VariableConstant.PARENT_FOLDER + "/Media/Images/CropImages/"*/, takenNewImage);
+                newFile = new File(context.getExternalFilesDir(null) /*+ "/" + VariableConstant.PARENT_FOLDER + "/Media/Images/CropImages/"*/, takenNewImage);
                 VariableConstant.newFile = newFile;
             } else {
                 newFile = new File(context.getFilesDir() /*+ "/" + VariableConstant.PARENT_FOLDER + "/Media/Images/CropImages/"*/, takenNewImage);
@@ -290,7 +290,6 @@ public class ImageEditUpload implements ActionSheet.ActionSheetListener {
 
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, newProfileImageUri);
-            intent.putExtra("return-data", true);
             context.startActivityForResult(intent, CAMERA_PIC);
         } catch (ActivityNotFoundException e) {
             Utility.printLog("RegistrationAct cannot take picture: " + e);
