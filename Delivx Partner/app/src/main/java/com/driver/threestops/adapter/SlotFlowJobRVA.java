@@ -63,26 +63,23 @@ public class SlotFlowJobRVA extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder viewHolder, final int position) {
         if (viewHolder.getItemViewType() == ORDER) {
             final ViewHolder holder = (ViewHolder) viewHolder;
-            holder.tvSlotTimings.setText(Utility.getDate(Long.parseLong(orderDetails.get(position).getSlotStartTime())) + " - " + Utility.getDate(Long.parseLong(orderDetails.get(position).getSlotEndTime())));
-            holder.tvSlotTimings.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            holder.tvSlotTimings.setText(String.format("%s - %s", Utility.getDate(Long.parseLong(orderDetails.get(position).getSlotStartTime())), Utility.getDate(Long.parseLong(orderDetails.get(position).getSlotEndTime()))));
+            holder.tvSlotTimings.setOnClickListener(v -> {
 
-                    for (int i = 0; i < appointmentsResponse.size(); i++) {
-                        if (appointmentsResponse.get(i).getSlotId().equals(orderDetails.get(position).getSlotId())) {
-                            passingAssignmentTrips.add(appointmentsResponse.get(i));
-                        }
+                for (int i = 0; i < appointmentsResponse.size(); i++) {
+                    if (appointmentsResponse.get(i).getSlotId().equals(orderDetails.get(position).getSlotId())) {
+                        passingAssignmentTrips.add(appointmentsResponse.get(i));
                     }
+                }
 
-                    if (passingAssignmentTrips.size() > 0) {
-                        Intent intent = new Intent(context, SlotAppointmentActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable(DATA, passingAssignmentTrips);
-                        intent.putExtras(bundle);
-                        context.startActivity(intent);
-                    } else {
-                        Toast.makeText(context, "No Orders Available For This Slot.", Toast.LENGTH_SHORT).show();
-                    }
+                if (passingAssignmentTrips.size() > 0) {
+                    Intent intent = new Intent(context, SlotAppointmentActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(DATA, passingAssignmentTrips);
+                    intent.putExtras(bundle);
+                    context.startActivity(intent);
+                } else {
+                    Toast.makeText(context, "No Orders Available For This Slot.", Toast.LENGTH_SHORT).show();
                 }
             });
             passingAssignmentTrips.clear();

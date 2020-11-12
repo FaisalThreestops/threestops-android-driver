@@ -79,7 +79,7 @@ public class CurrentUpcomingJobRVA extends RecyclerView.Adapter<CurrentUpcomingJ
             holder.tv_store_type.setText(mData.get(position).getStoreTypeMsg());
             holder.tv_drop_loc.setText(mData.get(position).getDropAddress());
             holder.tv_drop_loc_header.setText(mData.get(position).getCustomerName());
-            holder.tv_deliveryfee.setText(mData.get(position).getCurrencySymbol() + " " + Utility.formatPrice(mData.get(position).getDeliveryCharge()));
+            holder.tv_deliveryfee.setText(String.format("%s %s", mData.get(position).getCurrencySymbol(), Utility.formatPrice(mData.get(position).getDeliveryCharge())));
             holder.tv_date_time.setText(Utility.getDateFormat(Long.parseLong(mData.get(position).getOrderDateTimeStamp())));
             holder.tv_deliverytime.setText(Utility.getDate(Long.parseLong(mData.get(position).getDueDatetimeTimeStamp())));
             holder.tvOrderStatus.setText(mData.get(position).getStatusMessage());
