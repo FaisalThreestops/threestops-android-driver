@@ -564,7 +564,9 @@ public class Utility {
         String inputPattern = "yyyy-MM-dd HH:mm:ss";
         String outputPattern = "MMM d. h.mm a";
         SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern, Locale.US);
+        inputFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern, Locale.US);
+        outputFormat.setTimeZone(TimeZone.getDefault());
 
         Date date = null;
         String str = null;
