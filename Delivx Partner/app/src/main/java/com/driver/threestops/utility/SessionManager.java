@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.inject.Inject;
+
 public class SessionManager {
 
 
@@ -57,9 +59,11 @@ public class SessionManager {
     private final String mileage_metric = "mileage_metric";
     private final String presence_interval = "presence_interval";
     private final String DISTANCE_CONVERSION_UNIT = "distance_conversion";
+    private final String BOOKING_POPUP_DETAILS = "booking_popup_details";
 
     /***********************************************************************************************/
 
+    @Inject
     public SessionManager(Context context) {
         sharedPreferences = getSharedPref(context);
         editor = getEditor();
@@ -764,6 +768,15 @@ public class SessionManager {
 
     public void setWalletEnabled(boolean value) {
         editor.putBoolean("WalletEnabled", value);
+        editor.commit();
+    }
+
+    public String getBookingPopupDetails() {
+        return sharedPreferences.getString(BOOKING_POPUP_DETAILS, "");
+    }
+
+    public void setBookingPopupDetails(String bookingData) {
+        editor.putString(BOOKING_POPUP_DETAILS, bookingData);
         editor.commit();
     }
 }

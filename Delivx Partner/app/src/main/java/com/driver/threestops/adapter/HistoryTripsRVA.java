@@ -67,10 +67,10 @@ public class HistoryTripsRVA extends RecyclerView.Adapter<HistoryTripsRVA.ViewHo
         });
 
         holder.tvOrderStatus.setText("Completed");
-        holder.tv_job_id.setText(context.getResources().getString(R.string.id) + " " + appointments.get(position).getOrderId());
+        holder.tv_job_id.setText(String.format("%s %s", context.getResources().getString(R.string.id), appointments.get(position).getOrderId()));
         holder.tv_pickup_loc.setText(appointments.get(position).getPickAddress());
         holder.tv_drop_loc.setText(appointments.get(position).getDropAddress());
-        holder.tv_deliveryfee.setText(appointments.get(position).getCurrencySymbol() + "" + appointments.get(position).getTotalAmount());
+        holder.tv_deliveryfee.setText(String.format("%s%s", appointments.get(position).getCurrencySymbol(), Utility.roundOfDoubleValue(appointments.get(position).getTotalAmount())));
         if(appointments.get(position).getStoreType().equals("7")){
             holder.tv_pickup_loc_header.setText(context.getResources().getString(R.string.pickup));
             holder.tv_drop_loc_header.setText(context.getResources().getString(R.string.delivery));

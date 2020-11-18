@@ -22,6 +22,7 @@ import com.driver.threestops.app.bookingRequest.BookingPopUp;
 import com.driver.threestops.service.LocationUpdateService;
 import com.driver.threestops.utility.AcknowledgeHelper;
 import com.driver.threestops.utility.AppConstants;
+import com.driver.threestops.utility.SessionManager;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -42,6 +43,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Inject
     AcknowledgeHelper acknowledgeHelper;
+    private SessionManager sessionManager;
     private String data;
 
     /**
@@ -51,7 +53,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     // [START receive_message]
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-
+        sessionManager = new SessionManager(this);
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
             try {
@@ -137,8 +139,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private void sendNotification(String messageBody, int action) {
         Intent intent;
         if (action == 11) {
+            sessionManager.setBookingPopupDetails(jsonObject.toString());
             intent = new Intent(MyFirebaseMessagingService.this, BookingPopUp.class);
-            intent.putExtra("booking_Data", jsonObject.toString());
         } else {
             intent = new Intent(MyFirebaseMessagingService.this, SplashScreen.class);
         }

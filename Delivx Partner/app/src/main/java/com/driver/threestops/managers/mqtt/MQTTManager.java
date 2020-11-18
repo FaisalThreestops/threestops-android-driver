@@ -28,6 +28,7 @@ import com.driver.threestops.networking.NetworkStateHolder;
 import com.driver.threestops.pojo.BookingAssigned;
 import com.driver.threestops.utility.AcknowledgeHelper;
 import com.driver.threestops.utility.AcknowledgementCallback;
+import com.driver.threestops.utility.SessionManager;
 import com.driver.threestops.utility.Utility;
 import com.driver.threestops.utility.VariableConstant;
 
@@ -65,6 +66,7 @@ public class MQTTManager
     private AcknowledgeHelper acknowledgeHelper;
     private PreferenceHelperDataSource helperDataSource;
     private BookingManager bookingManager;
+    private SessionManager sessionManager;
 
     @Inject
     public MQTTManager(Context context, AcknowledgeHelper acknowledgeHelper,
@@ -75,6 +77,7 @@ public class MQTTManager
         this.acknowledgeHelper=acknowledgeHelper;
         this.helperDataSource=dDataSource;
         this.bookingManager=bookingManager;
+        this.sessionManager = new SessionManager(mContext);
 
         mMQTTListener = new IMqttActionListener()
         {
@@ -239,8 +242,8 @@ public class MQTTManager
                                         public void callback(String bid) {
                                             if(!IS_POP_UP_OPEN){
                                                 try {
+                                                    sessionManager.setBookingPopupDetails(jsonObject.getString("bookingData"));
                                                     Intent intent = new Intent(mContext, BookingPopUp.class);
-                                                    intent.putExtra("booking_Data", jsonObject.getString("bookingData"));
                                                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
                                                     mContext.startActivity(intent);
                                                 } catch (JSONException e) {
@@ -307,8 +310,8 @@ public class MQTTManager
                                         @Override
                                         public void callback(String bid) {
                                             if(!IS_POP_UP_OPEN){
+                                                sessionManager.setBookingPopupDetails(jsonObject.toString());
                                                 Intent intent = new Intent(mContext, BookingPopUp.class);
-                                                intent.putExtra("booking_Data", jsonObject.toString());
                                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
                                                 mContext.startActivity(intent);
                                             }

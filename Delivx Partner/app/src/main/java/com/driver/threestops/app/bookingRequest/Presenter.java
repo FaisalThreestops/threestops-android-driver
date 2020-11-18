@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 
 import com.driver.threestops.app.MyApplication;
+import com.driver.threestops.utility.SessionManager;
+import com.driver.threestops.utility.TextUtil;
 import com.google.gson.Gson;
 import com.driver.threestops.data.source.PreferenceHelperDataSource;
 import com.driver.threestops.networking.DispatcherService;
@@ -33,6 +35,7 @@ public class Presenter implements BookingPopUpMainMVP.PresenterOperations {
     @Inject   BookingPopUpMainMVP.ViewOperations view;
     @Inject   Activity context;
     @Inject   PreferenceHelperDataSource preferenceHelperDataSource;
+    @Inject   SessionManager sessionManager;
     @Inject   DispatcherService dispatcherService;
 
     private NewBookingMQTTResponse newBookingMQTTResponse;
@@ -76,14 +79,14 @@ public class Presenter implements BookingPopUpMainMVP.PresenterOperations {
 
     @Override
     public void getBundleData(Intent intent) {
-        Bundle bundle = intent.getExtras();
-        if (bundle != null && bundle.containsKey("booking_Data")) {
+        String data = sessionManager.getBookingPopupDetails();
+        if (!TextUtil.isEmpty(data)) {
+            sessionManager.setBookingPopupDetails("");
             NotificationManager notificationManager= (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
             notificationManager.cancelAll();
 
-            String response = bundle.getString("booking_Data");
-            Utility.printLog("the booking req details : "+ response);
-            newBookingMQTTResponse = new Gson().fromJson(response, NewBookingMQTTResponse.class);
+            Utility.printLog("the booking req details : "+ data);
+            newBookingMQTTResponse = new Gson().fromJson(data, NewBookingMQTTResponse.class);
             view.setTexts(newBookingMQTTResponse);
         }
     }

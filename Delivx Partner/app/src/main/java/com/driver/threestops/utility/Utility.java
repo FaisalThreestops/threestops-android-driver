@@ -1069,8 +1069,10 @@ public class Utility {
     public static String parseDateToddMMyyyy(String time) {
         String inputPattern = "yyyy-MM-dd HH:mm:ss";
         String outputPattern = "dd MMM yyyy, h:mm a";
-        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
-        SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
+        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern, Locale.US);
+        inputFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern, Locale.US);
+        outputFormat.setTimeZone(TimeZone.getDefault());
 
         Date date = null;
         String str = null;

@@ -10,6 +10,7 @@ import com.driver.threestops.app.MyApplication;
 import com.driver.threestops.login.language.LanguagesList;
 import com.driver.threestops.login.language.LanguagesPojo;
 import com.driver.threestops.networking.LanguageApiService;
+import com.driver.threestops.utility.SessionManager;
 import com.google.gson.Gson;
 import com.driver.threestops.RxObservers.RXMqttMessageObserver;
 import com.driver.threestops.RxObservers.RxNetworkObserver;
@@ -46,6 +47,7 @@ public class MainPresenterImpl implements MainPresenter {
     @Inject  Activity context;
     @Inject  MainView view;
     @Inject  PreferenceHelperDataSource helperDataSource;
+    @Inject  SessionManager sessionManager;
     @Inject  NetworkService networkService;
     @Inject  RxNetworkObserver rxNetworkObserver;
     @Inject  NetworkStateHolder networkStateHolder;
@@ -214,8 +216,8 @@ public class MainPresenterImpl implements MainPresenter {
                     @Override
                     public void callback(String bid) {
                         if(!VariableConstant.IS_POP_UP_OPEN){
+                            sessionManager.setBookingPopupDetails(jsonObject.toString());
                             Intent intent = new Intent(context, BookingPopUp.class);
-                            intent.putExtra("booking_Data", jsonObject.toString());
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
                             context.startActivity(intent);
                         }
