@@ -92,6 +92,12 @@ public interface BookingPopUpMainMVP {
          */
         void getBundleData(Intent intent);
 
+        /**
+         * <h1>cancelCountDownTimer</h1>
+         * <p>cancel or finish the timer count</p>
+         */
+        public void cancelCountDownTimer();
+
     }
 
 }

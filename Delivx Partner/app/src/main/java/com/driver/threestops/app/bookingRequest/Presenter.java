@@ -71,7 +71,7 @@ public class Presenter implements BookingPopUpMainMVP.PresenterOperations {
             }
             public void onFinish() {
                 view.onTimerChanged(0,"00");
-                cancelCoutDownTimer();
+                cancelCountDownTimer();
             }
         }.start();
 
@@ -132,7 +132,7 @@ public class Presenter implements BookingPopUpMainMVP.PresenterOperations {
                                 jsonObject=new JSONObject(value.errorBody().string());
                                 view.onSuccess(jsonObject.getString("message"));
                             }
-                            cancelCoutDownTimer();
+                            cancelCountDownTimer();
 
                             Utility.printLog("respondToRequest : "+jsonObject.toString());
                         }catch (Exception e)
@@ -146,7 +146,7 @@ public class Presenter implements BookingPopUpMainMVP.PresenterOperations {
                         if(view!=null){
                             view.dismissProgressbar();
                         }
-                        cancelCoutDownTimer();
+                        cancelCountDownTimer();
                     }
 
                     @Override
@@ -158,11 +158,8 @@ public class Presenter implements BookingPopUpMainMVP.PresenterOperations {
                 });
     }
 
-    /**
-     * <h1>cancelCoutDownTimer</h1>
-     * <p>cancel or finish the timer count</p>
-     */
-    private void cancelCoutDownTimer(){
+    @Override
+    public void cancelCountDownTimer() {
         if (countDownTimer != null) {
             countDownTimer.cancel();
             countDownTimer = null;

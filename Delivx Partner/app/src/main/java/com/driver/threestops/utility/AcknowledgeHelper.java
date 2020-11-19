@@ -1,12 +1,10 @@
 package com.driver.threestops.utility;
 
-import android.app.Activity;
 import android.content.Context;
 
 import com.driver.threestops.app.MyApplication;
 import com.driver.threestops.data.source.PreferenceHelperDataSource;
 import com.driver.threestops.networking.DispatcherService;
-
 
 import org.json.JSONObject;
 
@@ -29,15 +27,15 @@ public class AcknowledgeHelper {
     Context activity;
 
     @Inject
-    public AcknowledgeHelper(PreferenceHelperDataSource dataSource,DispatcherService dispatcherService) {
-        preferenceHelperDataSource=dataSource;
-        this.dispatcherService=dispatcherService;
+    public AcknowledgeHelper(PreferenceHelperDataSource dataSource, DispatcherService dispatcherService) {
+        preferenceHelperDataSource = dataSource;
+        this.dispatcherService = dispatcherService;
     }
 
 
-    public void  bookingAckApi(String bid, Context context, final AcknowledgementCallback callback){
+    public void bookingAckApi(String bid, Context context, final AcknowledgementCallback callback) {
         activity = context;
-        final Observable<Response<ResponseBody>> bookingAck=dispatcherService.bookingAck(preferenceHelperDataSource.getLanguage(), MyApplication.getInstance().getAuthToken(preferenceHelperDataSource.getDriverID()),bid);
+        final Observable<Response<ResponseBody>> bookingAck = dispatcherService.bookingAck(preferenceHelperDataSource.getLanguage(), MyApplication.getInstance().getAuthToken(preferenceHelperDataSource.getDriverID()), bid);
         bookingAck.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Response<ResponseBody>>() {
@@ -51,25 +49,24 @@ public class AcknowledgeHelper {
 
                         try {
                             JSONObject jsonObject;
-                            if(value.code()==200){
-                                jsonObject=new JSONObject(value.body().string());
+                            if (value.code() == 200) {
+                                jsonObject = new JSONObject(value.body().string());
                                 callback.callback(jsonObject.getString("message"));
 
-                            }else {
-                                jsonObject=new JSONObject(value.errorBody().string());
+                            } else {
+                                jsonObject = new JSONObject(value.errorBody().string());
                             }
 
-                            Utility.printLog("bookingAckApi : "+jsonObject.toString());
+                            Utility.printLog("bookingAckApi : " + jsonObject.toString());
 
-                        }catch (Exception e)
-                        {
-                            Utility.printLog("bookingAckApi : Catch :"+e.getMessage());
+                        } catch (Exception e) {
+                            Utility.printLog("bookingAckApi : Catch :" + e.getMessage());
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Utility.printLog("bookingAckApi Error: " + e.getMessage());
                     }
 
                     @Override
