@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="E:\Sagar\Workspace\delivx_android_partner_threestops\Delivx Partner\signature-pad\src\main\shaders"/></dataSet><dataSet config="release" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="E:\Sagar\Workspace\delivx_android_partner_threestops\Delivx Partner\signature-pad\src\release\shaders"/></dataSet></merger>
