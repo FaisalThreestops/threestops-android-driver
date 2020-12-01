@@ -389,6 +389,9 @@ public interface PreferenceHelperDataSource
     void setCountryCode(String countryCode);
     String getCountryCode();
 
+    void setMobileNo(String mobileNo);
+    String getMobileNo();
+
     void setCurrency(String currency);
     String getCurrency();
 

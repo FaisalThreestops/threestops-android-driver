@@ -122,6 +122,8 @@ public class WalletPresenterImpl implements WalletPresenter {
                                             String result = responseBodyResponse.body().string();
                                             object = new JSONObject(result);
 
+                                            Utility.printLog();
+
                                             mView.callCashFree(
                                                     object.getJSONObject("data").getString("orderId"),
                                                     object.getJSONObject("data").getString("orderNote"),
@@ -129,7 +131,8 @@ public class WalletPresenterImpl implements WalletPresenter {
                                                     object.getJSONObject("data").getString("appId"),
                                                     object.getJSONObject("data").getString("token"),
                                                     total,
-                                                    preferenceHelperDataSource.getMyName(),"9123456789",
+                                                    preferenceHelperDataSource.getMyName(),
+                                                    preferenceHelperDataSource.getCountryCode().concat(" ").concat(preferenceHelperDataSource.getMobileNo()),
                                                     preferenceHelperDataSource.getMyEmail()
                                             );
                                         } catch (Exception e) {
@@ -305,6 +308,7 @@ public class WalletPresenterImpl implements WalletPresenter {
                                         AppConstants.WALLET_AVAILABLE = true;
 
                                         currency = object.getJSONObject("data").getString("currencySymbol");
+                                        preferenceHelperDataSource.setCurrencySymbol(currency);
                                         double walletBalance = Double.parseDouble(object.getJSONObject("data").opt("walletBalance").toString());
                                         AppConstants.WALLET_AMOUNT = Utility.currencyFormat(walletBalance + "");
                                         mView.setTotalBalance(currency + " " + AppConstants.WALLET_AMOUNT);

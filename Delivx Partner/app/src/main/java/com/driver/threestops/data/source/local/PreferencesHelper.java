@@ -475,6 +475,17 @@ public class PreferencesHelper implements PreferenceHelperDataSource {
     }
 
     @Override
+    public void setMobileNo(String mobileNo) {
+        editor.putString(PreferenceKeys.KeysEntry.MOBILE_NO, mobileNo);
+        editor.commit();
+    }
+
+    @Override
+    public String getMobileNo() {
+        return sharedPreferences.getString(PreferenceKeys.KeysEntry.MOBILE_NO,"");
+    }
+
+    @Override
     public void setCurrency(String currency) {
         editor.putString(PreferenceKeys.KeysEntry.CURRENCY,currency);
         editor.commit();
