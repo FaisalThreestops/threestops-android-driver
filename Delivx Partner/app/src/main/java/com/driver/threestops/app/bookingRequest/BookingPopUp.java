@@ -177,7 +177,6 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
     public void setTexts(NewBookingMQTTResponse newBookingMQTTResponse) {
         tv_popup_cur.setText(newBookingMQTTResponse.getCurrencySymbol());
         tvDistance.setText(String.format("%s %s", newBookingMQTTResponse.getDis(), newBookingMQTTResponse.getMileageMetric()));
-        tvPayment.setText(newBookingMQTTResponse.getPaymentType());
         tv_popup_pickuploc.setText(String.format("%s:%s", newBookingMQTTResponse.getStoreName(), newBookingMQTTResponse.getAdr1()));
 //        tv_pickuptime.setText(Utility.formatDateWeek(newBookingMQTTResponse.getDt()));
         if (newBookingMQTTResponse.getStoreType() != null && newBookingMQTTResponse.getStoreType().equals("7"))
@@ -192,6 +191,8 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
 
         if (newBookingMQTTResponse.getPaymentType().equals("2"))
             tvPayment.setText(getResources().getString(R.string.cash));
+        else if (newBookingMQTTResponse.getPaymentType().equals("1"))
+            tvPayment.setText(getResources().getString(R.string.lbl_wallet));
         else
             tvPayment.setText(getResources().getString(R.string.card));
 

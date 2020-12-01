@@ -342,6 +342,8 @@ public class StorePickUp extends DaggerAppCompatActivity implements PickUpContra
 
         if (appointments.getPaymentType().equals("2"))
             tv_payment_type.setText(getResources().getString(R.string.cash));
+        else if(appointments.getPaymentType().equals("1"))
+            tv_payment_type.setText(getResources().getString(R.string.lbl_wallet));
         else
             tv_payment_type.setText(getResources().getString(R.string.card));
 

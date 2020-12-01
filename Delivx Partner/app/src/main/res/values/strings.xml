@@ -524,6 +524,7 @@
     <string name="not_picked">Accepted</string>
     <string name="cash">Cash</string>
     <string name="card">Card</string>
+    <string name="lbl_wallet">Wallet</string>
     <string name="on_the_way">Enroute to Customer </string>
     <string name="call">Call</string>
     <!--<string name="on_the_way_to_pickup">On the way to pick up</string>-->
