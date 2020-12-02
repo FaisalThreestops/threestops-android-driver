@@ -244,7 +244,7 @@ public class MQTTManager
                                                 try {
                                                     sessionManager.setBookingPopupDetails(jsonObject.getString("bookingData"));
                                                     Intent intent = new Intent(mContext, BookingPopUp.class);
-                                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                     mContext.startActivity(intent);
                                                 } catch (JSONException e) {
                                                     e.printStackTrace();
@@ -312,7 +312,7 @@ public class MQTTManager
                                             if(!IS_POP_UP_OPEN){
                                                 sessionManager.setBookingPopupDetails(jsonObject.toString());
                                                 Intent intent = new Intent(mContext, BookingPopUp.class);
-                                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                 mContext.startActivity(intent);
                                             }
 

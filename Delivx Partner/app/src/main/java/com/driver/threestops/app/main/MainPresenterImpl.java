@@ -218,7 +218,7 @@ public class MainPresenterImpl implements MainPresenter {
                         if(!VariableConstant.IS_POP_UP_OPEN){
                             sessionManager.setBookingPopupDetails(jsonObject.toString());
                             Intent intent = new Intent(context, BookingPopUp.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             context.startActivity(intent);
                         }
                     }
