@@ -227,20 +227,7 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        NotificationManagerCompat.from(this).cancelAll();
-        unregisterReceiver(mOrderUpdateReceiver);
-    }
-
-    @Override
     public void onBackPressed() {
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        registerReceiver(mOrderUpdateReceiver, new IntentFilter(VariableConstant.BOOKING_DISPATCH_CANCEL));
     }
 
     private final BroadcastReceiver mOrderUpdateReceiver = new BroadcastReceiver() {
@@ -249,6 +236,20 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
             presenter.cancelCountDownTimer();
         }
     };
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        registerReceiver(mOrderUpdateReceiver, new IntentFilter(VariableConstant.BOOKING_DISPATCH_CANCEL));
+    }
+
+    @Override
+    protected void onDestroy() {
+        NotificationManagerCompat.from(this).cancelAll();
+        unregisterReceiver(mOrderUpdateReceiver);
+        IS_POP_UP_OPEN = false;
+        super.onDestroy();
+    }
 
     @Override
     public void onSuccess(String msg) {
@@ -291,8 +292,13 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
         }
         NotificationManagerCompat.from(this).cancelAll();
         IS_POP_UP_OPEN = false;
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+
+        if (Utility.appInForeground(this)) {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        } else {
+            finishAndRemoveTask();
+        }
     }
 }
