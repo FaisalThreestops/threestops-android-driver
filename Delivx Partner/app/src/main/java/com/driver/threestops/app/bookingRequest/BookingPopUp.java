@@ -248,6 +248,9 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
         NotificationManagerCompat.from(this).cancelAll();
         unregisterReceiver(mOrderUpdateReceiver);
         IS_POP_UP_OPEN = false;
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+        }
         super.onDestroy();
     }
 

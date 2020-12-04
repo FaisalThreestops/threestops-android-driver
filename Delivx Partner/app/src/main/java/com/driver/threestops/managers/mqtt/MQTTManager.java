@@ -445,15 +445,15 @@ public class MQTTManager
      * @param custID customer ID
      * @param custName Customer name
      */
-    private void sendNotification(String bid, String message, String custID, String custName){
-        Intent intent=new Intent(mContext,ChattingActivity.class);
-        intent.putExtra("BID",bid);
-        intent.putExtra("CUST_ID",custID);
-        intent.putExtra("CUST_NAME",custName);
+    private void sendNotification(String bid, String message, String custID, String custName) {
+        Intent intent = new Intent(mContext, ChattingActivity.class);
+        intent.putExtra("BID", bid);
+        intent.putExtra("CUST_ID", custID);
+        intent.putExtra("CUST_NAME", custName);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        Bitmap bitmap= BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_launcher);
+        Bitmap bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_launcher);
 
         NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
         bigText.bigText(message);
@@ -464,10 +464,11 @@ public class MQTTManager
         notificationManager.cancel(0);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-        String CHANNEL_ID = mContext.getString(R.string.app_name_withoutSpace);;// The id of the channel.
+        String CHANNEL_ID = mContext.getString(R.string.app_name_withoutSpace);
+        ;// The id of the channel.
         CharSequence name = mContext.getString(R.string.app_name);
 
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(mContext)
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(mContext, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setContentTitle(mContext.getString(R.string.app_name))
                 .setContentText(message)
@@ -479,8 +480,8 @@ public class MQTTManager
                 .setLargeIcon(bitmap)
                 .setStyle(bigText);
 
-        notificationManager.notify(0 , notificationBuilder.build());
-         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        notificationManager.notify(0, notificationBuilder.build());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
             notificationManager.createNotificationChannel(mChannel);
