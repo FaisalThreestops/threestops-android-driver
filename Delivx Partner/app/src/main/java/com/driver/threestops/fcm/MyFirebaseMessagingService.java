@@ -138,7 +138,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      */
     private void sendNotification(String messageBody, int action) {
         Intent intent;
-        if (action == 11) {
+        if (action == 11 && jsonObject != null) {
             sessionManager.setBookingPopupDetails(jsonObject.toString());
             intent = new Intent(MyFirebaseMessagingService.this, BookingPopUp.class);
         } else {

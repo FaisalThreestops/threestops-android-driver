@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.TextUtils;
 
 import com.driver.threestops.app.MyApplication;
 import com.driver.threestops.utility.SessionManager;
@@ -54,7 +55,7 @@ public class Presenter implements BookingPopUpMainMVP.PresenterOperations {
     public void startTimer()
     {
         view.startMusicPlayer();
-        final long finalTime = newBookingMQTTResponse.getExpiryTimer();
+        final long finalTime = (newBookingMQTTResponse != null && !TextUtils.isEmpty(newBookingMQTTResponse.getExpiryTimer()) && TextUtils.isDigitsOnly(newBookingMQTTResponse.getExpiryTimer())) ? Long.parseLong(newBookingMQTTResponse.getExpiryTimer()) : 30;
         countDownTimer = new CountDownTimer(finalTime * 1000, 1000) {
 
             public void onTick(long millisUntilFinished) {

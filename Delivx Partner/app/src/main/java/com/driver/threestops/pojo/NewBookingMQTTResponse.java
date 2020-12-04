@@ -27,7 +27,7 @@ public class NewBookingMQTTResponse implements Serializable {
     private String dis;
     @SerializedName("message")
     private String msg;
-    private int ExpiryTimer;
+    private String ExpiryTimer;
     private String storeType;
 
     private String storeTypeMsg;
@@ -125,7 +125,7 @@ public class NewBookingMQTTResponse implements Serializable {
         this.a = a;
     }
 
-    public int getExpiryTimer() {
+    public String getExpiryTimer() {
         return ExpiryTimer;
     }
 
