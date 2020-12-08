@@ -109,6 +109,13 @@ public interface BookingRideContract
          * @param appointments : appointmentPojo data
          */
         void openChatAct(AssignedAppointments appointments);
+
+        /**
+         * <h2>updateLocation</h2>
+         * <p>this method is provide updated location.</p>
+         * @param location object of {@link Location}
+         */
+        void updateLocation(Location location);
     }
 
     interface PresenterOperations {
@@ -149,6 +156,18 @@ public interface BookingRideContract
          * <p>giving Dial action to call </p>
          */
         void callCustomer();
+
+        /**
+         * <h2>startLocationUpdate</h2>
+         * <p>This method is start location updating</p>
+         */
+        void startLocationUpdate();
+
+        /**
+         * <h2>stopLocationUpdate</h2>
+         * <p>This method is stop location updating</p>
+         */
+        void stopLocationUpdate();
 
         /**
          *<h2>getDirection</h2>

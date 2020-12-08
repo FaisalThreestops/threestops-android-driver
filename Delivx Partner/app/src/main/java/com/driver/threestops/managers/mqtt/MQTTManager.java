@@ -123,12 +123,7 @@ public class MQTTManager
             if (mqttAndroidClient != null)
                 mqttAndroidClient.subscribe(mqttTopic, 1);
         }
-        catch (MqttException e)
-        {
-            Utility.printLog(TAG+" MqttException "+e);
-            e.printStackTrace();
-        }
-        catch (NullPointerException e)
+        catch (MqttException | NullPointerException e)
         {
             Utility.printLog(TAG+" MqttException "+e);
             e.printStackTrace();
@@ -270,8 +265,6 @@ public class MQTTManager
                         case "3":
                             if(IS_POP_UP_OPEN) {
                                 IS_POP_UP_OPEN = false;
-                                if(BookingPopUp.mediaPlayer!=null && BookingPopUp.mediaPlayer.isPlaying())
-                                    BookingPopUp.mediaPlayer.stop();
                                 Intent intent = new Intent(mContext, MainActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK|
                                         Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -340,8 +333,6 @@ public class MQTTManager
                         case 3:
                             if(IS_POP_UP_OPEN) {
                                 IS_POP_UP_OPEN = false;
-                                if(BookingPopUp.mediaPlayer!=null && BookingPopUp.mediaPlayer.isPlaying())
-                                    BookingPopUp.mediaPlayer.stop();
                                 Intent intent = new Intent(mContext, MainActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK|
                                         Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);

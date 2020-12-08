@@ -43,7 +43,7 @@ import static com.driver.threestops.utility.VariableConstant.IS_POP_UP_OPEN;
 
 public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClickListener, BookingPopUpMainMVP.ViewOperations {
 
-    public static MediaPlayer mediaPlayer;
+    public MediaPlayer mediaPlayer;
     private ProgressDialog mDialog;
 
     @BindView(R.id.circular_progress_bar)
@@ -191,8 +191,7 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
 
         if (newBookingMQTTResponse.getPaymentType().equals("2")) {
             tvPayment.setText(getResources().getString(R.string.cash));
-        }
-        else if (newBookingMQTTResponse.getPaymentType().equals("1"))
+        } else if (newBookingMQTTResponse.getPaymentType().equals("1"))
             tvPayment.setText(getResources().getString(R.string.card));
         else {
             tvPayment.setText(getResources().getString(R.string.lbl_wallet));
@@ -245,18 +244,19 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
 
     @Override
     protected void onDestroy() {
+        presenter.stopTimer();
         NotificationManagerCompat.from(this).cancelAll();
-        unregisterReceiver(mOrderUpdateReceiver);
+
         IS_POP_UP_OPEN = false;
         if (mediaPlayer != null && mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
         }
+        unregisterReceiver(mOrderUpdateReceiver);
         super.onDestroy();
     }
 
     @Override
     public void onSuccess(String msg) {
-        NotificationManagerCompat.from(this).cancelAll();
     }
 
     @Override
@@ -290,6 +290,7 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
 
     @Override
     public void onFinish() {
+        Utility.printLog(BookingPopUp.class.getSimpleName() + ": finished");
         if (mediaPlayer != null && mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
         }
@@ -300,6 +301,7 @@ public class BookingPopUp extends DaggerAppCompatActivity implements View.OnClic
             Intent intent = new Intent(this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
+            finish();
         } else {
             finishAndRemoveTask();
         }

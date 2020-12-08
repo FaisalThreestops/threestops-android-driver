@@ -86,6 +86,12 @@ public interface BookingPopUpMainMVP {
         void startTimer();
 
         /**
+         * <h1>stopTimer</h1>
+         * <p>stop count down timer</p>
+         */
+        void stopTimer();
+
+        /**
          * <h1>getBundleData</h1>
          * <p>get the Bundle data MQTT </p>
          * @param intent data

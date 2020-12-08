@@ -7,6 +7,8 @@ import com.driver.threestops.data.source.PreferenceHelperDataSource;
 import com.driver.threestops.managers.booking.BookingManager;
 import com.driver.threestops.managers.booking.RxBookingAssignObserver;
 import com.driver.threestops.managers.booking.RxDriverCancelledObserver;
+import com.driver.threestops.managers.location.LocationProvider;
+import com.driver.threestops.managers.location.RxLocationObserver;
 import com.driver.threestops.managers.mqtt.MQTTManager;
 import com.driver.threestops.networking.DispatcherService;
 import com.driver.threestops.networking.NetworkStateHolder;
@@ -25,6 +27,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import pl.charmas.android.reactivelocation2.ReactiveLocationProvider;
 
 /**
  * Created by DELL on 10-01-2018.
@@ -122,5 +125,22 @@ public class UtilityModule {
         return new DialogHelper();
     }
 
+    @Provides
+    @Singleton
+    RxLocationObserver locationObserver() {
+        return new RxLocationObserver();
+    }
+
+    @Provides
+    @Singleton
+    LocationProvider locationProvider(Context context, RxLocationObserver observer) {
+        return new LocationProvider(context, observer);
+    }
+
+    @Provides
+    @Singleton
+    ReactiveLocationProvider reactiveLocationProvider(Context context) {
+        return new ReactiveLocationProvider(context);
+    }
 
 }

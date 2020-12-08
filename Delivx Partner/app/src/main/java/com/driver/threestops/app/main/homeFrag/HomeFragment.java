@@ -12,9 +12,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
-import androidx.core.app.ActivityCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -28,9 +25,22 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.driver.Threestops.R;
+import com.driver.threestops.adapter.CurrentUpcomingJobRVA;
 import com.driver.threestops.adapter.SlotFlowJobRVA;
 import com.driver.threestops.adapter.SortSlotStartTimeCmp;
+import com.driver.threestops.dagger.ActivityScoped;
+import com.driver.threestops.data.source.PreferenceHelperDataSource;
+import com.driver.threestops.pojo.AssignedAppointments;
 import com.driver.threestops.service.LocationUpdateService;
+import com.driver.threestops.utility.AppConstants;
+import com.driver.threestops.utility.FontUtils;
+import com.driver.threestops.utility.PicassoMarker;
+import com.driver.threestops.utility.Utility;
 import com.driver.threestops.utility.VariableConstant;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -41,16 +51,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.driver.threestops.adapter.CurrentUpcomingJobRVA;
-import com.driver.threestops.dagger.ActivityScoped;
-import com.driver.threestops.data.source.PreferenceHelperDataSource;
-import com.driver.Threestops.R;
-import com.driver.threestops.pojo.AssignedAppointments;
-import com.driver.threestops.utility.AppConstants;
-import com.driver.threestops.utility.FontUtils;
-import com.driver.threestops.utility.LocationUtil;
-import com.driver.threestops.utility.PicassoMarker;
-import com.driver.threestops.utility.Utility;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -66,7 +66,7 @@ import butterknife.OnClick;
 import dagger.android.support.DaggerFragment;
 
 @ActivityScoped
-public class HomeFragment extends DaggerFragment implements HomeFragmentContract.View, OnMapReadyCallback, LocationUtil.GetLocationListener, View.OnClickListener {
+public class HomeFragment extends DaggerFragment implements HomeFragmentContract.View, OnMapReadyCallback, View.OnClickListener {
 
     private View rootView;
     private TextView tv_on_off_statas;
@@ -120,7 +120,6 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
     private boolean first = false;
     private PicassoMarker marker;
     private Location mCurrentLoc, mPreviousLoc;
-    private LocationUtil locationUtilObj;
     private ArrayList<AssignedAppointments> appointments = new ArrayList<>();
     private CurrentUpcomingJobRVA adapter;
     private SlotFlowJobRVA slotFlowJobRVA;
@@ -129,8 +128,8 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
     private AlertDialog alertDialog;
     private String driverType;
     private String driverScheduleType;
-    private ArrayList<AssignedAppointments> orderDetails=new ArrayList<>();
-    private ArrayList<AssignedAppointments> assignedTrips=new ArrayList<>();
+    private ArrayList<AssignedAppointments> orderDetails = new ArrayList<>();
+    private ArrayList<AssignedAppointments> assignedTrips = new ArrayList<>();
 
     @Inject
     public HomeFragment() {
@@ -143,8 +142,6 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
         rootView = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, rootView);
         presenter.attachView(this);
-
-        locationUtilObj = new LocationUtil(getActivity(), this);
 
         initLayoutId();
 
@@ -176,7 +173,7 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
         mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.frag_map);
         mapFragment.getMapAsync(this);
 
-        slotFlowJobRVA = new SlotFlowJobRVA(getContext(),orderDetails,assignedTrips);
+        slotFlowJobRVA = new SlotFlowJobRVA(getContext(), orderDetails, assignedTrips);
         rvSlots.setLayoutManager(new LinearLayoutManager(getContext()));
         rvSlots.setAdapter(slotFlowJobRVA);
         slotFlowJobRVA.notifyDataSetChanged();
@@ -285,11 +282,13 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
                             * startLatLng.longitude;
                     double lat = t * mCurrentLoc.getLatitude() + (1 - t)
                             * startLatLng.latitude;
-                    marker.getmMarker().setPosition(new LatLng(lat, lng));
-                    marker.getmMarker().setAnchor(0.5f, 0.5f);
-                    marker.getmMarker().setRotation(bearing);
-                    marker.getmMarker().setFlat(true);
 
+                    if (marker != null) {
+                        marker.getmMarker().setPosition(new LatLng(lat, lng));
+                        marker.getmMarker().setAnchor(0.5f, 0.5f);
+                        marker.getmMarker().setRotation(bearing);
+                        marker.getmMarker().setFlat(true);
+                    }
 
                     if (t < 1.0) {
                         // Post again 16ms later.
@@ -307,7 +306,7 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
         if (map != null) {
             if (first) {
                 LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 16.0f));
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 16.0f));
                 first = false;
             }
             if (marker != null) {
@@ -317,20 +316,12 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
         }
     }
 
-    @Override
-    public void location_Error(String error) {
-
-    }
-
 
     @Override
     public void onResume() {
         super.onResume();
         VariableConstant.FORGROUND_LOCK = false;
-        if (locationUtilObj != null) {
-            locationUtilObj.checkLocationSettings();
-            locationUtilObj.restart_location_update();
-        }
+        presenter.startLocationUpdate();
         presenter.getDriverScheduleType();
         presenter.checkBookingPopUp();
         presenter.getAssignedTRips();
@@ -340,6 +331,7 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
     public void onPause() {
         super.onPause();
         VariableConstant.FORGROUND_LOCK = true;
+        presenter.stopLocationUpdate();
     }
 
     @Override
@@ -354,10 +346,6 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
     @Override
     public void onStop() {
         super.onStop();
-        if (locationUtilObj != null) {
-            locationUtilObj.stop_Location_Update();
-        }
-
     }
 
     @OnClick({R.id.tvMarkerPickUp, R.id.tvMarkerAll, R.id.tvMarkerDelivery})
@@ -446,16 +434,16 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
 
             }
 
-            for(int i=0;i<appointments.size();i++){
-                for(int j=i+1;j<appointments.size();j++){
-                    String s1=appointments.get(i).getSlotId();
-                    String s2=appointments.get(j).getSlotId();
-                    if( s1.equals(s2)){
+            for (int i = 0; i < appointments.size(); i++) {
+                for (int j = i + 1; j < appointments.size(); j++) {
+                    String s1 = appointments.get(i).getSlotId();
+                    String s2 = appointments.get(j).getSlotId();
+                    if (s1.equals(s2)) {
                         appointments.remove(j);
                     }
                 }
             }
-            Collections.sort(appointments,new SortSlotStartTimeCmp());
+            Collections.sort(appointments, new SortSlotStartTimeCmp());
             Collections.reverse(appointments);
             ArrayList<AssignedAppointments> orderDetailsTemp = new ArrayList<>();
 
@@ -472,10 +460,10 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
 
                     AssignedAppointments orderDetails = appointments.get(i);
 
-                    Date d = new Date((long)Long.parseLong(orderDetails.getSlotStartTime())*1000);
+                    Date d = new Date((long) Long.parseLong(orderDetails.getSlotStartTime()) * 1000);
                     DateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     System.out.println(f.format(d));
-                    Utility.printLog("date"+f.format(d));
+                    Utility.printLog("date" + f.format(d));
                     String monthIndex = Utility.getMonth(f.format(d));
 //                    String monthIndex = Utility.getMonth(orderDetails.getDueDatetime());
 
@@ -502,10 +490,10 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
 
 
                                 AssignedAppointments futureOrderDetails = appointments.get(j);
-                                Date d1 = new Date((long)Long.parseLong(futureOrderDetails.getSlotStartTime())*1000);
+                                Date d1 = new Date((long) Long.parseLong(futureOrderDetails.getSlotStartTime()) * 1000);
                                 DateFormat f1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                 System.out.println(f1.format(d1));
-                                Utility.printLog("date"+f1.format(d1));
+                                Utility.printLog("date" + f1.format(d1));
                                 String futureMonthIndex = Utility.getMonth(f1.format(d1));
 
 //                                String futureMonthIndex = Utility.getMonth(futureOrderDetails.getDueDatetime());
@@ -564,9 +552,9 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
 
                 orderDetails.addAll(orderDetailsTemp);
 
-        slotFlowJobRVA.notifyDataSetChanged();
+                slotFlowJobRVA.notifyDataSetChanged();
+            }
         }
-    }
     }
 
     @Override
@@ -585,7 +573,7 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
 
     @Override
     public void minimizeMap(ArrayList<AssignedAppointments> appointments) {
-        if(appointments!=null && appointments.size()>0){
+        if (appointments != null && appointments.size() > 0) {
             ll_bookings.setVisibility(View.VISIBLE);
         }
         llMarkerFilter.setVisibility(View.GONE);
@@ -595,8 +583,7 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
     }
 
     @Override
-    public void addMarkers(ArrayList<AssignedAppointments> appointments)
-    {
+    public void addMarkers(ArrayList<AssignedAppointments> appointments) {
         map.clear();
         tvMarkerPickUp.setTextColor(getActivity().getResources().getColor(R.color.color_sup_txt));
         tvMarkerAll.setTextColor(getActivity().getResources().getColor(R.color.colorPrimary));
@@ -605,29 +592,28 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
         pickUp.clear();
         delivery.clear();
 
-        if(appointments!=null && appointments.size()>0){
-            for(AssignedAppointments appointment:appointments)
-            {
-                if((appointment.getOrderStatus().compareTo(AppConstants.BookingStatus.JourneyStarted))>0){
+        if (appointments != null && appointments.size() > 0) {
+            for (AssignedAppointments appointment : appointments) {
+                if ((appointment.getOrderStatus().compareTo(AppConstants.BookingStatus.JourneyStarted)) > 0) {
                     String[] latLong = appointment.getDropLatLng().split(",");
                     Double lat = null, lng = null;
                     if (latLong.length > 0) {
                         lat = Double.parseDouble(latLong[0]);
                         lng = Double.parseDouble(latLong[1]);
 
-                        Marker customer_marker = map.addMarker(new MarkerOptions().position(new LatLng(lat,lng)));
+                        Marker customer_marker = map.addMarker(new MarkerOptions().position(new LatLng(lat, lng)));
                         customer_marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.delivery_orange_pin_icon));
                         delivery.add(customer_marker);
                     }
 
-                }else {
+                } else {
                     String[] latLong = appointment.getPickUpLatLng().split(",");
                     Double lat = null, lng = null;
                     if (latLong.length > 0) {
                         lat = Double.parseDouble(latLong[0]);
                         lng = Double.parseDouble(latLong[1]);
 
-                        Marker customer_marker = map.addMarker(new MarkerOptions().position(new LatLng(lat,lng)));
+                        Marker customer_marker = map.addMarker(new MarkerOptions().position(new LatLng(lat, lng)));
                         customer_marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.store_pickup_location_icon));
                         pickUp.add(customer_marker);
                     }
@@ -644,13 +630,13 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
         tvMarkerDelivery.setTextColor(getActivity().getResources().getColor(R.color.colorPrimary));
 
 
-        if(pickUp.size()>0){
-            for(int position=0;position<pickUp.size();position++){
+        if (pickUp.size() > 0) {
+            for (int position = 0; position < pickUp.size(); position++) {
                 pickUp.get(position).setVisible(false);
             }
         }
-        if(delivery.size()>0){
-            for(int position=0;position<delivery.size();position++){
+        if (delivery.size() > 0) {
+            for (int position = 0; position < delivery.size(); position++) {
                 delivery.get(position).setVisible(true);
             }
         }
@@ -662,13 +648,13 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
         tvMarkerAll.setTextColor(getActivity().getResources().getColor(R.color.color_sup_txt));
         tvMarkerDelivery.setTextColor(getActivity().getResources().getColor(R.color.color_sup_txt));
 
-        if(delivery.size()>0){
-            for(int position=0;position<delivery.size();position++){
+        if (delivery.size() > 0) {
+            for (int position = 0; position < delivery.size(); position++) {
                 delivery.get(position).setVisible(false);
             }
         }
-        if(pickUp.size()>0){
-            for(int position=0;position<pickUp.size();position++){
+        if (pickUp.size() > 0) {
+            for (int position = 0; position < pickUp.size(); position++) {
                 pickUp.get(position).setVisible(true);
             }
         }
@@ -677,9 +663,9 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
     @Override
     public void showError(String statusMsg) {
 
-        if(isAdded()){
+        if (isAdded()) {
 
-            if(alertDialog!=null && !alertDialog.isShowing()){
+            if (alertDialog != null && !alertDialog.isShowing()) {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -687,7 +673,7 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
                     }
                 });
 
-            }else if(alertDialog==null){
+            } else if (alertDialog == null) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), 5);
                 builder.setTitle(getActivity().getResources().getString(R.string.message));
                 builder.setMessage(statusMsg);
@@ -701,7 +687,7 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        alertDialog=builder.create();
+                        alertDialog = builder.create();
                         alertDialog.show();
                     }
                 });
@@ -715,9 +701,8 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
      * <h1>startUpdateLocation</h1>
      * <p>start LocationUpdate Service</p>
      */
-    private void startUpdateLocation()
-    {
-        if(!Utility.isMyServiceRunning(LocationUpdateService.class,getActivity())){
+    private void startUpdateLocation() {
+        if (!Utility.isMyServiceRunning(LocationUpdateService.class, getActivity())) {
             Intent startIntent = new Intent(getActivity(), LocationUpdateService.class);
             startIntent.setAction(AppConstants.ACTION.STARTFOREGROUND_ACTION);
             getActivity().startService(startIntent);
@@ -728,9 +713,8 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
      * <h1>stopUpdateLocation</h1>
      * <p>stop LocationUpdate Service</p>
      */
-    private void stopUpdateLocation()
-    {
-        if(Utility.isMyServiceRunning(LocationUpdateService.class,getActivity())){
+    private void stopUpdateLocation() {
+        if (Utility.isMyServiceRunning(LocationUpdateService.class, getActivity())) {
             Intent stopIntent = new Intent(getActivity(), LocationUpdateService.class);
             stopIntent.setAction(AppConstants.ACTION.STOPFOREGROUND_ACTION);
             getActivity().startService(stopIntent);
@@ -739,13 +723,12 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
 
     @Override
     public void driverStatusType(int driverStatus) {
-        this.driverScheduleType=driverStatus+"";
-        if(this.driverScheduleType.equals("1")){
+        this.driverScheduleType = driverStatus + "";
+        if (this.driverScheduleType.equals("1")) {
             ll_frag_map.setVisibility(View.GONE);
             rl_slot_flow.setVisibility(View.VISIBLE);
 
-        }
-        else{
+        } else {
             ll_frag_map.setVisibility(View.VISIBLE);
             rl_slot_flow.setVisibility(View.GONE);
         }

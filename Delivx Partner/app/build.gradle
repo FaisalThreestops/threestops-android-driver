@@ -9,7 +9,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 18
-        versionName "1.2.3"
+        versionName "1.2.4"
         multiDexEnabled true
 
         dexOptions {
@@ -140,6 +140,9 @@ dependencies {
     implementation 'com.leo.simplearcloader:simplearcloader:1.0.+'
 
     implementation 'com.cashfree.pg:android-sdk:1.5.0'
+
+    // reactive location
+    implementation "pl.charmas.android:android-reactive-location2:2.1@aar"
 
 }
 apply plugin: 'com.google.gms.google-services'

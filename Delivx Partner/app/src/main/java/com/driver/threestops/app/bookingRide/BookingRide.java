@@ -10,12 +10,9 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.location.Location;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import android.os.Bundle;
-import androidx.appcompat.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
 import android.util.TypedValue;
@@ -29,7 +26,21 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+
+import com.driver.Threestops.R;
+import com.driver.threestops.app.storeDetails.StorePickUpDetails;
+import com.driver.threestops.app.storePickUp.StorePickUp;
 import com.driver.threestops.data.source.PreferenceHelperDataSource;
+import com.driver.threestops.mqttChat.ChattingActivity;
+import com.driver.threestops.pojo.AssignedAppointments;
+import com.driver.threestops.utility.AppConstants;
+import com.driver.threestops.utility.FontUtils;
+import com.driver.threestops.utility.PicassoMarker;
+import com.driver.threestops.utility.Slider;
+import com.driver.threestops.utility.Utility;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -40,17 +51,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
-import com.driver.threestops.app.storeDetails.StorePickUpDetails;
-import com.driver.threestops.app.storePickUp.StorePickUp;
-import com.driver.Threestops.R;
-import com.driver.threestops.mqttChat.ChattingActivity;
-import com.driver.threestops.pojo.AssignedAppointments;
-import com.driver.threestops.utility.AppConstants;
-import com.driver.threestops.utility.FontUtils;
-import com.driver.threestops.utility.LocationUtil;
-import com.driver.threestops.utility.PicassoMarker;
-import com.driver.threestops.utility.Slider;
-import com.driver.threestops.utility.Utility;
 
 import javax.inject.Inject;
 
@@ -59,36 +59,53 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dagger.android.support.DaggerAppCompatActivity;
 
-public class BookingRide extends DaggerAppCompatActivity implements OnMapReadyCallback,BookingRideContract.ViewOperations, LocationUtil.GetLocationListener {
+public class BookingRide extends DaggerAppCompatActivity implements OnMapReadyCallback, BookingRideContract.ViewOperations {
 
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.tv_title) TextView tv_title;
-    @BindView(R.id.tvAddress) TextView tvAddress;
-    @BindView(R.id.tvCall) TextView tvCall;
-    @BindView(R.id.tvJobDetails) TextView tvJobDetails;
-    @BindView(R.id.tv_distance_value) TextView tv_distance_value;
-    @BindView(R.id.tv_timer_value) TextView tv_timer_value;
-    @BindView(R.id.tv_distance) TextView tv_distance;
-    @BindView(R.id.tv_timer) TextView tv_timer;
-    @BindView(R.id.tv_status_text) TextView tv_status_text;
-    @BindView(R.id.myseek) Slider myseek;
-    @BindView(R.id.ivDirection) ImageView ivDirection;
-    @BindView(R.id.progressBar) ProgressBar progressBar;
-    @BindView(R.id.ivMyLocation) ImageView ivMyLocation;
-    @BindView(R.id.ivAddressDot) ImageView ivAddressDot;
-    @BindView(R.id.iv_search) ImageView iv_search;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.tv_title)
+    TextView tv_title;
+    @BindView(R.id.tvAddress)
+    TextView tvAddress;
+    @BindView(R.id.tvCall)
+    TextView tvCall;
+    @BindView(R.id.tvJobDetails)
+    TextView tvJobDetails;
+    @BindView(R.id.tv_distance_value)
+    TextView tv_distance_value;
+    @BindView(R.id.tv_timer_value)
+    TextView tv_timer_value;
+    @BindView(R.id.tv_distance)
+    TextView tv_distance;
+    @BindView(R.id.tv_timer)
+    TextView tv_timer;
+    @BindView(R.id.tv_status_text)
+    TextView tv_status_text;
+    @BindView(R.id.myseek)
+    Slider myseek;
+    @BindView(R.id.ivDirection)
+    ImageView ivDirection;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
+    @BindView(R.id.ivMyLocation)
+    ImageView ivMyLocation;
+    @BindView(R.id.ivAddressDot)
+    ImageView ivAddressDot;
+    @BindView(R.id.iv_search)
+    ImageView iv_search;
 
-    @Inject BookingRideContract.PresenterOperations presenter;
-    @Inject FontUtils fontUtils;
+    @Inject
+    BookingRideContract.PresenterOperations presenter;
+    @Inject
+    FontUtils fontUtils;
 
     private SupportMapFragment mapFragment;
     private GoogleMap map;
     private PicassoMarker marker;
-    private Location mCurrentLoc,mPreviousLoc;
+    private Location mCurrentLoc, mPreviousLoc;
     private Marker customer_marker;
-    private LocationUtil locationUtilObj;
-    private boolean first=false;
+    private boolean first = false;
     private int index;
     @Inject
     PreferenceHelperDataSource preferenceHelperDataSource;
@@ -96,7 +113,7 @@ public class BookingRide extends DaggerAppCompatActivity implements OnMapReadyCa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Utility.RtlConversion(this,presenter.getlanguageCode());
+        Utility.RtlConversion(this, presenter.getlanguageCode());
         setContentView(R.layout.activity_booking_ride);
         ButterKnife.bind(this);
         presenter.getBundleData(getIntent().getExtras());
@@ -107,14 +124,26 @@ public class BookingRide extends DaggerAppCompatActivity implements OnMapReadyCa
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.startLocationUpdate();
+    }
+
+    @Override
+    protected void onPause() {
+        presenter.stopLocationUpdate();
+        super.onPause();
+    }
+
     /**
      * <h2>initLayout</h2>
      * <p>initializing the views(font and style)</p>
      */
-    public void initLayout(){
+    public void initLayout() {
 
-        Typeface font= fontUtils.titaliumRegular();
-        Typeface fontBold=fontUtils.titaliumSemiBold();
+        Typeface font = fontUtils.titaliumRegular();
+        Typeface fontBold = fontUtils.titaliumSemiBold();
 
         tv_title.setTypeface(fontBold);
         tvCall.setTypeface(fontBold);
@@ -125,7 +154,6 @@ public class BookingRide extends DaggerAppCompatActivity implements OnMapReadyCa
         tvAddress.setTypeface(font);
         tv_distance.setTypeface(font);
         tv_timer.setTypeface(font);
-        locationUtilObj = new LocationUtil(BookingRide.this, this);
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -133,7 +161,7 @@ public class BookingRide extends DaggerAppCompatActivity implements OnMapReadyCa
         final Rect rect = new Rect();
         myseek.getHitRect(rect);
         rect.right += 100;   // increase left hit area
-        myseek.setTouchDelegate( new TouchDelegate( rect , myseek));
+        myseek.setTouchDelegate(new TouchDelegate(rect, myseek));
 
         myseek.setSliderProgressCallback(new Slider.SliderProgressCallback() {
             @Override
@@ -208,10 +236,9 @@ public class BookingRide extends DaggerAppCompatActivity implements OnMapReadyCa
     @Override
     public void setTitle(String status) {
 
-        if(status.equals(AppConstants.BookingStatus.JourneyStarted)){
+        if (status.equals(AppConstants.BookingStatus.JourneyStarted)) {
             tv_title.setText(getResources().getString(R.string.on_the_way));
-        }else
-        {
+        } else {
             tv_title.setText(getResources().getString(R.string.on_the_way_to_pickup));
         }
 
@@ -219,16 +246,15 @@ public class BookingRide extends DaggerAppCompatActivity implements OnMapReadyCa
     }
 
     @Override
-    public void setViews(AssignedAppointments appointments){
-        if(appointments.getOrderStatus().equals(AppConstants.BookingStatus.JourneyStarted)){
-            String text = "<b>" + appointments.getCustomerName() + "</b> "+" : "+appointments.getDropAddress() ;
+    public void setViews(AssignedAppointments appointments) {
+        if (appointments.getOrderStatus().equals(AppConstants.BookingStatus.JourneyStarted)) {
+            String text = "<b>" + appointments.getCustomerName() + "</b> " + " : " + appointments.getDropAddress();
             tvAddress.setText(Html.fromHtml(text));
             tv_status_text.setText(getResources().getString(R.string.reached));
             ivAddressDot.setImageDrawable(getResources().getDrawable(R.drawable.history_dropoff_icon));
 
-        }else
-        {
-            String text = "<b>" + appointments.getStoreName() + "</b> "+" : "+appointments.getPickUpAddress() ;
+        } else {
+            String text = "<b>" + appointments.getStoreName() + "</b> " + " : " + appointments.getPickUpAddress();
             tvAddress.setText(Html.fromHtml(text));
             ivAddressDot.setImageDrawable(getResources().getDrawable(R.drawable.history_pickup_icon));
         }
@@ -243,7 +269,7 @@ public class BookingRide extends DaggerAppCompatActivity implements OnMapReadyCa
 
 
     @Override
-    public void setmarkers(LatLng current,LatLng customer ) {
+    public void setmarkers(LatLng current, LatLng customer) {
         try {
             marker = new PicassoMarker(map.addMarker(new MarkerOptions().position(current).title("First Point")));
             Picasso.get().load(R.drawable.car_one).resize(50, 50).into(marker);
@@ -257,26 +283,26 @@ public class BookingRide extends DaggerAppCompatActivity implements OnMapReadyCa
         }
     }
 
-    @OnClick({R.id.tvCall,R.id.tvJobDetails,R.id.ivDirection,R.id.ivMyLocation,R.id.iv_search})
-    public void onclick(View view){
-        switch (view.getId()){
+    @OnClick({R.id.tvCall, R.id.tvJobDetails, R.id.ivDirection, R.id.ivMyLocation, R.id.iv_search})
+    public void onclick(View view) {
+        switch (view.getId()) {
             //call option
             case R.id.tvCall:
                 presenter.callCustomer();
                 break;
-                //job details
+            //job details
             case R.id.tvJobDetails:
                 presenter.getJobdetails();
                 break;
-                //chat option in action bar
+            //chat option in action bar
             case R.id.iv_search:
                 presenter.openChat();
                 break;
-                //Direction option
+            //Direction option
             case R.id.ivDirection:
                 presenter.getDirection();
                 break;
-                //my current location
+            //my current location
             case R.id.ivMyLocation:
                 presenter.getLatLong();
                 break;
@@ -284,22 +310,19 @@ public class BookingRide extends DaggerAppCompatActivity implements OnMapReadyCa
     }
 
     @Override
-    public void setCarMarker(final Location location)
-    {
-        mCurrentLoc=location;
+    public void setCarMarker(final Location location) {
+        mCurrentLoc = location;
 
-        if(mPreviousLoc==null)
-        {
-            mPreviousLoc=location;
+        if (mPreviousLoc == null) {
+            mPreviousLoc = location;
         }
 
         final float bearing = mPreviousLoc.bearingTo(mCurrentLoc);
-        if(marker!=null)
-        {
+        if (marker != null) {
             final Handler handler = new Handler();
             final long start = SystemClock.uptimeMillis();
             Projection proj = map.getProjection();
-            Point startPoint = proj.toScreenLocation(new LatLng(mPreviousLoc.getLatitude(),mPreviousLoc.getLongitude()));
+            Point startPoint = proj.toScreenLocation(new LatLng(mPreviousLoc.getLatitude(), mPreviousLoc.getLongitude()));
             final LatLng startLatLng = proj.fromScreenLocation(startPoint);
             final long duration = 500;
 
@@ -314,10 +337,13 @@ public class BookingRide extends DaggerAppCompatActivity implements OnMapReadyCa
                             * startLatLng.longitude;
                     double lat = t * mCurrentLoc.getLatitude() + (1 - t)
                             * startLatLng.latitude;
-                    marker.getmMarker().setPosition(new LatLng(lat,lng));
-                    marker.getmMarker().setAnchor(0.5f, 0.5f);
-                    marker.getmMarker().setRotation(bearing);
-                    marker.getmMarker().setFlat(true);
+
+                    if (marker != null) {
+                        marker.getmMarker().setPosition(new LatLng(lat, lng));
+                        marker.getmMarker().setAnchor(0.5f, 0.5f);
+                        marker.getmMarker().setRotation(bearing);
+                        marker.getmMarker().setFlat(true);
+                    }
 
 
                     if (t < 1.0) {
@@ -328,22 +354,22 @@ public class BookingRide extends DaggerAppCompatActivity implements OnMapReadyCa
             });
         }
 
-        mPreviousLoc=mCurrentLoc;
+        mPreviousLoc = mCurrentLoc;
+        setCarMarker(new LatLng(location.getLatitude(), location.getLongitude()));
     }
 
     @Override
-    public void setCarMarker(LatLng latLng)
-    {
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+    public void setCarMarker(LatLng latLng) {
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
         map.getUiSettings().setZoomControlsEnabled(false);
 
-        if(marker!=null)
+        if (marker != null)
             marker.getmMarker().setPosition(latLng);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId()==android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             super.onBackPressed();
         }
 
@@ -354,22 +380,16 @@ public class BookingRide extends DaggerAppCompatActivity implements OnMapReadyCa
     @Override
     public void updateLocation(Location location) {
         if (map != null) {
-            if(first){
+            if (first) {
                 LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 16.0f));
-                first=false;
+                first = false;
             }
-
 
             if (marker != null) {
                 setCarMarker(location);
             }
         }
-    }
-
-    @Override
-    public void location_Error(String error) {
-
     }
 
     @Override
@@ -382,10 +402,10 @@ public class BookingRide extends DaggerAppCompatActivity implements OnMapReadyCa
 
     @Override
     public void openChatAct(AssignedAppointments appointments) {
-        Intent intent=new Intent(this,ChattingActivity.class);
-        intent.putExtra("BID",appointments.getBid());
-        intent.putExtra("CUST_ID",appointments.getCustomerId());
-        intent.putExtra("CUST_NAME",appointments.getCustomerName());
+        Intent intent = new Intent(this, ChattingActivity.class);
+        intent.putExtra("BID", appointments.getBid());
+        intent.putExtra("CUST_ID", appointments.getCustomerId());
+        intent.putExtra("CUST_NAME", appointments.getCustomerName());
         startActivity(intent);
     }
 
@@ -398,8 +418,7 @@ public class BookingRide extends DaggerAppCompatActivity implements OnMapReadyCa
             intent.putExtras(bundle);
             startActivity(intent);
             finish();
-        }
-        else{
+        } else {
             Intent intent = new Intent(BookingRide.this, StorePickUp.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("data", appointments);
@@ -413,15 +432,15 @@ public class BookingRide extends DaggerAppCompatActivity implements OnMapReadyCa
     @Override
     public void onError(String message) {
         myseek.setProgress(0);
-        Utility.mShowMessage(getResources().getString(R.string.message),message,this);
+        Utility.mShowMessage(getResources().getString(R.string.message), message, this);
     }
 
     @Override
     public void openJobDetails(AssignedAppointments appointments) {
-        Intent intent=new Intent(BookingRide.this, StorePickUpDetails.class);
-        Bundle bundle=new Bundle();
-        bundle.putSerializable("data",appointments);
-        bundle.putString("from","JOB_DETAILS");
+        Intent intent = new Intent(BookingRide.this, StorePickUpDetails.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("data", appointments);
+        bundle.putString("from", "JOB_DETAILS");
         intent.putExtras(bundle);
         startActivity(intent);
     }

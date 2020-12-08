@@ -68,6 +68,13 @@ public interface HomeFragmentContract {
 
         void driverStatusType(int driverStatus);
 
+        /**
+         * <h2>updateLocation</h2>
+         * <p>this method is provide updated location.</p>
+         * @param location object of {@link Location}
+         */
+        void updateLocation(Location location);
+
     }
 
 
@@ -85,6 +92,18 @@ public interface HomeFragmentContract {
          * <p>updating the online and offline status of the driver</p>
          */
         void updateMasterStatus();
+
+        /**
+         * <h2>startLocationUpdate</h2>
+         * <p>This method is start location updating</p>
+         */
+        void startLocationUpdate();
+
+        /**
+         * <h2>stopLocationUpdate</h2>
+         * <p>This method is stop location updating</p>
+         */
+        void stopLocationUpdate();
 
         /**
          * <h2>getAssignedTRips</h2>

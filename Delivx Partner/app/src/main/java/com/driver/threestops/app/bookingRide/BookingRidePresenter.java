@@ -2,6 +2,7 @@ package com.driver.threestops.app.bookingRide;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -9,7 +10,11 @@ import android.util.Log;
 import com.driver.threestops.app.MyApplication;
 import com.driver.threestops.login.LoginActivity;
 import com.driver.threestops.login.language.LanguagesList;
+import com.driver.threestops.managers.location.LocationCallBack;
+import com.driver.threestops.managers.location.LocationProvider;
+import com.driver.threestops.managers.location.RxLocationObserver;
 import com.driver.threestops.service.LocationUpdateService;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
 import com.driver.threestops.RxObservers.RXDistanceChangeObserver;
 import com.driver.threestops.data.source.PreferenceHelperDataSource;
@@ -29,6 +34,7 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
@@ -36,12 +42,17 @@ import retrofit2.Response;
 
 
 
-public class BookingRidePresenter implements BookingRideContract.PresenterOperations
+public class BookingRidePresenter implements BookingRideContract.PresenterOperations, LocationCallBack
 {
     @Inject BookingRideContract.ViewOperations view;
     @Inject PreferenceHelperDataSource preferenceHelperDataSource;
     @Inject Activity context;
     @Inject DispatcherService dispatcherService;
+    @Inject
+    LocationProvider locationProvider;
+    @Inject
+    RxLocationObserver locationObserver;
+    private Disposable locationDisposable;
     private AssignedAppointments appointments;
     private boolean runTimer = false;
     private int timeConsumedSecond = 0;
@@ -120,6 +131,48 @@ public class BookingRidePresenter implements BookingRideContract.PresenterOperat
     }
 
     @Override
+    public void startLocationUpdate() {
+        locationProvider.startLocation(this);
+        locationObserver.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Location>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        locationDisposable = d;
+                    }
+
+                    @Override
+                    public void onNext(@NonNull Location location) {
+                        view.updateLocation(location);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void stopLocationUpdate() {
+        if (locationDisposable != null && !locationDisposable.isDisposed())
+            locationDisposable.dispose();
+
+        if (locationProvider.isLocationUpdating())
+            locationProvider.stopLocationUpdates();
+    }
+
+    @Override
+    public void onLocationServiceDisabled(Status status) {
+
+    }
+
+    @Override
     public void getDirection() {
         if(appointments.getOrderStatus().equals(AppConstants.BookingStatus.JourneyStarted)){
             if(!appointments.getDropLatLng().isEmpty()){
@@ -160,7 +213,7 @@ public class BookingRidePresenter implements BookingRideContract.PresenterOperat
         if(appointments.getOrderStatus().equals(AppConstants.BookingStatus.JourneyStarted)){
             if(!appointments.getDropLatLng().isEmpty() && !appointments.getDropLatLng().contains("null")){
                 String[] latLong = appointments.getDropLatLng().split(",");
-                LatLng customer = new LatLng(Double.valueOf(latLong[0]), Double.valueOf(latLong[1]));
+                LatLng customer = new LatLng(Double.parseDouble(latLong[0]), Double.parseDouble(latLong[1]));
 
                 LatLng current=new LatLng(preferenceHelperDataSource.getDriverCurrentLat(),preferenceHelperDataSource.getDriverCurrentLongi());
 
@@ -170,7 +223,7 @@ public class BookingRidePresenter implements BookingRideContract.PresenterOperat
         {
             if(!appointments.getPickUpLatLng().isEmpty() && !appointments.getDropLatLng().contains("null")){
                 String[] latLong = appointments.getPickUpLatLng().split(",");
-                LatLng customer = new LatLng(Double.valueOf(latLong[0]), Double.valueOf(latLong[1]));
+                LatLng customer = new LatLng(Double.parseDouble(latLong[0]), Double.parseDouble(latLong[1]));
 
                 LatLng current=new LatLng(preferenceHelperDataSource.getDriverCurrentLat(),preferenceHelperDataSource.getDriverCurrentLongi());
 
@@ -482,6 +535,7 @@ public class BookingRidePresenter implements BookingRideContract.PresenterOperat
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
 
 
     }

@@ -79,10 +79,17 @@ public class Presenter implements BookingPopUpMainMVP.PresenterOperations {
     }
 
     @Override
+    public void stopTimer() {
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+            countDownTimer = null;
+        }
+    }
+
+    @Override
     public void getBundleData(Intent intent) {
         String data = sessionManager.getBookingPopupDetails();
         if (!TextUtil.isEmpty(data)) {
-            sessionManager.setBookingPopupDetails("");
             NotificationManager notificationManager= (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
             notificationManager.cancelAll();
 

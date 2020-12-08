@@ -11,9 +11,13 @@ import com.driver.threestops.app.bookingRequest.BookingPopUp;
 import com.driver.threestops.login.LoginActivity;
 import com.driver.threestops.login.language.LanguagesList;
 import com.driver.threestops.managers.booking.RxBookingAssignObserver;
+import com.driver.threestops.managers.location.LocationCallBack;
+import com.driver.threestops.managers.location.LocationProvider;
+import com.driver.threestops.managers.location.RxLocationObserver;
 import com.driver.threestops.pojo.BookingAssigned;
 import com.driver.threestops.service.LocationUpdateService;
 import com.driver.threestops.utility.AppConstants;
+import com.google.android.gms.common.api.Status;
 import com.google.gson.Gson;
 import com.driver.threestops.RxObservers.RXMqttMessageObserver;
 import com.driver.threestops.data.source.PreferenceHelperDataSource;
@@ -34,13 +38,14 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
 
-public class Presenter implements HomeFragmentContract.Presenter {
+public class Presenter implements HomeFragmentContract.Presenter, LocationCallBack {
 
     private RxBookingAssignObserver rxBookingAssignObserver;
     private boolean isMapInFullView=false;
@@ -52,6 +57,11 @@ public class Presenter implements HomeFragmentContract.Presenter {
     @Inject   Activity context;
     @Inject   DispatcherService dispatcherService;
     @Inject   PreferenceHelperDataSource preferenceHelperDataSource;
+    @Inject
+    LocationProvider locationProvider;
+    @Inject
+    RxLocationObserver locationObserver;
+    private Disposable locationDisposable;
     private ArrayList<AssignedAppointments> appointments;
 
     @Inject
@@ -111,6 +121,43 @@ public class Presenter implements HomeFragmentContract.Presenter {
             updateMasterStatusApi(4);
         else
             updateMasterStatusApi(3);
+    }
+
+    @Override
+    public void startLocationUpdate() {
+        locationProvider.startLocation(this);
+        locationObserver.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Location>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        locationDisposable = d;
+                    }
+
+                    @Override
+                    public void onNext(@NonNull Location location) {
+                        view.updateLocation(location);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void stopLocationUpdate() {
+        if (locationDisposable != null && !locationDisposable.isDisposed())
+            locationDisposable.dispose();
+
+        if (locationProvider.isLocationUpdating())
+            locationProvider.stopLocationUpdates();
     }
 
     @Override
@@ -295,8 +342,6 @@ public class Presenter implements HomeFragmentContract.Presenter {
     @Override
     public void checkBookingPopUp() {
 
-        if(BookingPopUp.mediaPlayer!=null && BookingPopUp.mediaPlayer.isPlaying())
-            BookingPopUp.mediaPlayer.stop();
     }
 
     /**
@@ -399,5 +444,10 @@ public class Presenter implements HomeFragmentContract.Presenter {
     @Override
     public void getDriverScheduleType() {
         view.driverStatusType(preferenceHelperDataSource.getDriverScheduleType());
+    }
+
+    @Override
+    public void onLocationServiceDisabled(Status status) {
+
     }
 }
