@@ -12,17 +12,19 @@ import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import androidx.core.app.NotificationCompat;
 import android.util.Log;
 
+import androidx.core.app.NotificationCompat;
+
+import com.driver.Threestops.R;
 import com.driver.threestops.RxObservers.RXMqttMessageObserver;
 import com.driver.threestops.app.SplashScreen;
-import com.driver.Threestops.R;
 import com.driver.threestops.app.bookingRequest.BookingPopUp;
 import com.driver.threestops.service.LocationUpdateService;
 import com.driver.threestops.utility.AcknowledgeHelper;
 import com.driver.threestops.utility.AppConstants;
 import com.driver.threestops.utility.SessionManager;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -37,8 +39,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "MyFirebaseMsgService";
     JSONObject received;
-    private String message,bid;
-    private int action=-1;
+    private String message, bid;
+    private int action = -1;
     JSONObject jsonObject;
 
     @Inject
@@ -48,6 +50,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     /**
      * Called when message is received.
+     *
      * @param remoteMessage Object representing the message received from Firebase Cloud Messaging.
      */
     // [START receive_message]
@@ -59,61 +62,62 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             try {
                 received = new JSONObject(remoteMessage.getData());
 
-                if(received.has("a")){
+                if (received.has("a")) {
                     action = received.getInt("a");
                 }
-                if(received.has("action")){
+                if (received.has("action")) {
                     action = received.getInt("action");
                 }
 //                if(received.has("msg")){
 //                    message = received.getString("msg");
 //                }
 
-                if(received.has("title")){
+                if (received.has("title")) {
                     message = received.getString("title");
                 }
 
-                if(received.has("message")){
+                if (received.has("message")) {
                     message = received.getString("message");
                 }
-                if(received.has("body")){
+                if (received.has("body")) {
                     message = received.getString("body");
                 }
-                if(received.has("data")){
+                if (received.has("data")) {
                     data = received.getString("data");
                 }
 
             } catch (JSONException e) {
                 e.printStackTrace();
+                FirebaseCrashlytics.getInstance().recordException(e);
             }
 
-            Log.d(TAG, "Message data orderID: " +data+" : "+acknowledgeHelper);
-            if(action==11||action==10 ||  action==29|| action==14){
-                if(data.contains("bookingData")){
+            Log.d(TAG, "Message data orderID: " + data + " : " + acknowledgeHelper);
+            if (action == 11 || action == 10 || action == 29 || action == 14) {
+                if (data.contains("bookingData")) {
                     try {
-                        jsonObject=new JSONObject(data);
-                        jsonObject=jsonObject.getJSONObject("bookingData");
-                        jsonObject.put("action",""+action);
+                        jsonObject = new JSONObject(data);
+                        jsonObject = jsonObject.getJSONObject("bookingData");
+                        jsonObject.put("action", "" + action);
                         sendNotification(message, action);
                         RXMqttMessageObserver.getInstance().emit(jsonObject);
 
-                        Log.d(TAG, "Message data : " +jsonObject.toString());
+                        Log.d(TAG, "Message data : " + jsonObject.toString());
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        FirebaseCrashlytics.getInstance().recordException(e);
                     }
                 }
             }
 
-            if("506".equals(action))
-            {
-                    Intent stopIntent = new Intent(MyFirebaseMessagingService.this, LocationUpdateService.class);
-                    stopIntent.setAction(AppConstants.ACTION.STOPFOREGROUND_ACTION);
-                    startService(stopIntent);
+            if ("506".equals(action)) {
+                Intent stopIntent = new Intent(MyFirebaseMessagingService.this, LocationUpdateService.class);
+                stopIntent.setAction(AppConstants.ACTION.STOPFOREGROUND_ACTION);
+                startService(stopIntent);
 
 //               if(!Utility.isMyServiceRunning(LocationUpdateService.class,MyFirebaseMessagingService.this)){
-                    Intent startIntent = new Intent(MyFirebaseMessagingService.this, LocationUpdateService.class);
-                    startIntent.setAction(AppConstants.ACTION.STARTFOREGROUND_ACTION);
-                    startService(startIntent);
+                Intent startIntent = new Intent(MyFirebaseMessagingService.this, LocationUpdateService.class);
+                startIntent.setAction(AppConstants.ACTION.STARTFOREGROUND_ACTION);
+                startService(startIntent);
 //                }
 
             }
@@ -124,8 +128,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
         }
 
-        if(action!=1)
-        sendNotification(message,action);
+        if (action != 1)
+            sendNotification(message, action);
     }
 
 
@@ -146,7 +150,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
-            PendingIntent.FLAG_ONE_SHOT);
+                PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_launcher);
@@ -155,35 +159,34 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         bigText.bigText(messageBody);
         bigText.setBigContentTitle(this.getString(R.string.app_name));
         NotificationManager notificationManager = (NotificationManager) this.getSystemService(
-            Context.NOTIFICATION_SERVICE);
+                Context.NOTIFICATION_SERVICE);
 
         assert notificationManager != null;
         notificationManager.cancel(0);
 
-        PendingIntent pendingIntent1 = PendingIntent.getActivity(this, 0, intent,
-            PendingIntent.FLAG_ONE_SHOT);
         String CHANNEL_ID = getApplicationContext().getString(R.string.app_name_withoutSpace);
         ;// The id of the channel.
         CharSequence name = getApplicationContext().getString(R.string.app_name);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_launcher)
-            .setContentTitle(getString(R.string.app_name))
-            .setContentText(messageBody)
-            .setContentIntent(pendingIntent1)
-            .setChannelId(CHANNEL_ID)
-            .setPriority(NotificationCompat.PRIORITY_MAX)
-            .setSound(defaultSoundUri)
-            .setAutoCancel(true)
-            .setLargeIcon(bitmap)
-            .setStyle(bigText);
+                .setSmallIcon(R.drawable.ic_launcher)
+                .setContentTitle(getString(R.string.app_name))
+                .setContentText(messageBody)
+                .setContentIntent(pendingIntent)
+                .setChannelId(CHANNEL_ID)
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setSound(defaultSoundUri)
+                .setAutoCancel(true)
+                .setLargeIcon(bitmap)
+                .setStyle(bigText);
 
-        notificationManager.notify(0, notificationBuilder.build());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
             notificationManager.createNotificationChannel(mChannel);
         }
+
+        notificationManager.notify(0, notificationBuilder.build());
     }
     /*private void sendNotification(String messageBody) {
 
@@ -226,16 +229,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }*/
 
 
-    public static boolean isApplicationSentToBackground(final Context context)
-    {
+    public static boolean isApplicationSentToBackground(final Context context) {
 
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(1);
-        if (!tasks.isEmpty())
-        {
+        if (!tasks.isEmpty()) {
             ComponentName topActivity = tasks.get(0).topActivity;
-            if (!topActivity.getPackageName().equals(context.getPackageName()))
-            {
+            if (!topActivity.getPackageName().equals(context.getPackageName())) {
                 return true;
             }
         }

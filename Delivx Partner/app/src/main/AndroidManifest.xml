@@ -178,6 +178,13 @@
             android:name="io.fabric.ApiKey"
             android:value="d10711215d5a970c67c4f76641fef0cccf62b92d" />
 
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_launcher" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
+
         <activity
             android:name="com.livechatinc.inappchat.ChatWindowActivity"
             android:configChanges="orientation|screenSize" />

@@ -700,5 +700,6 @@
 
     <string name="phone_num_lower">Phone Number</string>
     <string name="lblDiscount">Discount</string>
+    <string name="default_notification_channel_id">1</string>
 
 </resources>
