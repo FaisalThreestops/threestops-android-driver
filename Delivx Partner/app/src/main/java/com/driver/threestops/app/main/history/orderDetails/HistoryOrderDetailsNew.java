@@ -190,8 +190,8 @@ public class HistoryOrderDetailsNew extends DaggerAppCompatActivity implements O
             ll_subTotal.setVisibility(View.GONE);
         }
         else{
-            tvPickUp_name.setText(appointment.getCustomerName());
-            tv_drop_name.setText(appointment.getStoreName());
+            tvPickUp_name.setText(appointment.getStoreName());
+            tv_drop_name.setText(appointment.getCustomerName());
         }
 
 
@@ -220,12 +220,7 @@ public class HistoryOrderDetailsNew extends DaggerAppCompatActivity implements O
         }
 
         if(appointment.getTax().matches("0"))
-            ll_discount.setVisibility(View.GONE);
-
-        if(appointment.getItems().get(0).getAppliedDiscount()!=null) {
-            if (appointment.getItems().get(0).getAppliedDiscount().matches("0"))
-                ll_tax.setVisibility(View.GONE);
-        }
+            ll_tax.setVisibility(View.GONE);
 
         double paidByCash = Double.parseDouble(appointment.getPaidByCash());
         tvCashValue.setText(appointment.getCurrencySymbol()+" "+String.format("%.2f", paidByCash));
