@@ -390,7 +390,11 @@ public class LoginPresenterImpl implements LoginPresenter
 
         if(MyApplication.getInstance().isMQTTConnected()){
             Log.i("check", "setSignInData: if");
-            mqttManager.subscribeToTopic(preferenceHelperDataSource.getDriverID());
+            try {
+                mqttManager.subscribeToTopic(preferenceHelperDataSource.getDriverID());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
         }else {
             Log.i("check", "setSignInData: else");

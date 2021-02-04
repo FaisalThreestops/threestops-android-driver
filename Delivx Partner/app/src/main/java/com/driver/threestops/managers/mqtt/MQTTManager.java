@@ -12,15 +12,16 @@ import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+
 import androidx.core.app.NotificationCompat;
 
+import com.driver.Threestops.BuildConfig;
+import com.driver.Threestops.R;
 import com.driver.threestops.RxObservers.RXMqttMessageObserver;
 import com.driver.threestops.RxObservers.RxNetworkObserver;
 import com.driver.threestops.app.bookingRequest.BookingPopUp;
 import com.driver.threestops.app.main.MainActivity;
 import com.driver.threestops.data.source.PreferenceHelperDataSource;
-import com.driver.Threestops.BuildConfig;
-import com.driver.Threestops.R;
 import com.driver.threestops.managers.booking.BookingManager;
 import com.driver.threestops.mqttChat.ChatDataObervable;
 import com.driver.threestops.mqttChat.ChattingActivity;
@@ -55,12 +56,11 @@ import static com.driver.threestops.utility.VariableConstant.IS_POP_UP_OPEN;
  * <h1>MQTTManager</h1>
  * <p>Mqtt Connection, Subscribe and manage the Mqtt messages</p>
  */
-public class MQTTManager
-{
+public class MQTTManager {
     private static final String TAG = "MQTTManager";
     private IMqttActionListener mMQTTListener;
     private static MqttAndroidClient mqttAndroidClient;
-    private static  MqttConnectOptions mqttConnectOptions;
+    private static MqttConnectOptions mqttConnectOptions;
     private Context mContext;
 
     private AcknowledgeHelper acknowledgeHelper;
@@ -71,43 +71,43 @@ public class MQTTManager
     @Inject
     public MQTTManager(Context context, AcknowledgeHelper acknowledgeHelper,
                        PreferenceHelperDataSource dDataSource, final NetworkStateHolder holder,
-                       final RxNetworkObserver rxNetworkObserver, BookingManager bookingManager)
-    {
+                       final RxNetworkObserver rxNetworkObserver, BookingManager bookingManager) {
         mContext = context;
-        this.acknowledgeHelper=acknowledgeHelper;
-        this.helperDataSource=dDataSource;
-        this.bookingManager=bookingManager;
+        this.acknowledgeHelper = acknowledgeHelper;
+        this.helperDataSource = dDataSource;
+        this.bookingManager = bookingManager;
         this.sessionManager = new SessionManager(mContext);
 
-        mMQTTListener = new IMqttActionListener()
-        {
+        mMQTTListener = new IMqttActionListener() {
             @Override
-            public void onSuccess(IMqttToken asyncActionToken)
-            {
+            public void onSuccess(IMqttToken asyncActionToken) {
 
-                if(mqttAndroidClient!=null && mqttAndroidClient.isConnected()) {
-                    subscribeToTopic(helperDataSource.getDriverChannel());
-                    subscribeToTopic(helperDataSource.getDriverChannel_msg());
+                if (mqttAndroidClient != null && mqttAndroidClient.isConnected()) {
+                    try {
+                        subscribeToTopic(helperDataSource.getDriverChannel());
+                        subscribeToTopic(helperDataSource.getDriverChannel_msg());
 
-                    if(helperDataSource.getServiceZoneList().getServiceZones().size()>0)
-                    for(int i=0;i<helperDataSource.getServiceZoneList().getServiceZones().size();i++){
-                        String topic = "onlineDrivers/".concat(helperDataSource.getCityId().concat("/").concat(helperDataSource.getServiceZoneList().getServiceZones().get(i)));
-                        Utility.printLog("subscribed Mqtt Zone topic :  "+topic);
-                        subscribeToTopic(topic);
+                        if (helperDataSource.getServiceZoneList().getServiceZones().size() > 0)
+                            for (int i = 0; i < helperDataSource.getServiceZoneList().getServiceZones().size(); i++) {
+                                String topic = "onlineDrivers/".concat(helperDataSource.getCityId().concat("/").concat(helperDataSource.getServiceZoneList().getServiceZones().get(i)));
+                                Utility.printLog("subscribed Mqtt Zone topic :  " + topic);
+                                subscribeToTopic(topic);
+                            }
+                        holder.setConnected(true);
+                        Utility.printLog(TAG + " TEST MQTT" + " connected " + mqttAndroidClient.getClientId());
+                        rxNetworkObserver.publishData(holder);
+                        Utility.printLog(TAG + " onSuccessPhone: myqtt client " + asyncActionToken.isComplete());
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-
-                    holder.setConnected(true);
-                    Utility.printLog(TAG + " TEST MQTT" +" connected " + mqttAndroidClient.getClientId());
-                    rxNetworkObserver.publishData(holder);
-                    Utility.printLog(TAG + " onSuccessPhone: myqtt client " + asyncActionToken.isComplete());
                 }
-
             }
+
             @Override
             public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
                 exception.printStackTrace();
-                Utility.printLog(TAG+ "onFailure: myqtt client "+asyncActionToken.isComplete()
-                        +" "+exception.getMessage());
+                Utility.printLog(TAG + "onFailure: myqtt client " + asyncActionToken.isComplete()
+                        + " " + exception.getMessage());
             }
         };
     }
@@ -116,53 +116,33 @@ public class MQTTManager
      * <h2>subscribeToTopic</h2>
      * This method is used to subscribe to the mqtt topic
      */
-    public void subscribeToTopic(String mqttTopic)
-    {
-        try
-        {
-            if (mqttAndroidClient != null)
-                mqttAndroidClient.subscribe(mqttTopic, 1);
-        }
-        catch (MqttException | NullPointerException e)
-        {
-            Utility.printLog(TAG+" MqttException "+e);
-            e.printStackTrace();
-        }
+    public void subscribeToTopic(String mqttTopic) throws Exception {
+        if (mqttAndroidClient != null)
+            mqttAndroidClient.subscribe(mqttTopic, 1);
     }
 
     /**
      * <h2>unSubscribeToTopic</h2>
      * This method is used to unSubscribe to topic already subscribed
+     *
      * @param topic Topic name from which to  unSubscribe
      */
     @SuppressWarnings("TryWithIdenticalCatches")
-    public void unSubscribeToTopic(String topic)
-    {
-        try
-        {
+    public void unSubscribeToTopic(String topic) throws MqttException {
             if (mqttAndroidClient != null)
                 mqttAndroidClient.unsubscribe(topic);
-        }
-        catch (MqttException e)
-        {
-            e.printStackTrace();
-        }
-        catch (NullPointerException e)
-        {
-            e.printStackTrace();
-        }
     }
 
     /**
      * <h2>isMQTTConnected</h2>
      * This method is used to check whether MQTT is connected
+     *
      * @return boolean value whether MQTT is connected
      */
-    public boolean isMQTTConnected()
-    {
+    public boolean isMQTTConnected() {
         try {
             return mqttAndroidClient != null && mqttAndroidClient.isConnected();
-        }catch (Exception e){
+        } catch (Exception e) {
             return true;
         }
 
@@ -171,43 +151,43 @@ public class MQTTManager
     /**
      * <h2>createMQttConnection</h2>
      * This method is used to create the connection with MQTT
+     *
      * @param clientId customer ID to connect MQTT
      */
     @SuppressWarnings("unchecked")
-    public void createMQttConnection(String clientId)
-    {
-        Utility.printLog(TAG+" createMQtftConnection: "+clientId);
+    public void createMQttConnection(String clientId) {
+        Utility.printLog(TAG + " createMQtftConnection: " + clientId);
         String serverUri = "tcp://" + BuildConfig.MQTT_HOST + ":" + BuildConfig.MQTT_PORT;
 //        String serverUri = "ssl://" + BuildConfig.MQTT_HOST + ":" + BuildConfig.MQTT_PORT;
         mqttAndroidClient = new MqttAndroidClient(mContext, serverUri, clientId);
         mqttAndroidClient.setCallback(new MqttCallback() {
             @Override
             public void connectionLost(Throwable cause) {
-                Utility.printLog(TAG+" TEST MQTT not connect "+cause);
+                Utility.printLog(TAG + " TEST MQTT not connect " + cause);
             }
+
             @Override
-            public void messageArrived(String topic, final MqttMessage message) throws Exception
-            {
+            public void messageArrived(String topic, final MqttMessage message) throws Exception {
                 final JSONObject jsonObject = new JSONObject(new String(message.getPayload()));
                 Utility.printLog("mqtt message : " + jsonObject.toString());
-                Utility.printLog(TAG+" messageArrived: "+new String(message.getPayload()));
+                Utility.printLog(TAG + " messageArrived: " + new String(message.getPayload()));
 
 
-                if(jsonObject.has("data")){
+                if (jsonObject.has("data")) {
 
-                    if(ChattingActivity.isOpen){
+                    if (ChattingActivity.isOpen) {
                         ChatDataObervable.getInstance().emitData(jsonObject);
-                    }else {
+                    } else {
                         String bid = jsonObject.getJSONObject("data").getString("bid");
                         String content = jsonObject.getJSONObject("data").getString("content");
                         String custID = jsonObject.getJSONObject("data").getString("fromID");
                         String custName = jsonObject.getJSONObject("data").getString("name");
-                        sendNotification(bid,content,custID,custName);
+                        sendNotification(bid, content, custID, custName);
                     }
 
-                }else if(jsonObject.has("bookingData")) {
+                } else if (jsonObject.has("bookingData")) {
 
-                    switch (jsonObject.getJSONObject("bookingData").getString("action")){
+                    switch (jsonObject.getJSONObject("bookingData").getString("action")) {
                         //Handle the booking request cancel
                         case "41":
                             Intent orderUpdateIntent = new Intent(VariableConstant.BOOKING_DISPATCH_CANCEL);
@@ -215,13 +195,12 @@ public class MQTTManager
                             break;
                         //Handle the Assign Booking from dispatcher
                         case "29":
-                            if(isApplicationSentToBackground() || FORGROUND_LOCK) {
+                            if (isApplicationSentToBackground() || FORGROUND_LOCK) {
                                 Intent intent = new Intent(mContext, MainActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |
                                         Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                 mContext.startActivity(intent);
-                            }
-                            else {
+                            } else {
                                 BookingAssigned bookingAssigned = new BookingAssigned();
                                 bookingAssigned.setAssigned(true);
                                 bookingManager.assignedBooking(bookingAssigned);
@@ -230,12 +209,12 @@ public class MQTTManager
 
                         //Handle New Booking
                         case "11":
-                            try{
-                                if(helperDataSource.getDriverChannel().equals(jsonObject.getJSONObject("bookingData").getString("chn"))){
-                                    acknowledgeHelper.bookingAckApi(jsonObject.getJSONObject("bookingData").getString("orderId"),mContext, new AcknowledgementCallback() {
+                            try {
+                                if (helperDataSource.getDriverChannel().equals(jsonObject.getJSONObject("bookingData").getString("chn"))) {
+                                    acknowledgeHelper.bookingAckApi(jsonObject.getJSONObject("bookingData").getString("orderId"), mContext, new AcknowledgementCallback() {
                                         @Override
                                         public void callback(String bid) {
-                                            if(!IS_POP_UP_OPEN){
+                                            if (!IS_POP_UP_OPEN) {
                                                 try {
                                                     sessionManager.setBookingPopupDetails(jsonObject.getString("bookingData"));
                                                     Intent intent = new Intent(mContext, BookingPopUp.class);
@@ -252,8 +231,8 @@ public class MQTTManager
                                     });
                                 }
 
-                            }catch (Exception e){
-                                Utility.printLog(TAG+" "+e.getMessage());
+                            } catch (Exception e) {
+                                Utility.printLog(TAG + " " + e.getMessage());
                             }
                             break;
 
@@ -263,11 +242,11 @@ public class MQTTManager
                             break;
                         //Handle Booking cancel
                         case "3":
-                            if(IS_POP_UP_OPEN) {
+                            if (IS_POP_UP_OPEN) {
                                 IS_POP_UP_OPEN = false;
                                 Intent intent = new Intent(mContext, MainActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK|
-                                        Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                                        Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                 mContext.startActivity(intent);
                             }
 
@@ -275,20 +254,18 @@ public class MQTTManager
 
                     }
 
-                }
-                else {
-                    int action=jsonObject.has("a")?jsonObject.getInt("a"):jsonObject.getInt("action");
-                    switch (action){
+                } else {
+                    int action = jsonObject.has("a") ? jsonObject.getInt("a") : jsonObject.getInt("action");
+                    switch (action) {
 
                         //Handle the Assign Booking from dispatcher
                         case 29:
-                            if(isApplicationSentToBackground() || FORGROUND_LOCK) {
+                            if (isApplicationSentToBackground() || FORGROUND_LOCK) {
                                 Intent intent = new Intent(mContext, MainActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |
                                         Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                 mContext.startActivity(intent);
-                            }
-                            else {
+                            } else {
                                 BookingAssigned bookingAssigned = new BookingAssigned();
                                 bookingAssigned.setAssigned(true);
                                 bookingManager.assignedBooking(bookingAssigned);
@@ -297,12 +274,12 @@ public class MQTTManager
 
                         //Handle New Booking
                         case 11:
-                            try{
-                                if(helperDataSource.getDriverChannel().equals(jsonObject.getString("chn"))){
-                                    acknowledgeHelper.bookingAckApi(jsonObject.getString("orderId"),mContext, new AcknowledgementCallback() {
+                            try {
+                                if (helperDataSource.getDriverChannel().equals(jsonObject.getString("chn"))) {
+                                    acknowledgeHelper.bookingAckApi(jsonObject.getString("orderId"), mContext, new AcknowledgementCallback() {
                                         @Override
                                         public void callback(String bid) {
-                                            if(!IS_POP_UP_OPEN){
+                                            if (!IS_POP_UP_OPEN) {
                                                 sessionManager.setBookingPopupDetails(jsonObject.toString());
                                                 Intent intent = new Intent(mContext, BookingPopUp.class);
                                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -315,8 +292,8 @@ public class MQTTManager
                                     });
                                 }
 
-                            }catch (Exception e){
-                                Utility.printLog(TAG+" "+e.getMessage());
+                            } catch (Exception e) {
+                                Utility.printLog(TAG + " " + e.getMessage());
                             }
 
                             break;
@@ -331,11 +308,11 @@ public class MQTTManager
 
                         //Handle Booking cancel
                         case 3:
-                            if(IS_POP_UP_OPEN) {
+                            if (IS_POP_UP_OPEN) {
                                 IS_POP_UP_OPEN = false;
                                 Intent intent = new Intent(mContext, MainActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK|
-                                        Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                                        Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                 mContext.startActivity(intent);
                             }
                             break;
@@ -343,9 +320,10 @@ public class MQTTManager
 
                 }
             }
+
             @Override
             public void deliveryComplete(IMqttDeliveryToken token) {
-                Utility.printLog(TAG+" deliveryComplete: "+token);
+                Utility.printLog(TAG + " deliveryComplete: " + token);
             }
         });
         mqttConnectOptions = new MqttConnectOptions();
@@ -372,19 +350,21 @@ public class MQTTManager
 
     /**
      * <h1>publish</h1>
+     *
      * @param jsonObject : body to publish
      */
-    public void publish(JSONObject jsonObject){Utility.printLog("mqtt message status : " );
+    public void publish(JSONObject jsonObject) {
+        Utility.printLog("mqtt message status : ");
         try {
 
-            if(helperDataSource.getServiceZoneList().getServiceZones().size()>0)
-                for(int i=0;i<helperDataSource.getServiceZoneList().getServiceZones().size();i++){
+            if (helperDataSource.getServiceZoneList().getServiceZones().size() > 0)
+                for (int i = 0; i < helperDataSource.getServiceZoneList().getServiceZones().size(); i++) {
                     String topic = "onlineDrivers/".concat(helperDataSource.getCityId().concat("/").concat(helperDataSource.getServiceZoneList().getServiceZones().get(i)));
-                    Utility.printLog("published Mqtt Zone topic :  "+topic);
-                    mqttAndroidClient.publish(topic,jsonObject.toString().getBytes(),2,false);
+                    Utility.printLog("published Mqtt Zone topic :  " + topic);
+                    mqttAndroidClient.publish(topic, jsonObject.toString().getBytes(), 2, false);
 
                 }
-        } catch (MqttException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -394,16 +374,12 @@ public class MQTTManager
      * <h2>connectMQTTClient</h2>
      * This method is used to connect to MQTT client
      */
-    private void connectMQTTClient(Context mContext)
-    {
-        try
-        {
-            Utility.printLog(TAG+" connectMQTTClient: ");
+    private void connectMQTTClient(Context mContext) {
+        try {
+            Utility.printLog(TAG + " connectMQTTClient: ");
             mqttAndroidClient.connect(mqttConnectOptions, mContext, mMQTTListener);
-        }
-        catch (Exception e)
-        {
-            Utility.printLog(TAG+" MqttException: "+e);
+        } catch (Exception e) {
+            Utility.printLog(TAG + " MqttException: " + e);
             e.printStackTrace();
         }
     }
@@ -412,18 +388,15 @@ public class MQTTManager
      * <h2>disconnect</h2>
      * This method is used To disconnect the MQtt client
      */
-    public void disconnect()
-    {
-        try
-        {
-            if (mqttAndroidClient != null)
-            {
+    public void disconnect() {
+        try {
+            if (mqttAndroidClient != null) {
                 unSubscribeToTopic(helperDataSource.getDriverChannel());
                 unSubscribeToTopic(helperDataSource.getDriverChannel_msg());
-                unSubscribeToTopic("message/"+helperDataSource.getDriverID());
+                unSubscribeToTopic("message/" + helperDataSource.getDriverID());
                 mqttAndroidClient.disconnect();
             }
-        } catch (MqttException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -431,9 +404,10 @@ public class MQTTManager
     /**
      * <h1>sendNotification</h1>
      * <p>set the notification for chat, and show</p>
-     * @param bid booking ID
-     * @param message message for chat
-     * @param custID customer ID
+     *
+     * @param bid      booking ID
+     * @param message  message for chat
+     * @param custID   customer ID
      * @param custName Customer name
      */
     private void sendNotification(String bid, String message, String custID, String custName) {
@@ -483,17 +457,15 @@ public class MQTTManager
     /**
      * <h1>isApplicationSentToBackground</h1>
      * <p>check whether the app is background or not</p>
+     *
      * @return :boolean value true: app is background  ,false: not in background
      */
-    private boolean isApplicationSentToBackground()
-    {
+    private boolean isApplicationSentToBackground() {
         ActivityManager am = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(1);
-        if (!tasks.isEmpty())
-        {
+        if (!tasks.isEmpty()) {
             ComponentName topActivity = tasks.get(0).topActivity;
-            if (!topActivity.getPackageName().equals(mContext.getPackageName()))
-            {
+            if (!topActivity.getPackageName().equals(mContext.getPackageName())) {
                 VariableConstant.APPISBACKGROUND = true;
                 return true;
             }

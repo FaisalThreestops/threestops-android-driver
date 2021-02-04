@@ -12,21 +12,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-
-import androidx.annotation.NonNull;
-
-import com.driver.threestops.app.main.help_center.zendeskHelpIndex.ZendeskHelpIndexAct;
-import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.navigation.NavigationView;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.GravityCompat;
-import androidx.core.view.ViewCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
@@ -41,32 +26,43 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.driver.threestops.app.bookingRequest.BookingPopUp;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.core.view.ViewCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
+import com.driver.Threestops.R;
+import com.driver.threestops.app.MyApplication;
 import com.driver.threestops.app.main.bank.BankListFrag;
+import com.driver.threestops.app.main.bank.addBankAccount.BankNewAccountActivity;
+import com.driver.threestops.app.main.help_center.zendeskHelpIndex.ZendeskHelpIndexAct;
+import com.driver.threestops.app.main.history.HistoryFragment;
+import com.driver.threestops.app.main.homeFrag.HomeFragment;
+import com.driver.threestops.app.main.profile.MyProfileFrag;
+import com.driver.threestops.data.source.PreferenceHelperDataSource;
+import com.driver.threestops.login.LoginActivity;
 import com.driver.threestops.login.language.LanguagesList;
 import com.driver.threestops.networking.ConnectivityReceiver;
 import com.driver.threestops.networking.NetworkErrorDialog;
-import com.driver.threestops.payment.PaymentAct;
-import com.driver.threestops.utility.DialogHelper;
-import com.driver.threestops.wallet.WalletAct;
-import com.google.firebase.messaging.FirebaseMessaging;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
-import com.driver.threestops.app.MyApplication;
-import com.driver.threestops.app.main.history.HistoryFragment;
-import com.driver.threestops.app.main.profile.MyProfileFrag;
-import com.driver.threestops.app.main.homeFrag.HomeFragment;
-import com.driver.threestops.app.main.bank.addBankAccount.BankNewAccountActivity;
-import com.driver.threestops.data.source.PreferenceHelperDataSource;
-import com.driver.Threestops.R;
-import com.driver.threestops.login.LoginActivity;
 import com.driver.threestops.networking.NetworkService;
+import com.driver.threestops.payment.PaymentAct;
 import com.driver.threestops.service.LocationUpdateService;
 import com.driver.threestops.utility.AppConstants;
 import com.driver.threestops.utility.CircleImageView;
+import com.driver.threestops.utility.DialogHelper;
 import com.driver.threestops.utility.FontUtils;
 import com.driver.threestops.utility.Utility;
 import com.driver.threestops.utility.VariableConstant;
+import com.driver.threestops.wallet.WalletAct;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -765,7 +761,6 @@ public class MainActivity extends DaggerAppCompatActivity
         startActivity(intent);
         Runtime.getRuntime().exit(0);
     }
-
 
 
 }

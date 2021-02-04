@@ -16,6 +16,7 @@ import com.driver.threestops.data.source.PreferenceHelperDataSource;
 import com.driver.threestops.managers.mqtt.MQTTManager;
 import com.driver.threestops.service.CouchDbHandler;
 
+import org.eclipse.paho.client.mqttv3.MqttException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
@@ -51,7 +52,6 @@ public class MyApplication extends DaggerApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        FacebookSdk.sdkInitialize(this);
         myApplication=this;
         Utility.printLog(" preferenceHelperDataSource.getLanguageSettings() "+
                 preferenceHelperDataSource.getLanguageSettings());
@@ -90,8 +90,7 @@ public class MyApplication extends DaggerApplication {
     }
 
     public void disconnectMqtt(){
-        mqttManager.disconnect();
-
+            mqttManager.disconnect();
     }
 
     public static MyApplication getInstance() {
@@ -110,7 +109,11 @@ public class MyApplication extends DaggerApplication {
 
     public void unSubscribeMqtt(String topic)
     {
-        mqttManager.unSubscribeToTopic(topic);
+        try {
+            mqttManager.unSubscribeToTopic(topic);
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setConnectivityListener(ConnectivityReceiver.ConnectivityReceiverListener listener) {

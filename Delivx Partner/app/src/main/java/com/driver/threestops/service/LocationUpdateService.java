@@ -197,24 +197,21 @@ public class LocationUpdateService
             }
 
             LocationServices.FusedLocationApi.requestLocationUpdates(
-                    mGoogleApiClient, mLocationRequest, new LocationListener() {
-                        @Override
-                        public void onLocationChanged(Location currentLoc) {
-                            double currentLat = currentLoc.getLatitude();
-                            double currentLng = currentLoc.getLongitude();
+                    mGoogleApiClient, mLocationRequest, currentLoc -> {
+                        double currentLat = currentLoc.getLatitude();
+                        double currentLng = currentLoc.getLongitude();
 
-                            preferenceHelperDataSource.setDriverCurrentLat("" + currentLat);
-                            preferenceHelperDataSource.setDriverCurrentLongi("" + currentLng);
+                        preferenceHelperDataSource.setDriverCurrentLat("" + currentLat);
+                        preferenceHelperDataSource.setDriverCurrentLongi("" + currentLng);
 
-                            if (prevLocation == null) {
-                                prevLocation = currentLoc;
-                            } else {
-                                bearing = prevLocation.bearingTo(currentLoc);
-                            }
-
-                            mCalculateRouteArray();
-
+                        if (prevLocation == null) {
+                            prevLocation = currentLoc;
+                        } else {
+                            bearing = prevLocation.bearingTo(currentLoc);
                         }
+
+                        mCalculateRouteArray();
+
                     });
         } catch (Exception e) {
             e.printStackTrace();
