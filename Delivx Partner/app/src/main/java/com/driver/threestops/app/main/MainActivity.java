@@ -223,7 +223,7 @@ public class MainActivity extends DaggerAppCompatActivity
      */
     private void checkAndRequestPermissions() {
         if (Build.VERSION.SDK_INT >= 23) {
-            String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION};
+            String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION};
             if (EasyPermissions.hasPermissions(this, perms)) {
                 // Already have permission
                 if (!Utility.isMyServiceRunning(LocationUpdateService.class, MainActivity.this)) {

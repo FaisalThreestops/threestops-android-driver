@@ -119,8 +119,8 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
 
         //asking the location run time permission above 23 version devices
         if (Build.VERSION.SDK_INT >= 23) {
-            String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION};
-            //if permission is delayed,, telling the importances of the permission and ask again
+            String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION};
+            //if permission is delayed,, telling the importance of the permission and ask again
             if (!EasyPermissions.hasPermissions(this, perms)) {
                 EasyPermissions.requestPermissions(this, location_permission_message,
                         VariableConstant.RC_LOCATION_STATE, perms);
