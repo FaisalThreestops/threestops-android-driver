@@ -1,7 +1,9 @@
 package com.driver.threestops.app.main;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
@@ -12,6 +14,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PowerManager;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
@@ -28,6 +31,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
@@ -75,6 +79,8 @@ import butterknife.OnClick;
 import dagger.android.support.DaggerAppCompatActivity;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
+
+import static android.net.ConnectivityManager.RESTRICT_BACKGROUND_STATUS_ENABLED;
 
 
 public class MainActivity extends DaggerAppCompatActivity
@@ -140,6 +146,7 @@ public class MainActivity extends DaggerAppCompatActivity
 
     private Fragment fragment;
     private Dialog dialog;
+    private AlertDialog dialogBackgroundDataRequest;
 
     /**********************************************************************************************/
     @Override
@@ -186,6 +193,58 @@ public class MainActivity extends DaggerAppCompatActivity
         presenter.subscribeNetworkObserver();
         presenter.getAppConfig();
         getOverlayPermission();
+        requestIgnoreBatteryOptimizations();
+        enableBackgroundDataRestricted();
+    }
+
+    /**
+     * <h2>enableBackgroundDataRestricted</h2>
+     * <p>It's check if app is restricted for access in internet while app in background
+     * and if it is true then redirect to controlling background data restriction screen for this particular application</p>
+     */
+    private void enableBackgroundDataRestricted() {
+        ConnectivityManager connMgr = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        // Checks user’s Data Saver settings.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            if (connMgr.isActiveNetworkMetered() && connMgr.getRestrictBackgroundStatus() == RESTRICT_BACKGROUND_STATUS_ENABLED) {
+                if (dialogBackgroundDataRequest != null && dialogBackgroundDataRequest.isShowing()) {
+                    return;
+                }
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(R.string.permission_request);
+                builder.setMessage(R.string.msg_background_permission_request);
+                builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                    dialog.dismiss();
+                    startActivity(new Intent(Settings.ACTION_IGNORE_BACKGROUND_DATA_RESTRICTIONS_SETTINGS, Uri.parse("package:" + getPackageName())));
+                });
+
+                dialogBackgroundDataRequest = builder.create();
+                dialogBackgroundDataRequest.setCancelable(false);
+                dialogBackgroundDataRequest.show();
+            }
+        }
+    }
+
+
+    /**
+     * <h2>requestIgnoreBatteryOptimizations</h2>
+     * <p>It's check if app is restricted in a battery optimizations and if true then
+     * redirect user to ask for whitelist app from battery optimizations</p>
+     */
+    @SuppressLint("BatteryLife")
+    private void requestIgnoreBatteryOptimizations() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Intent intent = new Intent();
+            String packageName = getPackageName();
+            PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
+            if (!pm.isIgnoringBatteryOptimizations(packageName)) {
+                intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+                intent.setData(Uri.parse("package:" + packageName));
+                startActivity(intent);
+            }
+        }
     }
 
     @Override
@@ -223,7 +282,10 @@ public class MainActivity extends DaggerAppCompatActivity
      */
     private void checkAndRequestPermissions() {
         if (Build.VERSION.SDK_INT >= 23) {
-            String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION};
+            String[] perms = new String[]{Manifest.permission.ACCESS_FINE_LOCATION};
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                perms = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION};
+            }
             if (EasyPermissions.hasPermissions(this, perms)) {
                 // Already have permission
                 if (!Utility.isMyServiceRunning(LocationUpdateService.class, MainActivity.this)) {

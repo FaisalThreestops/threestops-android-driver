@@ -702,4 +702,7 @@
     <string name="lblDiscount">Discount</string>
     <string name="default_notification_channel_id">1</string>
 
+    <string name="permission_request">Permission Request</string>
+    <string name="msg_background_permission_request">You need to allow us background data access for share location when app in background or device locked.</string>
+
 </resources>

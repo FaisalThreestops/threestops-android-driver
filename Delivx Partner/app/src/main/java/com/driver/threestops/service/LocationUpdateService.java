@@ -530,6 +530,7 @@ public class LocationUpdateService
                         public void onNext(Response<ResponseBody> value) {
                             try {
                                 JSONObject jsonObject;
+                                Utility.printLog("Loc Update Code: " + value.code());
                                 if(value.code()==200)
                                 {
                                     jsonObject=new JSONObject(value.body().string());
