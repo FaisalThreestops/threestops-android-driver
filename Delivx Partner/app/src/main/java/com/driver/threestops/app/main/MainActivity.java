@@ -207,6 +207,7 @@ public class MainActivity extends DaggerAppCompatActivity
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         // Checks user’s Data Saver settings.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Utility.printLog("LocationIssue : Background Data Restricted : " + (connMgr.isActiveNetworkMetered() && connMgr.getRestrictBackgroundStatus() == RESTRICT_BACKGROUND_STATUS_ENABLED));
             if (connMgr.isActiveNetworkMetered() && connMgr.getRestrictBackgroundStatus() == RESTRICT_BACKGROUND_STATUS_ENABLED) {
                 if (dialogBackgroundDataRequest != null && dialogBackgroundDataRequest.isShowing()) {
                     return;
@@ -239,6 +240,7 @@ public class MainActivity extends DaggerAppCompatActivity
             Intent intent = new Intent();
             String packageName = getPackageName();
             PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
+            Utility.printLog("LocationIssue : Battery Optimization enabled : " + !pm.isIgnoringBatteryOptimizations(packageName));
             if (!pm.isIgnoringBatteryOptimizations(packageName)) {
                 intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
                 intent.setData(Uri.parse("package:" + packageName));

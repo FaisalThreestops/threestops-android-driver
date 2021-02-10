@@ -466,6 +466,7 @@ public class LocationUpdateService
     public void publishLocation(double latitude, double longitude, final int transit) {
 
         if (preferenceHelperDataSource.isLoggedIn()) {
+            Utility.printLog("LocationIssue : Mqtt Location Update : true");
             String locationChk = "";
             LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             boolean gps_enabled = false;
