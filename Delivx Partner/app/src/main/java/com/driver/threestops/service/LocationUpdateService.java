@@ -428,7 +428,7 @@ public class LocationUpdateService
                         }
 
 
-                        if (counter >= preferenceHelperDataSource.getMinDistForRouteArray()) {
+                        /*if (counter >= preferenceHelperDataSource.getMinDistForRouteArray()) {
                             counter = 0;
                             if (distance(prevLatTimer, prevLongTimer, preferenceHelperDataSource.getDriverCurrentLat(),
                                     preferenceHelperDataSource.getDriverCurrentLongi(), METER) >= preferenceHelperDataSource.getMinDistForRouteArray()) {
@@ -444,6 +444,24 @@ public class LocationUpdateService
 
                         } else {
                             counter++;
+                        }*/
+                        double mDistance = distance(prevLatTimer, prevLongTimer, preferenceHelperDataSource.getDriverCurrentLat(),
+                                preferenceHelperDataSource.getDriverCurrentLongi(), METER);
+
+                        if (mDistance >= preferenceHelperDataSource.getMinDistForRouteArray()) {
+                            counter = 0;
+                            prevLatTimer = preferenceHelperDataSource.getDriverCurrentLat();
+                            prevLongTimer = preferenceHelperDataSource.getDriverCurrentLongi();
+                            updateLocationMQTT(preferenceHelperDataSource.getDriverCurrentLat(), preferenceHelperDataSource.getDriverCurrentLongi(), 0);
+                            publishLocation(preferenceHelperDataSource.getDriverCurrentLat(), preferenceHelperDataSource.getDriverCurrentLongi(), 1);
+                        } else {
+                            if (counter >= preferenceHelperDataSource.getTripStartedInterval()) {
+                                counter = 0;
+                                updateLocationMQTT(preferenceHelperDataSource.getDriverCurrentLat(), preferenceHelperDataSource.getDriverCurrentLongi(), 0);
+                                publishLocation(preferenceHelperDataSource.getDriverCurrentLat(), preferenceHelperDataSource.getDriverCurrentLongi(), 0);
+                            } else {
+                                counter++;
+                            }
                         }
 
                     } else if (!preferenceHelperDataSource.getBookings().isEmpty()) {

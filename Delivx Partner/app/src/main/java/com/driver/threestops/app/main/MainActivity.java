@@ -241,11 +241,11 @@ public class MainActivity extends DaggerAppCompatActivity
             String packageName = getPackageName();
             PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
             Utility.printLog("LocationIssue : Battery Optimization enabled : " + !pm.isIgnoringBatteryOptimizations(packageName));
-            if (!pm.isIgnoringBatteryOptimizations(packageName)) {
+            /*if (!pm.isIgnoringBatteryOptimizations(packageName)) {
                 intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
                 intent.setData(Uri.parse("package:" + packageName));
                 startActivity(intent);
-            }
+            }*/
         }
     }
 
