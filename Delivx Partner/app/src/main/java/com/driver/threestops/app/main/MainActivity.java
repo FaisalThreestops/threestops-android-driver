@@ -193,8 +193,35 @@ public class MainActivity extends DaggerAppCompatActivity
         presenter.subscribeNetworkObserver();
         presenter.getAppConfig();
         getOverlayPermission();
-        requestIgnoreBatteryOptimizations();
-        enableBackgroundDataRestricted();
+        checkLocationUpdateRestrictions();
+//        requestIgnoreBatteryOptimizations();
+//        enableBackgroundDataRestricted();
+    }
+
+    private void checkLocationUpdateRestrictions() {
+        boolean isBackgroundDataRestricted = false, isBatteryOptimized = false;
+        ConnectivityManager connMgr = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Utility.printLog("LocationIssue : Background Data Restricted : " + (connMgr.isActiveNetworkMetered() && connMgr.getRestrictBackgroundStatus() == RESTRICT_BACKGROUND_STATUS_ENABLED));
+            if (connMgr.isActiveNetworkMetered() && connMgr.getRestrictBackgroundStatus() == RESTRICT_BACKGROUND_STATUS_ENABLED) {
+                isBackgroundDataRestricted = true;
+            }
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Intent intent = new Intent();
+            String packageName = getPackageName();
+            PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
+             isBatteryOptimized = !pm.isIgnoringBatteryOptimizations(packageName);
+        }
+
+        if (isBackgroundDataRestricted && isBatteryOptimized)
+            Toast.makeText(this, "BG Data Restricted & Battery Optimized!", Toast.LENGTH_LONG).show();
+        else if (isBackgroundDataRestricted)
+            Toast.makeText(this, "BG Data Restricted!", Toast.LENGTH_LONG).show();
+        else if (isBatteryOptimized)
+            Toast.makeText(this, "Battery Optimized!", Toast.LENGTH_LONG).show();
     }
 
     /**
