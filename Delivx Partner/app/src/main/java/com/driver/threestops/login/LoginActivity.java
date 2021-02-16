@@ -7,20 +7,9 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textfield.TextInputLayout;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatTextView;
-import androidx.core.content.ContextCompat;
-import androidx.cardview.widget.CardView;
 import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -30,17 +19,25 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
+
+import com.driver.Threestops.R;
 import com.driver.threestops.ForgotPassword.ForgotPasswordMobNum;
 import com.driver.threestops.app.main.MainActivity;
 import com.driver.threestops.data.source.PreferenceHelperDataSource;
 import com.driver.threestops.login.language.LanguagesList;
-import com.driver.threestops.utility.DialogHelper;
-import com.driver.Threestops.R;
 import com.driver.threestops.signup.perosonal.SignupPersonal;
+import com.driver.threestops.utility.DialogHelper;
 import com.driver.threestops.utility.DisableError;
 import com.driver.threestops.utility.FontUtils;
 import com.driver.threestops.utility.Utility;
 import com.driver.threestops.utility.VariableConstant;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.leo.simplearcloader.ArcConfiguration;
 import com.leo.simplearcloader.SimpleArcDialog;
@@ -68,37 +65,66 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
     Typeface ClanaproNarrMedium;
     Typeface ClanaproNarrNews;
 
-    @BindView(R.id.tv_log_login) TextView tv_log_login;
-    @BindView(R.id.tv_splash_msg) TextView tv_splash_msg;
-    @BindView(R.id.tv_log_forgortpass) TextView tv_log_forgortpass;
-    @BindView(R.id.tv_log_signup) TextView tv_log_signup ;
-    @BindView(R.id.et_log_mail_mob) EditText et_log_mob;
-    @BindView(R.id.et_log_password) EditText et_log_pass;
-    @BindView(R.id.progressBar) ProgressBar  progressBar;
-    @BindView(R.id.activityRoot) RelativeLayout activityRoot;
+    @BindView(R.id.tv_log_login)
+    TextView tv_log_login;
+    @BindView(R.id.tv_splash_msg)
+    TextView tv_splash_msg;
+    @BindView(R.id.tv_log_forgortpass)
+    TextView tv_log_forgortpass;
+    @BindView(R.id.tv_log_signup)
+    TextView tv_log_signup;
+    @BindView(R.id.et_log_mail_mob)
+    EditText et_log_mob;
+    @BindView(R.id.et_log_password)
+    EditText et_log_pass;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
+    @BindView(R.id.activityRoot)
+    RelativeLayout activityRoot;
 
-    @BindView(R.id.til_log_mail_mob) TextInputLayout til_log_mob;
-    @BindView(R.id.til_log_password) TextInputLayout til_log_pass;
-    @BindView(R.id.tvOr) TextView tvOr;
-    @BindView(R.id.tvUserNameHint) TextView tvUserNameHint;
-    @BindView(R.id.tv_option_email) TextView tv_option_email;
-    @BindView(R.id.tv_option_phone) TextView tv_option_phone;
-    @BindView(R.id.tvCountryCode) TextView tvCountryCode;
-    @BindView(R.id.ll_phone_number) LinearLayout ll_phone_number;
-    @BindView(R.id.llLogo) LinearLayout llLogo;
-    @BindView(R.id.et_phone_num) EditText et_phone_num;
-    @BindView(R.id.view_background) View view_background;
-    @BindView(R.id.view_phone_option) View view_phone_option;
-    @BindView(R.id.view_email_option) View view_email_option;
-    @BindView(R.id.cvBottom) CardView cvBottom;
-    @BindView(R.id.tv_selected_language) TextView tv_selected_language;
+    @BindView(R.id.til_log_mail_mob)
+    TextInputLayout til_log_mob;
+    @BindView(R.id.til_log_password)
+    TextInputLayout til_log_pass;
+    @BindView(R.id.tvOr)
+    TextView tvOr;
+    @BindView(R.id.tvUserNameHint)
+    TextView tvUserNameHint;
+    @BindView(R.id.tv_option_email)
+    TextView tv_option_email;
+    @BindView(R.id.tv_option_phone)
+    TextView tv_option_phone;
+    @BindView(R.id.tvCountryCode)
+    TextView tvCountryCode;
+    @BindView(R.id.ll_phone_number)
+    LinearLayout ll_phone_number;
+    @BindView(R.id.llLogo)
+    LinearLayout llLogo;
+    @BindView(R.id.et_phone_num)
+    EditText et_phone_num;
+    @BindView(R.id.view_background)
+    View view_background;
+    @BindView(R.id.view_phone_option)
+    View view_phone_option;
+    @BindView(R.id.view_email_option)
+    View view_email_option;
+    @BindView(R.id.cvBottom)
+    CardView cvBottom;
+    @BindView(R.id.tv_selected_language)
+    TextView tv_selected_language;
     ArrayList<LanguagesList> languagesLists = new ArrayList<>();
-    @BindDrawable(R.drawable.drop_down)  Drawable drop_down;
-    @Inject DialogHelper dialogHelper;
-    @BindString(R.string.location_permission_message) String location_permission_message;
-    @Inject PreferenceHelperDataSource preferenceHelperDataSource;
-    @Inject LoginPresenter loginPresenter;
-    @Inject FontUtils fontUtils;
+    @BindDrawable(R.drawable.drop_down)
+    Drawable drop_down;
+    @Inject
+    DialogHelper dialogHelper;
+    @BindString(R.string.location_permission_message)
+    String location_permission_message;
+    @Inject
+    PreferenceHelperDataSource preferenceHelperDataSource;
+    @Inject
+    LoginPresenter loginPresenter;
+    @Inject
+    FontUtils fontUtils;
     SimpleArcDialog mDialog;
     ArcConfiguration configuration;
 
@@ -107,7 +133,7 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Check if the language code needs RTL changes to the UI
-        Utility.RtlConversion(this,preferenceHelperDataSource.getLanguageSettings().getLanguageCode());
+        Utility.RtlConversion(this, preferenceHelperDataSource.getLanguageSettings().getLanguageCode());
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
@@ -132,8 +158,11 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
             }
             //if permission is delayed,, telling the importance of the permission and ask again
             if (!EasyPermissions.hasPermissions(this, perms)) {
-                EasyPermissions.requestPermissions(this, location_permission_message,
-                        VariableConstant.RC_LOCATION_STATE, perms);
+                if (preferenceHelperDataSource.isFirstTime())
+                    showLocationAccessDialog();
+                else
+                    EasyPermissions.requestPermissions(this, location_permission_message,
+                            VariableConstant.RC_LOCATION_STATE, perms);
             }
         }
     }
@@ -155,6 +184,12 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
         btnOk.setOnClickListener(v -> {
             preferenceHelperDataSource.setIsFirstTime(false);
             alertDialog.dismiss();
+            String[] perms = new String[]{Manifest.permission.ACCESS_FINE_LOCATION};
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                perms = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION};
+            }
+            EasyPermissions.requestPermissions(this, location_permission_message,
+                    VariableConstant.RC_LOCATION_STATE, perms);
         });
 
         alertDialog.show();
@@ -194,12 +229,12 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
         //DelivX image will hide when we enter the  values of email or password
         activityRoot.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
             int heightDiff = activityRoot.getRootView().getHeight() - activityRoot.getHeight();
-            Utility.printLog("dptopx "+dpToPx(LoginActivity.this, 200));
+            Utility.printLog("dptopx " + dpToPx(LoginActivity.this, 200));
             if (heightDiff > dpToPx(LoginActivity.this, 200)) { // if more than 200 dp, it's probably a keyboard...
                 llLogo.setVisibility(View.GONE);
                 cvBottom.setVisibility(View.GONE);
 
-            }else {
+            } else {
                 llLogo.setVisibility(View.VISIBLE);
                 cvBottom.setVisibility(View.VISIBLE);
             }
@@ -214,7 +249,7 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
 
             @Override
             public void changeLanguage(String langCode, String langName, int dir) {
-                loginPresenter.languageChanged(langCode,langName);
+                loginPresenter.languageChanged(langCode, langName);
             }
 
         });
@@ -236,10 +271,9 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
     }
 
 
-
-    @OnClick({R.id.tvCountryCode,R.id.tv_option_phone,R.id.tv_option_email,
-            R.id.activityRoot,R.id.tv_log_login,
-            R.id.tv_log_forgortpass,R.id.tv_log_signup,R.id.tv_selected_language})
+    @OnClick({R.id.tvCountryCode, R.id.tv_option_phone, R.id.tv_option_email,
+            R.id.activityRoot, R.id.tv_log_login,
+            R.id.tv_log_forgortpass, R.id.tv_log_signup, R.id.tv_selected_language})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -249,7 +283,7 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
                 enableDisableSignIn(false);
                 methodRequiresOnePermission();
                 if (preferenceHelperDataSource.getDeviceId() != null)
-                    loginPresenter.validateCredentials(et_phone_num.getText().toString(),et_log_mob.getText().toString(), et_log_pass.getText().toString());
+                    loginPresenter.validateCredentials(et_phone_num.getText().toString(), et_log_mob.getText().toString(), et_log_pass.getText().toString());
                 break;
 
             //Invoke the forgot password activity
@@ -320,7 +354,7 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
     @Override
     public void hideProgress() {
         progressBar.setVisibility(View.GONE);
-      //  mDialog.dismiss();
+        //  mDialog.dismiss();
     }
 
     @Override
@@ -388,7 +422,7 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
         view_background.setVisibility(View.GONE);
         et_log_pass.setText("");
     }
-    
+
 
     @Override
     public void setCountryCode(String dialCode) {
@@ -398,7 +432,7 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
     @Override
     public void showError(String message) {
         enableDisableSignIn(true);
-        Utility.mShowMessage(getResources().getString(R.string.message),message,LoginActivity.this);
+        Utility.mShowMessage(getResources().getString(R.string.message), message, LoginActivity.this);
     }
 
     @Override
@@ -439,8 +473,7 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
     }
 
     @Override
-    public void onPermissionsDenied(int requestCode, List<String> perms)
-    {
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
             new AppSettingsDialog.Builder(this).build().show();
         } else if (requestCode == VariableConstant.RC_READ_PHONE_STATE) {
@@ -460,11 +493,12 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
     /**
      * <h2>enableDisableSignIn</h2>
      * <p>enabling or disabling the sign in based on the boolean option</p>
+     *
      * @param enable : true(enable), false(disable)
      */
-    public void enableDisableSignIn(boolean enable){
+    public void enableDisableSignIn(boolean enable) {
         tv_log_login.setEnabled(enable);
-        if(enable)
+        if (enable)
             tv_log_login.setOnClickListener(this);
         else
             tv_log_login.setOnClickListener(null);
@@ -478,10 +512,10 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
     public void hideSoftKeyboard() {
         View view = this.getCurrentFocus();
         if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
-        getWindow().setSoftInputMode (WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
 
@@ -493,11 +527,10 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
     }
 
     @Override
-    public void setLanguage(String language,boolean restart)    {
+    public void setLanguage(String language, boolean restart) {
         tv_selected_language.setText(language);
-        tv_selected_language.setCompoundDrawablesWithIntrinsicBounds(null,null ,drop_down,null);
-        if(restart)
-        {
+        tv_selected_language.setCompoundDrawablesWithIntrinsicBounds(null, null, drop_down, null);
+        if (restart) {
             Intent intent = new Intent(this, LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);

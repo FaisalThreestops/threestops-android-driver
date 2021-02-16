@@ -49,7 +49,6 @@ android {
         release {
             //minifyEnabled fasle
            // proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            debuggable true
         }
         debug {
             debuggable true
