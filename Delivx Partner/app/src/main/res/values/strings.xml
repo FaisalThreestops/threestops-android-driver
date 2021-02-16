@@ -705,4 +705,10 @@
     <string name="permission_request">Permission Request</string>
     <string name="msg_background_permission_request">You need to allow us background data access for share location when app in background or device locked.</string>
 
+    <string name="location"><b>LOCATION</b></string>
+
+    <string name="location_info">This app collects location data to enable location service for ride bookings by accessing "<b>ACCESS COARSE LOCATION</b>","<b>ACCESS FINE LOCATION</b>","<b>ACCESS BACKGROUND LOCATION</b>" and "<b>FOREGROUND SERVICE</b>" even when the <b>app is in background</b> or <b>closed</b> or <b>always in use</b> or <b>not is use</b>.</string>
+
+    <string name="location_ok"><b>OK</b></string>
+
 </resources>

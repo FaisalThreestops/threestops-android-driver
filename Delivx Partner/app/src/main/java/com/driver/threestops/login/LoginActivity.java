@@ -8,12 +8,19 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
 import androidx.cardview.widget.CardView;
 import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -129,6 +136,28 @@ public class LoginActivity extends DaggerAppCompatActivity implements View.OnCli
                         VariableConstant.RC_LOCATION_STATE, perms);
             }
         }
+    }
+
+    private void showLocationAccessDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_location_access_info, null);
+        AppCompatTextView title = dialogView.findViewById(R.id.lblTitle);
+        AppCompatTextView description = dialogView.findViewById(R.id.tvDescription);
+        AppCompatButton btnOk = dialogView.findViewById(R.id.btnOk);
+        title.setText(Html.fromHtml(getString(R.string.location)));
+        description.setText(Html.fromHtml(getString(R.string.location_info)));
+        btnOk.setText(Html.fromHtml(getString(R.string.location_ok)));
+        builder.setView(dialogView);
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setCancelable(false);
+
+        btnOk.setOnClickListener(v -> {
+            preferenceHelperDataSource.setIsFirstTime(false);
+            alertDialog.dismiss();
+        });
+
+        alertDialog.show();
     }
 
 

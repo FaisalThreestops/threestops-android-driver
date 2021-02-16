@@ -32,6 +32,17 @@ public class PreferencesHelper implements PreferenceHelperDataSource {
     }
 
     @Override
+    public void setIsFirstTime(Boolean firstTime) {
+        editor.putBoolean(PreferenceKeys.KeysEntry.FIRST_TIME, firstTime);
+        editor.commit();
+    }
+
+    @Override
+    public Boolean isFirstTime() {
+        return sharedPreferences.getBoolean(PreferenceKeys.KeysEntry.FIRST_TIME,true);
+    }
+
+    @Override
     public void setMyEmail(String email) {
         editor.putString(PreferenceKeys.KeysEntry.EMAIL,email);
         editor.commit();

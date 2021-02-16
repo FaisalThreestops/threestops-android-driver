@@ -8,6 +8,19 @@ public interface PreferenceHelperDataSource
 {
 
     /**
+     * <h2>setIsFirstTime</h2>
+     * This method is used to set first time flag
+     * @param firstTime
+     */
+    void setIsFirstTime(Boolean firstTime);
+    /**
+     * <h2>isFirstTime</h2>
+     * This method is used to get first time flag
+     *
+     */
+    Boolean isFirstTime();
+
+    /**
      * <h2>setMyEmail</h2>
      * This method is used to set Email
      * @param email

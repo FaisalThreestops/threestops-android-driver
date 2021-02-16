@@ -10,6 +10,7 @@ public class PreferenceKeys
     }
 
     static abstract class KeysEntry{
+        public static final String FIRST_TIME = "first_time";
         public static final String REG_ID = "push_token";
         public static final String PUSH_TOPIC = "push_topic";
         public static final String VEH_ID = "vehicle_id";
