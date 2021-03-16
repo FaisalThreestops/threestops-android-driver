@@ -110,7 +110,10 @@ public class MyApplication extends DaggerApplication {
     public void unSubscribeMqtt(String topic)
     {
         try {
-            mqttManager.unSubscribeToTopic(topic);
+            if (mqttManager != null) {
+                mqttManager.unSubscribeToTopic(topic);
+            }
+
         } catch (MqttException e) {
             e.printStackTrace();
         }
