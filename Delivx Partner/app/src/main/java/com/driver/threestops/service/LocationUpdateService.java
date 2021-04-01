@@ -23,6 +23,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
+
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.driver.threestops.RxObservers.RXDistanceChangeObserver;
@@ -405,13 +407,13 @@ public class LocationUpdateService
 
                         if (!((MyApplication) getApplication()).isMQTTConnected() && mqttCount > 6) {
                             mqttCount = 0;
-                            if (preferenceHelperDataSource.getDriverID() != null) {
+                            if (!TextUtil.isEmpty(preferenceHelperDataSource.getDriverID())) {
                                 ((MyApplication) getApplication()).unSubscribeMqtt(preferenceHelperDataSource.getDriverID());
                                 Utility.printLog("testing unsubScribed Mqtt Topic :   " + preferenceHelperDataSource.getDriverID());
                             }
 
 
-                            if (preferenceHelperDataSource.getServiceZoneList().getServiceZones().size() > 0)
+                            if (preferenceHelperDataSource.getServiceZoneList() != null && preferenceHelperDataSource.getServiceZoneList().getServiceZones() != null && preferenceHelperDataSource.getServiceZoneList().getServiceZones().size() > 0)
                                 for (int i = 0; i < preferenceHelperDataSource.getServiceZoneList().getServiceZones().size(); i++) {
                                     String topic = "onlineDrivers/".concat(preferenceHelperDataSource.getCityId().concat("/").concat(preferenceHelperDataSource.getServiceZoneList().getServiceZones().get(i)));
                                     Utility.printLog("subscribed Mqtt Zone topic :  " + topic);

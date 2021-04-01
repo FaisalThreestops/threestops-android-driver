@@ -105,9 +105,11 @@ public class MQTTManager {
 
             @Override
             public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                exception.printStackTrace();
-                Utility.printLog(TAG + "onFailure: myqtt client " + asyncActionToken.isComplete()
-                        + " " + exception.getMessage());
+                if (exception != null) {
+                    exception.printStackTrace();
+                    Utility.printLog(TAG + "onFailure: myqtt client " + asyncActionToken.isComplete()
+                            + " " + exception.getMessage());
+                }
             }
         };
     }

@@ -780,24 +780,18 @@ public class MainActivity extends DaggerAppCompatActivity
 
     @Override
     public void networkAvailable() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (networkErrorDialog != null && networkErrorDialog.isShowing()) {
-                    networkErrorDialog.dismiss();
-                }
+        runOnUiThread(() -> {
+            if (mainActivity_opened && networkErrorDialog != null && networkErrorDialog.isShowing()) {
+                networkErrorDialog.dismiss();
             }
         });
     }
 
     @Override
     public void networkNotAvailable() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (mainActivity_opened && networkErrorDialog != null && !networkErrorDialog.isShowing())
-                    networkErrorDialog.show();
-            }
+        runOnUiThread(() -> {
+            if (mainActivity_opened && networkErrorDialog != null && !networkErrorDialog.isShowing())
+                networkErrorDialog.show();
         });
 
     }
