@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -32,6 +33,7 @@ import android.provider.Settings;
 import com.google.android.material.textfield.TextInputLayout;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -42,6 +44,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -1236,5 +1239,51 @@ public class Utility {
             }
         }
         return false;
+    }
+
+    public static void startPowerSaverIntent(Context context) {
+        SharedPreferences settings = context.getSharedPreferences("ProtectedApps", Context.MODE_PRIVATE);
+        boolean skipMessage = settings.getBoolean("skipProtectedAppCheck", false);
+        if (!skipMessage) {
+            final SharedPreferences.Editor editor = settings.edit();
+            boolean foundCorrectIntent = false;
+            for (Intent intent : VariableConstant.POWERMANAGER_INTENTS) {
+                if (isCallable(context, intent)) {
+                    foundCorrectIntent = true;
+                    final AppCompatCheckBox dontShowAgain = new AppCompatCheckBox(context);
+                    dontShowAgain.setText(context.getString(R.string.do_not_show_again));
+                    dontShowAgain.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                            editor.putBoolean("skipProtectedAppCheck", isChecked);
+                            editor.apply();
+                        }
+                    });
+
+                    new AlertDialog.Builder(context)
+                            .setTitle(Build.MANUFACTURER + " Protected Apps")
+                            .setMessage(String.format("%s requires to be enabled in 'Protected Apps' to function properly.%n", context.getString(R.string.app_name)))
+                            .setView(dontShowAgain)
+                            .setPositiveButton("Go to settings", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    context.startActivity(intent);
+                                }
+                            })
+                            .setNegativeButton(android.R.string.cancel, null)
+                            .show();
+                    break;
+                }
+            }
+            if (!foundCorrectIntent) {
+                editor.putBoolean("skipProtectedAppCheck", true);
+                editor.apply();
+            }
+        }
+    }
+
+    private static boolean isCallable(Context context, Intent intent) {
+        List<ResolveInfo> list = context.getPackageManager().queryIntentActivities(intent,
+                PackageManager.MATCH_DEFAULT_ONLY);
+        return list.size() > 0;
     }
 }

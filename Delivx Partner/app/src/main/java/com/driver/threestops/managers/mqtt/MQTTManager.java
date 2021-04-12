@@ -131,11 +131,9 @@ public class MQTTManager {
      */
     @SuppressWarnings("TryWithIdenticalCatches")
     public void unSubscribeToTopic(String topic) throws MqttException {
-            if (mqttAndroidClient != null) {
-                if (topic != null) {
-                    mqttAndroidClient.unsubscribe(topic);
-                }
-            }
+        if (mqttAndroidClient != null) {
+            mqttAndroidClient.unsubscribe(topic);
+        }
     }
 
     /**

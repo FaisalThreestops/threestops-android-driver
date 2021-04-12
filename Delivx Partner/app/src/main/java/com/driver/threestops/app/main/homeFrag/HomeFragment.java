@@ -321,6 +321,7 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
     public void onResume() {
         super.onResume();
         VariableConstant.FORGROUND_LOCK = false;
+        Utility.startPowerSaverIntent(getContext());
         presenter.startLocationUpdate();
         presenter.getDriverScheduleType();
         presenter.checkBookingPopUp();
