@@ -150,6 +150,10 @@ public class HistoryFragment extends DaggerFragment implements TabLayout.OnTabSe
             {
                 endDate = tabDateFormat.format(c.getTime());
                 c.add(Calendar.DATE , -differenceDays);
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int day = c.get(Calendar.DATE);
+                c.set(year, month, day, 0, 0, 0);
                 startDate = tabDateFormat.format(c.getTime());
                 apiStartWeek.add(c.getTime());
                 c.add(Calendar.DATE , -1);
@@ -168,6 +172,10 @@ public class HistoryFragment extends DaggerFragment implements TabLayout.OnTabSe
                 endDate = tabDateFormat.format(c.getTime());
                 Log.i("check", "initTabLayout: endate "+endDate);
                 c.add(Calendar.DATE , -6);
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int day = c.get(Calendar.DATE);
+                c.set(year, month, day, 0, 0, 0);
                 startDate = tabDateFormat.format(c.getTime());
                 apiStartWeek.add(c.getTime());
                 Log.i("check", "initTabLayout: apiStartWeek "+apiStartWeek);
@@ -256,7 +264,11 @@ public class HistoryFragment extends DaggerFragment implements TabLayout.OnTabSe
         Date endDate = apiStartWeek.get(position);
         Calendar calendar=Calendar.getInstance();
         calendar.setTime(endDate);
-        calendar.add(Calendar.DATE,5);
+        calendar.add(Calendar.DATE,6);
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DATE);
+        calendar.set(year, month, day, 23, 59, 59);
         String apiSelectedEndDate = apiDateFormat.format(calendar.getTime());
 
         Log.d(TAG, "onTabSelected: after minus tabPosition "+apiSelectedDate);
