@@ -1,0 +1,715 @@
+<resources>
+    <string name="app_name">Threestops Partner</string>
+    <string name="app_name_withoutSpace">Threestops_Partner</string>
+    <string name="facebook_app_id">1111066805703978</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="loading">Loading&#8230;</string>
+    <string name="logging_out">Logging out&#8230;</string>
+    <string name="network_problem">Could not connect to the server.</string>
+
+
+    <string name="uhOh">Uh&#45;Oh&#33;</string>
+    <string name="reGrantPermissionMsg">You have denied the required permission(s). Please, grant to proceed further."</string>
+    <string name="appSetting">App Setting</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="logoutDialog">Do you want to logout?</string>
+    <string name="log">Log</string>
+    <string name="out">Out</string>
+    <string name="sessionExpired">Sorry your session expired please login again!!!</string>
+
+    <!--Splash Screen Activity-->
+    <string name="login">LOG IN</string>
+    <string name="signin">SIGN IN</string>
+    <string name="signup">SIGN UP</string>
+    <string name="app_name_splash">Truckr</string>
+    <string name="splash_msg">Your same-day delivery solution</string>
+
+    <!--login activity -->
+    <string name="welcome">Welcome to Truckr</string>
+    <string name="phone_no">PHONE NUMBER</string>
+    <string name="phone_no_email_hint">EMAIL/PHONE NUMBER</string>
+    <string name="password">PASSWORD</string>
+    <string name="forgot_pass">FORGOT PASSWORD?</string>
+    <string name="select_country">SELECT COUNTRY</string>
+    <string name="fill_fields">Fill the fields</string>
+    <string name="phone_miss">Enter the email or phone number</string>
+    <string name="phone_mis">Please enter a phone number.</string>
+    <string name="password_miss">Please enter a password.</string>
+    <string name="login_succes">Login Success</string>
+    <string name="login_signup_txt"><![CDATA[<font color=\'#767676\'>"Don\'t have an account?"</font><font color=\'#5AA43E\'>" Sign Up"</font>]]></string>
+    <string name="selectLanguage">Language</string>
+    <string name="english">English</string>
+
+    <!--Forgot password Enter  mobile num activity-->
+    <string name="forgotPassword">Forgot Password</string>
+    <string name="forgotMsgMob">Enter your phone number and you will get a \n verification code to reset password </string>
+    <string name="forgotMsgEmail">Enter your email address to receive a \n link to reset password </string>
+    <!--Forgot password verify-->
+    <string name="verify_mob">Verify Mobile Number</string>
+    <string name="verify_msg1">A Verification Code has been sent to</string>
+    <string name="verify_msg2">Please enter the code below.</string>
+    <string name="resend">RESEND CODE ?</string>
+    <string name="verify">VERIFY</string>
+    <string name="enter_otp">Enter a verication code</string>
+    <!--Forgot Password re-enter pass-->
+    <string name="newpassmsg">Thank you for verifying your phone number \n  please create a new password below.</string>
+    <string name="NewPass">NEW PASSWORD</string>
+    <string name="ReEnterPass">"RE-ENTER PASSWORD</string>
+    <string name="passNotMactch">Mismatched password. </string>
+    <string name="Continue">CONTINUE</string>
+    <string name="entNewPass">Enter new password</string>
+    <string name="EntNewPass">Change Password</string>
+    <string name="reentrPass">Re-enter the password</string>
+
+    <!--select vechicle list-->
+    <string name="logout_vl">Logout</string>
+    <string name="selectVeh_vl">Select Vehicle</string>
+    <string name="plateno_vl">Plate Number</string>
+    <string name="type_vl">Type</string>
+    <string name="model_vl">Model</string>
+    <string name="confirm">CONFIRM</string>
+    <string name="logoutmessage">Are you sure you want to log out?</string>
+    <string name="selectVechicle">Select vehicle</string>
+
+    <!--sign up activity personal-->
+    <string name="signup_">Sign Up</string>
+    <string name="next">NEXT</string>
+    <string name="persoanl">PERSONAL DETAILS</string>
+    <string name="fname">FIRST NAME*</string>
+    <string name="lname">LAST NAME</string>
+    <string name="phone_num">PHONE NUMBER*</string>
+    <string name="email">EMAIL*</string>
+    <string name="password_signup">PASSWORD* </string>
+    <string name="driving_lic">DRIVING LICENCE *</string>
+    <string name="upload">"(upload both sides)*</string>
+    <string name="err_fname">Please enter your first name.</string>
+    <string name="err_phone_no">Please enter Phone Number</string>
+    <string name="err_email">Please enter an email address.</string>
+    <string name="err_pass">Please enter Password</string>
+    <string name="invalidEmail">Invalid email address, please try again.</string>
+    <string name="invalid_email_or_phone">Invalid Email or Phone Number</string>
+    <string name="invalidPhone">Invalid phone number, please try again.</string>
+    <string name="operator">Operator</string>
+    <string name="free_lancer">Freelancer</string>
+    <string name="choose_prof_pic">Please upload your Profile Image</string>
+    <string name="choose_licence_img">Please upload your driving license</string>
+    <string name="phone_reg_err">Phone  is already registered.</string>
+    <string name="phone_email_reg_err">Phone and Email is already registered.</string>
+    <string name="email_reg_err">Email  is already registered.</string>
+    <string name="licence_miss">Upload the Licence image.</string>
+
+    <!--sign up activity vechicle-->
+    <string name="vehicle_details">Vehicle Details</string>
+    <string name="plate_no">Plate Number*</string>
+    <string name="color">Color*</string>
+    <string name="type">Type*</string>
+    <string name="specialities">Speciality*</string>
+    <string name="make">Make*</string>
+    <string name="model">Model*</string>
+    <string name="insurance">INSURANCE (upload both sides)*</string>
+    <string name="finish">FINISH</string>
+    <string name="err_plate">Enter plate number</string>
+    <string name="err_color">Enter color</string>
+    <string name="err_type">Select Type</string>
+    <string name="err_specialities">Select Speciality</string>
+    <string name="err_make">Select Make</string>
+    <string name="err_model">Select Model</string>
+    <string name="err_veh_img">Select vehicle image</string>
+    <string name="err_insurance_img">Add insurance image</string>
+    <string name="signup_success_msg">Thanks for signing up. one of our representative will get in touch with you in the next 24 hours to setup your profile and get all the necessary documents</string>
+    <string name="Insurance_miss">Upload the Insurance image.</string>
+    <string name="certificate_miss">Upload the Certificate image.</string>
+
+    <!--NavigationDrawer-->
+    <string name="home">Home</string>
+    <string name="history">History</string>
+    <string name="support">Support</string>
+    <string name="logout">Logout</string>
+    <string name="payments">Wallet</string>
+    <string name="wallet">My Wallet</string>
+
+    <string name="view_profile">View Profile</string>
+
+    HomeFragmentCOntractment String-->
+    <string name="go_offline">Go Offline</string>
+    <string name="go_online">Go Online</string>
+    <string name="current">CURRENT</string>
+    <string name="upcoming">UPCOMING</string>
+    <string name="id">ID :</string>
+    <string name="time_left">Time left for pickup</string>
+
+    <!--Hostory String-->
+    <string name="from">From</string>
+    <string name="to">TO</string>
+    <string name="no_of_trips">No of Trips</string>
+    <string name="amount_earns">Amount Earned</string>
+
+    <!--On the way to pickup-->
+    <string name="onthepickup">On the way to pickup</string>
+    <string name="googlemaps">Google Maps</string>
+    <string name="googlemaps_color"><![CDATA[<font color=\'#4885ED\'>G</font><font color=\'#DB3236\'>o</font><font color=\'#F4C20D\'>o</font><font color=\'#4885ED\'>g</font><font color=\'#3CBA54\'>l</font><font color=\'#DB3236\'>e</font><font color=\'#767676\'>" Maps"</font>]]></string>
+    <string name="maps">" Maps"</string>
+    <string name="waze">Waze</string>
+    <string name="distance">Distance</string>
+    <string name="timer">Time</string>
+    <string name="km">Km</string>
+    <string name="min">Min</string>
+    <!--<string name="arrivedToPick">ARRIVED AT PICKUP</string>-->
+    <string name="arrivedToPick">ARRIVED</string>
+    <string name="arrivedAtPick">Arrived at pickup</string>
+    <string name="start">START</string>
+    <string name="waitingTime">Waiting Time</string>
+    <string name="hrs">Hrs</string>
+    <string name="onTrip">On Trip</string>
+    <string name="unload">UNLOAD</string>
+    <string name="delivery_completed">Delivery Completed</string>
+
+    <!--Cancel Activity-->
+    <string name="cancelReason">Cancel Reason</string>
+    <string name="comments">COMMENTS</string>
+    <string name="tv_comment_hint">Write comment here...</string>
+
+    <!--MyProfile fragment-->
+    <string name="edit">Edit</string>
+    <string name="name">Name</string>
+    <string name="prof_fname">First Name</string>
+    <string name="prof_lname">Last Name</string>
+    <string name="prof_number">Phone Number</string>
+    <string name="prof_pass">Password</string>
+    <string name="prof_veh_type">Vechicle Type</string>
+    <string name="prof_vech_number">Vechicle Number</string>
+    <string name="change_pass">Change Password</string>
+    <string name="save">Save</string>
+
+    <!--Edit Name -->
+    <string name="enter_new_name">Please enter your name to change.</string>
+    <string name="new_name">New Name</string>
+    <string name="err_name">Enter the name.</string>
+
+    <!--Edit Phone Number-->
+    <string name="edit_phone">Edit Phone Number</string>
+    <string name="edit_phone_msg">Please enter the new phone number, and you will receive a verification code to reset your number. </string>
+
+    <!--Edit Password dialog-->
+    <string name="enter_old_pass">Please enter your current password. </string>
+    <string name="old_pas">Enter Password</string>
+    <string name="invalid_pass">Incorrect password</string>
+
+    <!--Change Password-->
+    <string name="old_pass">Old Password</string>
+    <string name="new_pass">New Password</string>
+    <string name="re_ent_pass">Re-Enter Password</string>
+    <string name="submit">SUBMIT</string>
+    <string name="ent_pres_pass">Enter the current password.</string>
+    <string name="pass_change_success">Password changed successfully</string>
+    <string name="enter_new_pass">Please enter new password</string>
+
+    <!--DeliveryCompleted Activity-->
+    <string name="deli_completed">Delivery Completed</string>
+    <string name="id_">"ID: "</string>
+    <string name="help">Help?</string>
+    <string name="bil_details">Bill Details</string>
+    <string name="distance_fare">Distance </string>
+    <string name="time_fare">Time </string>
+    <string name="discount">Discount</string>
+    <string name="sub_total">Sub Total</string>
+    <string name="add_special">"+ Add Special Charges"</string>
+    <string name="grand_total">Grand Total : </string>
+    <string name="deliverd_to">Delivered to</string>
+    <string name="reiever_name">Receiver Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="signature">Signature</string>
+    <string name="photos_of_doc">Photos of document</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="rate_the_cus">Rate the customer</string>
+    <string name="read_storage_and_camera_state_permission_message">Please give permission for read write storage and camera to go ahead in app.</string>
+
+    <!--Booking PopUp Activity-->
+    <string name="pickup">PICKUP</string>
+    <string name="drop">DROP</string>
+    <string name="lefttoaccept">Left to Accept</string>
+    <string name="Deliveryfee">Delivery Fee</string>
+
+    <string name="senderdetails">Sender Details</string>
+    <string name="yourated">You Rated</string>
+    <string name="total">Total</string>
+    <string name="special_charge">Special Charges</string>
+    <string name="waitingcharge">Waiting Charge</string>
+    <string name="tollCharge">Toll Charge</string>
+    <string name="payment">Payment</string>
+    <string name="cardending">Card Ending</string>
+    <string name="recieversdetails">"Receiver's Details"</string>
+    <string name="documents">Documents</string>
+    <string name="recievedby">Received By</string>
+
+    <!--Job Details-->
+    <string name="jobdetails">Job Details</string>
+    <string name="bookingid">Booking ID</string>
+    <string name="pickupanddrop">Pickup and Drop</string>
+    <string name="senderrecdet">"Sender / Receiver Details"</string>
+    <string name="sender">SENDER</string>
+    <string name="reciever">RECEIVER</string>
+    <string name="shipmentdetails">Shipment Details</string>
+    <string name="goodstype">GOODS TYPE</string>
+    <string name="quantity">QUANTITY</string>
+    <string name="photos">PHOTOS</string>
+    <string name="additionalnot">ADDITIONAL NOTES</string>
+
+    <!--Imageupload-->
+    <string name="smthWentWrong">Something went wrong</string>
+    <string name="oops">Oops&#33;</string>
+    <string name="gallery">Gallery</string>
+    <string name="camera">Camera</string>
+    <string name="remove">Remove</string>
+
+    <!--activity_select_an_operator-->
+    <string name="title_activity_select_an_operator">Select An Operator</string>
+    <string name="referral">REFERRAL CODE</string>
+    <string name="select_zone">SELECT PREFERRED ZONE</string>
+    <string name="zones">Preferred Zones</string>
+    <string name="read_phone_state_permission_message">Please give permission to read phone state to identify your device.</string>
+    <string name="location_permission_message">Please give permission to fetch location of your device.</string>
+    <string name="booking_fare">Booking Fare</string>
+
+
+    <string name="currency">"$"</string>
+    <string name="message">Message</string>
+
+    <string name="sun">SUN</string>
+    <string name="mon">MON</string>
+    <string name="tue">TUE</string>
+    <string name="wed">WED</string>
+    <string name="thu">THU</string>
+    <string name="fri">FRI</string>
+    <string name="sat">SAT</string>
+
+    <string name="BaseFare">Base Fare</string>
+    <string name="charges">FARE BREAKDOWN</string>
+    <string name="cannot_edit_msg">CANNOT EDIT INVOICE ONCE CONFIRMED</string>
+    <string name="handling">Handling</string>
+    <string name="adjustment">Min Fare Adjustment</string>
+    <string name="waiting_fare">Waiting</string>
+    <string name="base_fare">Base</string>
+    <string name="bid">ID:</string>
+    <string name="validating">Validating...</string>
+    <string name="REJECT">REJECT</string>
+    <string name="make_online">Please be Online</string>
+    <string name="time_left_drop">Time left for Drop</string>
+    <string name="now">Now</string>
+    <string name="no_network">No Network Connection</string>
+    <string name="reg_certficate">Upload the registration certificate image.</string>
+    <string name="carriage_permit">Upload carriage permit image.</string>
+    <string name="emptyReason">Please Mention the Reason.</string>
+    <string name="your_earnings">Earnings and Commission</string>
+    <string name="earned_amount">Earned Amount</string>
+    <string name="AppCommission">App Commission</string>
+    <string name="reached_at_drop_location">REACHED AT DROP LOCATION</string>
+    <string name="pls_select_zone">Please select zone.</string>
+    <string name="insurance_photo">Insurance*</string>
+    <string name="carriage_photo">Permit</string>
+    <string name="registration">Registration*</string>
+    <string name="done">DONE</string>
+    <string name="certificate">Certificate*</string>
+    <string name="referral_text">Get a discount if your contacts sign up using your invite code.</string>
+    <string name="facebook">Facebook</string>
+    <string name="twitter">Twitter</string>
+    <string name="Email">Email</string>
+    <string name="invite">Invite</string>\
+    <string name="portal">Portal</string>
+
+    <!--   Bank  Details  -->
+    <string name="bank_details">Bank Details</string>
+    <string name="add">Add</string>
+    <string name="add_account">Add Account</string>
+    <string name="image">Image</string>
+    <string name="newAccount">New Account</string>
+    <string name="bankDetailsline">Bank\nDetails</string>
+    <string name="title_activity_new_account">NewAccountActivity</string>
+    <string name="addCaps">Add</string>
+    <string name="accno">Account Number*</string>
+    <string name="rountinNo">Routing Number*</string>
+    <string name="name_">Name*</string>
+    <string name="DOB">Date of Birth(mm/dd/yyyy)*</string>
+    <string name="personalId">SSN*</string>
+    <string name="state">State*</string>
+    <string name="postalCode">Postal Code*</string>
+    <string name="city">City*</string>
+    <string name="zone">Zone*</string>
+    <string name="address">Address*</string>
+    <string name="addIdProof">Add Id Proof</string>
+    <string name="plsUploadIdProf">Please Upload Id proof</string>
+    <string name="enterAccountNo">Enter Account No</string>
+    <string name="enterRoutinNo">Routing number should be 9 digits</string>
+    <string name="enterAccountHoldername">Enter Account Holder Name</string>
+    <string name="enterAccountHolderPhoneNumber">Enter Account Holder Phone Number</string>
+    <string name="enterAddressBank">Enter Address</string>
+    <string name="enterCityBank">Enter City</string>
+    <string name="enterStateBank">Enter state</string>
+    <string name="enterPincodeBank">Enter Pincode</string>
+    <string name="enterDob">Enter Dob</string>
+    <string name="enterPersonalid">Enter SSN</string>
+    <string name="enterState">Enter State</string>
+    <string name="enterPostalCode">Enter Zip Code</string>
+    <string name="enterCity">Enter City</string>
+    <string name="enterAddress">Enter Address</string>
+    <string name="accnolabel">Account No :</string>
+    <string name="accountHolder">Account Holder :</string>
+    <string name="accountDetails">Account Details</string>
+    <string name="makeDefault">Make Default</string>
+    <string name="rountinNoLabel">Routing No :</string>
+    <string name="bankName">Bank Name :</string>
+    <string name="currency_bank_details">Currency :</string>
+    <string name="county">Country :</string>
+    <string name="deleteAccount">Delete Account</string>
+    <string name="customerCancelTheBooking">Cutomer cancel the booking</string>
+    <string name="fullName">Full Name *</string>
+    <string name="zipCode">Zip Code*</string>
+    <string name="link">Hey there! Use my code XXXXX to signup and get exclusive deals on Truckr.</string>
+    <string name="change_name">Change your name</string>
+    <string name="change_name_title">Change Name</string>
+    <string name="booking_hoistory">BOOKING HISTORY</string>
+    <string name="plan">Commission Plan</string>
+    <string name="edit_pass">Change Password</string>
+    <string name="serverError">Unable to fetch data</string>
+    <string name="nosubCategory">No sub category</string>
+    <string name="photoID">PHOTO ID*</string>
+    <string name="FIRSTNAME">First Name*</string>
+    <string name="LASTNAME">Last Name*</string>
+    <string name="SSN">SSN*</string>
+    <string name="stripeAccount">STRIPE ACCOUNT</string>
+    <string name="bankAccounts">BANK ACCOUNTS</string>
+    <string name="addStripeAccount">Add Stripe Account</string>
+    <string name="noStripeAccountDetails">No Stripe Account Details!</string>
+    <string name="enterLastName">Enter Last Name</string>
+    <string name="enterValidDob">Enter Valid DOB</string>
+    <string name="enterValidPersonalid">Enter Valid Personal Id</string>
+    <string name="enterValidMonth">Enter Valid Month</string>
+    <string name="enterValidDay">Enter Valid Day</string>
+    <string name="enterValidYear">Enter Valid Year</string>
+
+    <string name="removephoto">Remove Photo</string>
+    <string name="addPhotoHeader">Add Photo</string>
+    <string name="takePhoto">Take Photo</string>
+    <string name="cho0seFromGallery">Choose From Gallery</string>
+    <string name="enteCountry">Enter Country</string>
+    <string name="stripeStatus">Stripe Status :</string>
+    <string name="stripeAccountNo">Stripe Account No :</string>
+    <string name="countyM">Country*</string>
+    <string name="nameM">Name*</string>
+    <string name="addBank">Add Bank</string>
+    <string name="addStripeAcount">Add Stripe Account</string>
+    <string name="profile">Profile</string>
+    <string name="enterTheName">Enter the name </string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="accountAdditionError">Unable to add account</string>
+    <string name="nameMiss">Enter the Name</string>
+    <string name="pls_select_vehicle">Please select vehicle</string>
+    <string name="pls_select_model">Please select model</string>
+    <string name="pls_select_make">Please select make</string>
+    <string name="pls_select_speciality">Please select speciality</string>
+    <string name="loading_time">Loading Time</string>
+    <string name="unloading_time">Unloading Time</string>
+    <string name="select_photo_from">Select photo from:</string>
+    <string name="NO_IMAGES">No job Documents.</string>
+    <string name="no_notes">No additional note provided by customer.</string>
+    <string name="additional_charges">ADDITIONAL CHARGES</string>
+    <string name="plsAddStripeFirst">Please Add Stripe First</string>
+    <string name="conform_password_miss">Enter confirm password</string>
+    <string name="enter_amt_collected">ENTER AMOUNT COLLECTED</string>
+    <string name="DISTANCE">DISTANCE</string>
+    <string name="no_of_handelers">NO OF HANDLERS</string>
+    <string name="PAYMENT">PAYMENT METHOD</string>
+    <string name="handlers">HANDLERS</string>
+    <string name="collect_cash">COLLECT CASH</string>
+    <string name="not_now">NOT NOW</string>
+    <string name="update_msg">Your application version is outdated, please update it from the store .</string>
+    <string name="update_available">Update Available:</string>
+    <string name="Update">Update</string>
+    <string name="update_non_mandatory">An update is available on the Play Store. Would you like to update now?</string>
+    <string name="paid_by_rcvr">Paid By Reciever</string>
+    <string name="collect_cash_from_rcvr">Collect cash from Receiver.</string>
+    <string name="CASH">CASH</string>
+    <string name="SOFT_LIMIT">SOFT LIMIT</string>
+    <string name="HARD_LIMIT">HARD LIMIT</string>
+    <string name="version">Version</string>
+    <string name="live_chat">Live chat</string>
+    <string name="OK">OK</string>
+    <string name="payUsing">Pay Using</string>
+    <string name="cashfree">Cashfree</string>
+    <string name="pincode">Pincode*</string>
+    <string name="ifsc_code">IFSC CODE*</string>
+    <string name="confirmAndPay">Confirm &#38; Pay</string>
+    <string name="current_credit">CURRENT CREDIT</string>
+    <string name="softLimit">Soft Limit &#58; </string>
+    <string name="hardLimit">Hard Limit &#58; </string>
+    <string name="payAmount">Pay Amount</string>
+    <string name="_0_00">0.00</string>
+    <string name="signing_up">Signing Up...</string>
+    <string name="share_your_code">Share your code</string>
+    <string name="step_1_connect_your_stripe_account">STEP 1 : CONNECT TO YOUR STRIPE ACCOUNT.</string>
+    <string name="connect_stripe_account">Connect stripe account</string>
+    <string name="stripe_account_no_xxxx">Stripe Account No : xxxxx</string>
+    <string name="step_2_link_bank_account">STEP 2 : LINK BANK ACCOUNT</string>
+    <string name="link_bank_account">Link bank account</string>
+
+
+    <!--wallet-->
+    <!--Alert Box Text-->
+    <string name="network_alert_title">Network Settings</string>
+    <string name="network_alert_message">Network is slow or Network service is not enabled. Do you want to go to settings menu?</string>
+    <string name="location_alert_title">Location Settings</string>
+    <string name="location_alert_message">Location service is not enabled. Do you want to go to settings menu?</string>
+    <string name="title_activity_confirm_number">ConfirmNumber</string>
+
+    <!--    network bar-->
+    <string name="nonetwork">Connection Lost</string>
+    <string name="alert">Alert</string>
+    <string name="alert_cap">ALERT</string>
+    <string name="messagealert">Message</string>
+
+    <string name="something_went_wrong">Oops..! Something went wrong.. try again</string>
+    <string name="force_logout_msg">You are logout from the device, please login again.</string>
+    <string name="addAmountToAdd">Please add amount to add to wallet.</string>
+    <string name="cardDetailsNotFound">Please add card to recharge wallet</string>
+    <string name="pleaseWait">Please wait</string>
+    <string name="softLimitMsg">Reaching maximum limit of Credit Line</string>
+    <string name="hardLimitMsg">Maximum limit of Credit Line exceeded</string>
+    <string name="no_transactions_done">No transactions done</string>
+    <string name="addcard">Add card</string>
+    <string name="paymentMethod">Payment Method</string>
+    <string name="scancard">Scan card</string>
+    <string name="poweredby">Powered by</string>
+    <string name="skip">Skip</string>
+    <string name="note">Note!</string>
+    <string name="You_did_not_enter_valid_card">You did not enter a valid card</string>
+    <string name="try_again">Try Again&#8230;.</string>
+    <string name="card_ending_with">Card Ending With</string>
+    <string name="stars">***************************************************************************************************************</string>
+    <string name="expiry">EXP</string>
+    <string name="carddflttxt">Make this card default</string>
+    <string name="delete_card">Delete Card</string>
+    <string name="wait">Please Wait&#8230;.</string>
+    <string name="card_info">CARD INFO</string>
+    <string name="Card_Info">Card Details</string>
+    <string name="card_removed">Card Removed Successfully</string>
+    <string name="confirmPayment">Confirm Payment</string>
+    <string name="paymentMsg1">Click on CONFIRM to authorize </string>
+    <string name="paymentMsg2"> to re-charge your wallet with </string>
+    <!-- WALLET TRANSACTIONS ACTIVITY-->
+    <string name="recentTransactions">Recent Transactions</string>
+    <string name="transactionID">Trans. ID &#58; </string>
+    <string name="bookingID">Booking ID &#58; </string>
+    <string name="all">ALl</string>
+    <string name="debit">DEBIT</string>
+    <string name="credit">CREDIT</string>
+    <string name="handlingFee">Handling</string>
+    <string name="cardNoHidden">"XXXX XXXX XXXX "</string>
+    <string name="requested_For">Requested for</string>
+    <string name="creditLine">Credit Line</string>
+    <string name="Cancellation_fare">Cancellation Fare</string>
+    <string name="wallet_enabled">Wallet enabled.</string>
+    <string name="wallet_disabled">Wallet disabled.</string>
+    <string name="customer_name">Customer Name</string>
+    <string name="delivery">Delivery</string>
+    <string name="products">Products</string>
+    <string name="price">Price</string>
+    <string name="items">Items</string>
+    <string name="start_job">Start Job</string>
+    <string name="delivery_time">Delivery Time:</string>
+    <string name="not_picked">Accepted</string>
+    <string name="cash">Cash</string>
+    <string name="card">Card</string>
+    <string name="lbl_wallet">Wallet</string>
+    <string name="on_the_way">Enroute to Customer </string>
+    <string name="call">Call</string>
+    <!--<string name="on_the_way_to_pickup">On the way to pick up</string>-->
+    <string name="on_the_way_to_pickup">Enroute to the store</string>
+    <string name="you_are_here">You are here</string>
+    <string name="tap_the_item_to_edit">tap the item to edit</string>
+    <string name="add_new_item">+ add new item</string>
+    <string name="picked_and_start"><![CDATA[Picked & Started]]></string>
+    <string name="arrived">At Store</string>
+    <string name="journey_started">Enroute to Customer</string>
+    <string name="reached">ARRIVED </string>
+    <string name="delivered">Delivered</string>
+    <string name="billable_amount">Billable Amount</string>
+    <string name="approve">APPROVE</string>
+    <string name="sign_here">Sign Here</string>
+    <string name="please_signature">Signature is required.</string>
+    <string name="qty">Qty: </string>
+    <string name="delete">Delete</string>
+    <string name="email_address">Email Address</string>
+    <string name="or">OR</string>
+    <string name="Support">Support</string>
+    <string name="number">PHONE NUMBER</string>
+    <string name="total_earning">Total Earning</string>
+    <string name="your_earning">Your Earnings</string>
+    <string name="you_rated">You Rated</string>
+    <string name="pickup_time">Pickup Time</string>
+    <string name="delivery_time_history">Delivery Time</string>
+    <string name="order_details">Order Details</string>
+    <string name="store_name">Store Name</string>
+    <string name="enterMsgHere">Enter message here</string>
+    <string name="helpSend">Send</string>
+    <string name="pass_validation">Please input a minimum of 6 characters with at least one numeric value(0-9).</string>
+    <string name="order_id">Order Id</string>
+    <string name="select_city">SELECT CITY</string>
+    <string name="select_signup_zone">SELECT ZONE</string>
+    <string name="expiry_date">License Expiry Date*</string>
+    <string name="choose_city">Please select your city.</string>
+    <string name="license_expiry_error">Please select expiry date for your driving license.</string>
+    <string name="license_no">LICENSE NUMBER *</string>
+    <string name="date_of_birth">Date of birth *</string>
+    <string name="license_empty">Please enter your license number.</string>
+    <string name="dob_empty">Please enter your date of birth.</string>
+    <string name="unit">Unit</string>
+    <string name="this_week">This week</string>
+
+    <string name="pickup_location">PICk UP LOCATION</string>
+    <string name="pickup_slot">PICk UP SLOT</string>
+    <string name="laundry_details">LAUNDRY DETAILS</string>
+    <string name="quantity_cap">QUANTITY : </string>
+
+
+
+    <string name="distance_his">"Distance : "</string>
+    <string name="time_his">"Time : "</string>
+    <string name="type_of_deli">"Type of Delivery"</string>
+    <string name="grocery">Grocery</string>
+    <string name="pic_drop">pickup and drop</string>
+    <string name="item_details">Item details</string>
+    <string name="quant">QTY</string>
+    <string name="paymentbreak">payment breakdown</string>
+    <string name="earningsandcommission">Earnings and commission </string>
+    <string name="delvery_charge">Delivery Charges</string>
+    <string name="tax">Tax</string>
+    <string name="taxes">Taxes :</string>
+    <string name="order_id_dot">Order Id : </string>
+    <string name="order_type">Order type</string>
+
+    <string name="shifts">SHIFTS:</string>
+    <string name="oid">OID</string>
+    <string name="picked">Picked</string>
+    <string name="product_name">PRODUCT NAME</string>
+    <string name="unit_cost">Unit Cost:</string>
+    <string name="total_price">Total price:</string>
+    <string name="replace_item">Replace Item</string>
+    <string name="cancel_item">Cancel Item</string>
+    <string name="return_partially">Return Partially</string>
+    <string name="return_completely">Return Completely</string>
+    <string name="edited_item">Edit Item</string>
+    <string name="want_to_cancel_item">Are you sure you want to cancel the item?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="search_item">Search Item</string>
+    <string name="return_item_completely">Would you like to return the item completely?</string>
+    <string name="last_item_delet_text">This is the last item in the order, cancelling this item will cancel the entire order. Please confirm to proceed ?</string>
+    <string name="today">Today</string>
+    <string name="days_ago">days ago</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="estimate_value">ESTIMATE PACKAGE VALUE</string>
+    <string name="customer_notes">CUSTOMER NOTES</string>
+    <string name="cancel_order">Cancel Order</string>
+    <string name="cancelOrderWarning">Cancellation Reasons</string>
+    <string name="message1">Message</string>
+    <string name="customer_details">Customer DETAILS</string>
+
+    <string name="addMoney">Add Money</string>
+    <string name="balance">Current cash balance</string>
+    <string name="recentTransction">Recent Transactions</string>
+    <string name="content_descriptor">&#8230;&#8230;&#8230;</string>
+    <string name="addNewCard">Add New Card</string>
+
+    <string name="softLimitDesc">About to reach maximum cash credit limit</string>
+    <string name="hardLimitDesc">Maximum cash credit limit hit and no cash booking will be allowed till dues are paid</string>
+    <string name="flexyCoin">Threestops Wallet</string>
+
+    <string name="addMoneyConfirm">Are you sure you want to recharge your wallet with</string>
+    <string name="success">Success</string>
+    <string name="addMoneySuccess">You have successfully  recharged your wallet with</string>
+    <string name="pay">Pay</string>
+
+    <!--payment option-->
+    <string name="xxx">XXXX XXXX XXXX</string>
+
+    <string name="save_card">Save card detail</string>
+    <string name="Amount">Amount</string>
+    <string name="ideal">Ideal</string>
+    <string name="idealPayment">Ideal Payment</string>
+    <string name="creditAndDebitCard">Credit/Debit Cards</string>
+    <string name="payYourOrder">Now pay your order using Ticket Restaurants\nMeal Card.Add your card details</string>
+    <string name="payOnDel">Pay On Delivery</string>
+    <string name="paymentoptions">Payment Options</string>
+    <string name="networkslow">Network Not Available or too slow please check</string>
+    <string name="insufficientBal">You have in sufficient balance choose other payment method.</string>
+    <string name="have_vocher">Have a voucher code ?</string>
+    <string name="voucher_code">Voucher code</string>
+    <string name="redeem">Redeem</string>
+    <string name="somethingWentWrong">Oops ! Something went wrong.Please try again</string>
+    <string name="add_amount">Amount (₹)</string>
+    <string name="scanCard">Scan Card</string>
+    <string name="tvPayment">Payment</string>
+    <string name="savedcards">Saved cards</string>
+    <string name="noCardsSaved">No Cards Saved</string>
+    <string name="startShopping">Start Shopping</string>
+    <string name="cards">Cards</string>
+
+    <!--payments-->
+    <string name="validThru">Valid\nThru</string>
+    <string name="make_card_default">Make As Default</string>
+
+    <string name="sureFordelete">Are you sure you want to delete?</string>
+
+    <string name="wallet_amt">Wallet :</string>
+    <string name="cash_amt">Cash :</string>
+    <string name="indian_code">+91</string>
+
+
+    <string name="helpSubject">Subject</string>
+
+    <!--Help Center-->
+    <string name="helpcenter">Help Center</string>
+    <string name="priorityUrgent">Urgent</string>
+    <string name="priorityHigh">High</string>
+    <string name="priorityNormal">Normal</string>
+    <string name="priorityLow">Low</string>
+    <string name="newTicket">New Ticket</string>
+    <string name="ticket">Ticket</string>
+    <string name="Clear">Clear</string>
+    <string name="priority">Priority</string>
+    <string-array name="ticketPriority">
+        <item>urgent</item>
+        <item>high</item>
+        <item>normal</item>
+        <item>low</item>
+    </string-array>
+
+    <string name="type_msg">Type Message</string>
+    <string name="status">Status</string>
+
+    <string name="date_time">DATE and TIME </string>
+    <string name="tips">Tips</string>
+
+    <string name="take_Back_photo">Take Back Photo</string>
+    <string name="take_front_photo">Take Front Photo</string>
+
+    <string name="phone_num_lower">Phone Number</string>
+    <string name="lblDiscount">Discount</string>
+    <string name="default_notification_channel_id">1</string>
+
+    <string name="permission_request">Permission Request</string>
+    <string name="msg_background_permission_request">You need to allow us background data access for share location when app in background or device locked.</string>
+
+    <string name="location"><b>LOCATION</b></string>
+
+    <string name="location_info">This app collects location data to enable location service for ride bookings by accessing "<b>ACCESS COARSE LOCATION</b>","<b>ACCESS FINE LOCATION</b>","<b>ACCESS BACKGROUND LOCATION</b>" and "<b>FOREGROUND SERVICE</b>" even when the <b>app is in background</b> or <b>closed</b> or <b>always in use</b> or <b>not is use</b>.</string>
+
+    <string name="location_ok"><b>OK</b></string>
+    <string name="do_not_show_again">Do not show again</string>
+
+</resources>

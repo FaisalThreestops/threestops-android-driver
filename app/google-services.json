@@ -1,0 +1,119 @@
+{
+  "project_info": {
+    "project_number": "952544260789",
+    "firebase_url": "https://threestops-6e3bb.firebaseio.com",
+    "project_id": "threestops-6e3bb",
+    "storage_bucket": "threestops-6e3bb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:952544260789:android:f2c255a162520c00b204fc",
+        "android_client_info": {
+          "package_name": "com.app.threestopsstore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "952544260789-fr5pda5jpsa1ql8v0bbgqomljpbk7frt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFc7VDVKI8lEdDw741eEofFIqso4GHM3g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "952544260789-fr5pda5jpsa1ql8v0bbgqomljpbk7frt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "952544260789-tmdv7o85c0t448p44vkip25aa13gbsi1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.3embed.threestopsdriver"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:952544260789:android:a62ee1e3d011aed5b204fc",
+        "android_client_info": {
+          "package_name": "com.customer.Threestops"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "952544260789-fr5pda5jpsa1ql8v0bbgqomljpbk7frt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFc7VDVKI8lEdDw741eEofFIqso4GHM3g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "952544260789-fr5pda5jpsa1ql8v0bbgqomljpbk7frt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "952544260789-tmdv7o85c0t448p44vkip25aa13gbsi1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.3embed.threestopsdriver"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:952544260789:android:beb146764001e36db204fc",
+        "android_client_info": {
+          "package_name": "com.driver.Threestops"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "952544260789-fr5pda5jpsa1ql8v0bbgqomljpbk7frt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFc7VDVKI8lEdDw741eEofFIqso4GHM3g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "952544260789-fr5pda5jpsa1ql8v0bbgqomljpbk7frt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "952544260789-tmdv7o85c0t448p44vkip25aa13gbsi1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.3embed.threestopsdriver"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

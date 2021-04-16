@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/smokewhite">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" >
+
+            <TextView
+                android:id="@+id/tvBankDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/addBank"
+                android:textSize="18sp"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/tvSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/save"
+                android:textSize="16sp"
+                android:padding="10dp"
+                android:layout_gravity="center_vertical|end"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:textColor="@color/white"/>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <LinearLayout
+        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:orientation="vertical">
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/tilName"
+            android:layout_margin="10dp">
+
+            <EditText
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/etName"
+                android:textSize="14sp"
+                android:textColorHint="@color/lightBlackText"
+                android:textColor="@color/lightBlackText"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:inputType="textCapWords"
+                android:hint="@string/nameM"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/tilPhone"
+            android:layout_margin="10dp">
+
+            <EditText
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/etPhone"
+                android:textSize="14sp"
+                android:textColorHint="@color/lightBlackText"
+                android:textColor="@color/lightBlackText"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:inputType="phone"
+                android:hint="@string/phone_number"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/tilAccountNo"
+            android:layout_margin="10dp">
+
+
+            <EditText
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/etAccountNo"
+                android:textSize="14sp"
+                android:textColorHint="@color/lightBlackText"
+                android:textColor="@color/lightBlackText"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:inputType="number"
+                android:hint="@string/accno"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/tilRoutingNo"
+            android:layout_margin="10dp">
+
+            <EditText
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/etRoutingNo"
+                android:textSize="14sp"
+                android:textColorHint="@color/lightBlackText"
+                android:textColor="@color/lightBlackText"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:inputType="textCapCharacters"
+                android:hint="@string/ifsc_code"
+                android:textAllCaps="true"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/tilAddress"
+            android:layout_margin="10dp">
+
+            <EditText
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/etAddress"
+                android:textSize="14sp"
+                android:textColorHint="@color/lightBlackText"
+                android:textColor="@color/lightBlackText"
+                android:singleLine="true"
+                android:maxLines="2"
+                android:inputType="textCapWords"
+                android:hint="@string/address"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/tilCity"
+            android:layout_margin="10dp">
+
+            <EditText
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/etCity"
+                android:textSize="14sp"
+                android:textColorHint="@color/lightBlackText"
+                android:textColor="@color/lightBlackText"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:inputType="textCapWords"
+                android:hint="@string/city"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/tilState"
+            android:layout_margin="10dp">
+
+            <EditText
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/etState"
+                android:textSize="14sp"
+                android:textColorHint="@color/lightBlackText"
+                android:textColor="@color/lightBlackText"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:inputType="textCapWords"
+                android:hint="@string/state"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/tilPinCode"
+            android:layout_margin="10dp">
+
+            <EditText
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/etPinCode"
+                android:textSize="14sp"
+                android:textColorHint="@color/lightBlackText"
+                android:textColor="@color/lightBlackText"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:inputType="number"
+                android:hint="@string/pincode"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        />
+
+</RelativeLayout>
+

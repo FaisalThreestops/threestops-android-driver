@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="2dp"
+    android:layout_marginLeft="@dimen/dpSixteen"
+    android:layout_marginRight="@dimen/dpSixteen"
+    android:layout_marginTop="5dp"
+    app:layout_goneMarginTop="@dimen/dpFive">
+
+    <RelativeLayout
+        android:id="@+id/rlHelpIndexMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dpFive">
+
+        <RelativeLayout
+            android:id="@+id/rlHelpIndexTextImagePre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvHelpIndexImageTextPre"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/black_circle"
+                android:backgroundTint="@color/colorPrimary"
+                android:gravity="center"
+                android:text="A"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/spTwenty"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"/>
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvHelpIndexCustNamePre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dpSixteen"
+            android:layout_marginRight="@dimen/dpSixteen"
+            android:layout_toEndOf="@+id/rlHelpIndexTextImagePre"
+            android:layout_toRightOf="@+id/rlHelpIndexTextImagePre"
+            android:maxLines="1"
+            android:textColor="@color/colorMineShaft"
+            android:textSize="@dimen/spFourteen" />
+
+        <TextView
+            android:id="@+id/tvHelpIndexDateNTimePre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvHelpIndexCustNamePre"
+            android:layout_marginLeft="@dimen/dpSixteen"
+            android:layout_marginRight="@dimen/dpSixteen"
+            android:layout_toEndOf="@+id/rlHelpIndexTextImagePre"
+            android:layout_toRightOf="@+id/rlHelpIndexTextImagePre"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/spTwelve" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rlHelpIndexMain"
+        android:layout_marginTop="7dp">
+
+        <TextView
+            android:id="@+id/tvHelpIndexText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dpSixteen"
+            android:layout_marginRight="@dimen/dpSixteen"
+            android:layout_toLeftOf="@+id/tvHelpIndexTime"
+            android:layout_toStartOf="@+id/tvHelpIndexTime"
+            android:textColor="@color/colorMineShaft"
+            android:layout_marginLeft="@dimen/dpTen"
+            android:layout_marginStart="@dimen/dpTen"
+            />
+        <TextView
+            android:id="@+id/tvHelpIndexTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/colorMineShaft"
+
+            />
+
+    </RelativeLayout>
+
+</RelativeLayout>
