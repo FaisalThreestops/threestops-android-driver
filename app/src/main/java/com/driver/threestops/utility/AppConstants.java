@@ -52,5 +52,6 @@ public enum AppConstants {
     public static final String ADDCARD_ACT = "act_addcard";
     public static final String PAYMENT_ACT = "act_payment";
     public static final String CARD_DETAIL_ACT = "act_carddetail";
+    public static  boolean Offline_status = false;
 
 }

@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/delivx_android_partner_threestops.iml" filepath="$PROJECT_DIR$/.idea/modules/delivx_android_partner_threestops.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/delivx_android_partner_threestops.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/delivx_android_partner_threestops.app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/signature-pad/delivx_android_partner_threestops.signature-pad.iml" filepath="$PROJECT_DIR$/.idea/modules/signature-pad/delivx_android_partner_threestops.signature-pad.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/simplecroplib/delivx_android_partner_threestops.simplecroplib.iml" filepath="$PROJECT_DIR$/.idea/modules/simplecroplib/delivx_android_partner_threestops.simplecroplib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/threestops-android-driver-client.iml" filepath="$PROJECT_DIR$/.idea/modules/threestops-android-driver-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/threestops-android-driver-client.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/threestops-android-driver-client.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/signature-pad/threestops-android-driver-client.signature-pad.iml" filepath="$PROJECT_DIR$/.idea/modules/signature-pad/threestops-android-driver-client.signature-pad.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/simplecroplib/threestops-android-driver-client.simplecroplib.iml" filepath="$PROJECT_DIR$/.idea/modules/simplecroplib/threestops-android-driver-client.simplecroplib.iml" />
     </modules>
   </component>
 </project>

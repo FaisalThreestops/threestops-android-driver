@@ -67,6 +67,8 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
+import static com.driver.threestops.utility.AppConstants.Offline_status;
+
 public class LocationUpdateService
         extends DaggerService
         implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -457,7 +459,8 @@ public class LocationUpdateService
                             updateLocationMQTT(preferenceHelperDataSource.getDriverCurrentLat(), preferenceHelperDataSource.getDriverCurrentLongi(), 0);
                             publishLocation(preferenceHelperDataSource.getDriverCurrentLat(), preferenceHelperDataSource.getDriverCurrentLongi(), 1);
                         } else {
-                            if (counter >= preferenceHelperDataSource.getTripStartedInterval()) {
+                            if (counter >= preferenceHelperDataSource.getTripStartedInterval() || Offline_status) {
+                                Offline_status=false;
                                 counter = 0;
                                 updateLocationMQTT(preferenceHelperDataSource.getDriverCurrentLat(), preferenceHelperDataSource.getDriverCurrentLongi(), 0);
                                 publishLocation(preferenceHelperDataSource.getDriverCurrentLat(), preferenceHelperDataSource.getDriverCurrentLongi(), 0);

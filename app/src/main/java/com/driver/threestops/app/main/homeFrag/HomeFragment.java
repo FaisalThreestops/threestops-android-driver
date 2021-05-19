@@ -65,6 +65,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dagger.android.support.DaggerFragment;
 
+import static com.driver.threestops.utility.AppConstants.Offline_status;
+
 @ActivityScoped
 public class HomeFragment extends DaggerFragment implements HomeFragmentContract.View, OnMapReadyCallback, View.OnClickListener {
 
@@ -704,6 +706,7 @@ public class HomeFragment extends DaggerFragment implements HomeFragmentContract
      */
     private void startUpdateLocation() {
         if (!Utility.isMyServiceRunning(LocationUpdateService.class, getActivity())) {
+            Offline_status=true;
             Intent startIntent = new Intent(getActivity(), LocationUpdateService.class);
             startIntent.setAction(AppConstants.ACTION.STARTFOREGROUND_ACTION);
             getActivity().startService(startIntent);
