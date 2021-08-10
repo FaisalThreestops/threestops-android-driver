@@ -43,6 +43,7 @@
     <string name="login_signup_txt"><![CDATA[<font color=\'#767676\'>"Don\'t have an account?"</font><font color=\'#5AA43E\'>" Sign Up"</font>]]></string>
     <string name="selectLanguage">Language</string>
     <string name="english">English</string>
+    <string name="termsAndConditions">Terms &amp; Conditions</string>
 
     <!--Forgot password Enter  mobile num activity-->
     <string name="forgotPassword">Forgot Password</string>
