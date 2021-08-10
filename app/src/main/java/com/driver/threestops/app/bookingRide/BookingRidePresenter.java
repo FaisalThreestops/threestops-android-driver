@@ -124,7 +124,8 @@ public class BookingRidePresenter implements BookingRideContract.PresenterOperat
     @Override
     public void callCustomer() {
         Log.d("check", "callCustomer: "+appointments.getOrderStatus());
-        if(appointments.getOrderStatus().trim().equals("10")){
+        //if(appointments.getOrderStatus().trim().equals("10") ){
+        if(appointments.getOrderStatus().trim().equals("10") || appointments.getOrderStatus().trim().equals("8")){ //@modified by faisal on 04_07_2021
             Utility.MakePhoneCall(appointments.getStorePhone(), context);
         }else
             Utility.MakePhoneCall(appointments.getCustomerPhone(), context);

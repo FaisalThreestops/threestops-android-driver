@@ -576,7 +576,10 @@ public class MainActivity extends DaggerAppCompatActivity
                     Utility.printLog(TAG + " caught : " + e.getMessage());
                 }
                 break;
-
+            case R.id.item_menu_nav_terms:
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(AppConstants.TERMS_AND_CONDITIONS));
+                startActivity(browserIntent);
+                break;
             case R.id.nav_cards:
                 try {
                     Intent intent = new Intent(MainActivity.this, PaymentAct.class);

@@ -53,5 +53,5 @@ public enum AppConstants {
     public static final String PAYMENT_ACT = "act_payment";
     public static final String CARD_DETAIL_ACT = "act_carddetail";
     public static  boolean Offline_status = false;
-
+    public static final String TERMS_AND_CONDITIONS = "https://superadmin.threestops.com/appWebPages/Customer/Termsen.html";
 }

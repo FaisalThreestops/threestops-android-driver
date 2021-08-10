@@ -40,7 +40,11 @@
             android:visible="false"/>
 
 
-
+        <item
+            android:id="@+id/item_menu_nav_terms"
+            android:icon="@drawable/history"
+            android:title="@string/termsAndConditions"
+            android:visible="true"/>
 
         <!--  <item
               android:id="@+id/nav_live_chat"
