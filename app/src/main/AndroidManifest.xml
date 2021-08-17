@@ -29,12 +29,6 @@
         android:name="android.hardware.camera.front"
         android:required="false" />
 
-    <!--    <permission-->
-    <!--        android:name="com.driver.Threestops.permission.C2D_MESSAGE"-->
-    <!--        android:protectionLevel="signature" />-->
-
-    <!--    <uses-permission android:name="com.dayrunnerdriver.main.permission.C2D_MESSAGE" />-->
-
     <application
         android:name="com.driver.threestops.app.MyApplication"
         android:allowBackup="true"
@@ -197,9 +191,9 @@
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" />
 
-        <activity
+        <!--<activity
             android:name="com.livechatinc.inappchat.ChatWindowActivity"
-            android:configChanges="orientation|screenSize" />
+            android:configChanges="orientation|screenSize" />-->
         <activity
             android:name="com.driver.threestops.app.main.support.webView.WebViewActivity"
             android:screenOrientation="portrait" />

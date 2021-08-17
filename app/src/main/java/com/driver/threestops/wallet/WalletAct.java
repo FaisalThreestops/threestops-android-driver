@@ -10,7 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.RequiresApi;
 
-import com.gocashfree.cashfreesdk.CFPaymentService;
+import com.cashfree.pg.CFPaymentService;
 import com.google.android.material.textfield.TextInputLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -47,13 +47,14 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import static com.gocashfree.cashfreesdk.CFPaymentService.PARAM_APP_ID;
-import static com.gocashfree.cashfreesdk.CFPaymentService.PARAM_CUSTOMER_EMAIL;
-import static com.gocashfree.cashfreesdk.CFPaymentService.PARAM_CUSTOMER_NAME;
-import static com.gocashfree.cashfreesdk.CFPaymentService.PARAM_CUSTOMER_PHONE;
-import static com.gocashfree.cashfreesdk.CFPaymentService.PARAM_ORDER_AMOUNT;
-import static com.gocashfree.cashfreesdk.CFPaymentService.PARAM_ORDER_ID;
-import static com.gocashfree.cashfreesdk.CFPaymentService.PARAM_ORDER_NOTE;
+import static com.cashfree.pg.CFPaymentService.PARAM_APP_ID;
+import static com.cashfree.pg.CFPaymentService.PARAM_CUSTOMER_EMAIL;
+import static com.cashfree.pg.CFPaymentService.PARAM_CUSTOMER_NAME;
+import static com.cashfree.pg.CFPaymentService.PARAM_CUSTOMER_PHONE;
+import static com.cashfree.pg.CFPaymentService.PARAM_ORDER_AMOUNT;
+import static com.cashfree.pg.CFPaymentService.PARAM_ORDER_ID;
+import static com.cashfree.pg.CFPaymentService.PARAM_ORDER_NOTE;
+
 
 public class WalletAct extends DaggerAppCompatActivity implements WalletView, View.OnClickListener {
     private Typeface fontMedium, fontRegular;

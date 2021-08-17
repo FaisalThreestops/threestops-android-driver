@@ -430,7 +430,9 @@ public class BankNewStripeActivity extends DaggerAppCompatActivity implements Vi
     public void openGallery() {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
-        startActivityForResult(photoPickerIntent, REQUEST_CODE_GALLERY);
+        if (photoPickerIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(photoPickerIntent, REQUEST_CODE_GALLERY);
+        }
     }
 
     @Override
